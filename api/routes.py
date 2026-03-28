@@ -239,7 +239,7 @@ async def _run_pipeline_bg(plid, req):
         if not product: raise ValueError(f"Product {req.product_id} not found")
         pipeline = AdvertorialPipeline(output_dir=out)
         _patch(pipeline, q, plid)
-        result = await pipeline.run(product_url=product["url"], product_data=product.get("data"), config={"angle":req.angle,"structure":req.structure,"persona":req.persona,"tone":req.tone,"language":req.language,"brief":req.brief})
+        result = await pipeline.run(product_url=product["url"])
         s["status"] = "completed"; s["completed_at"] = datetime.utcnow().isoformat(); s["progress"] = 1.0
         s["results"] = {"headline": result.get("slug",""), "qa_score": 0, "html_file": result.get("html_file","")}
         await _emit(q, plid, "completed", "Done", "", 1.0)
