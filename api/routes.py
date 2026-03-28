@@ -305,13 +305,13 @@ EDIT_SCRIPT = """
     }
     #edit-toolbar.visible { display: flex; }
     #edit-toolbar .tb-drag {
-      cursor: grab; padding: 2px 6px; color: #555; font-size: 16px; letter-spacing: 1px;
+      cursor: grab; padding: 2px 6px; color: #888; font-size: 16px; letter-spacing: 1px;
       display: flex; align-items: center; flex-shrink: 0;
     }
     #edit-toolbar .tb-drag:active { cursor: grabbing; }
     #edit-toolbar .tb-sep { width: 1px; height: 22px; background: #333; margin: 0 3px; flex-shrink: 0; }
     #edit-toolbar button {
-      background: none; border: 1px solid transparent; color: #ccc; cursor: pointer;
+      background: none; border: 1px solid transparent; color: #eee; cursor: pointer;
       min-width: 28px; height: 28px; border-radius: 6px; font-size: 13px;
       display: flex; align-items: center; justify-content: center; transition: all .1s;
       padding: 0 4px; font-family: inherit; flex-shrink: 0;
@@ -319,7 +319,7 @@ EDIT_SCRIPT = """
     #edit-toolbar button:hover { background: #2a2a2a; color: #fff; border-color: #444; }
     #edit-toolbar button.active { background: #f26722; color: #000; border-color: #f26722; }
     #edit-toolbar select {
-      background: #111; color: #ccc; border: 1px solid #333; border-radius: 6px;
+      background: #111; color: #eee; border: 1px solid #333; border-radius: 6px;
       padding: 3px 4px; font-size: 11px; cursor: pointer; height: 28px; outline: none;
       max-width: 70px; flex-shrink: 0;
     }
