@@ -210,7 +210,7 @@ body{{font-family:'Roboto',sans-serif;color:#111;background:#fff;font-size:18px;
 .sidebar-card{{border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;background:#fff}}
 .sidebar-card .sb-title{{font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;text-align:center;padding:14px 16px 10px;color:#111;line-height:1.3}}
 .sidebar-card .sb-img{{width:100%;height:200px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:13px;font-style:italic}}
-.sidebar-card .sb-cta{{display:block;margin:14px 16px;padding:14px;background:#f26722;color:#fff;text-align:center;font-size:16px;font-weight:700;border-radius:8px;text-decoration:none;transition:background .2s}}
+.sidebar-card .sb-cta{{display:block;margin:14px 16px;padding:14px;background:#f26722;color:#000;text-align:center;font-size:16px;font-weight:700;border-radius:8px;text-decoration:none;transition:background .2s}}
 .sidebar-card .sb-cta:hover{{background:#d85a1b}}
 .sidebar-card .sb-badges{{padding:0 16px 14px;font-size:13px;color:#555}}
 .sidebar-card .sb-badges div{{margin-bottom:4px}}
@@ -230,11 +230,11 @@ em{{color:#444}}
 .step-title{{font-weight:700;font-size:16px;margin-bottom:2px}}
 .step p{{font-size:16px;margin-bottom:4px}}
 .tip{{background:#faf8f5;border-left:3px solid #f26722;padding:12px 16px;margin:16px 0;font-size:16px}}
-.cta-bottom{{display:block;width:100%;padding:18px;background:#f26722;color:#fff;text-align:center;font-size:18px;font-weight:700;border-radius:8px;text-decoration:none;margin:20px 0 10px;transition:background .2s}}
+.cta-bottom{{display:block;width:100%;padding:18px;background:#f26722;color:#000;text-align:center;font-size:18px;font-weight:700;border-radius:8px;text-decoration:none;margin:20px 0 10px;transition:background .2s}}
 .cta-bottom:hover{{background:#d85a1b}}
 .cta-badges{{text-align:center;font-size:14px;color:#555;margin-bottom:8px}}
 .sticky-footer{{position:fixed;bottom:0;left:0;right:0;background:#f26722;padding:12px 20px;text-align:center;z-index:100}}
-.sticky-footer a{{color:#fff;text-decoration:none;font-weight:700;font-size:16px}}
+.sticky-footer a{{color:#000;text-decoration:none;font-weight:700;font-size:16px}}
 ul,ol{{padding-left:24px;margin-bottom:12px;overflow-wrap:break-word}}
 li{{margin-bottom:6px}}
 @media(max-width:840px){{
