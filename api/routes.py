@@ -282,34 +282,148 @@ async def save_html(plid: str, req: SaveHtmlReq):
 EDIT_SCRIPT = """
 <script>
 (function() {
+  // ── STYLES ──
   var style = document.createElement('style');
   style.textContent = `
     [data-editable] { transition: outline .15s, outline-offset .15s; }
     [data-editable]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; position: relative; }
     [data-editable]:hover::after { content: '✎'; position: absolute; top: -12px; right: -12px; background: #f26722; color: #fff; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 9999; }
+    [data-editable][contenteditable="true"]:hover::after { display: none; }
     img[data-img-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
     .placeholder[data-media-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
-    .placeholder[data-media-idx]:hover::after { content: '📷 Click to replace'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #f26722; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-style: normal; font-weight: 700; z-index: 9999; }
     .placeholder[data-media-idx] { position: relative; }
+    .placeholder[data-media-idx]:hover::after { content: '📷 Click to replace'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #f26722; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-style: normal; font-weight: 700; z-index: 9999; }
     .sb-img[data-media-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
+
+    /* ── TOOLBAR ── */
+    #edit-toolbar {
+      position: fixed; top: -60px; left: 50%; transform: translateX(-50%);
+      background: #1a1a1a; border: 1px solid #333; border-radius: 10px;
+      padding: 6px 8px; display: flex; gap: 2px; align-items: center;
+      z-index: 99999; box-shadow: 0 4px 20px rgba(0,0,0,.5);
+      transition: top .25s ease, opacity .25s; opacity: 0;
+      flex-wrap: wrap; max-width: 95vw;
+    }
+    #edit-toolbar.visible { top: 10px; opacity: 1; }
+    #edit-toolbar .tb-sep { width: 1px; height: 22px; background: #333; margin: 0 4px; }
+    #edit-toolbar button {
+      background: none; border: 1px solid transparent; color: #ccc; cursor: pointer;
+      width: 32px; height: 32px; border-radius: 6px; font-size: 14px;
+      display: flex; align-items: center; justify-content: center; transition: all .1s;
+      padding: 0; font-family: inherit;
+    }
+    #edit-toolbar button:hover { background: #2a2a2a; color: #fff; border-color: #444; }
+    #edit-toolbar button.active { background: #f26722; color: #000; border-color: #f26722; }
+    #edit-toolbar select {
+      background: #111; color: #ccc; border: 1px solid #333; border-radius: 6px;
+      padding: 4px 6px; font-size: 12px; cursor: pointer; height: 32px; outline: none;
+    }
+    #edit-toolbar select:hover { border-color: #555; }
+    #edit-toolbar input[type="color"] {
+      width: 28px; height: 28px; border: 1px solid #333; border-radius: 6px;
+      background: #111; cursor: pointer; padding: 2px;
+    }
   `;
   document.head.appendChild(style);
 
-  // Mark ALL text elements as editable
-  var editable = document.querySelectorAll('h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a');
-  editable.forEach(function(el, i) {
-    el.setAttribute('data-editable', 'text-' + i);
+  // ── CREATE TOOLBAR ──
+  var tb = document.createElement('div');
+  tb.id = 'edit-toolbar';
+  tb.innerHTML = `
+    <button data-cmd="bold" title="Bold"><b>B</b></button>
+    <button data-cmd="italic" title="Italic"><i>I</i></button>
+    <button data-cmd="underline" title="Underline"><u>U</u></button>
+    <button data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
+    <div class="tb-sep"></div>
+    <select data-action="fontSize" title="Font Size">
+      <option value="">Size</option>
+      <option value="1">12px</option>
+      <option value="2">14px</option>
+      <option value="3">16px</option>
+      <option value="4">18px</option>
+      <option value="5">22px</option>
+      <option value="6">28px</option>
+      <option value="7">36px</option>
+    </select>
+    <select data-action="fontName" title="Font">
+      <option value="">Font</option>
+      <option value="Roboto">Roboto</option>
+      <option value="Montserrat">Montserrat</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Arial">Arial</option>
+      <option value="Helvetica">Helvetica</option>
+      <option value="Times New Roman">Times</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Courier New">Courier</option>
+    </select>
+    <div class="tb-sep"></div>
+    <input type="color" data-action="foreColor" value="#111111" title="Text Color">
+    <input type="color" data-action="hiliteColor" value="#ffffff" title="Highlight">
+    <div class="tb-sep"></div>
+    <button data-cmd="justifyLeft" title="Align Left">⫷</button>
+    <button data-cmd="justifyCenter" title="Center">⫿</button>
+    <button data-cmd="justifyRight" title="Align Right">⫸</button>
+    <div class="tb-sep"></div>
+    <button data-cmd="removeFormat" title="Clear Formatting">✕</button>
+    <button data-action="link" title="Link">🔗</button>
+  `;
+  document.body.appendChild(tb);
+
+  // Toolbar click handlers
+  tb.addEventListener('mousedown', function(e) { e.preventDefault(); }); // prevent losing selection
+  tb.addEventListener('click', function(e) {
+    var btn = e.target.closest('button[data-cmd]');
+    if (btn) {
+      document.execCommand(btn.dataset.cmd, false, null);
+      updateToolbarState();
+      return;
+    }
+    var linkBtn = e.target.closest('[data-action="link"]');
+    if (linkBtn) {
+      var url = prompt('URL:', 'https://');
+      if (url) document.execCommand('createLink', false, url);
+      return;
+    }
   });
-  // Mark images
-  document.querySelectorAll('img').forEach(function(img, i) {
-    img.setAttribute('data-img-idx', i);
+  tb.addEventListener('change', function(e) {
+    var sel = e.target;
+    if (sel.dataset.action === 'fontSize') {
+      document.execCommand('fontSize', false, sel.value);
+      sel.value = '';
+    }
+    if (sel.dataset.action === 'fontName') {
+      document.execCommand('fontName', false, sel.value);
+      sel.value = '';
+    }
   });
-  // Mark placeholders and sb-img as replaceable media
-  var mediaIdx = 0;
-  document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) {
-    el.setAttribute('data-media-idx', mediaIdx++);
+  tb.addEventListener('input', function(e) {
+    var inp = e.target;
+    if (inp.dataset.action === 'foreColor') {
+      document.execCommand('foreColor', false, inp.value);
+    }
+    if (inp.dataset.action === 'hiliteColor') {
+      document.execCommand('hiliteColor', false, inp.value);
+    }
   });
 
+  function updateToolbarState() {
+    tb.querySelectorAll('button[data-cmd]').forEach(function(btn) {
+      var on = document.queryCommandState(btn.dataset.cmd);
+      btn.classList.toggle('active', on);
+    });
+  }
+
+  function showToolbar() { tb.classList.add('visible'); }
+  function hideToolbar() { tb.classList.remove('visible'); }
+
+  // ── MARK ELEMENTS ──
+  var editable = document.querySelectorAll('h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a');
+  editable.forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
+  document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
+  var mediaIdx = 0;
+  document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mediaIdx++); });
+
+  // ── EDIT LOGIC ──
   var activeEdit = null;
   function finishEdit() {
     if (activeEdit) {
@@ -319,15 +433,17 @@ EDIT_SCRIPT = """
       activeEdit.style.background = '';
       activeEdit.style.minHeight = '';
       activeEdit = null;
+      hideToolbar();
     }
   }
 
   document.addEventListener('click', function(e) {
+    if (e.target.closest('#edit-toolbar')) return; // don't interfere with toolbar clicks
     var el = e.target.closest('[data-editable]');
     if (el) {
       e.preventDefault();
       e.stopPropagation();
-      if (activeEdit === el) return; // already editing this one
+      if (activeEdit === el) return;
       finishEdit();
       activeEdit = el;
       el.contentEditable = 'true';
@@ -336,53 +452,59 @@ EDIT_SCRIPT = """
       el.style.background = 'rgba(242,103,34,0.05)';
       el.style.minHeight = '1em';
       el.focus();
-      // Select all text for easy replacement
       var range = document.createRange();
       range.selectNodeContents(el);
       var sel = window.getSelection();
       sel.removeAllRanges();
       sel.addRange(range);
+      showToolbar();
+      updateToolbarState();
       return;
     }
     var img = e.target.closest('img[data-img-idx]');
     if (img) {
+      e.preventDefault();
       window.parent.postMessage({ type: 'edit-image', src: img.src, alt: img.alt || '', index: parseInt(img.getAttribute('data-img-idx')), kind: 'img' }, '*');
       return;
     }
     var media = e.target.closest('[data-media-idx]');
     if (media) {
+      e.preventDefault();
       window.parent.postMessage({ type: 'edit-image', src: '', alt: '', index: parseInt(media.getAttribute('data-media-idx')), kind: 'placeholder' }, '*');
+      return;
     }
+    // Click outside → finish
+    finishEdit();
   }, true);
 
-  // Click outside editable → finish editing
-  document.addEventListener('click', function(e) {
-    if (activeEdit && !e.target.closest('[data-editable]') && !e.target.closest('[data-img-idx]') && !e.target.closest('[data-media-idx]')) {
-      finishEdit();
-    }
-  }, false);
+  // Update toolbar state on selection change
+  document.addEventListener('selectionchange', function() {
+    if (activeEdit) updateToolbarState();
+  });
 
-  // Keyboard: Escape to cancel, Enter on single-line elements
   document.addEventListener('keydown', function(e) {
     if (!activeEdit) return;
     if (e.key === 'Escape') { finishEdit(); e.preventDefault(); }
-    // Enter finishes edit on headings, badges, buttons (single-line)
     var tag = activeEdit.tagName.toLowerCase();
     if (e.key === 'Enter' && !e.shiftKey && (tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'a' || tag === 'div')) {
       finishEdit(); e.preventDefault();
     }
   });
 
+  // ── MESSAGES ──
   window.addEventListener('message', function(e) {
-    // update-field kept for backward compat
     if (e.data && e.data.type === 'update-field') {
       var el = document.querySelector('[data-editable="' + e.data.field + '"]');
       if (el) el.innerHTML = e.data.value;
     }
-    // get-html: parent requests current HTML
     if (e.data && e.data.type === 'get-html') {
       finishEdit();
+      // Remove toolbar from DOM before capturing
+      var tbEl = document.getElementById('edit-toolbar');
+      if (tbEl) tbEl.remove();
       window.parent.postMessage({ type: 'current-html', html: document.documentElement.outerHTML }, '*');
+      // Re-add toolbar
+      document.body.appendChild(tb);
     }
     if (e.data && e.data.type === 'update-image') {
       if (e.data.kind === 'placeholder') {
