@@ -252,7 +252,7 @@ class CopyAmmunition(BaseModel):
     hooks: list[str] = []
     key_benefits_ranked: list[str] = []
     proof_elements: list[str] = []
-    objection_handlers: list[str] = []
+    objection_handlers: list = []  # str or dict accepted
     urgency_elements: list[str] = []
     cta_options: list[str] = []
 
