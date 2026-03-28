@@ -6,7 +6,7 @@ Upload sur Cloudflare R2 et indexe dans media_index.json.
 
 Usage:
     python media_generator.py --product-id washer-seese-pro \
-        --product-ref "https://cdn.shopify.com/.../product.png" \
+        --product-ref "https://cdn.shopify.com/.../product.jpg" \
         --r2-bucket my-bucket \
         --count 30
 
@@ -288,7 +288,7 @@ class KieClient:
                 "prompt": prompt,
                 "aspect_ratio": aspect_ratio,
                 "resolution": "1K",
-                "output_format": "png",
+                "output_format": "jpg",
             },
         }
         if image_ref:
@@ -467,7 +467,7 @@ class MediaLibraryGenerator:
                     continue
 
                 # Build filename
-                filename = f"{media_type}-{variant+1:02d}-{aspect_ratio.replace(':','x')}.png"
+                filename = f"{media_type}-{variant+1:02d}-{aspect_ratio.replace(':','x')}.jpg"
                 r2_key = f"media/{product_id}/{filename}"
 
                 # Upload to R2 if configured
