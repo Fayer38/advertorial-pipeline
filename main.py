@@ -80,15 +80,19 @@ class AdvertorialPipeline:
 
     async def run(
         self,
-        product_url: str,
+        product_url: str = "",
         image_url: str = "",
+        product_data: dict = None,
+        config: dict = None,
     ) -> dict:
         """
         Exécute le pipeline complet.
 
         Args:
-            product_url: URL du produit Shopify
-            image_url: URL de l'image produit (optionnel — sinon prend la première du JSON Shopify)
+            product_url: URL du produit Shopify (pour scraping)
+            image_url: URL de l'image produit (optionnel)
+            product_data: Données produit pré-analysées (skip phase 1 si fourni)
+            config: Config optionnelle (angle, structure, persona, tone, language, brief)
 
         Returns:
             dict — template GemPage final
@@ -96,61 +100,87 @@ class AdvertorialPipeline:
         start_time = datetime.utcnow()
         logger.info("=" * 60)
         logger.info("PIPELINE ADVERTORIAL — DÉMARRAGE")
-        logger.info(f"  Produit : {product_url}")
-        logger.info(f"  Image   : {image_url or '(auto depuis Shopify)'}")
+        logger.info(f"  Produit : {product_url or '(données pré-chargées)'}")
+        logger.info(f"  Image   : {image_url or '(auto)'}")
+        logger.info(f"  Data pré-chargées : {'OUI' if product_data else 'NON'}")
         logger.info("=" * 60)
 
-        # ══════════════════════════════════════════════════════════
-        # PHASE 1 : COLLECTE (parallèle)
-        # ══════════════════════════════════════════════════════════
-        logger.info("\n📥 PHASE 1 — COLLECTE (parallèle)")
-
-        # L'Agent 1 et l'Agent 2 tournent en parallèle
-        # L'Agent 3 tourne aussi en parallèle si on a une image
-        phase1_tasks = [
-            self.extractor.run(url=product_url),
-            self.avatar_researcher.run(url=product_url),
-        ]
-
-        if image_url:
-            phase1_tasks.append(
-                self.image_describer.run(image_source=image_url)
-            )
-
-        results = await asyncio.gather(*phase1_tasks, return_exceptions=True)
-
-        # Traiter les résultats
-        product_data = self._handle_result(results[0], "Extracteur Produit")
-        avatar_research = self._handle_result(results[1], "Chercheur Avatar")
-
+        avatar_research = None
         image_description = None
-        if len(results) > 2:
-            image_description = self._handle_result(results[2], "Descripteur Image")
 
-        # Si pas d'image fournie, prendre la première du JSON Shopify
-        if not image_description and product_data:
+        if product_data:
+            # ══════════════════════════════════════════════════════
+            # PHASE 1 SKIP — données déjà disponibles
+            # ══════════════════════════════════════════════════════
+            logger.info("\n📥 PHASE 1 — SKIP (données pré-chargées)")
+            logger.info(f"  Produit : {product_data.get('product_info',{}).get('title','?')}")
+
+            # Build minimal avatar from existing data
+            benefits = product_data.get("benefits", {})
+            pi = product_data.get("product_info", {})
+            avatar_research = {
+                "avatar": {
+                    "demographics": config.get("persona", "") if config else "",
+                    "pain_points": benefits.get("main_benefits", [])[:3] if isinstance(benefits, dict) else [],
+                },
+                "marketing_angles": [{"angle_id": config.get("angle", "testimonial") if config else "testimonial"}],
+            }
+
+            # Use first product image if available
             images = product_data.get("images", [])
-            if images:
-                first_image_url = images[0].get("url", "")
-                if first_image_url:
-                    logger.info(f"Image auto-détectée depuis Shopify : {first_image_url[:60]}...")
-                    try:
-                        image_description = await self.image_describer.run(
-                            image_source=first_image_url
-                        )
-                    except Exception as e:
-                        logger.warning(f"Impossible de décrire l'image auto : {e}")
+            if images and isinstance(images, list):
+                first_img = images[0] if isinstance(images[0], str) else images[0].get("url", "")
+                if first_img:
+                    image_url = first_img
 
-        # Relancer Agent 2 avec les données produit pour enrichissement
-        if product_data and avatar_research:
-            try:
-                logger.info("Enrichissement de la recherche avatar avec les données produit...")
-                avatar_research = await self.avatar_researcher.run(
-                    url=product_url,
-                    product_data=product_data,
+        else:
+            # ══════════════════════════════════════════════════════
+            # PHASE 1 : COLLECTE (parallèle)
+            # ══════════════════════════════════════════════════════
+            logger.info("\n📥 PHASE 1 — COLLECTE (parallèle)")
+
+            phase1_tasks = [
+                self.extractor.run(url=product_url),
+                self.avatar_researcher.run(url=product_url),
+            ]
+
+            if image_url:
+                phase1_tasks.append(
+                    self.image_describer.run(image_source=image_url)
                 )
-            except Exception as e:
-                logger.warning(f"Enrichissement avatar échoué : {e}")
+
+            results = await asyncio.gather(*phase1_tasks, return_exceptions=True)
+
+            product_data = self._handle_result(results[0], "Extracteur Produit")
+            avatar_research = self._handle_result(results[1], "Chercheur Avatar")
+
+            if len(results) > 2:
+                image_description = self._handle_result(results[2], "Descripteur Image")
+
+            # Si pas d'image fournie, prendre la première du JSON Shopify
+            if not image_description and product_data:
+                images = product_data.get("images", [])
+                if images:
+                    first_image_url = images[0].get("url", "")
+                    if first_image_url:
+                        logger.info(f"Image auto-détectée depuis Shopify : {first_image_url[:60]}...")
+                        try:
+                            image_description = await self.image_describer.run(
+                                image_source=first_image_url
+                            )
+                        except Exception as e:
+                            logger.warning(f"Impossible de décrire l'image auto : {e}")
+
+            # Relancer Agent 2 avec les données produit pour enrichissement
+            if product_data and avatar_research:
+                try:
+                    logger.info("Enrichissement de la recherche avatar avec les données produit...")
+                    avatar_research = await self.avatar_researcher.run(
+                        url=product_url,
+                        product_data=product_data,
+                    )
+                except Exception as e:
+                    logger.warning(f"Enrichissement avatar échoué : {e}")
 
         # ══════════════════════════════════════════════════════════
         # PHASE 2 : STRUCTURATION
