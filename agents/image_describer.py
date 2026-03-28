@@ -59,13 +59,9 @@ class ImageDescriberAgent(BaseAgent):
         super().__init__(name="image_describer", output_dir=output_dir)
         self.system_prompt = self._load_system_prompt()
 
-        # Client Anthropic direct (on a besoin de l'API vision, pas du wrapper)
+        # Proxy URL pour les appels vision (claude-max-api-proxy)
         import os
-        import anthropic
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        if not api_key:
-            raise ValueError("ANTHROPIC_API_KEY manquante")
-        self.client = anthropic.AsyncAnthropic(api_key=api_key)
+        self.proxy_base = os.getenv("LLM_PROXY_URL", "http://localhost:3456")
 
     def _load_system_prompt(self) -> str:
         """Charge le prompt système."""
@@ -244,11 +240,9 @@ class ImageDescriberAgent(BaseAgent):
 
         user_content = [
             {
-                "type": "image",
-                "source": {
-                    "type": "base64",
-                    "media_type": media_type,
-                    "data": image_b64,
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:{media_type};base64,{image_b64}",
                 },
             },
             {
@@ -261,19 +255,30 @@ class ImageDescriberAgent(BaseAgent):
             },
         ]
 
-        message = await self.client.messages.create(
-            model="claude-sonnet-4-20250514",
-            max_tokens=2048,
-            temperature=0.1,
-            system=self.system_prompt,
-            messages=[{"role": "user", "content": user_content}],
-        )
+        messages = []
+        if self.system_prompt:
+            messages.append({"role": "system", "content": self.system_prompt})
+        messages.append({"role": "user", "content": user_content})
 
-        # Extraire le texte de la réponse
-        raw_text = ""
-        for block in message.content:
-            if block.type == "text":
-                raw_text += block.text
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                f"{self.proxy_base}/v1/chat/completions",
+                json={
+                    "model": "claude-sonnet-4",
+                    "messages": messages,
+                    "max_tokens": 2048,
+                    "temperature": 0.1,
+                    "stream": False,
+                },
+                headers={"Content-Type": "application/json"},
+                timeout=aiohttp.ClientTimeout(total=300),
+            ) as resp:
+                resp_data = await resp.json()
+                if resp.status != 200:
+                    error_msg = resp_data.get("error", {}).get("message", str(resp_data))
+                    raise RuntimeError(f"Vision API error: {error_msg}")
+
+        raw_text = resp_data["choices"][0]["message"]["content"]
 
         # Parser le JSON
         cleaned = raw_text.strip()

@@ -1,6 +1,7 @@
 """
 Client LLM unifié pour tous les agents.
-Wraps l'API Claude d'Anthropic avec retry, logging, et gestion d'erreurs.
+Route via claude-max-api-proxy (OpenAI-compatible endpoint sur localhost:3456)
+qui utilise l'abonnement Claude Max/Pro au lieu de crédits API.
 """
 
 import os
@@ -9,25 +10,23 @@ import logging
 import asyncio
 from typing import Optional
 
-import anthropic
+import aiohttp
 
 logger = logging.getLogger(__name__)
 
-# Modèle par défaut
-DEFAULT_MODEL = "claude-sonnet-4-20250514"
+# Modèle par défaut (via proxy, mapped to Claude Sonnet 4)
+DEFAULT_MODEL = "claude-sonnet-4"
+PROXY_BASE = os.getenv("LLM_PROXY_URL", "http://localhost:3456")
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # secondes
 
 
 class LLMClient:
-    """Client wrapper pour l'API Claude."""
+    """Client wrapper pour le proxy Claude Max API (OpenAI-compatible)."""
 
     def __init__(self, model: str = DEFAULT_MODEL):
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        if not api_key:
-            raise ValueError("ANTHROPIC_API_KEY manquante dans l'environnement")
-        self.client = anthropic.AsyncAnthropic(api_key=api_key)
         self.model = model
+        self.base_url = PROXY_BASE
 
     async def ask(
         self,
@@ -38,7 +37,7 @@ class LLMClient:
         response_format: str = "json",
     ) -> dict | str:
         """
-        Envoie un prompt à Claude et retourne la réponse.
+        Envoie un prompt via le proxy Claude et retourne la réponse.
 
         Args:
             user_prompt: Le message utilisateur
@@ -50,33 +49,53 @@ class LLMClient:
         Returns:
             dict si response_format="json", str sinon
         """
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": user_prompt})
+
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "stream": False,
+        }
+
         for attempt in range(1, MAX_RETRIES + 1):
             try:
-                message = await self.client.messages.create(
-                    model=self.model,
-                    max_tokens=max_tokens,
-                    temperature=temperature,
-                    system=system_prompt if system_prompt else anthropic.NOT_GIVEN,
-                    messages=[{"role": "user", "content": user_prompt}],
-                )
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(
+                        f"{self.base_url}/v1/chat/completions",
+                        json=payload,
+                        headers={"Content-Type": "application/json"},
+                        timeout=aiohttp.ClientTimeout(total=300),
+                    ) as resp:
+                        if resp.status == 429:
+                            wait = RETRY_DELAY * attempt
+                            logger.warning(f"Rate limit, retry dans {wait}s (tentative {attempt}/{MAX_RETRIES})")
+                            await asyncio.sleep(wait)
+                            continue
 
-                # Extraire le texte de la réponse
-                raw_text = ""
-                for block in message.content:
-                    if block.type == "text":
-                        raw_text += block.text
+                        resp_data = await resp.json()
 
-                if response_format == "json":
-                    return self._parse_json(raw_text)
-                return raw_text
+                        if resp.status != 200:
+                            error_msg = resp_data.get("error", {}).get("message", str(resp_data))
+                            logger.error(f"Erreur proxy LLM ({resp.status}): {error_msg}")
+                            if attempt == MAX_RETRIES:
+                                raise RuntimeError(f"Erreur LLM: {error_msg}")
+                            await asyncio.sleep(RETRY_DELAY)
+                            continue
 
-            except anthropic.RateLimitError:
-                wait = RETRY_DELAY * attempt
-                logger.warning(f"Rate limit atteint, retry dans {wait}s (tentative {attempt}/{MAX_RETRIES})")
-                await asyncio.sleep(wait)
+                        # Extract text from OpenAI-compatible response
+                        raw_text = resp_data["choices"][0]["message"]["content"]
 
-            except anthropic.APIError as e:
-                logger.error(f"Erreur API Claude (tentative {attempt}/{MAX_RETRIES}): {e}")
+                        if response_format == "json":
+                            return self._parse_json(raw_text)
+                        return raw_text
+
+            except aiohttp.ClientError as e:
+                logger.error(f"Erreur réseau (tentative {attempt}/{MAX_RETRIES}): {e}")
                 if attempt == MAX_RETRIES:
                     raise
                 await asyncio.sleep(RETRY_DELAY)
@@ -84,8 +103,7 @@ class LLMClient:
         raise RuntimeError("Échec après toutes les tentatives")
 
     def _parse_json(self, text: str) -> dict:
-        """Parse la réponse JSON de Claude, en nettoyant les balises markdown."""
-        # Nettoyer les balises ```json ... ```
+        """Parse la réponse JSON, en nettoyant les balises markdown."""
         cleaned = text.strip()
         if cleaned.startswith("```json"):
             cleaned = cleaned[7:]
@@ -99,7 +117,7 @@ class LLMClient:
             return json.loads(cleaned)
         except json.JSONDecodeError as e:
             logger.error(f"Impossible de parser le JSON:\n{cleaned[:500]}...")
-            raise ValueError(f"Réponse non-JSON de Claude: {e}") from e
+            raise ValueError(f"Réponse non-JSON: {e}") from e
 
 
 # Singleton réutilisable
