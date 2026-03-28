@@ -1,0 +1,76 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Homme caucasien, 30-38 ans, décontracté, sourire satisfait et complice. Il tient le Seese Pro d'une seule main dans un parking souterrain semi-éclairé. Un jet d'eau puissant frappe la carrosserie d'une berline sombre qui luit déjà. Un seau blanc posé au sol juste à ses pieds. En arrière-plan, la rampe de sortie du parking laisse entrer un rai de lumière naturelle chaude et dorée qui contre-éclaire la scène. Pas de robinet, pas de tuyau mural visible. Ambiance urbaine réaliste — béton, marquages au sol — mais éclairée de façon chaleureuse.",
+      "mood": "Satisfaction immédiate, fierté DIY, lumière chaude et naturelle, réaliste sans être froid",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Même homme, bras croisés, devant sa voiture encrassée dans le parking souterrain. Expression de résignation légère, regard posé sur la carrosserie couverte de poussière et de traces de pluie. Le béton du parking est visible, aucune infrastructure de lavage en vue — pas de robinet mural, pas de prise. Lumière fluorescente froide du parking. Couleurs désaturées, ambiance grise et urbaine pour accentuer la frustration.",
+      "mood": "Frustration contenue, quotidien urbain bloqué, ambiance grise et terne",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "before_after",
+      "description": "Split image horizontal en deux moitiés égales. Gauche : gros plan sur une carrosserie encrassée, traces de boue séchée, auréoles de pluie, poussière incrustée — texture réaliste, pas stylisée. Droite : ticket de caisse imprimé d'une station de lavage automatique posé sur le siège conducteur, montant '14,90 €' bien lisible, fond légèrement flou évoquant l'intérieur de la voiture. Ambiance documentaire, couleurs naturelles, lumière ambiante.",
+      "mood": "Réaliste, documentaire, argent gaspillé, contrainte quotidienne",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Le même homme que dans la section problème — mais maintenant détendu, léger sourire. Il utilise le Seese Pro depuis un simple seau bleu posé sur le sol en béton du même parking souterrain. Le jet d'eau frappe la carrosserie et fait partir la mousse. Sa posture est décontractée, une main dans la poche. La lumière dorée depuis la rampe de sortie réapparaît — même lieu, atmosphère transformée. La carrosserie commence à briller là où l'eau est passée.",
+      "mood": "Soulagement, solution trouvée, autonomie, lumière chaude revenue après la grisaille",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product_shot",
+      "description": "Gros plan ultra-serré sur la carrosserie d'une berline noire ou anthracite. Le jet d'eau du Seese Pro entre dans le cadre depuis le bord gauche et décape une bande nette : à gauche de la bande, surface encore couverte de boue marron et mousse sale ; à droite, métal qui luit et reflète la lumière comme un miroir. L'eau et les éclaboussures sont gelées par la vitesse d'obturation — gouttes suspendues dans l'air, dynamisme pur. La buse est partiellement visible mais l'accent est sur l'effet du jet.",
+      "mood": "Efficacité brute, puissance visuelle, contraste net avant/après sur une seule image, dynamique",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Grille de 4 photos carrées dans un seul visuel (2x2). En haut à gauche : l'homme nettoie sa voiture dans le parking souterrain, seau au sol. En haut à droite : une femme 35 ans utilise le Seese Pro sur la terrasse de son appartement pour nettoyer un vélo de route suspendu. En bas à gauche : un couple en camping nettoie l'avant d'un camping-car dans une forêt, l'eau vient d'une bassine. En bas à droite : gros plan sur un seau et le Seese Pro posé contre un mur — matériel prêt à l'emploi, contexte épuré. Toutes les images avec la même chaleur de lumière naturelle, look lifestyle réel.",
+      "mood": "Polyvalence, liberté, quotidien authentique, pas de studio, lumière naturelle cohérente entre les 4 cases",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "product_shot",
+      "description": "Flat lay soigné sur fond blanc cassé légèrement texturé (pas blanc pur). Tous les éléments du pack sont disposés avec intention : le Seese Pro central, légèrement en diagonale ; la batterie 21V à sa droite ; le tuyau filtrant enroulé proprement en arc au-dessus ; la buse 6-en-1 ouverte en éventail pour montrer les réglages ; le pot à mousse ; la housse de transport noire ouverte en bas. Ombre portée douce. Lumière studio naturelle diffuse. Impression de déballage premium mais accessible — pas luxe froid, plutôt outil bien conçu.",
+      "mood": "Premium accessible, déballage soigné, valeur perçue maximale, lumière douce et nette",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 7,
+      "scene_type": "product_shot",
+      "description": "Le Seese Pro tenu d'une seule main par l'homme, bras tendu, depuis l'extérieur — en plein air cette fois, devant la même berline sombre maintenant parfaitement propre et brillante. Lumière naturelle chaude de fin d'après-midi. Un fin jet d'eau sort de la buse en arc élégant. La carrosserie reflète les arbres ou le ciel. Cadrage vertical centré sur la main, l'appareil et le jet. L'homme n'est pas visible — seulement son avant-bras et sa main, détendue et assurée. L'image dégage la confiance simple de quelqu'un qui a trouvé la solution.",
+      "mood": "Confiance, simplicité, geste maîtrisé, lumière chaude et naturelle, conclusion positive",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    }
+  ]
+}

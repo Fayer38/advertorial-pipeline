@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "created_at": "2026-03-28T18:50:57.532203",
+    "product_url": "https://seesepro.com/en-us/products/washer-seese-pro",
+    "confidence_score": 0.55
+  },
+  "product_summary": {
+    "name": "Seese Pro™ Anywhere Washer",
+    "one_liner": "Un nettoyeur haute pression sans fil qui fonctionne depuis n'importe quelle source d'eau — un seau suffit — sans robinet, sans prise électrique, sans installation.",
+    "category": "Nettoyeur haute pression portable / Accessoire voiture & extérieur",
+    "price_point": "milieu de gamme (119.99 USD affiché comme 50% off vs 249.99)"
+  },
+  "avatar_profile": {
+    "who": "Homme ou femme de 28-50 ans, propriétaire d'une voiture, qui n'a pas accès à un robinet extérieur ou un tuyau d'arrosage là où il/elle se gare — appartement, parking souterrain, résidence sans extérieur aménagé — ou qui veut nettoyer en déplacement (camping-car, bateau, chantier). A probablement déjà essayé le lavage auto payant ou les serpillières à la main et trouve ça soit trop cher, soit trop peu efficace.",
+    "main_problem": "Je veux que ma voiture soit propre mais je n'ai pas de robinet ou de tuyau là où je suis. Je ne peux pas utiliser un karcher classique chez moi.",
+    "desired_outcome": "Pouvoir laver sa voiture (et ses affaires) quand il veut, où il veut, sans dépendre d'une infrastructure — se sentir autonome et malin, pas limité par son logement ou son parking.",
+    "emotional_state_before": "Frustré de voir sa voiture sale sans pouvoir rien faire facilement. Légèrement honteux ou agacé. A l'impression de payer trop cher les lavages auto automatiques pour un résultat moyen.",
+    "emotional_state_after": "Fier, autonome, satisfait. Sentiment d'avoir trouvé la solution maligne que les autres n'ont pas. Plaisir simple de voir une surface propre grâce à un outil qui appartient."
+  },
+  "copy_ammunition": {
+    "primary_angle": {
+      "angle_name": "L'autonomie totale : nettoyer sans dépendre d'un robinet",
+      "why": "C'est la raison d'exister du produit ET la douleur n°1 non résolue par tous les concurrents. Chaque nettoyeur haute pression classique exige un branchement eau + électricité. Ce produit casse les deux contraintes en même temps. Pour un avatar qui vit en appartement ou se déplace, c'est la première fois qu'une solution existe vraiment. Cet angle répond à une frustration concrète ('je ne peux pas'), pas à un simple désir de commodité. Il est donc plus fort que tous les angles 'rapide/facile/léger'.",
+      "hook_template": "Enfin un nettoyeur haute pression pour ceux qui n'ont pas de robinet dehors."
+    },
+    "secondary_angles": [
+      {
+        "angle_name": "Le remplacement du lavage auto payant",
+        "hook_template": "J'ai arrêté de payer 15€ le lavage auto. Un seau d'eau et 3 minutes suffisent maintenant."
+      },
+      {
+        "angle_name": "La performance professionnelle dans un format pocket",
+        "hook_template": "1 450 PSI dans quelque chose qui pèse moins qu'une bouteille d'eau de 1,5L."
+      },
+      {
+        "angle_name": "La liberté du van life / nomadisme / outdoor",
+        "hook_template": "Camping-car, bateau, chantier, trail — propre partout où vous allez."
+      }
+    ],
+    "hooks": [
+      "Enfin un nettoyeur haute pression pour ceux qui n'ont pas de robinet dehors.",
+      "J'ai lavé ma voiture dans le parking de mon immeuble. Juste avec un seau.",
+      "J'ai arrêté de payer le lavage auto automatique. Voilà pourquoi.",
+      "1 450 PSI depuis un seau. Sans robinet. Sans prise électrique. Sans installation.",
+      "Le karcher classique, c'est pour ceux qui ont une maison avec un jardin. Lui, c'est pour les autres.",
+      "Remplis. Appuie. Nettoie. C'est vraiment tout ce qu'il y a à faire.",
+      "Pourquoi ma voiture est toujours propre alors que je n'ai aucun accès à l'eau dehors.",
+      "Le seul nettoyeur haute pression que vous pouvez utiliser au milieu d'un champ."
+    ],
+    "key_benefits_ranked": [
+      "Fonctionne depuis n'importe quelle source d'eau (seau, piscine, rivière) — élimine la contrainte d'accès au robinet qui empêche de laver",
+      "Sans fil et sans prise électrique — liberté totale de mouvement et d'emplacement",
+      "Setup en 0 étape : remplis, appuie, nettoie — pas de montage, pas d'apprentissage, pas d'excuse",
+      "Utilisable d'une seule main à 1,3 kg — même sans force, même fatigué, même en déplacement",
+      "Puissance 1 450 PSI — résultats visibles immédiatement, pas un jouet",
+      "Sûr sur la carrosserie et les vitres (buses 25° et 40°) — zéro risque d'abîmer",
+      "50ft de tuyau filtrant inclus — portée suffisante pour toute la voiture sans bouger le seau",
+      "Système mousse inclus — résultat lavage pro, pas juste un rinçage"
+    ],
+    "proof_elements": [
+      "1 450 PSI — pression mesurable et comparable (spec technique vérifiable)",
+      "Moteur brushless 24V — technologie industrielle standard = durabilité",
+      "Batterie 21V haute capacité incluse (valeur déclarée 70 USD) — preuve de valeur perçue",
+      "Expédié depuis entrepôts USA sous 24-48h — réassurance logistique locale",
+      "Garantie 30 jours satisfait ou remboursé — réduction du risque perçu",
+      "MANQUANT : aucun témoignage client fourni. MANQUANT : aucune étude ou certification tierce. MANQUANT : aucune donnée de volume de clients ou de note produit."
+    ],
+    "objection_handlers": [
+      {
+        "objection": "C'est trop cher",
+        "response": "À 119,99€ et 50% de réduction, c'est moins cher que 8 lavages auto automatiques à 15€. La machine se rembourse en 2 mois si vous laviez une fois par semaine. Et vous la gardez des années."
+      },
+      {
+        "objection": "Est-ce que c'est vraiment aussi puissant qu'un karcher branché ?",
+        "response": "1 450 PSI. C'est dans la gamme des nettoyeurs haute pression résidentiels classiques. Pas un jouet d'eau — une vraie pression qui enlève la boue, la graisse et les mousses sans frotter."
+      },
+      {
+        "objection": "Est-ce que ça va abîmer ma peinture de voiture ?",
+        "response": "Les buses 25° et 40° créent un jet large et doux, conçu explicitement pour la carrosserie, les vitres et les surfaces délicates. Zéro risque avec les bons réglages."
+      },
+      {
+        "objection": "C'est compliqué à utiliser ?",
+        "response": "Trois étapes : remplis un seau, branche le tuyau, appuie. Pas de notice, pas d'installation, pas de plombier."
+      },
+      {
+        "objection": "La batterie va tenir combien de temps ?",
+        "response": "MANQUANT — autonomie de la batterie non spécifiée dans les données produit fournies. Ne pas inventer ce chiffre."
+      },
+      {
+        "objection": "Et si ça ne me convient pas ?",
+        "response": "30 jours pour tester. Si vous n'êtes pas satisfait, remboursement complet. Aucun risque."
+      }
+    ],
+    "urgency_elements": [
+      "Offre 50% de réduction aujourd'hui — prix normal 249,99 USD, prix actuel 119,99 USD (caractère temporaire de la promo à confirmer)",
+      "Cadeau offert : batterie haute capacité 21V (valeur 70 USD) incluse — à mentionner comme bonus à durée limitée si vrai",
+      "MANQUANT : aucune donnée de stock limité confirmée. MANQUANT : aucune date d'expiration de l'offre fournie. Ne pas fabriquer une fausse urgence."
+    ],
+    "cta_options": [
+      "Essayez-le 30 jours sans risque — remboursement complet si vous n'êtes pas convaincu",
+      "Profitez du -50% + la batterie offerte à 70€ — commander maintenant",
+      "Commandez aujourd'hui, livré depuis les USA en moins de 10 jours"
+    ]
+  },
+  "visual_notes": {
+    "product_description": "MANQUANT — aucune description image (Agent 3) fournie. Les éléments suivants sont déduits de la fiche produit uniquement : appareil compact et léger (~1,3 kg), pistolet avec poignée ergonomique, tuyau de 50 pieds, buse ajustable 6-en-1, pot à mousse attaché, housse de transport premium. Design probable industriel / ABS rigide. Couleurs non spécifiées.",
+    "suggested_scenes": [
+      "Hero : produit tenu d'une main, en extérieur (parking ou cour), jet d'eau visible sur carrosserie brillante — lumière naturelle chaude",
+      "Section problème : voiture sale dans un parking d'immeuble, personne regardant son véhicule avec frustration, aucun robinet visible en arrière-plan",
+      "Section solution : même personne utilisant le Seese Pro depuis un simple seau posé au sol, sourire de satisfaction",
+      "Section bénéfices : gros plan sur le seau comme seule source d'eau — montrer la simplicité radicale du setup",
+      "Section preuve : jet puissant décollant de la boue / mousse sur une carrosserie — avant/après",
+      "Section liberté : utilisation dans des contextes variés — camping-car en forêt, bateau au port, terrasse d'appartement",
+      "Section CTA : produit + accessoires inclus à plat (flat lay) sur fond neutre — mise en valeur du bundle complet"
+    ],
+    "mood": "Pratique, masculin mais accessible, outdoor sans être extrême, satisfaction immédiate et visuelle. Pas clinique, pas high-tech froid — plutôt DIY malin, autonome, simple. Lumière naturelle, couleurs réelles, pas de studio aseptisé."
+  }
+}

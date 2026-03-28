@@ -1,0 +1,108 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "Caucasian man 30-38 years old, casual clothes, satisfied complicit smile, holding a compact cordless electric pressure washer with one hand in a dimly lit underground parking garage, powerful water jet hitting the wet gleaming dark sedan car body, white plastic bucket on concrete floor at his feet, background shows parking exit ramp with warm golden natural light streaming in creating dramatic backlight contre-jour effect, concrete pillars, ground markings visible, urban realistic atmosphere, warm cinematic lighting contrast with cold fluorescent overhead, photorealistic, hyperdetailed, 8k, professional photography, cinematic lighting --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, wall tap, hose pipe, wall outlet, cord, cable, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, artificial, overlit, flat lighting",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "Caucasian man 30-38 years old, casual clothes, arms crossed, slight resigned expression, looking at dusty dirty car covered in dried mud and rain streaks in underground parking garage, cold harsh fluorescent overhead lighting, desaturated muted color palette, grey urban atmosphere, concrete parking structure visible, no wall tap no hose no washing infrastructure visible, realistic documentary style, photorealistic, professional photography, flat cold lighting, desaturated tones, urban frustration --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, warm light, golden light, smiling, happy, water jet, bucket, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "Horizontal split image two equal halves, left side close-up macro shot of dirty car body panel covered in dried mud splashes rain streaks dust embedded in paint texture realistic gritty detail, right side printed car wash receipt paper '14,90 €' price clearly readable placed on car driver seat leather, slightly blurred car interior background suggesting vehicle interior, documentary style natural ambient lighting, realistic colors, split panel composition, photorealistic, hyperdetailed, professional photography --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, extra text, logo, signature, illustration, digital art, stylized, merged image, people, hands, extra limbs",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "Caucasian man 30-38 years old, casual clothes, relaxed posture one hand in pocket, light satisfied smile, using compact cordless electric pressure washer from a blue plastic bucket on concrete floor in underground parking garage, powerful water jet hitting dark sedan car body removing foam and dirt, car body starting to gleam where water has passed, warm golden natural light streaming in from parking exit ramp in background transforming the atmosphere, same parking location as before but mood completely transformed, photorealistic, hyperdetailed, 8k, cinematic lighting, warm tones, professional photography --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, wall tap, hose pipe, wall outlet, frustrated, tense, cold light, grey atmosphere, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "Extreme close-up macro shot on black anthracite sedan car body panel, compact cordless pressure washer nozzle entering frame from left edge firing powerful water jet, clean stripe cutting through the panel left side covered in brown mud and dirty foam versus right side revealing gleaming mirror-like metal reflecting light, frozen water droplets suspended in air high shutter speed effect, dynamic water splash motion, crisp sharp detail, photorealistic, hyperdetailed, 8k, high-speed photography, dramatic contrast clean vs dirty, professional product photography, studio lighting on subject --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, full person, face, stock photo, soft focus, motion blur on water",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "2x2 grid collage four square lifestyle photos same warm natural lighting aesthetic, top left Caucasian man 30-38 years casual clothes cleaning dark sedan car in underground parking white bucket on concrete floor, top right woman 35 years old cleaning road bicycle suspended on apartment terrace with compact cordless pressure washer, bottom left couple camping cleaning front of motorhome campervan in forest using basin of water, bottom right close-up still life blue bucket and compact cordless pressure washer leaning against concrete wall minimal clean composition, all four images cohesive warm natural light authentic lifestyle feel non-studio --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, studio lighting, artificial, inconsistent lighting, extra limbs, extra fingers, mutated hands, bad anatomy",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "Professional product flat lay on off-white slightly textured background, compact cordless electric pressure washer central slightly diagonal, 21V battery pack to its right, coiled filter hose arranged in clean arc above, 6-in-1 adjustable nozzle spread open fan showing different settings, foam cannon bottle below, black nylon carry case opened at bottom, soft drop shadows, diffused natural studio light, premium unboxing feel, clean organized intentional arrangement, photorealistic product photography, hyperdetailed, sharp focus throughout, professional commercial photography --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, pure white background, harsh shadows, dark background, clutter, mess, person, hands, extra objects",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "Vertical centered composition, single male forearm and hand relaxed confident grip holding compact cordless electric pressure washer arm extended outdoors, thin elegant arc of water jet flowing from nozzle, perfectly clean gleaming dark sedan car body in background reflecting trees and sky like a mirror, warm golden late afternoon natural light, no face no full body only forearm hand and device visible, shallow depth of field background slightly bokeh, photorealistic, hyperdetailed, 8k, professional photography, cinematic warm tones, lifestyle commercial --ar 4:5 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, face, full body, extra limbs, extra fingers, mutated hands, bad anatomy, dirty car, cold light, stock photo",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

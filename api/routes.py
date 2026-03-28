@@ -248,7 +248,7 @@ async def run_agent(plid: str, req: AgentRunReq, bg: BackgroundTasks):
 async def history():
     h = []
     for plid, s in pipelines.items():
-        h.append({"id": plid, "product_id": s["product_id"], "product_name": s.get("product_name",""), "product_url": s["product_url"], "status": s["status"], "started_at": s["started_at"], "completed_at": s.get("completed_at",""), "headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "config": s["config"]})
+        h.append({"id": plid, "product_id": s["product_id"], "product_name": s.get("product_name",""), "product_url": s["product_url"], "status": s["status"], "started_at": s["started_at"], "completed_at": s.get("completed_at",""), "headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "config": s["config"], "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent","")})
     h.sort(key=lambda x: x["started_at"], reverse=True)
     return {"pipelines": h}
 

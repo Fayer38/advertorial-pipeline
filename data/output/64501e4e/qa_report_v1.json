@@ -1,0 +1,43 @@
+{
+  "overall_score": 7,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "La scène d'ouverture est efficace — visuelle, spécifique, intrigante. Le 'tour de magie' crée une curiosité immédiate. Le sous-titre avec le chiffre 15€ ancre le bénéfice concret. Seul bémol : la question du voisin ('Tu fais comment, toi ?') est un bon bucket brigade mais on arrive un peu vite à l'identité du narrateur. Le hook pourrait être encore plus punch en retardant la révélation d'une ligne pour maximiser la tension."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "La progression générale est solide et les sections s'enchaînent bien. Les bucket brigades sont présents et fonctionnels ('Et puis un soir, je suis tombé sur quelque chose de différent.'). Problème principal : la deuxième section PROOF ('Ce que ça change vraiment au quotidien') casse le rythme — elle répète des éléments déjà établis (économies, liberté) sans apporter de preuve nouvelle, et dilue la montée vers le CTA. Elle devrait soit être fusionnée avec la première PROOF, soit repositionnée comme future pacing émotionnel avant l'offre."
+    },
+    "proof_density": {
+      "score": 6,
+      "feedback": "Point faible de l'advertorial. Il n'y a qu'un seul témoignage client (Rémi), sans nom complet, sans photo, sans contexte détaillé sur son profil ou sa situation initiale — ce qui limite fortement la crédibilité. Les specs techniques (1 450 PSI, moteur brushless 24V) sont bien exploitées mais restent des arguments constructeur non vérifiables par le lecteur. Il manque : (1) un second témoignage d'un profil différent (femme, camping-car, bateau), (2) une preuve visuelle suggérée ('comme vous pouvez le voir dans cette vidéo...'), (3) une certification ou comparaison tierç partie pour valider le 1 450 PSI. L'affirmation 'premier vraiment' n'est étayée par rien."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Le CTA est clair, le prix est affiché, le contenu du pack est détaillé, la garantie est présente et rassurante. La boucle narrative avec le voisin est un bon closing émotionnel. Manque critique : il n'y a aucune urgence réelle. 'Offre de lancement' est vague — sans date limite, sans compteur de stock, sans notion de rupture imminente, le lecteur reporte l'achat. Suggestion : ajouter une ligne comme 'Stock limité à 200 unités pour ce tarif de lancement — 143 déjà commandées cette semaine' ou une date d'expiration de l'offre."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'empathie dans la section problème est authentique et bien ciblée — le lecteur en appartement se reconnaît. La frustration des 780€/an est un ancrage financier efficace. En revanche, le future pacing est quasi absent : le message du voisin ('Ma voiture n'a jamais été aussi propre') est trop court pour faire visualiser la transformation au lecteur. Il manque un paragraphe entier où Thomas décrit sa vie 30 jours après — le parking, l'odeur de propre, la fierté, le regard des voisins — pour que le lecteur se projette émotionnellement dans son propre futur avec le produit."
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Excellent sur l'ensemble : paragraphes courts, phrases percutantes, usage du gras pertinent, listes bien placées. Les 1 084 mots sont dans la cible. Seul point d'amélioration : la section OFFER avec la liste à puces du contenu du pack est la plus 'catalogue' de l'article — le changement de registre (éditorial → fiche produit) est perceptible. Un ou deux mots de transition contextuels entre les items de la liste rendraient le tout plus fluide."
+    },
+    "similarity_to_best": {
+      "score": 7,
+      "feedback": "La structure est correcte et respecte le template éprouvé. Le ton éditorial est maintenu sur 80% de l'article. Deux points de fragilité : (1) la section OFFER bascule trop visiblement en mode fiche produit/e-commerce, ce qui rompt l'immersion narrative — dans les meilleurs advertoriaux, même l'offre est racontée ('voici ce que j'ai reçu dans la boîte'). (2) Contrairement à l'exemple de référence Jeniva, le personnage de Thomas manque de profondeur humaine — on ne connaît pas son métier, sa vie, ses émotions au-delà du problème voiture. Plus d'ancrage humain rendrait l'ensemble indiscernable d'un vrai article."
+    }
+  },
+  "improvements": [
+    "Ajouter un second témoignage client avec profil distinct (ex : femme, camping-car ou bateau) et plus de détails contextuels que le simple verbatim de Rémi",
+    "Supprimer ou fusionner la deuxième section PROOF ('Ce que ça change vraiment au quotidien') avec la première — elle casse le rythme sans apporter de preuve supplémentaire",
+    "Ajouter un paragraphe de future pacing après les bénéfices : Thomas décrit sa routine 30 jours après — le parking, la voiture qui brille, la satisfaction, pour que le lecteur se projette",
+    "Injecter de l'urgence réelle dans le CTA : stock limité chiffré ('143 unités vendues cette semaine'), date d'expiration de l'offre ou badge 'rupture fréquente sur ce modèle'",
+    "Réécrire la section OFFER en mode narratif éditorial ('Voici ce qui arrive dans la boîte...') plutôt qu'en liste de fiche produit e-commerce",
+    "Approfondir le personnage de Thomas avec un ou deux détails humains supplémentaires (métier, contrainte de temps, contexte familial) pour renforcer l'identification du lecteur"
+  ],
+  "version": 1
+}
