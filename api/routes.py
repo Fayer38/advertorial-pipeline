@@ -434,82 +434,118 @@ EDIT_SCRIPT = """
   }, { passive: false });
   document.addEventListener('touchend', onDragEnd);
 
-  // Prevent losing selection on toolbar interaction (except drag handle and selects)
+  // ── SELECTION SAVE/RESTORE ──
+  var savedSel = null;
+  function saveSel() {
+    var s = window.getSelection();
+    if (s && s.rangeCount > 0) savedSel = s.getRangeAt(0).cloneRange();
+  }
+  function restoreSel() {
+    if (!savedSel || !activeEdit) return;
+    activeEdit.focus();
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(savedSel);
+  }
+
+  // Save selection before any toolbar interaction steals focus
   tb.addEventListener('mousedown', function(e) {
-    if (!e.target.closest('[data-drag]') && !e.target.closest('select') && !e.target.closest('input')) e.preventDefault();
+    saveSel();
+    // Prevent focus loss on buttons (NOT on selects/inputs — they need native focus)
+    if (!e.target.closest('select') && !e.target.closest('input[type="color"]') && !e.target.closest('[data-drag]')) {
+      e.preventDefault();
+    }
   });
+
+  // ── BUTTON COMMANDS ──
   tb.addEventListener('click', function(e) {
     var btn = e.target.closest('button[data-cmd]');
     if (btn) {
-      if (activeEdit) activeEdit.focus();
+      restoreSel();
       document.execCommand(btn.dataset.cmd, false, null);
       updateToolbarState();
+      saveSel();
       return;
     }
     var linkBtn = e.target.closest('[data-action="link"]');
     if (linkBtn) {
+      restoreSel();
       var url = prompt('URL:', 'https://');
       if (url) document.execCommand('createLink', false, url);
       return;
     }
   });
-  // ── FONT SIZE / FONT NAME via execCommand + post-fix ──
-  // execCommand('fontSize', x) creates <font size="x"> — we convert to inline style
+
+  // ── FONT SIZE (execCommand fontSize + convert <font> to <span>) ──
   var sizeMap = {'12':'1','14':'2','16':'3','18':'4','20':'4','22':'5','24':'5','28':'6','32':'6','36':'7','48':'7'};
-  var pxMap = {'1':'12px','2':'14px','3':'16px','4':'18px','5':'22px','6':'28px','7':'36px'};
-  var pxExact = {}; // store exact px value requested
+  var lastRequestedPx = '18px';
 
   function applyFontSize(px) {
-    if (!activeEdit) return;
-    activeEdit.focus();
-    // Map to nearest execCommand value
+    restoreSel();
     var cmdVal = sizeMap[px] || '4';
-    pxExact[cmdVal] = px + 'px';
+    lastRequestedPx = px + 'px';
     document.execCommand('fontSize', false, cmdVal);
-    // Convert <font size="x"> to <span style="font-size:Xpx">
-    activeEdit.querySelectorAll('font[size]').forEach(function(f) {
-      var span = document.createElement('span');
-      var sz = pxExact[f.getAttribute('size')] || pxMap[f.getAttribute('size')] || px+'px';
-      span.style.fontSize = sz;
-      span.innerHTML = f.innerHTML;
-      f.replaceWith(span);
-    });
+    // Convert <font size=X> to <span style="font-size:Xpx">
+    if (activeEdit) {
+      activeEdit.querySelectorAll('font[size]').forEach(function(f) {
+        var span = document.createElement('span');
+        span.style.fontSize = lastRequestedPx;
+        while (f.firstChild) span.appendChild(f.firstChild);
+        f.parentNode.replaceChild(span, f);
+      });
+    }
+    saveSel();
   }
 
+  // ── FONT NAME (execCommand fontName + convert <font> to <span>) ──
   function applyFontName(font) {
-    if (!activeEdit) return;
-    activeEdit.focus();
+    restoreSel();
     document.execCommand('fontName', false, font);
-    // Convert <font face="x"> to <span style="font-family:X">
-    activeEdit.querySelectorAll('font[face]').forEach(function(f) {
-      var span = document.createElement('span');
-      span.style.fontFamily = f.getAttribute('face');
-      span.innerHTML = f.innerHTML;
-      f.replaceWith(span);
-    });
+    if (activeEdit) {
+      activeEdit.querySelectorAll('font[face]').forEach(function(f) {
+        var span = document.createElement('span');
+        span.style.fontFamily = f.getAttribute('face');
+        while (f.firstChild) span.appendChild(f.firstChild);
+        f.parentNode.replaceChild(span, f);
+      });
+    }
+    saveSel();
   }
+
+  // ── SELECT CHANGE HANDLERS ──
+  // Must save selection on focus (before change fires)
+  tb.querySelectorAll('select').forEach(function(s) {
+    s.addEventListener('focus', function() { saveSel(); });
+  });
 
   tb.addEventListener('change', function(e) {
     var sel = e.target;
     if (sel.dataset.action === 'fontSize' && sel.value) {
       applyFontSize(sel.value);
-      sel.selectedIndex = 0;
     }
     if (sel.dataset.action === 'fontName' && sel.value) {
       applyFontName(sel.value);
-      sel.selectedIndex = 0;
     }
+    // Reset to placeholder after a short delay (so user sees what they picked)
+    setTimeout(function() { sel.selectedIndex = 0; }, 300);
+  });
+
+  // ── COLOR INPUTS ──
+  tb.querySelectorAll('input[type="color"]').forEach(function(inp) {
+    inp.addEventListener('focus', function() { saveSel(); });
   });
   tb.addEventListener('input', function(e) {
     var inp = e.target;
     if (!activeEdit) return;
     if (inp.dataset.action === 'foreColor') {
-      activeEdit.focus();
+      restoreSel();
       document.execCommand('foreColor', false, inp.value);
+      saveSel();
     }
     if (inp.dataset.action === 'hiliteColor') {
-      activeEdit.focus();
+      restoreSel();
       document.execCommand('hiliteColor', false, inp.value);
+      saveSel();
     }
   });
 
