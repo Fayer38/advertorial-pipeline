@@ -376,7 +376,7 @@ EDIT_SCRIPT = """
     <button data-cmd="justifyCenter" title="Center"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="3" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="4" y="14" width="8" height="2"/></svg></button>
     <button data-cmd="justifyRight" title="Align Right"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="5" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="7" y="14" width="8" height="2"/></svg></button>
     <div class="tb-sep"></div>
-    <button data-cmd="removeFormat" title="Clear Formatting">✕</button>
+    <button data-cmd="removeFormat" title="Clear Formatting" style="font-size:11px">Aa</button>
     <button data-action="link" title="Link">🔗</button>
   `;
   document.body.appendChild(tb);
@@ -434,9 +434,9 @@ EDIT_SCRIPT = """
   }, { passive: false });
   document.addEventListener('touchend', onDragEnd);
 
-  // Prevent losing selection on toolbar interaction (except drag handle)
+  // Prevent losing selection on toolbar interaction (except drag handle and selects)
   tb.addEventListener('mousedown', function(e) {
-    if (!e.target.closest('[data-drag]')) e.preventDefault();
+    if (!e.target.closest('[data-drag]') && !e.target.closest('select') && !e.target.closest('input')) e.preventDefault();
   });
   tb.addEventListener('click', function(e) {
     var btn = e.target.closest('button[data-cmd]');
