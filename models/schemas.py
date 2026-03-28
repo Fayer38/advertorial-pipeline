@@ -181,14 +181,14 @@ class AvatarProfile(BaseModel):
 
 class PainPoint(BaseModel):
     pain: str = ""
-    intensity: Intensity = Intensity.MEDIUM
+    intensity: str = "medium"
     verbatim_examples: list[str] = []
 
 class MarketingAngle(BaseModel):
     angle_name: str = ""
     hook_idea: str = ""
     emotional_trigger: str = ""
-    strength: Intensity = Intensity.MEDIUM
+    strength: str = "medium"
 
 class RedditInsights(BaseModel):
     subreddits_explored: list[str] = []
@@ -286,10 +286,10 @@ class DraftMeta(BaseModel):
 
 class VisualPlaceholder(BaseModel):
     description: str = ""
-    type: SceneType = SceneType.PRODUCT
+    type: str = "product"
 
 class AdvertorialSection(BaseModel):
-    type: SectionType
+    type: str = "body"
     heading: str = ""
     body_html: str = ""
     visual_placeholder: VisualPlaceholder = Field(default_factory=VisualPlaceholder)
@@ -317,12 +317,12 @@ class AdvertorialDraft(BaseModel):
 
 class VisualScene(BaseModel):
     section_index: int = 0
-    scene_type: SceneType = SceneType.PRODUCT
+    scene_type: str = "product"  # flexible — LLM may return FR or variant values
     description: str = ""
     mood: str = ""
-    format: VisualFormat = VisualFormat.IMAGE
-    aspect_ratio: AspectRatio = AspectRatio.SIXTEEN_NINE
-    priority: Priority = Priority.SUPPORTING
+    format: str = "image"  # flexible
+    aspect_ratio: str = "16:9"  # flexible
+    priority: str = "supporting"
 
 class VisualPlan(BaseModel):
     """Sortie de l'Agent 6 : Stratège Visuel"""
@@ -335,7 +335,7 @@ class VisualPlan(BaseModel):
 
 class GeneratedPrompt(BaseModel):
     scene_index: int = 0
-    platform: PromptPlatform = PromptPlatform.MIDJOURNEY
+    platform: str = "midjourney"
     prompt: str = ""
     negative_prompt: str = ""
     parameters: dict = {}
