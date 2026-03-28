@@ -266,7 +266,7 @@ class AdvertorialPipeline:
             image_prompts=image_prompts,
             video_prompts=video_prompts,
             product_url=product_url,
-            lang=cfg.get("language", "en") if config else "en",
+            lang=config.get("language", "en") if config else "en",
         )
 
         # ══════════════════════════════════════════════════════════

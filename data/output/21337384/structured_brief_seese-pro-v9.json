@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "created_at": "2026-03-28T17:17:24.771956",
+    "product_url": "https://seesepro.com/en-us/products/seese-pro-v9",
+    "confidence_score": 0.62
+  },
+  "product_summary": {
+    "name": "Seese Pro™ Ultra-Light Cordless Blower",
+    "one_liner": "Un souffleur sans fil de 950g qui remplace votre souffleur de garage, votre plumeau, votre serpillière de voiture et votre gratte-givre — en une seule main, toute l'année.",
+    "category": "Électroportatif sans fil / Entretien maison & jardin",
+    "price_point": "mid-range (positionné premium à $249.99 barré, vendu à $119.99 — perception valeur élevée)"
+  },
+  "avatar_profile": {
+    "who": "Propriétaire de maison, probablement 45-65 ans, homme ou femme, qui entretient seul(e) son extérieur (terrasse, allée, voiture, garage). A déjà un souffleur encombrant ou utilise un râteau/balai par défaut. Pas de profil professionnel — usage domestique hebdomadaire.",
+    "main_problem": "Les outils actuels sont soit trop lourds et douloureux à utiliser, soit trop lents et inefficaces. Chaque nettoyage prend trop de temps et laisse le dos endolori.",
+    "desired_outcome": "Que les corvées d'entretien soient rapides, sans effort et sans douleur — retrouver du temps pour soi et le sentiment d'avoir une maison impeccable sans se fatiguer.",
+    "emotional_state_before": "Frustré(e), physiquement épuisé(e) après chaque nettoyage, découragé(e) de sortir le matériel lourd, parfois honteux/honteuse de l'état de sa terrasse ou de sa voiture faute de courage pour s'y mettre.",
+    "emotional_state_after": "Soulagé(e), efficace, fier/fière du résultat — et surpris(e) que ça ait été aussi simple. Sentiment d'avoir enfin l'outil qu'il aurait dû avoir depuis longtemps."
+  },
+  "copy_ammunition": {
+    "primary_angle": {
+      "angle_name": "La révolte contre la fatigue physique inutile",
+      "why": "Le bénéfice le plus transversal et le plus émotionnel du produit n'est pas la puissance — c'est l'absence de douleur et d'effort. '950g, une main, pas de mal de dos' parle à la majorité des propriétaires de 40+ ans qui associent l'entretien extérieur à une corvée physique pénible. C'est aussi l'angle qui différencie le plus de la concurrence (qui vend de la puissance) en vendant de la liberté corporelle. Le prix réduit de 55% renforce l'angle : 'vous n'avez plus d'excuse pour vous fatiguer avec votre vieux matériel.'",
+      "hook_template": "J'ai arrêté de me faire mal au dos pour nettoyer ma terrasse — et ça m'a pris 4 minutes."
+    },
+    "secondary_angles": [
+      {
+        "angle_name": "Le remplacement de 4 outils en 1",
+        "hook_template": "J'ai jeté mon souffleur de garage, mon gratte-givre, mes chiffons de voiture et mon plumeau. Un seul outil les remplace tous."
+      },
+      {
+        "angle_name": "La performance professionnelle accessible",
+        "hook_template": "200 MPH dans la main. Les pros paient $300+ pour ça. Aujourd'hui c'est $119."
+      },
+      {
+        "angle_name": "L'outil 4 saisons qu'on n'aurait jamais pensé acheter",
+        "hook_template": "En automne je souffle les feuilles. En hiver je dégivre le pare-brise. En été je sèche ma voiture. Il fait tout, toute l'année."
+      }
+    ],
+    "hooks": [
+      "J'ai nettoyé ma terrasse en 4 minutes. Avant, ça me prenait 25 minutes avec un balai et le dos en compote.",
+      "Mon médecin m'a dit d'arrêter de porter des charges lourdes. Mon jardin ne le sait pas encore — mais ce souffleur, oui.",
+      "J'ai 58 ans. J'avais arrêté de sortir mon souffleur parce qu'il me tuait les épaules. Seese Pro pèse moins lourd qu'un sac de sucre.",
+      "200 MPH dans une main. Moins lourd qu'un sac de sucre. Et 55% de réduction aujourd'hui.",
+      "J'ai jeté mes chiffons de voiture, mon gratte-givre, mon plumeau et mon souffleur de garage. Un seul truc les remplace tous.",
+      "Le nettoyage de ma voiture prenait 15 minutes avec des chiffons. Maintenant : 3 minutes, zéro rayure, zéro trace.",
+      "On m'a dit que c'était 'juste un souffleur de feuilles'. Puis ils ont vu ce qu'il faisait à mon garage en 60 secondes.",
+      "Livré avec une garantie à vie. Pas parce qu'ils sont généreux — parce qu'ils savent qu'il ne tombera pas en panne."
+    ],
+    "key_benefits_ranked": [
+      "Zéro douleur au dos, zéro fatigue — 950g dans une main, même pour les seniors ou après une opération",
+      "5 minutes pour nettoyer une terrasse de 40m² vs 25 minutes au balai — récupère du temps de vie réel",
+      "Sèche une voiture en 3 minutes sans rayure ni trace — remplace définitivement les chiffons",
+      "Fonctionne 40 minutes sur une charge — assez pour tout faire d'une traite sans recharge",
+      "Remplace 4 outils (souffleur, plumeau, chiffon auto, gratte-givre) — désencombre le garage",
+      "Dégivre le pare-brise en 2 minutes en hiver — fini le grattage dans le froid",
+      "Sans fil, sans essence, sans entretien — sort du placard, s'utilise, se range",
+      "Moteur brushless 30 000 RPM — même technologie que les drones et les Tesla, outlast les moteurs standard"
+    ],
+    "proof_elements": [
+      "200+ MPH / 30 000 RPM — spécifications turbine propriétaires mesurées (force de poussée : 1 000g)",
+      "Comparatif interne : terrasse 40m² en 4 min 58s vs 24 min 30s au balai (cas d'usage documenté)",
+      "Comparatif voiture : séchage en 3 min vs 15+ min aux chiffons (cas d'usage documenté)",
+      "Comparatif dégivrage : pare-brise en < 2 min vs grattage manuel (cas d'usage documenté)",
+      "Garantie à vie (remplacement) — signal fort de confiance fabricant",
+      "Garantie 30 jours satisfait ou remboursé — risque zéro acheteur",
+      "Entrepôts Canada, France, Allemagne — expédition rapide, pas de douane pour les marchés ciblés",
+      "MANQUANT : aucun témoignage client, aucune étude tierce, aucune certification externe fournie"
+    ],
+    "objection_handlers": [
+      {
+        "objection": "C'est trop petit pour être vraiment puissant",
+        "response": "200 MPH. Les souffleurs pros à $300+ font pareil. La puissance vient du moteur brushless 30 000 RPM — pas de la taille de la machine. Vidéo de démonstration : terrasse nettoyée en 4 minutes."
+      },
+      {
+        "objection": "J'ai déjà un souffleur, je n'en ai pas besoin",
+        "response": "Votre souffleur actuel pèse combien ? Est-ce que vous l'utilisez pour sécher votre voiture ? Pour dépoussiérer votre atelier ? Pour dégivrer votre pare-brise ? Seese Pro remplace 4 outils différents que votre souffleur actuel ne remplace pas."
+      },
+      {
+        "objection": "$119 c'est cher pour un souffleur",
+        "response": "Le prix public est $249.99. Aujourd'hui : $119.99 avec livraison gratuite + étui de rangement ($25) + bouchons d'oreilles offerts. Ramené à l'usage quotidien possible (jardinage, voiture, garage, hiver), c'est moins de $0.33/jour sur 1 an. Et il est garanti à vie."
+      },
+      {
+        "objection": "La batterie va mourir vite comme tous les cordless",
+        "response": "Moteur brushless — pas de charbons qui s'usent, pas de friction mécanique. C'est la même technologie que les drones de course et les moteurs Tesla. Conçu pour durer des années, pas des mois. Plus garantie à vie remplacement."
+      },
+      {
+        "objection": "Est-ce que ça va abîmer la peinture de ma voiture ?",
+        "response": "Aucun contact avec la carrosserie. Pas d'embout métallique. Flux d'air pur et contrôlé. Conçu spécifiquement pour la peinture, les jantes, les grilles et les rétroviseurs."
+      },
+      {
+        "objection": "C'est trop bruyant",
+        "response": "Il fait du bruit — c'est le signe qu'il est puissant. Des bouchons d'oreilles sont inclus dans chaque commande. Et il n'est pas assez fort pour déranger les voisins."
+      }
+    ],
+    "urgency_elements": [
+      "55% de réduction aujourd'hui seulement ($249.99 → $119.99) — prix barré visible sur la page produit",
+      "3 cadeaux offerts d'une valeur de $110 inclus avec la commande (étui $25 + chargeur rapide + bouchons)",
+      "MANQUANT : aucune indication de stock limité, aucune date de fin de promo fournie — à ajouter si réel",
+      "MANQUANT : aucun compte à rebours ni seuil de stock documenté — ne pas fabriquer si non confirmé"
+    ],
+    "cta_options": [
+      "Essayez Seese Pro sans risque — 30 jours pour changer d'avis, livraison gratuite",
+      "Commandez aujourd'hui à $119.99 — économisez $130 sur le prix public",
+      "Obtenez le vôtre maintenant — et dites adieu au balai, aux chiffons et au gratte-givre"
+    ]
+  },
+  "visual_notes": {
+    "product_description": "Souffleur sans fil compact de couleur noire/grise, design aérodynamique, poignée ergonomique monopiece, embout tubulaire orientable, batterie amovible intégrée dans le corps. Poids visuel : très léger, tenu en une main sans effort apparent. Étui de transport rigide compact inclus.",
+    "suggested_scenes": [
+      "Hero (ouverture) : main tenant le Seese Pro à une hauteur naturelle, terrasse ou allée en arrière-plan avec feuilles qui s'envolent — lumière dorée d'automne, angle latéral pour montrer la légèreté",
+      "Section problème : personne courbée sur un râteau ou portant un gros souffleur thermique à deux mains, expression épuisée — contraste fort avec la suite",
+      "Section solution #1 : même personne, debout, détendue, utilisant Seese Pro d'une main — sourire naturel, terrasse nette en arrière-plan",
+      "Section cas d'usage voiture : flux d'air sur carrosserie mouillée, gouttelettes s'envolant, voiture brillante — pas de chiffon en contact",
+      "Section cas d'usage hiver : pare-brise givré, Seese Pro dirigé dessus, givre qui se disperse — matin d'hiver, vapeur visible",
+      "Section preuve / specs : produit posé sur balance affichant < 1kg, à côté d'un sac de sucre 1kg pour comparaison visuelle",
+      "CTA final : produit dans son étui ouvert, batterie et chargeur visibles, fond neutre propre — produit prêt à l'emploi dès la boîte"
+    ],
+    "mood": "Actif, pratique, libérateur. Pas clinique, pas technique. Lumières naturelles chaudes (automne/soleil matinal). Personnes réelles, pas des mannequins. Le héros visuel est l'absence d'effort — pas la puissance brute."
+  }
+}

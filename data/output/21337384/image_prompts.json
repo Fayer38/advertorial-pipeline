@@ -1,0 +1,108 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "man in late 50s, casual jeans and light jacket, holding compact cordless leaf blower effortlessly in one hand at waist height, relaxed posture, slight natural smile, side profile low-angle shot, autumn patio stone deck, golden oak leaves swirling mid-air with motion blur, warm golden hour backlight, cinematic depth of field, photorealistic, 8k, professional lifestyle photography, one-handed grip emphasized, no strain or effort visible",
+      "negative_prompt": "ugly, deformed, noisy, blurry background on subject, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, two hands on blower, leaning forward, tense posture, stock photo feel, oversaturated",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "middle-aged man hunched over a broom on leaf-covered patio, tired resigned posture, back slightly curved, one hand resting on lower back mid-sweep, expression weary and defeated not angry, large pile of dry autumn leaves barely moved, late afternoon light slightly desaturated warm tones, cluttered garage door softly out of focus in background, honest documentary lifestyle photography, photorealistic, 8k, candid real-life moment, subtle fatigue",
+      "negative_prompt": "ugly, deformed, noisy, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, bad anatomy, dramatic angry expression, oversaturated colors, artificial lighting, posed stock photo, happy expression",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "split image composition, LEFT SIDE dark garage corner with dusty heavy gas leaf blower neglected on floor, cobweb draped over handle, old red fuel can beside it, cold shadowy interior lighting, abandoned feel, RIGHT SIDE cluttered utility shelf with bunched-up used microfiber car cloths, old yellowed plastic ice scraper, half-empty bottle of car detailing spray, both sides dimly lit cool indoor shadows, horizontal dividing line, photorealistic product still life, 8k, cinematic shadow play",
+      "negative_prompt": "ugly, deformed, noisy, distorted, grainy, low quality, watermark, text, logo, signature, bright cheerful lighting, clean organized shelves, people, warm tones, modern equipment",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "close-up of sleek compact cordless leaf blower held loosely in one open relaxed hand, fingers not gripping tightly, blower looks surprisingly small and lightweight, premium matte black and grey finish, blurred autumn driveway warm bokeh background, foreground corner: white 1kg sugar bag placed next to blower as size reference, soft diffused natural daylight, product lifestyle photography, hyperdetailed, 8k, shallow depth of field, trustworthy premium aesthetic",
+      "negative_prompt": "ugly, deformed, noisy, distorted, grainy, low quality, watermark, text, logo, signature, tight grip, large bulky blower, cluttered background, artificial studio lighting, bad anatomy, extra fingers",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "triptych three square panels side by side, PANEL 1 compact cordless blower directing wave of autumn leaves off clean patio in sharp motion blur, digital timer overlay reading 4:58, warm golden light, PANEL 2 water droplets exploding off glossy dark wet car paint in slow-motion freeze frame, mirror-like finish gleaming, no cloth visible, studio-quality macro, PANEL 3 frosted windshield with blower aimed at it, frost crystals dispersing in cold morning air, breath mist visible, blue-white dawn light, consistent natural cinematic lighting across all three panels, photorealistic, 8k, proof-driven visual storytelling",
+      "negative_prompt": "ugly, deformed, noisy, distorted, grainy, low quality, watermark, signature, bad anatomy, clutter, inconsistent lighting between panels, soft unfocused leaves",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "four-panel 2x2 seasonal collage, TOP LEFT autumn: same man blowing oak leaves from stone patio, amber golden light, TOP RIGHT winter: same man clearing frost off car windshield cold blue-white morning, breath mist, BOTTOM LEFT spring: sawdust and fine workshop debris blown out of garage by airflow, soft morning light, BOTTOM RIGHT summer: man smiling, gleaming freshly washed wet car drying in bright sunshine, each panel natural seasonal lighting, consistent same male subject across panels, compact cordless blower featured in all, photorealistic lifestyle photography, 8k, cohesive visual narrative",
+      "negative_prompt": "ugly, deformed, noisy, distorted, grainy, low quality, watermark, text, logo, signature, different people across panels, inconsistent tool, stock photo feel, bad anatomy, extra limbs",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "overhead flat lay product photography, premium hard-shell carrying case open revealing custom black foam insert, sleek compact cordless leaf blower centered precisely in molded foam cutout, fast USB-C charger placed neatly to the right in its foam slot, small ear protection plugs set to the left, clean light grey surface background, soft natural diffused side lighting, subtle soft shadows, breathing room between items, unboxing premium aesthetic, hyperdetailed, 8k, commercial product photography, price tag prop showing $119.99 subtly placed near case corner",
+      "negative_prompt": "ugly, deformed, noisy, distorted, grainy, low quality, watermark, logo, signature, cluttered arrangement, cramped layout, dark shadows, messy foam, plastic cheap case, artificial harsh lighting",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "man in late 50s standing fully upright relaxed confident posture, holding compact cordless leaf blower casually at his side in one hand like holding a travel mug, natural genuine smile, behind him spotlessly clean stone patio or driveway with crisp autumn leaves cleared away, shot from slightly below eye level emphasizing pride and confidence, warm morning golden sunlight rim light, no sweat no strain no clutter, after-state lifestyle portrait, photorealistic, 8k, cinematic depth of field, authentic candid pride",
+      "negative_prompt": "ugly, deformed, noisy, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, bad anatomy, tense posture, hunched, cluttered background, two-handed grip, posed stiff smile, stock photo feel, leaves on ground",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}
