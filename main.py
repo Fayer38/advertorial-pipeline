@@ -193,6 +193,23 @@ class AdvertorialPipeline:
             image_description=image_description,
         )
 
+        # Inject config overrides into the structured brief
+        if config:
+            if not isinstance(structured_brief, dict):
+                structured_brief = {}
+            lang = config.get("language", "en")
+            lang_names = {"en": "English", "fr": "Français", "es": "Español", "de": "Deutsch"}
+            structured_brief["_config"] = {
+                "language": lang,
+                "language_name": lang_names.get(lang, lang),
+                "angle": config.get("angle", "testimonial"),
+                "structure": config.get("structure", "pas"),
+                "tone": config.get("tone", "conversational"),
+                "persona": config.get("persona", ""),
+                "brief": config.get("brief", ""),
+            }
+            logger.info(f"  Config injectée: langue={lang}, angle={config.get('angle')}, tone={config.get('tone')}")
+
         # ══════════════════════════════════════════════════════════
         # PHASE 3 : RÉDACTION
         # ══════════════════════════════════════════════════════════
@@ -249,6 +266,7 @@ class AdvertorialPipeline:
             image_prompts=image_prompts,
             video_prompts=video_prompts,
             product_url=product_url,
+            lang=cfg.get("language", "en") if config else "en",
         )
 
         # ══════════════════════════════════════════════════════════

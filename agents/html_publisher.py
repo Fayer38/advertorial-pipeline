@@ -39,6 +39,7 @@ class HTMLPublisherAgent(BaseAgent):
         product_image_url: str = "",
         author_name: str = "",
         slug: str = "",
+        lang: str = "en",
     ) -> dict:
         self.log_start()
 
@@ -58,7 +59,7 @@ class HTMLPublisherAgent(BaseAgent):
                 if url:
                     image_map[p.get("scene_index", -1)] = url
 
-        html = self._build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name)
+        html = self._build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang=lang)
 
         output_path = self.output_dir / f"{slug}.html"
         with open(output_path, "w", encoding="utf-8") as f:
@@ -80,7 +81,7 @@ class HTMLPublisherAgent(BaseAgent):
             "word_count": advertorial_draft.get("meta", {}).get("word_count", 0),
         }
 
-    def _build_html(self, content, seo, image_map, product_url, product_name, product_image_url, author_name):
+    def _build_html(self, content, seo, image_map, product_url, product_name, product_image_url, author_name, lang="en"):
         today = datetime.utcnow().strftime("%B %d, %Y")
         headline = content.get("headline", "")
         subheadline = content.get("subheadline", "")
@@ -137,7 +138,7 @@ class HTMLPublisherAgent(BaseAgent):
     </div>'''
 
         return f'''<!DOCTYPE html>
-<html lang="en">
+<html lang="{lang}">
 <head>
 <title>{seo.get("meta_title", headline)}</title>
 <meta charset="utf-8">

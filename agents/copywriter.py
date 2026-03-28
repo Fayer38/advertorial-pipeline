@@ -282,6 +282,25 @@ class CopywriterAgent(BaseAgent):
                 for imp in improvements:
                     parts.append(f"  - {imp}")
 
+        # ── CONFIG OVERRIDES (langue, angle, ton, etc.) ──
+        cfg = brief.get("_config", {})
+        lang_name = cfg.get("language_name", "")
+        lang_code = cfg.get("language", "en")
+
+        if lang_name:
+            parts.append(f"\n\n---\n# ⚠️ DIRECTIVES OBLIGATOIRES\n")
+            parts.append(f"**LANGUE** : Rédige TOUT l'advertorial en **{lang_name}** ({lang_code}). Titres, body, CTA — tout doit être en {lang_name}.")
+            if cfg.get("tone"):
+                parts.append(f"**TON** : {cfg['tone']}")
+            if cfg.get("angle"):
+                parts.append(f"**ANGLE** : {cfg['angle']}")
+            if cfg.get("structure"):
+                parts.append(f"**STRUCTURE** : {cfg['structure']}")
+            if cfg.get("persona"):
+                parts.append(f"**PERSONA CIBLE** : {cfg['persona']}")
+            if cfg.get("brief"):
+                parts.append(f"**BRIEF ADDITIONNEL** : {cfg['brief']}")
+
         # ── INSTRUCTION FINALE ──
         parts.append(f"\n\n---\n")
         if qa_feedback:
@@ -297,6 +316,8 @@ class CopywriterAgent(BaseAgent):
                 "Chaque section doit avoir un visual_placeholder décrivant l'image souhaitée. "
                 "L'advertorial doit faire entre 800 et 1500 mots."
             )
+        if lang_name:
+            parts.append(f"\n⚠️ RAPPEL : TOUT le contenu (headline, sections, CTA) DOIT être en {lang_name}.")
         parts.append("\nRéponds UNIQUEMENT en JSON valide, sans texte autour.")
 
         return "\n".join(parts)
