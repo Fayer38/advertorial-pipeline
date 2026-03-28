@@ -441,6 +441,7 @@ EDIT_SCRIPT = """
   tb.addEventListener('click', function(e) {
     var btn = e.target.closest('button[data-cmd]');
     if (btn) {
+      if (activeEdit) activeEdit.focus();
       document.execCommand(btn.dataset.cmd, false, null);
       updateToolbarState();
       return;
@@ -452,53 +453,44 @@ EDIT_SCRIPT = """
       return;
     }
   });
-  // Save/restore selection for dropdown changes
-  var savedRange = null;
-  function saveSelection() {
-    var s = window.getSelection();
-    if (s.rangeCount > 0) savedRange = s.getRangeAt(0).cloneRange();
-  }
-  function restoreSelection() {
-    if (savedRange) {
-      var s = window.getSelection();
-      s.removeAllRanges();
-      s.addRange(savedRange);
-    }
-  }
+  // ── FONT SIZE / FONT NAME via execCommand + post-fix ──
+  // execCommand('fontSize', x) creates <font size="x"> — we convert to inline style
+  var sizeMap = {'12':'1','14':'2','16':'3','18':'4','20':'4','22':'5','24':'5','28':'6','32':'6','36':'7','48':'7'};
+  var pxMap = {'1':'12px','2':'14px','3':'16px','4':'18px','5':'22px','6':'28px','7':'36px'};
+  var pxExact = {}; // store exact px value requested
 
-  // Font size: wrap selection in span with explicit px size
   function applyFontSize(px) {
-    restoreSelection();
-    var sel = window.getSelection();
-    if (!sel.rangeCount || sel.isCollapsed) return;
-    var range = sel.getRangeAt(0);
-    var span = document.createElement('span');
-    span.style.fontSize = px + 'px';
-    range.surroundContents(span);
-    sel.removeAllRanges();
+    if (!activeEdit) return;
+    activeEdit.focus();
+    // Map to nearest execCommand value
+    var cmdVal = sizeMap[px] || '4';
+    pxExact[cmdVal] = px + 'px';
+    document.execCommand('fontSize', false, cmdVal);
+    // Convert <font size="x"> to <span style="font-size:Xpx">
+    activeEdit.querySelectorAll('font[size]').forEach(function(f) {
+      var span = document.createElement('span');
+      var sz = pxExact[f.getAttribute('size')] || pxMap[f.getAttribute('size')] || px+'px';
+      span.style.fontSize = sz;
+      span.innerHTML = f.innerHTML;
+      f.replaceWith(span);
+    });
   }
 
-  // Font name: wrap selection in span with font-family
   function applyFontName(font) {
-    restoreSelection();
-    var sel = window.getSelection();
-    if (!sel.rangeCount || sel.isCollapsed) return;
-    var range = sel.getRangeAt(0);
-    var span = document.createElement('span');
-    span.style.fontFamily = font;
-    range.surroundContents(span);
-    sel.removeAllRanges();
+    if (!activeEdit) return;
+    activeEdit.focus();
+    document.execCommand('fontName', false, font);
+    // Convert <font face="x"> to <span style="font-family:X">
+    activeEdit.querySelectorAll('font[face]').forEach(function(f) {
+      var span = document.createElement('span');
+      span.style.fontFamily = f.getAttribute('face');
+      span.innerHTML = f.innerHTML;
+      f.replaceWith(span);
+    });
   }
-
-  // Save selection when interacting with toolbar dropdowns
-  tb.querySelectorAll('select').forEach(function(s) {
-    s.addEventListener('mousedown', function() { saveSelection(); });
-    s.addEventListener('focus', function() { saveSelection(); });
-  });
 
   tb.addEventListener('change', function(e) {
     var sel = e.target;
-    if (!activeEdit) return;
     if (sel.dataset.action === 'fontSize' && sel.value) {
       applyFontSize(sel.value);
       sel.selectedIndex = 0;
@@ -510,10 +502,13 @@ EDIT_SCRIPT = """
   });
   tb.addEventListener('input', function(e) {
     var inp = e.target;
+    if (!activeEdit) return;
     if (inp.dataset.action === 'foreColor') {
+      activeEdit.focus();
       document.execCommand('foreColor', false, inp.value);
     }
     if (inp.dataset.action === 'hiliteColor') {
+      activeEdit.focus();
       document.execCommand('hiliteColor', false, inp.value);
     }
   });
