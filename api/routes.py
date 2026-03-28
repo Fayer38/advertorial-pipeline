@@ -296,30 +296,44 @@ EDIT_SCRIPT = """
 
     /* ── TOOLBAR ── */
     #edit-toolbar {
-      position: absolute; display: none;
+      position: fixed; display: none;
       background: #1a1a1a; border: 1px solid #333; border-radius: 10px;
-      padding: 6px 8px; display: none; gap: 2px; align-items: center;
+      padding: 4px 6px; gap: 2px; align-items: center;
       z-index: 99999; box-shadow: 0 8px 30px rgba(0,0,0,.6);
-      flex-wrap: wrap; max-width: 95vw;
+      flex-wrap: wrap; max-width: min(95vw, 460px); touch-action: none;
+      user-select: none; -webkit-user-select: none;
     }
     #edit-toolbar.visible { display: flex; }
-    #edit-toolbar .tb-sep { width: 1px; height: 22px; background: #333; margin: 0 4px; }
+    #edit-toolbar .tb-drag {
+      cursor: grab; padding: 2px 6px; color: #555; font-size: 16px; letter-spacing: 1px;
+      display: flex; align-items: center; flex-shrink: 0;
+    }
+    #edit-toolbar .tb-drag:active { cursor: grabbing; }
+    #edit-toolbar .tb-sep { width: 1px; height: 22px; background: #333; margin: 0 3px; flex-shrink: 0; }
     #edit-toolbar button {
       background: none; border: 1px solid transparent; color: #ccc; cursor: pointer;
-      width: 32px; height: 32px; border-radius: 6px; font-size: 14px;
+      min-width: 28px; height: 28px; border-radius: 6px; font-size: 13px;
       display: flex; align-items: center; justify-content: center; transition: all .1s;
-      padding: 0; font-family: inherit;
+      padding: 0 4px; font-family: inherit; flex-shrink: 0;
     }
     #edit-toolbar button:hover { background: #2a2a2a; color: #fff; border-color: #444; }
     #edit-toolbar button.active { background: #f26722; color: #000; border-color: #f26722; }
     #edit-toolbar select {
       background: #111; color: #ccc; border: 1px solid #333; border-radius: 6px;
-      padding: 4px 6px; font-size: 12px; cursor: pointer; height: 32px; outline: none;
+      padding: 3px 4px; font-size: 11px; cursor: pointer; height: 28px; outline: none;
+      max-width: 70px; flex-shrink: 0;
     }
     #edit-toolbar select:hover { border-color: #555; }
     #edit-toolbar input[type="color"] {
-      width: 28px; height: 28px; border: 1px solid #333; border-radius: 6px;
-      background: #111; cursor: pointer; padding: 2px;
+      width: 24px; height: 24px; border: 1px solid #333; border-radius: 6px;
+      background: #111; cursor: pointer; padding: 1px; flex-shrink: 0;
+    }
+    @media (max-width: 480px) {
+      #edit-toolbar { max-width: 98vw; padding: 3px 4px; gap: 1px; border-radius: 8px; }
+      #edit-toolbar button { min-width: 26px; height: 26px; font-size: 12px; }
+      #edit-toolbar select { font-size: 10px; max-width: 58px; height: 26px; padding: 2px 3px; }
+      #edit-toolbar input[type="color"] { width: 22px; height: 22px; }
+      #edit-toolbar .tb-sep { height: 18px; margin: 0 2px; }
     }
   `;
   document.head.appendChild(style);
@@ -328,6 +342,7 @@ EDIT_SCRIPT = """
   var tb = document.createElement('div');
   tb.id = 'edit-toolbar';
   tb.innerHTML = `
+    <span class="tb-drag" data-drag="true" title="Drag to move">⠿</span>
     <button data-cmd="bold" title="Bold"><b>B</b></button>
     <button data-cmd="italic" title="Italic"><i>I</i></button>
     <button data-cmd="underline" title="Underline"><u>U</u></button>
@@ -366,8 +381,63 @@ EDIT_SCRIPT = """
   `;
   document.body.appendChild(tb);
 
-  // Toolbar click handlers
-  tb.addEventListener('mousedown', function(e) { e.preventDefault(); }); // prevent losing selection
+  // ── DRAG LOGIC ──
+  var isDragging = false, dragOffX = 0, dragOffY = 0, tbManualPos = false;
+
+  function onDragStart(clientX, clientY) {
+    var r = tb.getBoundingClientRect();
+    dragOffX = clientX - r.left;
+    dragOffY = clientY - r.top;
+    isDragging = true;
+    tb.querySelector('.tb-drag').style.cursor = 'grabbing';
+  }
+  function onDragMove(clientX, clientY) {
+    if (!isDragging) return;
+    var x = clientX - dragOffX;
+    var y = clientY - dragOffY;
+    // Clamp to viewport
+    x = Math.max(0, Math.min(x, window.innerWidth - tb.offsetWidth));
+    y = Math.max(0, Math.min(y, window.innerHeight - tb.offsetHeight));
+    tb.style.left = x + 'px';
+    tb.style.top = y + 'px';
+    tbManualPos = true;
+  }
+  function onDragEnd() {
+    isDragging = false;
+    var drag = tb.querySelector('.tb-drag');
+    if (drag) drag.style.cursor = 'grab';
+  }
+
+  // Mouse drag
+  tb.addEventListener('mousedown', function(e) {
+    if (e.target.closest('[data-drag]')) {
+      e.preventDefault();
+      onDragStart(e.clientX, e.clientY);
+    }
+  });
+  document.addEventListener('mousemove', function(e) { onDragMove(e.clientX, e.clientY); });
+  document.addEventListener('mouseup', onDragEnd);
+
+  // Touch drag
+  tb.addEventListener('touchstart', function(e) {
+    if (e.target.closest('[data-drag]')) {
+      var t = e.touches[0];
+      onDragStart(t.clientX, t.clientY);
+    }
+  }, { passive: true });
+  document.addEventListener('touchmove', function(e) {
+    if (isDragging) {
+      var t = e.touches[0];
+      onDragMove(t.clientX, t.clientY);
+      e.preventDefault();
+    }
+  }, { passive: false });
+  document.addEventListener('touchend', onDragEnd);
+
+  // Prevent losing selection on toolbar interaction (except drag handle)
+  tb.addEventListener('mousedown', function(e) {
+    if (!e.target.closest('[data-drag]')) e.preventDefault();
+  });
   tb.addEventListener('click', function(e) {
     var btn = e.target.closest('button[data-cmd]');
     if (btn) {
@@ -456,18 +526,19 @@ EDIT_SCRIPT = """
   }
 
   function positionToolbar(el) {
+    if (tbManualPos) { tb.classList.add('visible'); return; } // user dragged it, keep position
     var rect = el.getBoundingClientRect();
     var tbH = 44;
-    var top = rect.top - tbH - 8 + window.scrollY;
-    if (top < window.scrollY + 4) top = rect.bottom + 8 + window.scrollY; // below if no room above
+    var top = rect.top - tbH - 10;
+    if (top < 4) top = rect.bottom + 8; // below if no room above
     var left = rect.left + (rect.width / 2) - 200;
-    if (left < 8) left = 8;
-    if (left + 400 > window.innerWidth) left = window.innerWidth - 408;
-    tb.style.top = top + 'px';
-    tb.style.left = left + 'px';
+    if (left < 4) left = 4;
+    if (left + 400 > window.innerWidth) left = window.innerWidth - 404;
+    tb.style.top = Math.max(0, top) + 'px';
+    tb.style.left = Math.max(0, left) + 'px';
     tb.classList.add('visible');
   }
-  function hideToolbar() { tb.classList.remove('visible'); }
+  function hideToolbar() { tb.classList.remove('visible'); tbManualPos = false; }
 
   // ── UNDO/REDO HISTORY (page-level, 15 snapshots) ──
   var undoStack = [];
