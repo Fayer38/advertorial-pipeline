@@ -465,8 +465,29 @@ EDIT_SCRIPT = """
     var btn = e.target.closest('button[data-cmd]');
     if (btn) {
       restoreSel();
-      document.execCommand(btn.dataset.cmd, false, null);
-      // Selection should persist after execCommand — just update UI
+      var cmd = btn.dataset.cmd;
+      // For bold: if CSS makes it bold (font-weight >= 700), use inline style override
+      if (cmd === 'bold') {
+        var sel = window.getSelection();
+        var node = sel.focusNode; if (node && node.nodeType === 3) node = node.parentElement;
+        if (node) {
+          var cw = parseInt(window.getComputedStyle(node).fontWeight);
+          if (cw >= 700 && document.queryCommandState('bold') === false) {
+            // CSS-bold — wrap in span with font-weight:normal
+            if (!sel.isCollapsed) {
+              var range = sel.getRangeAt(0);
+              var span = document.createElement('span');
+              span.style.fontWeight = 'normal';
+              range.surroundContents(span);
+              sel.removeAllRanges(); var r2 = document.createRange(); r2.selectNodeContents(span); sel.addRange(r2);
+            } else {
+              node.style.fontWeight = node.style.fontWeight === 'normal' ? '' : 'normal';
+            }
+            updateToolbarState(); saveSel(); return;
+          }
+        }
+      }
+      document.execCommand(cmd, false, null);
       updateToolbarState();
       saveSel();
       return;
