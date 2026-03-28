@@ -379,7 +379,7 @@ EDIT_SCRIPT = """
     <button data-cmd="justifyCenter" title="Center"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="3" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="4" y="14" width="8" height="2"/></svg></button>
     <button data-cmd="justifyRight" title="Align Right"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="5" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="7" y="14" width="8" height="2"/></svg></button>
     <div class="tb-sep"></div>
-    <button data-cmd="removeFormat" title="Clear Formatting" style="font-size:11px">Aa</button>
+    <button data-cmd="removeFormat" title="Clear Formatting" style="font-size:11px;text-decoration:line-through;opacity:.7">T</button>
     <button data-action="link" title="Link">🔗</button>
   `;
   document.body.appendChild(tb);
@@ -466,6 +466,7 @@ EDIT_SCRIPT = """
     if (btn) {
       restoreSel();
       document.execCommand(btn.dataset.cmd, false, null);
+      // Selection should persist after execCommand — just update UI
       updateToolbarState();
       saveSel();
       return;
@@ -488,16 +489,23 @@ EDIT_SCRIPT = """
     var cmdVal = sizeMap[px] || '4';
     lastRequestedPx = px + 'px';
     document.execCommand('fontSize', false, cmdVal);
-    // Convert <font size=X> to <span style="font-size:Xpx">
+    // Convert <font size=X> to <span style="font-size:Xpx"> while preserving selection
     if (activeEdit) {
       activeEdit.querySelectorAll('font[size]').forEach(function(f) {
         var span = document.createElement('span');
         span.style.fontSize = lastRequestedPx;
         while (f.firstChild) span.appendChild(f.firstChild);
         f.parentNode.replaceChild(span, f);
+        // Re-select the span contents
+        var range = document.createRange();
+        range.selectNodeContents(span);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
       });
     }
     saveSel();
+    updateToolbarState();
   }
 
   // ── FONT NAME (execCommand fontName + convert <font> to <span>) ──
@@ -510,9 +518,15 @@ EDIT_SCRIPT = """
         span.style.fontFamily = f.getAttribute('face');
         while (f.firstChild) span.appendChild(f.firstChild);
         f.parentNode.replaceChild(span, f);
+        var range = document.createRange();
+        range.selectNodeContents(span);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
       });
     }
     saveSel();
+    updateToolbarState();
   }
 
   // ── SELECT CHANGE HANDLERS ──
@@ -553,10 +567,40 @@ EDIT_SCRIPT = """
   });
 
   function updateToolbarState() {
+    // Bold, italic, underline, strikethrough, align states
     tb.querySelectorAll('button[data-cmd]').forEach(function(btn) {
-      var on = document.queryCommandState(btn.dataset.cmd);
-      btn.classList.toggle('active', on);
+      try { btn.classList.toggle('active', document.queryCommandState(btn.dataset.cmd)); } catch(e) {}
     });
+    // Font size — detect current size and show in dropdown
+    try {
+      var szSel = tb.querySelector('select[data-action="fontSize"]');
+      var el = window.getSelection().focusNode;
+      if (el && el.nodeType === 3) el = el.parentElement;
+      if (el) {
+        var cs = window.getComputedStyle(el);
+        var px = Math.round(parseFloat(cs.fontSize));
+        var found = false;
+        for (var i = 0; i < szSel.options.length; i++) {
+          if (parseInt(szSel.options[i].value) === px) { szSel.selectedIndex = i; found = true; break; }
+        }
+        if (!found) szSel.selectedIndex = 0;
+        // Font name
+        var fnSel = tb.querySelector('select[data-action="fontName"]');
+        var fontFamily = cs.fontFamily.replace(/['"]/g, '').split(',')[0].trim();
+        var fnFound = false;
+        for (var j = 0; j < fnSel.options.length; j++) {
+          if (fnSel.options[j].value.toLowerCase() === fontFamily.toLowerCase()) { fnSel.selectedIndex = j; fnFound = true; break; }
+        }
+        if (!fnFound) fnSel.selectedIndex = 0;
+        // Text color
+        var fcInp = tb.querySelector('input[data-action="foreColor"]');
+        if (fcInp) {
+          var rgb = cs.color;
+          var m = rgb.match(/(\d+),\s*(\d+),\s*(\d+)/);
+          if (m) fcInp.value = '#' + ((1<<24) + (parseInt(m[1])<<16) + (parseInt(m[2])<<8) + parseInt(m[3])).toString(16).slice(1);
+        }
+      }
+    } catch(e) {}
   }
 
   function positionToolbar(el) {
