@@ -328,42 +328,38 @@ EDIT_SCRIPT = """
   var tb = document.createElement('div');
   tb.id = 'edit-toolbar';
   tb.innerHTML = `
-    <button data-cmd="undo" title="Undo">↩</button>
-    <button data-cmd="redo" title="Redo">↪</button>
-    <div class="tb-sep"></div>
     <button data-cmd="bold" title="Bold"><b>B</b></button>
     <button data-cmd="italic" title="Italic"><i>I</i></button>
     <button data-cmd="underline" title="Underline"><u>U</u></button>
     <button data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
     <div class="tb-sep"></div>
     <select data-action="fontSize" title="Font Size">
-      <option value="">Size</option>
-      <option value="1">12px</option>
-      <option value="2">14px</option>
-      <option value="3">16px</option>
-      <option value="4">18px</option>
-      <option value="5">22px</option>
-      <option value="6">28px</option>
-      <option value="7">36px</option>
+      <option value="" disabled selected>Size</option>
+      <option value="12">12</option><option value="14">14</option>
+      <option value="16">16</option><option value="18">18</option>
+      <option value="20">20</option><option value="22">22</option>
+      <option value="24">24</option><option value="28">28</option>
+      <option value="32">32</option><option value="36">36</option>
+      <option value="48">48</option>
     </select>
     <select data-action="fontName" title="Font">
-      <option value="">Font</option>
-      <option value="Roboto, sans-serif">Roboto</option>
-      <option value="Montserrat, sans-serif">Montserrat</option>
-      <option value="Georgia, serif">Georgia</option>
-      <option value="Arial, sans-serif">Arial</option>
-      <option value="Helvetica, sans-serif">Helvetica</option>
-      <option value="Times New Roman, serif">Times</option>
-      <option value="Verdana, sans-serif">Verdana</option>
-      <option value="Courier New, monospace">Courier</option>
+      <option value="" disabled selected>Font</option>
+      <option value="Roboto">Roboto</option>
+      <option value="Montserrat">Montserrat</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Arial">Arial</option>
+      <option value="Helvetica">Helvetica</option>
+      <option value="Times New Roman">Times</option>
+      <option value="Verdana">Verdana</option>
+      <option value="Courier New">Courier</option>
     </select>
     <div class="tb-sep"></div>
     <input type="color" data-action="foreColor" value="#111111" title="Text Color">
     <input type="color" data-action="hiliteColor" value="#ffffff" title="Highlight">
     <div class="tb-sep"></div>
-    <button data-cmd="justifyLeft" title="Align Left">⫷</button>
-    <button data-cmd="justifyCenter" title="Center">⫿</button>
-    <button data-cmd="justifyRight" title="Align Right">⫸</button>
+    <button data-cmd="justifyLeft" title="Align Left"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="1" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="1" y="14" width="8" height="2"/></svg></button>
+    <button data-cmd="justifyCenter" title="Center"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="3" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="4" y="14" width="8" height="2"/></svg></button>
+    <button data-cmd="justifyRight" title="Align Right"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="5" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="7" y="14" width="8" height="2"/></svg></button>
     <div class="tb-sep"></div>
     <button data-cmd="removeFormat" title="Clear Formatting">✕</button>
     <button data-action="link" title="Link">🔗</button>
@@ -386,15 +382,60 @@ EDIT_SCRIPT = """
       return;
     }
   });
+  // Save/restore selection for dropdown changes
+  var savedRange = null;
+  function saveSelection() {
+    var s = window.getSelection();
+    if (s.rangeCount > 0) savedRange = s.getRangeAt(0).cloneRange();
+  }
+  function restoreSelection() {
+    if (savedRange) {
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(savedRange);
+    }
+  }
+
+  // Font size: wrap selection in span with explicit px size
+  function applyFontSize(px) {
+    restoreSelection();
+    var sel = window.getSelection();
+    if (!sel.rangeCount || sel.isCollapsed) return;
+    var range = sel.getRangeAt(0);
+    var span = document.createElement('span');
+    span.style.fontSize = px + 'px';
+    range.surroundContents(span);
+    sel.removeAllRanges();
+  }
+
+  // Font name: wrap selection in span with font-family
+  function applyFontName(font) {
+    restoreSelection();
+    var sel = window.getSelection();
+    if (!sel.rangeCount || sel.isCollapsed) return;
+    var range = sel.getRangeAt(0);
+    var span = document.createElement('span');
+    span.style.fontFamily = font;
+    range.surroundContents(span);
+    sel.removeAllRanges();
+  }
+
+  // Save selection when interacting with toolbar dropdowns
+  tb.querySelectorAll('select').forEach(function(s) {
+    s.addEventListener('mousedown', function() { saveSelection(); });
+    s.addEventListener('focus', function() { saveSelection(); });
+  });
+
   tb.addEventListener('change', function(e) {
     var sel = e.target;
     if (!activeEdit) return;
-    activeEdit.focus(); // re-focus to restore selection
-    if (sel.dataset.action === 'fontSize') {
-      if (sel.value) document.execCommand('fontSize', false, sel.value);
+    if (sel.dataset.action === 'fontSize' && sel.value) {
+      applyFontSize(sel.value);
+      sel.selectedIndex = 0;
     }
-    if (sel.dataset.action === 'fontName') {
-      if (sel.value) document.execCommand('fontName', false, sel.value);
+    if (sel.dataset.action === 'fontName' && sel.value) {
+      applyFontName(sel.value);
+      sel.selectedIndex = 0;
     }
   });
   tb.addEventListener('input', function(e) {
@@ -428,6 +469,62 @@ EDIT_SCRIPT = """
   }
   function hideToolbar() { tb.classList.remove('visible'); }
 
+  // ── UNDO/REDO HISTORY (page-level, 15 snapshots) ──
+  var undoStack = [];
+  var redoStack = [];
+  var initialHtml = document.body.innerHTML;
+  undoStack.push(initialHtml);
+
+  function snapshotForUndo() {
+    var html = document.body.innerHTML;
+    if (undoStack.length === 0 || undoStack[undoStack.length - 1] !== html) {
+      undoStack.push(html);
+      if (undoStack.length > 16) undoStack.shift(); // keep 15 + current
+      redoStack = [];
+    }
+  }
+
+  function globalUndo() {
+    if (undoStack.length <= 1) return;
+    finishEdit();
+    redoStack.push(undoStack.pop());
+    document.body.innerHTML = undoStack[undoStack.length - 1];
+    document.body.appendChild(tb);
+    reMarkElements();
+  }
+
+  function globalRedo() {
+    if (redoStack.length === 0) return;
+    finishEdit();
+    var html = redoStack.pop();
+    undoStack.push(html);
+    document.body.innerHTML = html;
+    document.body.appendChild(tb);
+    reMarkElements();
+  }
+
+  // Take snapshot when finishing an edit
+  var origFinishEdit;
+
+  // Expose undo/redo to parent
+  window._advUndo = globalUndo;
+  window._advRedo = globalRedo;
+  window._advResetAll = function() {
+    finishEdit();
+    document.body.innerHTML = initialHtml;
+    document.body.appendChild(tb);
+    undoStack = [initialHtml];
+    redoStack = [];
+    reMarkElements();
+  };
+
+  function reMarkElements() {
+    document.querySelectorAll('h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a').forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
+    document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
+    var mi = 0;
+    document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mi++); });
+  }
+
   // ── MARK ELEMENTS ──
   var editable = document.querySelectorAll('h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a');
   editable.forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
@@ -446,6 +543,7 @@ EDIT_SCRIPT = """
       activeEdit.style.minHeight = '';
       activeEdit = null;
       hideToolbar();
+      snapshotForUndo();
     }
   }
 
@@ -512,6 +610,9 @@ EDIT_SCRIPT = """
       var el = document.querySelector('[data-editable="' + e.data.field + '"]');
       if (el) el.innerHTML = e.data.value;
     }
+    if (e.data && e.data.type === 'undo') { globalUndo(); return; }
+    if (e.data && e.data.type === 'redo') { globalRedo(); return; }
+    if (e.data && e.data.type === 'reset-all') { if(window._advResetAll) window._advResetAll(); return; }
     if (e.data && e.data.type === 'get-html') {
       finishEdit();
       // Remove toolbar from DOM before capturing
