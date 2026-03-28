@@ -252,6 +252,32 @@ async def history():
     h.sort(key=lambda x: x["started_at"], reverse=True)
     return {"pipelines": h}
 
+# ── SAVE EDITED HTML ──
+class SaveHtmlReq(BaseModel):
+    html: str
+
+@app.put("/pipeline/{plid}/save-html")
+async def save_html(plid: str, req: SaveHtmlReq):
+    out = Path(f"data/output/{plid}")
+    if not out.exists():
+        raise HTTPException(404, "Pipeline not found")
+    htmls = list(out.glob("*.html"))
+    if not htmls:
+        raise HTTPException(404, "No HTML file")
+    # Strip the edit script before saving
+    import re
+    clean = re.sub(r'<script>\s*\(function\(\)\s*\{.*?</script>', '', req.html, flags=re.DOTALL)
+    # Also remove data-editable and data-img-idx and data-media-idx attributes
+    clean = re.sub(r'\s+data-editable="[^"]*"', '', clean)
+    clean = re.sub(r'\s+data-img-idx="[^"]*"', '', clean)
+    clean = re.sub(r'\s+data-media-idx="[^"]*"', '', clean)
+    clean = re.sub(r'\s+contenteditable="[^"]*"', '', clean)
+    htmls[0].write_text(clean, encoding="utf-8")
+    # Also copy to published dir
+    pub = Path("/var/www/advertorials") / htmls[0].name
+    pub.write_text(clean, encoding="utf-8")
+    return {"saved": True, "file": htmls[0].name}
+
 # ── EDITABLE PREVIEW ──
 EDIT_SCRIPT = """
 <script>
@@ -269,8 +295,8 @@ EDIT_SCRIPT = """
   `;
   document.head.appendChild(style);
 
-  // Mark editable elements
-  var editable = document.querySelectorAll('h1, h2, h3, p:not(.byline), li, .step p, .tip, .sb-title, .offer-box h2, .offer-box p, .cta-bottom, .sb-cta, a.cta-bottom');
+  // Mark ALL text elements as editable
+  var editable = document.querySelectorAll('h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a');
   editable.forEach(function(el, i) {
     el.setAttribute('data-editable', 'text-' + i);
   });
@@ -284,14 +310,38 @@ EDIT_SCRIPT = """
     el.setAttribute('data-media-idx', mediaIdx++);
   });
 
+  var activeEdit = null;
+  function finishEdit() {
+    if (activeEdit) {
+      activeEdit.contentEditable = 'false';
+      activeEdit.style.outline = '';
+      activeEdit.style.outlineOffset = '';
+      activeEdit.style.background = '';
+      activeEdit.style.minHeight = '';
+      activeEdit = null;
+    }
+  }
+
   document.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
     var el = e.target.closest('[data-editable]');
     if (el) {
-      var field = el.getAttribute('data-editable');
-      var hasHtml = el.querySelector('strong, em, a, br, span');
-      window.parent.postMessage({ type: 'edit-element', field: field, value: hasHtml ? el.innerHTML : el.textContent, tag: el.tagName.toLowerCase() }, '*');
+      e.preventDefault();
+      e.stopPropagation();
+      if (activeEdit === el) return; // already editing this one
+      finishEdit();
+      activeEdit = el;
+      el.contentEditable = 'true';
+      el.style.outline = '2px solid #f26722';
+      el.style.outlineOffset = '3px';
+      el.style.background = 'rgba(242,103,34,0.05)';
+      el.style.minHeight = '1em';
+      el.focus();
+      // Select all text for easy replacement
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
       return;
     }
     var img = e.target.closest('img[data-img-idx]');
@@ -305,10 +355,34 @@ EDIT_SCRIPT = """
     }
   }, true);
 
+  // Click outside editable → finish editing
+  document.addEventListener('click', function(e) {
+    if (activeEdit && !e.target.closest('[data-editable]') && !e.target.closest('[data-img-idx]') && !e.target.closest('[data-media-idx]')) {
+      finishEdit();
+    }
+  }, false);
+
+  // Keyboard: Escape to cancel, Enter on single-line elements
+  document.addEventListener('keydown', function(e) {
+    if (!activeEdit) return;
+    if (e.key === 'Escape') { finishEdit(); e.preventDefault(); }
+    // Enter finishes edit on headings, badges, buttons (single-line)
+    var tag = activeEdit.tagName.toLowerCase();
+    if (e.key === 'Enter' && !e.shiftKey && (tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'a' || tag === 'div')) {
+      finishEdit(); e.preventDefault();
+    }
+  });
+
   window.addEventListener('message', function(e) {
+    // update-field kept for backward compat
     if (e.data && e.data.type === 'update-field') {
       var el = document.querySelector('[data-editable="' + e.data.field + '"]');
       if (el) el.innerHTML = e.data.value;
+    }
+    // get-html: parent requests current HTML
+    if (e.data && e.data.type === 'get-html') {
+      finishEdit();
+      window.parent.postMessage({ type: 'current-html', html: document.documentElement.outerHTML }, '*');
     }
     if (e.data && e.data.type === 'update-image') {
       if (e.data.kind === 'placeholder') {
