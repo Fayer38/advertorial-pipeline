@@ -1,0 +1,76 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Un homme d'environ 55 ans, décontracté, tient la Seese Pro d'une seule main à hauteur de hanche. Arrière-plan : terrasse de maison de banlieue floue, feuilles mortes orange et ocre tourbillonnant dans l'air devant lui. Son visage est calme, légèrement souriant — aucun effort visible. Lumière dorée de fin d'après-midi, 16h en automne. Le produit occupe un tiers de l'image, reconnaissable immédiatement.",
+      "mood": "Maîtrise tranquille, lumière automnale chaude, sentiment de compétence sans effort",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "before_after",
+      "description": "Split-screen horizontal. Gauche : homme légèrement voûté, souffleur à essence volumineux dans les deux mains, câble qui traîne, expression fatiguée, lumière dure. Droite : même type d'homme, posture droite et détendue, Seese Pro tenue d'une main, sourire discret, lumière chaude de fin d'après-midi. Même décor de terrasse en banlieue sur les deux côtés. Séparateur central fin, pas de texte sur le visuel.",
+      "mood": "Contraste clair avant/après, même chaleur automnale sur les deux côtés — la différence est dans la posture, pas dans le décor",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Homme d'une cinquantaine d'années penché en avant sur une pile de feuilles, tenant un grand souffleur à essence des deux mains. Corps légèrement tordu, épaules contractées. Soleil de midi un peu dur. Tas de feuilles à moitié déplacé. L'énergie dégagée est celle de l'effort inutile — pas de l'humiliation, juste la fatigue d'un outil inadapté. Aucun produit Seese visible.",
+      "mood": "Frustration familière, réaliste et digne — le lecteur se reconnaît sans se sentir jugé",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "product_shot",
+      "description": "Gros plan sur une main masculine tenant la Seese Pro d'une prise décontractée, comme on tiendrait une grande télécommande. En premier plan flou : quelques feuilles en mouvement, visiblement propulsées par le souffle. En arrière-plan : terrasse en bois propre, nette, débarrassée. Lumière naturelle latérale, douce. La légèreté du produit est rendue par la position naturelle du poignet — pas de tension.",
+      "mood": "Précision, légèreté, efficacité — lumière de fin d'après-midi, tons terre et bois",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product_shot",
+      "description": "Flat lay soigné sur fond bois naturel ou béton ciré gris chaud. Disposition : Seese Pro au centre, batterie à gauche, chargeur en bas, étui de transport ouvert à droite avec la protection auditive bien visible à l'intérieur. Tous les éléments espacés, proprement organisés. Éclairage studio doux avec légère ombre naturelle. Le prix $119.99 sur une petite étiquette discrète posée contre le produit.",
+      "mood": "Clair, professionnel, honnête — l'inventaire complet d'un achat bien pensé",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Composition en quatre panneaux égaux (2x2), même Seese Pro visible dans chacun, même lumière chaude : (1) Terrasse de maison — feuilles qui s'envolent sur un sol de béton. (2) Capot de voiture après lavage — gouttelettes d'eau projetées latéralement par le souffle, voiture sombre pour contraste. (3) Établi de garage — fine couche de sciure dispersée, outils en arrière-plan flou. (4) Pare-brise givré au petit matin — givre blanc qui se décolle sous le flux d'air. Chaque panneau = même outil, usage différent, résultat immédiat visible.",
+      "mood": "Polyvalence concrète, lumière automnale à hivernale selon le panneau — cohérence de couleur entre tous",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "lifestyle",
+      "description": "Femme d'environ 68 ans, bien mise sans être apprêtée, debout sur une terrasse en bois entourée de feuillage automnal. Elle tient la Seese Pro d'une seule main, l'autre main posée naturellement sur le côté. Son sourire est authentique et discret — la satisfaction de quelqu'un qui vient de finir une tâche qu'elle ne pensait plus pouvoir faire seule. Lumière dorée de fin d'après-midi. Posture droite, digne. Aucune mise en scène : terrasse réelle, jardin réel en arrière-plan.",
+      "mood": "Dignité, autonomie retrouvée, chaleur humaine — pas condescendant, pas publicitaire",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 7,
+      "scene_type": "product_shot",
+      "description": "La Seese Pro rangée dans son étui ouvert, posé sur une étagère de garage en bois bien organisée. Autour : quelques outils courants (niveau, perceuse), mais l'étui est accessible, en avant, clairement à portée de main. Éclairage naturel de fenêtre de garage, légèrement chaud. L'étui est propre, le produit nickel. Impression : c'est l'outil qu'on attrape en premier, pas celui qu'on redoute de sortir.",
+      "mood": "Ordre, praticité, disponibilité — le bon outil à sa place, prêt à servir",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    }
+  ]
+}

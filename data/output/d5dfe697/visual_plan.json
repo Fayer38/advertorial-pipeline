@@ -1,0 +1,76 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Close-up of a relaxed hand — belonging to a man or woman in their 50s, casually dressed — holding the Seese Pro blower at waist height with a loose, effortless grip. Sunny residential patio in the background, slightly out of focus. A trail of leaves is visibly caught mid-air, blowing away to the right. The wrist is relaxed, not tense. No strain, no effort. The scene communicates 'this is nothing' without a word.",
+      "mood": "Décontracté, naturel, presque nonchalant. Lumière solaire chaude de fin de matinée. Pas de mise en scène — comme si quelqu'un avait pris la photo en passant.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "before_after",
+      "description": "Image divisée verticalement. Gauche : un coin de garage encombré, semi-obscur, avec un gros souffleur à essence posé au sol sous des outils et une vieille boîte. Lumière sombre, ambiance 'oublié là'. Droite : une étagère propre et bien rangée près d'une porte d'entrée ou de garage, avec uniquement le Seese Pro dans son étui compact, posé à portée de main. Lumière naturelle, ambiance 'prêt à l'emploi'. Les deux photos doivent sembler authentiques, pas trop stylisées.",
+      "mood": "Contraste clair entre 'lourd et oublié' vs 'léger et accessible'. Pas dramatique — juste réaliste et parlant.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Une personne de 50-60 ans (homme ou femme, tenue décontractée du weekend) debout devant une terrasse couverte de feuilles mortes. Bras croisés, regard légèrement las dirigé vers le sol. Pas de dramatisation — juste cette expression universelle de 'pas envie de s'y mettre'. Lumière naturelle d'après-midi. Vrai jardin résidentiel, pas un studio. Aucun souffleur visible — c'est justement le point.",
+      "mood": "Relatable, sans exagération. L'émotion doit être douce et reconnaissable : le découragement pré-tâche que tout le monde connaît.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "product_shot",
+      "description": "Le Seese Pro tenu d'une seule main par une personne d'une cinquantaine d'années, debout à côté d'une terrasse impeccablement propre. Le bras est tendu naturellement, sans effort visible. L'autre main est dans la poche ou posée sur la hanche. En arrière-plan flou : la terrasse nette, peut-être quelques feuilles encore dans l'air. Lumière naturelle chaude. On voit clairement le produit, sa taille compacte, son look moderne.",
+      "mood": "Satisfaction tranquille. Chaleureux, domestique, moderne sans être froid. L'outil est le héros, mais la personne donne l'échelle et l'émotion.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "before_after",
+      "description": "Diptyque horizontal. Gauche : mains gantées frottant une voiture mouillée avec un chamois — geste lent, friction visible, posture courbée. Un overlay discret indique '15 min'. Droite : le Seese Pro dirigé vers la carrosserie d'une voiture, gouttelettes d'eau projetées en arc dans les airs, surface déjà sèche derrière le flux d'air. Overlay '3 min'. Même voiture, même angle si possible. Lumière d'extérieur, allée résidentielle.",
+      "mood": "Factuel et convaincant. Pas de surenchère — juste une démonstration visuelle claire de la différence de temps et d'effort.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "product_shot",
+      "description": "Flat lay sur fond blanc ou gris très clair. Au centre : le Seese Pro, mis en valeur, propre. Autour de lui, disposés en arc ou en grille : un gros souffleur à essence miniaturisé ou une silhouette (barré d'une croix rouge), un chamois de séchage (barré), un grattoir de pare-brise (barré), une bombe de dépoussiérage électrique (barrée). Les croix sont nettes, le style est minimal et moderne. Police sans-serif si des labels sont ajoutés.",
+      "mood": "Clair, visuel, efficace. Style infographie lifestyle — entre la photo produit et le schéma. Le message doit se comprendre en 2 secondes.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "product_shot",
+      "description": "Flat lay soigné sur surface claire (bois clair ou fond blanc cassé). Disposition ordonnée du kit complet : souffleur Seese Pro, étui de transport, batterie, chargeur, protection auditive. Chaque élément est espacé proprement, comme dans un unboxing premium. En bas à droite ou en superposition légère : étiquette prix avec '$249.99' barré en rouge et '$119.99' en gras en dessous. Lumière douce et uniforme, sans ombre dure.",
+      "mood": "Premium, propre, rassurant. Donne envie de recevoir le colis. Pas 'promotionnel criard' — plutôt 'Apple product reveal' accessible.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    },
+    {
+      "section_index": 7,
+      "scene_type": "lifestyle",
+      "description": "Une personne de 50-60 ans (même avatar que section 2 idéalement) debout sur une terrasse parfaitement propre, le Seese Pro tenu nonchalamment dans une main, sourire détendu — pas un sourire de publicité, juste la satisfaction tranquille du travail fait. Lumière dorée de fin d'après-midi (golden hour). Fond : jardin résidentiel réel, arbres flous, maison visible. L'atmosphère dit 'c'est fait, et ça n'a pris que cinq minutes'.",
+      "mood": "Chaleureux, accompli, apaisé. C'est l'image émotionnelle de clôture — la promesse tenue. Lumière dorée, espace propre, corps détendu.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    }
+  ]
+}

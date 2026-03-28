@@ -1,0 +1,108 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "close-up of a relaxed human hand loosely gripping a compact modern electric leaf blower at waist height, casual weekend clothing sleeve visible, residential sunny patio blurred in background, trail of autumn leaves caught mid-air blowing dynamically to the right, wrist completely relaxed and natural, effortless nonchalant gesture, warm late-morning sunlight, candid photography style, photorealistic, 35mm lens, shallow depth of field, natural bokeh background, hyperdetailed, cinematic lighting, professional photography, shot as if taken casually by a passerby",
+      "negative_prompt": "ugly, deformed, noisy, blurry foreground hand, distorted, grainy, low quality, watermark, text, logo, signature, tense grip, strained wrist, extra fingers, mutated hands, bad anatomy, stock photo aesthetic, staged pose, artificial lighting",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "vertical split-screen diptych, left half: cluttered dark garage corner, dim moody lighting, large heavy gas-powered leaf blower sitting on dusty concrete floor buried under old tools and cardboard boxes, forgotten and neglected atmosphere, shadows, gritty realism, right half: clean organized shelf near a garage entry door, compact modern electric leaf blower in a sleek carrying case placed neatly at arm's reach, natural daylight from window, tidy and ready-to-use atmosphere, both halves photographed in authentic documentary style, no staging, real residential environment, photorealistic, sharp focus",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, signature, overly staged, studio lighting, artificial backdrop, cartoon, illustration",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "candid photo of a 55-year-old person, man or woman, wearing relaxed weekend casual clothes, standing in front of a real residential backyard terrace covered in fallen autumn leaves, arms loosely crossed, gaze directed slightly downward at the leaf-covered ground, subtle expression of mild reluctance and pre-task weariness, soft natural afternoon light, genuine residential garden environment with trees and fence in background, no tools or equipment visible, authentic non-staged documentary photography, photorealistic, 50mm lens, natural colors, hyperdetailed",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, extra limbs, extra fingers, mutated hands, bad anatomy, dramatic expression, exaggerated emotion, stock photo smile, studio backdrop, artificial lighting, young person",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "a person in their early 50s, casual weekend attire, standing beside an immaculately clean residential terrace, holding a compact modern electric leaf blower in one extended arm with a natural relaxed posture, other hand resting in pocket, the blower clearly visible showing its small compact size and modern sleek design, warm natural outdoor light, background showing clean patio surface with a few last leaves still drifting in soft bokeh, person's expression calm and quietly satisfied, product scale clearly visible against human hand, photorealistic, 85mm portrait lens, shallow depth of field, professional lifestyle photography",
+      "negative_prompt": "ugly, deformed, blurry foreground, distorted, grainy, low quality, watermark, text, logo, extra fingers, mutated hands, bad anatomy, strained posture, tense grip, stock photo expression, studio backdrop, artificial lighting, young person",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "horizontal diptych split-screen comparison, left side: gloved hands slowly rubbing a wet dark car with a chamois cloth, visible friction and effort, person leaning over with curved back, water droplets on car surface, residential driveway, overcast natural light, small overlay text '15 min' in clean sans-serif, right side: same car same angle same driveway, compact modern electric leaf blower aimed at car body, water droplets explosively scattered in arc through the air, car surface visibly dry behind the airflow, small overlay text '3 min' in clean sans-serif, both sides authentic outdoor residential setting, photorealistic, hyperdetailed, natural outdoor lighting",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, extra logo, extra fingers, mutated hands, bad anatomy, studio backdrop, artificial lighting, inconsistent backgrounds",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "minimal clean flat lay product infographic on pure white background, center: compact modern electric leaf blower hero product, clean and pristine, surrounding it in a neat arc: small gas-powered leaf blower crossed out with bold red X, chamois drying cloth crossed out with bold red X, ice scraper crossed out with bold red X, electric air duster can crossed out with bold red X, all items evenly spaced with clear visual hierarchy, modern sans-serif labels, soft uniform diffused studio lighting, zero harsh shadows, minimalist Apple-style product photography aesthetic, graphic design clarity, hyperdetailed product rendering, commercial photography",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, cluttered background, colored background, harsh shadows, uneven lighting, bad typography, illegible text, extra items, cartoon style",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "premium flat lay on light natural wood surface, carefully arranged full product kit in elegant unboxing layout: compact modern electric leaf blower centered and prominent, sleek carrying case open beside it, battery unit, wall charger, hearing protection earmuffs, each item cleanly spaced with equal breathing room as in luxury product reveal, soft diffused natural studio lighting, zero harsh shadows, bottom right corner: clean sans-serif price tag label showing '$249.99' with red strikethrough and '$119.99' in bold below, Apple product launch aesthetic, photorealistic commercial photography, hyperdetailed, premium lifestyle brand visual",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, cluttered, harsh shadows, dark background, plastic cheap feel, amateur photography, extra items, messy layout, gaudy promotional style",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "a person aged 55-60, casual comfortable weekend clothes, standing relaxed on a spotlessly clean residential terrace, holding a compact modern electric leaf blower nonchalantly at their side in one hand, genuine quiet smile of calm satisfaction — not a commercial grin, warm golden hour late afternoon sunlight bathing the scene, long soft shadows, blurred residential garden background with trees and glimpse of house facade, body language fully relaxed and unhurried, atmosphere communicating 'done in five minutes', photorealistic, 50mm lens, golden bokeh background, cinematic warm tones, hyperdetailed, professional lifestyle photography",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, extra limbs, extra fingers, mutated hands, bad anatomy, fake advertising smile, tense posture, studio backdrop, cold lighting, young person, stock photo aesthetic",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

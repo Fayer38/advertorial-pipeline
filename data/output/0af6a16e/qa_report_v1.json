@@ -1,0 +1,42 @@
+{
+  "overall_score": 8,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 7,
+      "feedback": "Le hook est solide et crée de la curiosité ('the wrong tool all along'), mais il manque d'un choc immédiat. Il démarre sur une réflexion personnelle plutôt que sur une tension forte. Le sous-titre compense bien avec '950 grams / 200 MPH', mais le premier paragraphe reste trop calme pour arrêter un vrai scroll. Le lecteur continue par bienveillance, pas par urgence irrésistible."
+    },
+    "story_flow": {
+      "score": 8,
+      "feedback": "Excellent flow narratif. Les sections s'enchaînent naturellement (David → ritual → Tom → specs → 4 tools → Margaret → offre). Les bucket brigades ('Let me tell you what changed', 'Here's the part I didn't expect', 'That's when I understood') sont bien placées. Léger ralentissement dans la section [OFFER] où le ton passe d'éditorial à catalogue — affaiblit légèrement le rythme acquis."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Les preuves internes sont bonnes : specs détaillées (30,000 RPM, 40 min, 2-sec startup), benchmark personnel (4:30 vs 25 min), témoignage Margaret. Mais il manque totalement de preuve externe : aucun avis client chiffré (Trustpilot, Amazon), aucune certification, aucune mention presse. Un sceptique pourrait rejeter tout ça comme des affirmations non vérifiables. Suggestion : ajouter '★★★★★ 4.7/5 — 2,847 verified reviews' dès la section proof."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Le CTA est clair sur l'action (cliquer, prix, garantie) mais l'urgence est vague : 'before this offer ends' ne crée pas de vraie pression. Pas de deadline précise, pas de stock limité, pas de raison concrète d'agir maintenant plutôt que dans 3 jours. Suggestion : 'Only 47 units left at this price — offer expires Sunday at midnight' ou un compteur de stock décroissant."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'arc douleur → découverte → confiance fonctionne bien, avec un vrai moment émotionnel dans la section Margaret ('It gives capable adults back their independence'). Mais le future pacing est quasi absent : le lecteur n'est jamais projeté dans sa vie après achat. Suggestion : ajouter un paragraphe après les bénéfices — 'Imagine next Saturday: you grab the Seese Pro, your patio is clean before your coffee gets cold, and you're back inside in under 5 minutes. That's what the right tool feels like.'"
+    },
+    "readability": {
+      "score": 9,
+      "feedback": "Excellent : paragraphes courts (2-4 lignes), usage du gras pertinent et non abusif, listes bullet points bien utilisées, 1099 mots — longueur idéale. Les dialogues ('Give me two minutes', 'This is it?') aèrent la narration. Lecture fluide même en diagonale."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "Structure éprouvée bien respectée. Le ton éditorial est maintenu sur 90% de l'article — David sonne comme un vrai propriétaire, pas un copywriter. La section [OFFER] avec la liste prix barrés ($249.99 → $119.99) rompt légèrement le naturel éditorial. Les meilleurs advertoriaux intègrent l'offre de façon plus narrative ('I looked it up and it was $119 — less than I'd spent on the gas alone last season')."
+    }
+  },
+  "improvements": [
+    "Reformuler le hook d'ouverture avec un détail physique immédiat : 'The morning I threw my back out trying to start a $220 blower — for the fourth time — I finally admitted I had the wrong tool.' Tension dès la ligne 1.",
+    "Ajouter une preuve sociale chiffrée dans la section [PROOF] : '★★★★★ 4.7/5 based on 2,847 verified reviews' avec 1-2 verbatims clients courts (max 2 lignes chacun).",
+    "Insérer un paragraphe de future pacing après la section Margaret : projeter le lecteur dans sa vie concrète le week-end suivant l'achat.",
+    "Remplacer 'before this offer ends' dans le CTA par une urgence spécifique et crédible : stock restant (ex. '53 units left at this price'), deadline précise, ou badge 'Ships Monday if ordered today'.",
+    "Adoucir le break éditorial dans la section [OFFER] en intégrant les prix de façon narrative plutôt qu'en liste catalogue, pour maintenir le ton jusqu'au bout."
+  ],
+  "version": 1
+}

@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "created_at": "2026-03-28T17:25:16.401618",
+    "product_url": "https://seesepro.com/en-us/products/seese-pro-v9",
+    "confidence_score": 0.72
+  },
+  "product_summary": {
+    "name": "Seese Pro™ Ultra-Light Cordless Blower",
+    "one_liner": "Un souffleur sans fil de 950g qui délivre 200 MPH — remplace votre souffleur de garage, votre séchoir voiture, votre dépoussiéreur et votre gratte-givre en un seul outil.",
+    "category": "Outillage extérieur / entretien maison — souffleur portatif",
+    "price_point": "milieu de gamme (positionné premium par rapport au prix barré à $249.99, mais accessible à $119.99)"
+  },
+  "avatar_profile": {
+    "who": "Propriétaire de maison, 40-65 ans, actif mais pas sportif, qui entretient lui-même son terrain, sa voiture et son garage. Peut être une femme ou un senior qui a renoncé aux gros outils par peur de se blesser ou par manque de force.",
+    "main_problem": "Mon vieux souffleur à gaz est trop lourd, trop bruyant, trop compliqué à démarrer — et une fois sorti, mon dos me fait souffrir. Mais sans lui, le nettoyage prend une éternité.",
+    "desired_outcome": "Nettoyer son espace sans effort et sans douleur, se sentir efficace et capable — sans dépendre de quelqu'un d'autre ni d'un gros engin encombrant.",
+    "emotional_state_before": "Épuisé, frustré par des outils inadaptés, découragé face au nettoyage automnal, honteux que ça prenne autant de temps, inquiet pour son dos.",
+    "emotional_state_after": "Soulagé, fier d'avoir fini en 5 minutes, surpris par la puissance de quelque chose d'aussi léger, libéré de la corvée."
+  },
+  "copy_ammunition": {
+    "primary_angle": {
+      "angle_name": "La révélation du mauvais outil — 'Vous trimez depuis des années avec le mauvais équipement'",
+      "why": "Le lecteur n'est pas en train de chercher un souffleur, il cherche à ne plus souffrir du dos, à ne plus perdre son samedi, à ne plus sortir un engin à gaz pour 10 feuilles. L'angle 'vous avez toujours eu le mauvais outil' crée un moment de prise de conscience qui disqualifie tous les autres produits (balai, râteau, gros souffleur) et positionne Seese Pro comme l'évidence. Il joue sur la frustration accumulée, pas sur les specs techniques — ce qui correspond parfaitement à un avatar qui en a marre, pas à un technophile qui compare des chiffres.",
+      "hook_template": "J'ai arrêté de me battre contre mon souffleur à gaz le jour où j'ai compris que je m'étais trompé d'outil depuis le début."
+    },
+    "secondary_angles": [
+      {
+        "angle_name": "L'outil 4-en-1 — valeur exceptionnelle vs achat séparé",
+        "hook_template": "J'allais acheter un séchoir voiture à $60, un dépoussiéreur à $80 et un souffleur à $200. Puis j'ai trouvé ça."
+      },
+      {
+        "angle_name": "Le souffleur pour ceux qui ne peuvent pas (ou ne veulent plus) forcer",
+        "hook_template": "Ma mère de 68 ans nettoie sa terrasse seule maintenant. Elle n'aurait jamais pu avec un vrai souffleur."
+      },
+      {
+        "angle_name": "La vitesse — transformer la corvée en 5 minutes",
+        "hook_template": "Ma terrasse de 400 m² : 25 minutes avec un balai, 4 minutes 30 avec ça."
+      }
+    ],
+    "hooks": [
+      "J'ai arrêté de me battre contre mon souffleur à gaz le jour où j'ai compris que je m'étais trompé d'outil depuis le début.",
+      "Plus léger qu'un sac de sucre. Plus puissant que votre souffleur de garage. Voici pourquoi ça m'a semblé impossible — jusqu'à ce que je l'essaie.",
+      "Ma terrasse de 37 m² me prenait 25 minutes avec un balai. Maintenant : 4 minutes 30. Voici ce qui a changé.",
+      "J'allais dépenser $300 sur un souffleur professionnel. Mon voisin m'a montré quelque chose à $119 qui fait exactement la même chose — sans m'arracher le dos.",
+      "Ce n'est pas un jouet. 200 MPH dans une main, 950 grammes sur la balance. C'est le souffleur que j'aurais voulu avoir il y a 10 ans.",
+      "Mon dos me faisait souffrir chaque automne. Pas à cause des feuilles — à cause de l'outil que j'utilisais pour les ramasser.",
+      "Je sèche ma voiture en 3 minutes sans une seule trace. Fini les microfibres, fini les griffures. Voici comment.",
+      "Je pensais que 'léger et puissant' était un argument marketing. J'avais tort."
+    ],
+    "key_benefits_ranked": [
+      "Zéro douleur au dos — une main suffit, même après 40 minutes d'utilisation (bénéfice #1 : soulagement de la douleur récurrente)",
+      "Nettoyer en 5 minutes ce qui prenait 25 — retrouver son samedi au lieu de le perdre dans les corvées",
+      "Remplace 4 outils encombrants — souffleur, séchoir voiture, dépoussiéreur, gratte-givre : plus qu'un seul truc à ranger",
+      "Fonctionne toute l'année — ne prend pas la poussière 9 mois sur 12 comme un souffleur classique",
+      "200 MPH rivalisent avec des souffleurs à $300+ — la performance sans le prix ni le poids",
+      "Séchage voiture sans griffures ni traces — résultat professionnel sans payer le détailer",
+      "Démarrage immédiat, pas de gaz, pas de câble — prêt en 2 secondes, rangé en 2 secondes",
+      "Garantie à vie (remplacement) — on n'achète qu'une fois"
+    ],
+    "proof_elements": [
+      "Comparaison mesurable : patio de 400 sq ft en moins de 5 min vs 25 min au balai (donnée produit officielle)",
+      "Séchage voiture en 3 min vs 15+ min avec des serviettes microfibre (donnée produit officielle)",
+      "Dégivrage pare-brise en moins de 2 minutes sans gratter (donnée produit officielle)",
+      "200+ MPH / 30,000+ RPM — specs vérifiables, moteur brushless (même technologie que les drones et les Tesla selon la fiche produit)",
+      "Trademark protégé + specs turbine propriétaires — pas un produit générique",
+      "Entrepôts Canada, France, Allemagne — présence internationale, pas un drop-shipper inconnu",
+      "Prix barré $249.99 → $119.99 : 55% de réduction documentée (crédibilise la valeur perçue)",
+      "MANQUANT : témoignages clients, nombre d'unités vendues, notes/avis vérifiables, études indépendantes"
+    ],
+    "objection_handlers": [
+      {
+        "objection": "C'est trop petit pour être vraiment puissant",
+        "response": "200 MPH dans quelque chose qui pèse moins qu'une bouteille d'eau d'un litre. La taille ne détermine plus la puissance quand on utilise un moteur brushless à 30,000 RPM — la même technologie que les drones de course et les voitures électriques de luxe."
+      },
+      {
+        "objection": "$120 c'est trop cher pour un souffleur",
+        "response": "Comparez : un souffleur de garage ($150+) + un séchoir voiture ($60) + un dépoussiéreur ($80) + un gratte-givre ($20) = $310 minimum. Seese Pro remplace les quatre pour $119.99 — et vous économisez l'espace de rangement par-dessus."
+      },
+      {
+        "objection": "Est-ce que ça remplace vraiment mon gros souffleur ?",
+        "response": "Pour 95% des tâches quotidiennes d'un propriétaire — terrasse, allée, voiture, garage — oui. Votre gros souffleur restera dans le fond du garage. Votre dos s'en souviendra."
+      },
+      {
+        "objection": "Est-ce que la batterie dure assez longtemps ?",
+        "response": "40 minutes de runtime. Une terrasse de 400 sq ft se nettoie en moins de 5 minutes. Vous pouvez faire 8 nettoyages complets sur une seule charge."
+      },
+      {
+        "objection": "Ça va abîmer la peinture de ma voiture ?",
+        "response": "Aucun contact, aucune pointe métallique. Seese Pro sèche par flux d'air uniquement — peinture, jantes, rétroviseurs, grilles d'aération. Zéro risque de rayure."
+      },
+      {
+        "objection": "Est-ce que c'est trop bruyant ?",
+        "response": "Comme tout souffleur haute vitesse, oui, il fait du bruit. C'est pourquoi des bouchons d'oreilles sont inclus dans chaque commande. Mais vous ne dérangerez pas vos voisins — c'est un nettoyage de 5 minutes, pas une heure."
+      },
+      {
+        "objection": "Et si ça ne me convient pas ?",
+        "response": "30 jours pour le retourner, remboursement complet. Garantie à vie ensuite — remplacement si ça tombe en panne. Zéro risque d'achat."
+      }
+    ],
+    "urgency_elements": [
+      "Remise de 55% : $249.99 → $119.99 — prix barré affiché, valeur de référence établie",
+      "3 cadeaux gratuits d'une valeur de $110 inclus (dont le cas de rangement à $25) — offre groupée qui disparaît",
+      "Bundles disponibles (Ultimate Drying Bundle, Professional Bundle) à 55% — offres limitées par définition",
+      "MANQUANT : mention explicite de stock limité, compte à rebours, ruptures passées — à vérifier auprès du vendeur avant d'utiliser dans le copy"
+    ],
+    "cta_options": [
+      "Essayez Seese Pro sans risque — 30 jours pour décider, garantie à vie si vous gardez.",
+      "Réclamez votre remise de 55% + les 3 cadeaux offerts — offre valable aujourd'hui.",
+      "Commandez maintenant, livraison gratuite — et nettoyez votre terrasse ce week-end en moins de 5 minutes."
+    ]
+  },
+  "visual_notes": {
+    "product_description": "Souffleur portatif compact, design épuré, corps en plastique ABS robuste (probablement noir ou gris anthracite avec accents de couleur). Forme ergonomique en pistolet, prévu pour une seule main. Livré dans un étui de rangement compact. Aspect moderne et professionnel, pas 'jouet'.",
+    "suggested_scenes": [
+      "Hero : Seese Pro tenu à une main, fond légèrement flou (terrasse ou allée en automne). Feuilles en mouvement dans l'air. Lumière dorée d'après-midi.",
+      "Section problème : split-screen — à gauche, personne qui se courbe douloureusement avec un râteau ou lutte avec un gros souffleur à gaz. À droite, même personne debout, décontractée, Seese Pro à la main.",
+      "Section vitesse/efficacité : terrasse avant/après côte à côte, ou chronomètre stylisé montrant '4 min 30'.",
+      "Section voiture : Seese Pro dirigé sur un capot mouillé après lavage, eau qui s'envole en gouttelettes. Résultat : voiture sèche et brillante sans microfibre.",
+      "Section hiver : Seese Pro sur un pare-brise givré, glace et givre qui s'envolent. Contraste avec la douleur habituelle du grattage.",
+      "Section senior/accessibilité : femme de 60+ ans qui utilise le produit d'une main, sourire naturel, aucun effort visible.",
+      "Section unboxing/valeur : tout le contenu étalé — blower, batterie, chargeur, étui, bouchons d'oreille — avec le prix $119.99 visible.",
+      "Closing/CTA : produit dans son étui rangé proprement, à portée de main dans un garage organisé."
+    ],
+    "mood": "Automnal et domestique — chaleureux, concret, sans prétention. Pas de studio blanc aseptisé. Vraies maisons, vraies terrasses, vraie lumière naturelle. Sentiment de compétence et de satisfaction, pas d'aspiration lifestyle. Palette : terres, verts sombres, lumière de fin d'après-midi."
+  }
+}
