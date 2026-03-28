@@ -121,20 +121,73 @@ class HTMLPublisherAgent(BaseAgent):
         article_body = "\n\n".join(body_parts)
         cta_body = cta_section.get("body_html", "") if cta_section else ""
 
+        # Translations for static template text
+        i18n = {
+            "en": {
+                "offer_title": '⚠️ Special Offer: <span class="accent">50% Off</span> — Limited Stock',
+                "offer_desc": 'Available <strong>ONLY</strong> on the official store — at the lowest price of the year.',
+                "step1_title": "✅ Step 1", "step1": "Order yours today to lock in the exclusive discount — only while supplies last.",
+                "step2_title": "✅ Step 2", "step2": "When it arrives (2-5 business days), unbox it and start using it immediately. No setup needed.",
+                "step3_title": "✅ Step 3", "step3": "Make it part of your routine. See the difference in minutes — <strong>without any effort</strong>.",
+                "tip": '<strong>Useful tip:</strong><br>Know someone who would love this? It makes an incredible gift — the kind that gets used every week.',
+                "gift": '<strong>Gift idea:</strong> Get the bundle and save even more. Perfect for birthdays, holidays, or just treating yourself.',
+                "cta": "Check Availability", "cta_footer": "👉 Skip to offer — Check availability",
+                "badge1": "30-day money-back guarantee", "badge2": "Free shipping (2-5 days)",
+                "byline_by": "By", "product_img_alt": "Product image",
+            },
+            "fr": {
+                "offer_title": '⚠️ Offre Spéciale : <span class="accent">-50%</span> — Stock Limité',
+                "offer_desc": 'Disponible <strong>UNIQUEMENT</strong> sur le site officiel — au prix le plus bas de l\'année.',
+                "step1_title": "✅ Étape 1", "step1": "Commandez aujourd'hui pour bénéficier de la réduction exclusive — jusqu'à épuisement des stocks.",
+                "step2_title": "✅ Étape 2", "step2": "Dès réception (2-5 jours ouvrés), déballez et utilisez immédiatement. Aucune installation nécessaire.",
+                "step3_title": "✅ Étape 3", "step3": "Intégrez-le à votre routine. Voyez la différence en quelques minutes — <strong>sans aucun effort</strong>.",
+                "tip": '<strong>Astuce :</strong><br>Vous connaissez quelqu\'un qui adorerait ? C\'est le cadeau idéal — celui qu\'on utilise chaque semaine.',
+                "gift": '<strong>Idée cadeau :</strong> Prenez le pack et économisez encore plus. Parfait pour un anniversaire ou se faire plaisir.',
+                "cta": "Vérifier la Disponibilité", "cta_footer": "👉 Voir l'offre — Vérifier la disponibilité",
+                "badge1": "Satisfait ou remboursé 30 jours", "badge2": "Livraison gratuite (2-5 jours)",
+                "byline_by": "Par", "product_img_alt": "Image produit",
+            },
+            "es": {
+                "offer_title": '⚠️ Oferta Especial: <span class="accent">-50%</span> — Stock Limitado',
+                "offer_desc": 'Disponible <strong>SOLO</strong> en la tienda oficial — al precio más bajo del año.',
+                "step1_title": "✅ Paso 1", "step1": "Pide el tuyo hoy para asegurar el descuento exclusivo — hasta agotar existencias.",
+                "step2_title": "✅ Paso 2", "step2": "Cuando llegue (2-5 días hábiles), ábrelo y úsalo de inmediato. Sin instalación.",
+                "step3_title": "✅ Paso 3", "step3": "Hazlo parte de tu rutina. Nota la diferencia en minutos — <strong>sin ningún esfuerzo</strong>.",
+                "tip": '<strong>Consejo:</strong><br>¿Conoces a alguien que lo adoraría? Es el regalo perfecto — de los que se usan cada semana.',
+                "gift": '<strong>Idea de regalo:</strong> Llévate el pack y ahorra aún más.',
+                "cta": "Ver Disponibilidad", "cta_footer": "👉 Ir a la oferta — Ver disponibilidad",
+                "badge1": "Garantía de devolución 30 días", "badge2": "Envío gratuito (2-5 días)",
+                "byline_by": "Por", "product_img_alt": "Imagen del producto",
+            },
+            "de": {
+                "offer_title": '⚠️ Sonderangebot: <span class="accent">-50%</span> — Begrenzter Vorrat',
+                "offer_desc": '<strong>NUR</strong> im offiziellen Shop erhältlich — zum niedrigsten Preis des Jahres.',
+                "step1_title": "✅ Schritt 1", "step1": "Bestellen Sie noch heute und sichern Sie sich den exklusiven Rabatt — solange der Vorrat reicht.",
+                "step2_title": "✅ Schritt 2", "step2": "Nach Erhalt (2-5 Werktage) sofort auspacken und loslegen. Keine Installation nötig.",
+                "step3_title": "✅ Schritt 3", "step3": "Machen Sie es zu Ihrer Routine. Sehen Sie den Unterschied in Minuten — <strong>ohne Aufwand</strong>.",
+                "tip": '<strong>Tipp:</strong><br>Kennen Sie jemanden, der das lieben würde? Ein perfektes Geschenk — eins, das jede Woche benutzt wird.',
+                "gift": '<strong>Geschenkidee:</strong> Holen Sie sich das Bundle und sparen Sie noch mehr.',
+                "cta": "Verfügbarkeit prüfen", "cta_footer": "👉 Zum Angebot — Verfügbarkeit prüfen",
+                "badge1": "30 Tage Geld-zurück-Garantie", "badge2": "Kostenloser Versand (2-5 Tage)",
+                "byline_by": "Von", "product_img_alt": "Produktbild",
+            },
+        }
+        tx = i18n.get(lang, i18n["en"])
+
         offer_box = f'''<div class="offer-box">
-      <h2>⚠️ Special Offer: <span class="accent">50% Off</span> — Limited Stock</h2>
-      <p><strong>{product_name}</strong><br>Available <strong>ONLY</strong> on the official store — at the lowest price of the year.</p>
+      <h2>{tx["offer_title"]}</h2>
+      <p><strong>{product_name}</strong><br>{tx["offer_desc"]}</p>
       <div class="offer-product">
-        {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;border-radius:8px;margin:8px 0 16px;">' if product_image_url else '<div class="placeholder"><div class="tbadge">product bundle</div><br>Product hero image with all accessories, price badge showing discount</div>'}
+        {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;border-radius:8px;margin:8px 0 16px;">' if product_image_url else ''}
       </div>
-      <div class="step"><div class="step-title">✅ Step 1</div><p>Order yours today to lock in the exclusive discount — only while supplies last.</p></div>
-      <div class="step"><div class="step-title">✅ Step 2</div><p>When it arrives (2-5 business days from US warehouses), unbox it and start using it immediately. No setup, no tools, no experience needed.</p></div>
-      <div class="step"><div class="step-title">✅ Step 3</div><p>Make it part of your routine. See the difference in minutes — <strong>without any effort</strong>.</p></div>
-      <div class="tip">💡 <strong>Useful tip:</strong><br>Know someone who would love this? It makes an incredible, actually-useful gift — the kind that gets used every week, not stored away.</div>
-      <div class="tip">🎁 <strong>Gift idea:</strong> Get the bundle and save even more. Perfect for birthdays, holidays, or just treating yourself.</div>
+      <div class="step"><div class="step-title">{tx["step1_title"]}</div><p>{tx["step1"]}</p></div>
+      <div class="step"><div class="step-title">{tx["step2_title"]}</div><p>{tx["step2"]}</p></div>
+      <div class="step"><div class="step-title">{tx["step3_title"]}</div><p>{tx["step3"]}</p></div>
+      <div class="tip">💡 {tx["tip"]}</div>
+      <div class="tip">🎁 {tx["gift"]}</div>
       {cta_body}
-      <a href="{product_url}" class="cta-bottom">Check Availability</a>
-      <div class="cta-badges"><div><span class="chk">✔</span> 30-day money-back guarantee</div><div><span class="chk">✔</span> Free shipping from US warehouses</div></div>
+      <a href="{product_url}" class="cta-bottom">{tx["cta"]}</a>
+      <div class="cta-badges"><div><span class="chk">✔</span> {tx["badge1"]}</div><div><span class="chk">✔</span> {tx["badge2"]}</div></div>
     </div>'''
 
         return f'''<!DOCTYPE html>
@@ -197,24 +250,24 @@ ul,ol{{padding-left:20px;padding-right:8px}}
 <div class="page-wrapper">
   <div class="article-content">
     <h1>{headline}</h1>
-    <p class="byline">By {author_name}&nbsp;&nbsp;|&nbsp;&nbsp;{today}&nbsp;&nbsp;|&nbsp;&nbsp;10:15 am</p>
+    <p class="byline">{tx["byline_by"]} {author_name}&nbsp;&nbsp;|&nbsp;&nbsp;{today}</p>
     {article_body}
     {offer_box}
   </div>
   <div class="sidebar">
     <div class="sidebar-card">
       <div class="sb-title">{product_name}</div>
-      {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;">' if product_image_url else '<div class="sb-img">[Product image]</div>'}
-      <a href="{product_url}" class="sb-cta">Check Availability</a>
+      {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;">' if product_image_url else '<div class="sb-img">[' + tx["product_img_alt"] + ']</div>'}
+      <a href="{product_url}" class="sb-cta">{tx["cta"]}</a>
       <div class="sb-badges">
-        <div><span class="chk">✔</span> 30-day money-back guarantee</div>
-        <div><span class="chk">✔</span> Free shipping (2-5 days)</div>
+        <div><span class="chk">✔</span> {tx["badge1"]}</div>
+        <div><span class="chk">✔</span> {tx["badge2"]}</div>
       </div>
     </div>
   </div>
 </div>
 <div class="sticky-footer">
-  <a href="{product_url}">👉 Skip to offer — Check availability</a>
+  <a href="{product_url}">{tx["cta_footer"]}</a>
 </div>
 </body>
 </html>'''
