@@ -77,6 +77,74 @@ async def _load_existing_products():
         except Exception as e:
             logger.error(f"Failed to load {f}: {e}")
 
+# ── LOAD EXISTING PIPELINES ON STARTUP ──
+@app.on_event("startup")
+async def _load_existing_pipelines():
+    out_dir = Path("data/output")
+    if not out_dir.exists():
+        return
+    for d in out_dir.iterdir():
+        if not d.is_dir() or d.name == "products":
+            continue
+        plid = d.name
+        # Check if there's a draft or HTML
+        drafts = list(d.glob("advertorial_draft*.json"))
+        htmls = list(d.glob("*.html"))
+        briefs = list(d.glob("structured_brief*.json"))
+        if not drafts and not htmls:
+            continue  # empty/incomplete pipeline
+        try:
+            # Determine status
+            status = "completed" if htmls else "failed"
+            headline = ""
+            qa_score = 0
+            html_file = ""
+            config = {}
+            product_id = ""
+            product_name = ""
+            started_at = ""
+
+            if htmls:
+                html_file = htmls[0].name
+                headline = htmls[0].stem.replace("-", " ").title()[:80]
+
+            if drafts:
+                draft = json.loads(drafts[0].read_text())
+                content = draft.get("content", {})
+                headline = content.get("headline", headline)
+
+            # Try to get QA score
+            qa_files = list(d.glob("qa_report*.json"))
+            if qa_files:
+                qa = json.loads(qa_files[0].read_text())
+                qa_score = qa.get("overall_score", 0)
+
+            # Try to get config from brief
+            if briefs:
+                brief = json.loads(briefs[0].read_text())
+                cfg = brief.get("_config", {})
+                config = cfg if cfg else {"angle": "testimonial", "structure": "pas", "tone": "conversational", "language": "en"}
+                ps = brief.get("product_summary", {})
+                product_name = ps.get("name", "")
+
+            # Use dir mtime as timestamp
+            import os as _os
+            mtime = datetime.fromtimestamp(_os.path.getmtime(str(d)))
+            started_at = mtime.isoformat()
+
+            pipelines[plid] = {
+                "id": plid, "status": status, "started_at": started_at,
+                "completed_at": started_at if status == "completed" else "",
+                "product_id": product_id, "product_url": "",
+                "product_name": product_name,
+                "config": config,
+                "current_phase": "", "current_agent": "", "progress": 1.0 if status == "completed" else 0,
+                "error": "", "results": {"headline": headline, "qa_score": qa_score, "html_file": html_file},
+            }
+            logger.info(f"Loaded pipeline: {plid} ({status}) — {headline[:50]}")
+        except Exception as e:
+            logger.error(f"Failed to load pipeline {plid}: {e}")
+
 # ── PRODUCTS ──
 @app.post("/products/analyze")
 async def analyze_product(req: ProductAnalyzeReq, bg: BackgroundTasks):
