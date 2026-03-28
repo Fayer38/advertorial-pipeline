@@ -133,7 +133,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "gift": '<strong>Gift idea:</strong> Get the bundle and save even more. Perfect for birthdays, holidays, or just treating yourself.',
                 "cta": "Check Availability", "cta_footer": "👉 Skip to offer — Check availability",
                 "badge1": "30-day money-back guarantee", "badge2": "Free shipping (2-5 days)",
-                "byline_by": "By", "product_img_alt": "Product image",
+                "byline_by": "By", "product_img_alt": "Product image", "bundle_badge": "PRODUCT BUNDLE", "bundle_desc": "Product hero image with all accessories and price badge",
             },
             "fr": {
                 "offer_title": '⚠️ Offre Spéciale : <span class="accent">-50%</span> — Stock Limité',
@@ -145,7 +145,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "gift": '<strong>Idée cadeau :</strong> Prenez le pack et économisez encore plus. Parfait pour un anniversaire ou se faire plaisir.',
                 "cta": "Vérifier la Disponibilité", "cta_footer": "👉 Voir l'offre — Vérifier la disponibilité",
                 "badge1": "Satisfait ou remboursé 30 jours", "badge2": "Livraison gratuite (2-5 jours)",
-                "byline_by": "Par", "product_img_alt": "Image produit",
+                "byline_by": "Par", "product_img_alt": "Image produit", "bundle_badge": "PACK PRODUIT", "bundle_desc": "Image du pack complet avec tous les accessoires et prix remisé",
             },
             "es": {
                 "offer_title": '⚠️ Oferta Especial: <span class="accent">-50%</span> — Stock Limitado',
@@ -157,7 +157,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "gift": '<strong>Idea de regalo:</strong> Llévate el pack y ahorra aún más.',
                 "cta": "Ver Disponibilidad", "cta_footer": "👉 Ir a la oferta — Ver disponibilidad",
                 "badge1": "Garantía de devolución 30 días", "badge2": "Envío gratuito (2-5 días)",
-                "byline_by": "Por", "product_img_alt": "Imagen del producto",
+                "byline_by": "Por", "product_img_alt": "Imagen del producto", "bundle_badge": "PACK PRODUCTO", "bundle_desc": "Imagen del pack completo con accesorios y precio con descuento",
             },
             "de": {
                 "offer_title": '⚠️ Sonderangebot: <span class="accent">-50%</span> — Begrenzter Vorrat',
@@ -169,7 +169,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "gift": '<strong>Geschenkidee:</strong> Holen Sie sich das Bundle und sparen Sie noch mehr.',
                 "cta": "Verfügbarkeit prüfen", "cta_footer": "👉 Zum Angebot — Verfügbarkeit prüfen",
                 "badge1": "30 Tage Geld-zurück-Garantie", "badge2": "Kostenloser Versand (2-5 Tage)",
-                "byline_by": "Von", "product_img_alt": "Produktbild",
+                "byline_by": "Von", "product_img_alt": "Produktbild", "bundle_badge": "PRODUKT-BUNDLE", "bundle_desc": "Produktbild mit allem Zubehör und Rabattpreis",
             },
         }
         tx = i18n.get(lang, i18n["en"])
@@ -178,7 +178,7 @@ class HTMLPublisherAgent(BaseAgent):
       <h2>{tx["offer_title"]}</h2>
       <p><strong>{product_name}</strong><br>{tx["offer_desc"]}</p>
       <div class="offer-product">
-        {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;border-radius:8px;margin:8px 0 16px;">' if product_image_url else ''}
+        {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;border-radius:8px;margin:8px 0 16px;">' if product_image_url else '<div class="placeholder"><div class="tbadge">' + tx.get("bundle_badge","PRODUCT BUNDLE") + '</div><br>' + tx.get("bundle_desc","Product hero image with all accessories and price badge") + '</div>'}
       </div>
       <div class="step"><div class="step-title">{tx["step1_title"]}</div><p>{tx["step1"]}</p></div>
       <div class="step"><div class="step-title">{tx["step2_title"]}</div><p>{tx["step2"]}</p></div>
