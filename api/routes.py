@@ -12,6 +12,9 @@ from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 app = FastAPI(title="Advertorial Pipeline API", version="2.0.0")
+
+from api.media_routes import router as media_router
+app.include_router(media_router)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 # ── MODELS ──
