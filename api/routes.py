@@ -252,6 +252,78 @@ async def history():
     h.sort(key=lambda x: x["started_at"], reverse=True)
     return {"pipelines": h}
 
+# ── EDITABLE PREVIEW ──
+EDIT_SCRIPT = """
+<script>
+(function() {
+  var style = document.createElement('style');
+  style.textContent = `
+    [data-editable] { transition: outline .15s, outline-offset .15s; }
+    [data-editable]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; position: relative; }
+    [data-editable]:hover::after { content: '✎'; position: absolute; top: -12px; right: -12px; background: #f26722; color: #fff; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 9999; }
+    img[data-img-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
+  `;
+  document.head.appendChild(style);
+
+  // Mark editable elements
+  var editable = document.querySelectorAll('h1, h2, h3, p:not(.byline), li, .step p, .tip, .sb-title, .offer-box h2, .offer-box p, .cta-bottom, .sb-cta, a.cta-bottom');
+  editable.forEach(function(el, i) {
+    el.setAttribute('data-editable', 'text-' + i);
+  });
+  // Mark images
+  document.querySelectorAll('img').forEach(function(img, i) {
+    img.setAttribute('data-img-idx', i);
+  });
+
+  document.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var el = e.target.closest('[data-editable]');
+    if (el) {
+      var field = el.getAttribute('data-editable');
+      var hasHtml = el.querySelector('strong, em, a, br, span');
+      window.parent.postMessage({ type: 'edit-element', field: field, value: hasHtml ? el.innerHTML : el.textContent, tag: el.tagName.toLowerCase() }, '*');
+      return;
+    }
+    var img = e.target.closest('img[data-img-idx]');
+    if (img) {
+      window.parent.postMessage({ type: 'edit-image', src: img.src, alt: img.alt || '', index: parseInt(img.getAttribute('data-img-idx')) }, '*');
+    }
+  }, true);
+
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'update-field') {
+      var el = document.querySelector('[data-editable="' + e.data.field + '"]');
+      if (el) el.innerHTML = e.data.value;
+    }
+    if (e.data && e.data.type === 'update-image') {
+      var imgs = document.querySelectorAll('img[data-img-idx]');
+      if (imgs[e.data.index]) imgs[e.data.index].src = e.data.value;
+    }
+  });
+})();
+</script>
+"""
+
+from fastapi.responses import HTMLResponse
+
+@app.get("/pipeline/{plid}/editable", response_class=HTMLResponse)
+async def editable_preview(plid: str):
+    """Serve the published HTML with edit script injected — avoids cross-origin iframe issues."""
+    out = Path(f"data/output/{plid}")
+    if not out.exists():
+        raise HTTPException(404, "Pipeline not found")
+    htmls = list(out.glob("*.html"))
+    if not htmls:
+        raise HTTPException(404, "No HTML file found")
+    html = htmls[0].read_text(encoding="utf-8")
+    # Inject edit script before </body>
+    if "</body>" in html:
+        html = html.replace("</body>", EDIT_SCRIPT + "\n</body>")
+    else:
+        html += EDIT_SCRIPT
+    return HTMLResponse(content=html)
+
 # ── SYSTEM ──
 @app.get("/health")
 async def health():
