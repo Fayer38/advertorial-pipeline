@@ -309,9 +309,61 @@ async def run_agent(plid: str, req: AgentRunReq, bg: BackgroundTasks):
 async def history():
     h = []
     for plid, s in pipelines.items():
-        h.append({"id": plid, "product_id": s["product_id"], "product_name": s.get("product_name",""), "product_url": s["product_url"], "status": s["status"], "started_at": s["started_at"], "completed_at": s.get("completed_at",""), "headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "thumbnail": s["results"].get("thumbnail",""), "config": s["config"], "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent",""), "results": {"headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "thumbnail": s["results"].get("thumbnail",""), "html_file": s["results"].get("html_file","")}})
+        hf = s["results"].get("html_file","")
+        pub_url = f"https://dailybloginfo.com/a/{hf}" if hf else ""
+        h.append({"id": plid, "product_id": s["product_id"], "product_name": s.get("product_name",""), "product_url": s["product_url"], "status": s["status"], "started_at": s["started_at"], "completed_at": s.get("completed_at",""), "headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "thumbnail": s["results"].get("thumbnail",""), "config": s["config"], "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent",""), "published_url": pub_url, "results": {"headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "thumbnail": s["results"].get("thumbnail",""), "html_file": hf}})
     h.sort(key=lambda x: x["started_at"], reverse=True)
     return {"pipelines": h}
+
+# ── UPDATE SLUG + TITLE ──
+class UpdateMetaReq(BaseModel):
+    slug: Optional[str] = None
+    title: Optional[str] = None
+
+@app.put("/pipeline/{plid}/meta")
+async def update_meta(plid: str, req: UpdateMetaReq):
+    if plid not in pipelines: raise HTTPException(404)
+    out = Path(f"data/output/{plid}")
+    htmls = list(out.glob("*.html"))
+    if not htmls: raise HTTPException(404, "No HTML file")
+    html_path = htmls[0]
+    html = html_path.read_text(encoding="utf-8")
+    pub_dir = Path("/var/www/advertorials")
+
+    # Update title in HTML
+    if req.title:
+        html = _re.sub(r'<title>[^<]*</title>', f'<title>{req.title}</title>', html)
+        # Also update og:title if present
+        html = _re.sub(r'(<meta\s+property="og:title"\s+content=")[^"]*(")', f'\\g<1>{req.title}\\2', html)
+        pipelines[plid]["results"]["headline"] = req.title
+
+    # Rename slug (rename file)
+    old_name = html_path.name
+    if req.slug:
+        # Sanitize slug
+        import unicodedata
+        slug = req.slug.strip().lower()
+        slug = _re.sub(r'[^a-z0-9\-]', '-', slug)
+        slug = _re.sub(r'-+', '-', slug).strip('-')
+        if not slug: raise HTTPException(400, "Invalid slug")
+        new_name = f"{slug}.html"
+        # Write updated HTML to new filename
+        new_path = out / new_name
+        new_path.write_text(html, encoding="utf-8")
+        # Remove old file if different name
+        if old_name != new_name and html_path.exists():
+            html_path.unlink()
+        # Update published copy
+        old_pub = pub_dir / old_name
+        if old_pub.exists(): old_pub.unlink()
+        (pub_dir / new_name).write_text(html, encoding="utf-8")
+        pipelines[plid]["results"]["html_file"] = new_name
+        return {"updated": True, "old_slug": old_name.replace(".html",""), "new_slug": slug, "url": f"https://dailybloginfo.com/a/{new_name}"}
+    else:
+        # Just title update, save in place
+        html_path.write_text(html, encoding="utf-8")
+        (pub_dir / old_name).write_text(html, encoding="utf-8")
+        return {"updated": True, "slug": old_name.replace(".html",""), "url": f"https://dailybloginfo.com/a/{old_name}"}
 
 # ── SAVE EDITED HTML ──
 class SaveHtmlReq(BaseModel):
