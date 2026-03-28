@@ -15,6 +15,12 @@ app = FastAPI(title="Advertorial Pipeline API", version="2.0.0")
 
 from api.media_routes import router as media_router
 app.include_router(media_router)
+
+from starlette.staticfiles import StaticFiles
+import os
+_media_dir = os.path.join(os.path.dirname(__file__), "..", "data", "output", "media")
+os.makedirs(_media_dir, exist_ok=True)
+app.mount("/media-files", StaticFiles(directory=_media_dir), name="media-files")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 # ── MODELS ──

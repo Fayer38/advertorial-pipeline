@@ -9,7 +9,7 @@ from pathlib import Path
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, BackgroundTasks, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, BackgroundTasks, UploadFile, File, Form, Body
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/media", tags=["media"])
@@ -123,6 +123,32 @@ async def upload_manual_media(
         json.dump(index, f, indent=2)
 
     return {"uploaded": filename, "media_type": media_type, "total": index["total_images"]}
+
+
+@router.delete("/{product_id}/bulk")
+async def bulk_delete_media(product_id: str, ids: list[str] = Body(...)):
+    """Delete multiple media items at once."""
+    index_path = MEDIA_DIR / product_id / "media_index.json"
+    if not index_path.exists():
+        raise HTTPException(404, "No media library found")
+
+    with open(index_path) as f:
+        index = json.load(f)
+
+    media = index.get("media", [])
+    to_delete = [m for m in media if m.get("id") in ids]
+    for m in to_delete:
+        filepath = MEDIA_DIR / product_id / m.get("filename", "")
+        if filepath.exists():
+            filepath.unlink()
+
+    index["media"] = [m for m in media if m.get("id") not in ids]
+    index["total_images"] = len(index["media"])
+
+    with open(index_path, "w") as f:
+        json.dump(index, f, indent=2)
+
+    return {"deleted": len(to_delete), "remaining": len(index["media"])}
 
 
 @router.delete("/{product_id}/{media_id}")
