@@ -44,7 +44,7 @@ class QACheckerAgent(BaseAgent):
     ):
         super().__init__(name="qa_checker", output_dir=output_dir)
         self.llm = get_llm_client()
-        self.reference_selector = ReferenceSelector(reference_dir=reference_dir)
+        self.reference_selector = ReferenceSelector()
         self.system_prompt = self._load_system_prompt()
         self.min_score = min_score
         self.max_iterations = max_iterations
