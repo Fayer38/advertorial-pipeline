@@ -90,8 +90,10 @@ async def upload_manual_media(
     product_dir.mkdir(parents=True, exist_ok=True)
 
     # Save file
+    import uuid
     ext = file.filename.split(".")[-1] if "." in file.filename else "jpg"
-    filename = f"{media_type}-manual-{datetime.utcnow().strftime('%H%M%S')}.{ext}"
+    uid = uuid.uuid4().hex[:8]
+    filename = f"{media_type}-manual-{uid}.{ext}"
     filepath = product_dir / filename
 
     content = await file.read()
@@ -106,12 +108,12 @@ async def upload_manual_media(
         index = {"product_id": product_id, "media": [], "total_images": 0}
 
     entry = {
-        "id": datetime.utcnow().strftime("%H%M%S"),
+        "id": uid,
         "type": media_type,
         "type_label": media_type.replace("_", " ").title(),
         "variant": 0,
         "filename": filename,
-        "url": f"/media-files/{product_id}/{filename}",
+        "url": f"https://64.23.138.193.sslip.io/adv-api/media-files/{product_id}/{filename}",
         "aspect_ratio": "unknown",
         "setting": "manual upload",
         "generated_at": datetime.utcnow().isoformat(),

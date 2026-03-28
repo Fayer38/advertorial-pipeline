@@ -3,7 +3,7 @@
   "product_name": "Seese Pro Ultra-Light Ultra-Powerful Blower",
   "product_ref_url": "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Capture_d_ecran_2026-03-19_a_23.21.05.png?v=1773948079",
   "generated_at": "2026-03-28T21:31:28.181729",
-  "total_images": 25,
+  "total_images": 23,
   "media": [
     {
       "id": "d4705ff1",
@@ -30,32 +30,6 @@
       "setting": "backyard patio",
       "prompt": "Generate a photorealistic advertising scene with a person holding the handheld device from the reference image.\n\nSCENE:\nThe Seese Pro Ultra-Light Ultra-Powerful Blower device from the reference image ...",
       "generated_at": "2026-03-28T21:35:25.596160"
-    },
-    {
-      "id": "3cf2d730",
-      "type": "lifestyle",
-      "type_label": "Product In-Use / Lifestyle",
-      "variant": 1,
-      "filename": "lifestyle-01-16x9.jpg",
-      "url": "https://tempfile.aiquickdraw.com/image-format-converter/1774733944317-0tf826onk81.jpg",
-      "r2_key": "media/seese-pro-v9/lifestyle-01-16x9.jpg",
-      "aspect_ratio": "16:9",
-      "setting": "garden path",
-      "prompt": "Generate a photorealistic advertising scene with a person holding the handheld device from the reference image.\n\nSCENE:\nA homeowner (45-60) actively using the Seese Pro Ultra-Light Ultra-Powerful Blow...",
-      "generated_at": "2026-03-28T21:39:07.834839"
-    },
-    {
-      "id": "9e02eb04",
-      "type": "lifestyle",
-      "type_label": "Product In-Use / Lifestyle",
-      "variant": 2,
-      "filename": "lifestyle-02-16x9.jpg",
-      "url": "https://tempfile.aiquickdraw.com/image-format-converter/1774733985152-ky4gqazuzhl.jpg",
-      "r2_key": "media/seese-pro-v9/lifestyle-02-16x9.jpg",
-      "aspect_ratio": "16:9",
-      "setting": "deck surrounded by trees",
-      "prompt": "Generate a photorealistic advertising scene with a person holding the handheld device from the reference image.\n\nSCENE:\nA woman (40-55) using the Seese Pro Ultra-Light Ultra-Powerful Blower device fro...",
-      "generated_at": "2026-03-28T21:39:49.335036"
     },
     {
       "id": "8ea2f195",
@@ -275,7 +249,7 @@
       "r2_key": "media/seese-pro-v9/environment-02-16x9.jpg",
       "aspect_ratio": "16:9",
       "setting": "driveway",
-      "prompt": "A messy driveway before cleanup — leaves piled up, debris scattered. Slightly muted tones, problem visualization. No person, no product.\n\nCOMPOSITION:\n- Person aged 45-65, casual comfortable clothing\n...",
+      "prompt": "A messy driveway before cleanup \u2014 leaves piled up, debris scattered. Slightly muted tones, problem visualization. No person, no product.\n\nCOMPOSITION:\n- Person aged 45-65, casual comfortable clothing\n...",
       "generated_at": "2026-03-28T21:54:44.937983"
     },
     {
@@ -305,19 +279,6 @@
       "generated_at": "2026-03-28T21:55:52.856647"
     },
     {
-      "id": "d4d53feb",
-      "type": "bundle",
-      "type_label": "Bundle / Unboxing",
-      "variant": 1,
-      "filename": "bundle-01-16x9.jpg",
-      "url": "https://tempfile.aiquickdraw.com/image-format-converter/1774734991233-t6to1h1pwvf.jpg",
-      "r2_key": "media/seese-pro-v9/bundle-01-16x9.jpg",
-      "aspect_ratio": "16:9",
-      "setting": "garage area",
-      "prompt": "Generate a photorealistic advertising scene with a person holding the handheld device from the reference image.\n\nSCENE:\nThe Seese Pro Ultra-Light Ultra-Powerful Blower device from the reference image ...",
-      "generated_at": "2026-03-28T21:56:34.245259"
-    },
-    {
       "id": "28bdf69f",
       "type": "bundle",
       "type_label": "Bundle / Unboxing",
@@ -329,6 +290,17 @@
       "setting": "sidewalk near home",
       "prompt": "Generate a photorealistic advertising scene with a person holding the handheld device from the reference image.\n\nSCENE:\nAn open premium carry case with the Seese Pro Ultra-Light Ultra-Powerful Blower ...",
       "generated_at": "2026-03-28T21:57:10.743869"
+    },
+    {
+      "id": "223030",
+      "type": "hero",
+      "type_label": "Hero",
+      "variant": 0,
+      "filename": "hero-manual-223030.jpeg",
+      "url": "https://64.23.138.193.sslip.io/adv-api/media-files/seese-pro-v9/hero-manual-223030.jpeg",
+      "aspect_ratio": "unknown",
+      "setting": "manual upload",
+      "generated_at": "2026-03-28T22:30:30.809341"
     }
   ]
 }
