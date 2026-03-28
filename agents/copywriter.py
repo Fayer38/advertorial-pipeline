@@ -50,7 +50,7 @@ class CopywriterAgent(BaseAgent):
     ):
         super().__init__(name="copywriter", output_dir=output_dir)
         self.llm = get_llm_client()
-        self.reference_selector = ReferenceSelector(reference_dir=reference_dir)
+        self.reference_selector = ReferenceSelector()
         self.system_prompt = self._load_system_prompt()
 
     def _load_system_prompt(self) -> str:
