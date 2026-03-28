@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "created_at": "2026-03-28T15:36:07.740152",
+    "product_url": "https://seesepro.com/en-us/products/seese-pro-v9",
+    "confidence_score": 0.65
+  },
+  "product_summary": {
+    "name": "Seese Pro™ Ultra-Light, Ultra-Powerful Blower",
+    "one_liner": "Un souffleur sans fil de 950g qui délivre 200 MPH de puissance — remplace votre souffleur de garage, votre chiffon de séchage, votre dépoussiéreur et votre gratte-glace, sans mal de dos.",
+    "category": "Outillage extérieur / entretien maison — cordless handheld blower",
+    "price_point": "milieu de gamme (positionné premium via ancrage prix $249.99)"
+  },
+  "avatar_profile": {
+    "who": "Propriétaire de maison de 40-65 ans (hommes et femmes), actif mais pas professionnel du jardinage, fatigué de sortir un équipement encombrant pour des petites tâches. Probable douleur de dos chronique ou crainte d'en développer une. Possède déjà un souffleur à gaz ou un grand souffleur électrique qu'il n'utilise plus parce que c'est 'trop compliqué pour ça'.",
+    "main_problem": "Mon souffleur est trop lourd, trop encombrant et trop compliqué à sortir — du coup je fais tout à la main (râteau, balai, chiffon) et ça me prend une éternité et ça me casse le dos.",
+    "desired_outcome": "Finir le ménage extérieur rapidement, sans effort, sans douleur — et récupérer du temps libre pour autre chose.",
+    "emotional_state_before": "Frustré, épuisé avant même de commencer, découragé par l'effort que représente une tâche banale. Sentiment de vieillir, de 'ne plus être en forme pour ça'.",
+    "emotional_state_after": "Léger, efficace, presque surpris que ce soit si simple. Fier d'avoir une maison propre sans y passer la journée. Sentiment d'avoir retrouvé de l'autonomie."
+  },
+  "copy_ammunition": {
+    "primary_angle": {
+      "angle_name": "L'outil que vous sortirez vraiment",
+      "why": "Le vrai frein pour l'avatar n'est pas la puissance — c'est la friction. Le souffleur à gaz reste dans le garage parce qu'il est trop lourd, trop bruyant, trop de setup. Seese Pro supprime 100% de cette friction : pas de câble, pas d'essence, 950g, prêt en 5 secondes. L'angle 'vous allez enfin l'utiliser' est plus fort que 'il est puissant' parce qu'il parle du comportement réel de l'avatar, pas d'une spec technique.",
+      "hook_template": "Mon souffleur à gaz n'a pas quitté le garage depuis 2 ans. Voilà ce qui l'a remplacé."
+    },
+    "secondary_angles": [
+      {
+        "angle_name": "Le mal de dos évité",
+        "hook_template": "2.1 lbs. C'est moins lourd qu'un sac de sucre — et ça déplace 200 MPH d'air."
+      },
+      {
+        "angle_name": "L'outil 4-en-1 qui simplifie le garage",
+        "hook_template": "J'ai jeté 4 outils. Ce truc fait tout."
+      },
+      {
+        "angle_name": "La vitesse vs la méthode traditionnelle",
+        "hook_template": "5 minutes pour vider une terrasse de 37m². Avant il m'en fallait 25 avec un balai."
+      }
+    ],
+    "hooks": [
+      "Mon souffleur à gaz n'a pas quitté le garage depuis 2 ans. Voilà ce qui l'a remplacé.",
+      "J'ai nettoyé toute ma terrasse en 5 minutes. Sans me baisser, sans me fatiguer, sans câble.",
+      "Il pèse moins qu'un sac de sucre. Il souffle à 200 MPH. Et il m'a rendu ma matinée du samedi.",
+      "Pourquoi est-ce que je passais 25 minutes avec un balai quand ça prend 5 minutes avec ça ?",
+      "J'ai 63 ans et mal au dos. C'est le premier outil de jardin que je peux utiliser sans regretter de l'avoir sorti.",
+      "Sécher une voiture sans marques. Dégivrer un pare-brise en 2 minutes. Vider un garage en secondes. Un seul appareil.",
+      "55% de réduction aujourd'hui. Mais surtout : vous ne toucherez plus jamais à votre râteau.",
+      "Les souffleurs pro coûtent $300+. Celui-ci fait pareil et tient dans une valise."
+    ],
+    "key_benefits_ranked": [
+      "Zéro effort physique — 950g, une seule main, aucune douleur de dos même pour les seniors",
+      "Prêt en 5 secondes — pas de câble à dérouler, pas d'essence à mettre, pas de setup",
+      "5 minutes au lieu de 25 — terrasse propre avant que le café soit froid",
+      "Remplace 4 outils — plus besoin du chiffon de séchage, du dépoussiéreur, du gratte-glace, du grand souffleur",
+      "40 minutes d'autonomie — assez pour tout faire en une charge",
+      "Utilisable partout, toute l'année — terrasse, voiture, garage, vents, électronique, neige",
+      "Puissance de pro ($300+) à $119 — 200 MPH, moteur brushless comme les drones et les Tesla",
+      "Garantie à vie + remboursement 30 jours — risque zéro à l'achat"
+    ],
+    "proof_elements": [
+      "200+ MPH de vitesse d'air — mesure technique vérifiable, rivalise avec les souffleurs professionnels à $300+",
+      "30,000+ RPM moteur brushless — même technologie que les drones et les véhicules Tesla (crédibilité technologique)",
+      "Poids certifié : 950g / 2.1 lbs — fait physique, pas une promesse marketing",
+      "Cas d'usage chronométrés : terrasse 400 sq ft en 5 min vs 25 min au balai ; séchage voiture en 3 min vs 15 min au chiffon ; dégivrage en 2 min vs grattage manuel",
+      "Garantie à vie (remplacement) — signal de confiance fort dans la durabilité produit",
+      "Entrepôts Canada, France, Allemagne — livraison locale, pas dropshipping depuis l'Asie (réduction objection qualité/délai)",
+      "Marque déposée + specs turbine propriétaires — différenciation technique protégée",
+      "MANQUANT : témoignages clients vérifiables, nombre d'unités vendues, avis vérifiés (★★★★★ count)"
+    ],
+    "objection_handlers": [
+      {
+        "objection": "C'est trop petit pour être vraiment puissant",
+        "response": "200 MPH. C'est la même vitesse que les souffleurs pro à $300. La puissance ne vient pas de la taille — elle vient du moteur brushless 30,000 RPM. Même technologie que dans les drones de livraison."
+      },
+      {
+        "objection": "J'ai déjà un souffleur, je n'en ai pas besoin d'un autre",
+        "response": "Combien de fois l'avez-vous sorti ce mois-ci ? Seese Pro, vous le prendrez pour 5 minutes de terrasse, sécher votre voiture, dépoussiérer un meuble, dégivrer un pare-brise. C'est l'outil que vous utilisez vraiment — pas celui qui reste dans le garage."
+      },
+      {
+        "objection": "$119 c'est cher pour un souffleur",
+        "response": "Le prix catalogue est $249.99. Aujourd'hui il est à $119.99 — 55% de remise. Et il remplace 4 outils que vous achetez séparément (dépoussiéreur, chiffon de séchage, gratte-glace, souffleur). Plus la garantie à vie incluse."
+      },
+      {
+        "objection": "La batterie va tenir combien de temps ?",
+        "response": "40 minutes par charge. Assez pour vider une terrasse, sécher une voiture et passer dans le garage en une seule charge. Et la recharge est rapide avec le chargeur rapide inclus."
+      },
+      {
+        "objection": "Est-ce que ça va rayer ma voiture ?",
+        "response": "Aucune pointe métallique, aucun point de contact. Air uniquement. Sûr sur la carrosserie, les jantes, les grilles, les rétroviseurs — même les espaces difficiles d'accès."
+      },
+      {
+        "objection": "C'est trop bruyant pour mes voisins",
+        "response": "Des bouchons d'oreilles sont inclus dans la boîte. Et pour l'usage (5 à 15 minutes), le niveau sonore est comparable à un aspirateur — pas à une tondeuse à gaz."
+      }
+    ],
+    "urgency_elements": [
+      "Promotion -55% active aujourd'hui : $249.99 → $119.99 (durée non précisée — à vérifier si vraiment limitée)",
+      "3 cadeaux offerts d'une valeur de $110 inclus (dont le case à $25)",
+      "MANQUANT : données de stock réel (ruptures passées non documentées dans les sources fournies — ne pas inventer)",
+      "Livraison sous 5-12 jours ouvrés : commande maintenant = reçu avant le prochain weekend de nettoyage"
+    ],
+    "cta_options": [
+      "Essayez sans risque — 30 jours de garantie remboursement, garantie à vie incluse.",
+      "Commandez maintenant et recevez les 3 cadeaux offerts (valeur $110) — livraison gratuite.",
+      "Profitez des -55% aujourd'hui — votre dos vous remerciera dès le premier week-end."
+    ]
+  },
+  "visual_notes": {
+    "product_description": "Souffleur portatif compact, design industriel épuré, corps en plastique ABS rigide coloris noir/gris anthracite (à confirmer selon visuels réels), poignée ergonomique pistolet, buse avant fuselée, batterie lithium intégrée visible sur le corps. Livré dans un case rigide compact style mallette à outils.",
+    "suggested_scenes": [
+      "Hero : Seese Pro tenu d'une seule main, bras détendu, feuilles qui s'envolent sur une terrasse ensoleillée — lumière chaude automne",
+      "Section problème : personne fatiguée, dos courbé, qui pousse un balai ou soulève un grand souffleur lourd dans un garage encombré",
+      "Section révélation produit : gros plan sur le produit posé dans la paume d'une main — comparaison visuelle avec un sac de sucre à côté",
+      "Section voiture : jet d'air sur carrosserie mouillée, gouttelettes qui s'envolent, résultat impeccable sans chiffon",
+      "Section hiver : utilisation sur pare-brise givré, personne en manteau qui sourit, pas de gratte-glace en vue",
+      "Section crédibilité : unboxing — case ouvert avec les 3 cadeaux bien disposés, chargeur, bouchons d'oreilles, tout visible",
+      "CTA : personne senior (60+) qui utilise le produit d'une main avec facilité visible, sourire naturel, jardin en arrière-plan"
+    ],
+    "mood": "Pratico-pratique, chaleureux, légèrement aspirationnel. Pas clinique, pas hyper-technique. Ambiance 'samedi matin productif sans effort'. Couleurs chaudes (bois, vert gazon, lumière dorée). Éviter le blanc stérile ou les visuels catalogue trop lisses."
+  }
+}

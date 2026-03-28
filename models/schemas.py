@@ -21,10 +21,15 @@ class Intensity(str, Enum):
 
 class SceneType(str, Enum):
     PRODUCT = "product"
+    PRODUCT_SHOT = "product_shot"
     LIFESTYLE = "lifestyle"
     BEFORE_AFTER = "before_after"
     INFOGRAPHIC = "infographic"
     TESTIMONIAL = "testimonial"
+    HERO = "hero"
+    COMPARISON = "comparison"
+    DETAIL = "detail"
+    SOCIAL_PROOF = "social_proof"
 
 class SectionType(str, Enum):
     HOOK = "hook"
