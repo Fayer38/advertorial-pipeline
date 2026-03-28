@@ -1,7 +1,7 @@
 """
 API REST FastAPI v2 — Products + Advertorials flow.
 """
-import asyncio, json, logging, uuid
+import asyncio, json, logging, re, uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -10,7 +10,45 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
+import re as _re
+
 logger = logging.getLogger(__name__)
+
+def _extract_thumbnail(html_path: Path, product_id: str = "") -> str:
+    """Extract thumbnail: first <img src> from HTML, or first media library image for the product."""
+    # 1. Try extracting from HTML
+    try:
+        html = html_path.read_text(encoding="utf-8", errors="ignore")[:50000]
+        for m in _re.finditer(r'<img[^>]+src=["\']([^"\']+)["\']', html, _re.IGNORECASE):
+            src = m.group(1)
+            if not src or src.startswith("data:"):
+                continue
+            lower = src.lower()
+            if any(skip in lower for skip in ["logo", "icon", "pixel", "tracking", "favicon", "badge", "star", "rating"]):
+                continue
+            return src
+    except Exception:
+        pass
+    # 2. Fallback: first image from product media library
+    search_ids = [product_id] if product_id else []
+    # Also search all media libraries as fallback
+    media_root = Path("data/output/media")
+    if media_root.exists():
+        for d in media_root.iterdir():
+            if d.is_dir() and d.name not in search_ids:
+                search_ids.append(d.name)
+    for pid in search_ids:
+        try:
+            media_index = media_root / pid / "media_index.json"
+            if media_index.exists():
+                mi = json.loads(media_index.read_text())
+                for item in mi.get("media", []):
+                    url = item.get("url", "")
+                    if url and not url.startswith("data:"):
+                        return url
+        except Exception:
+            pass
+    return ""
 app = FastAPI(title="Advertorial Pipeline API", version="2.0.0")
 
 from api.media_routes import router as media_router
@@ -108,14 +146,24 @@ async def _load_existing_pipelines():
             headline = ""
             qa_score = 0
             html_file = ""
+            thumbnail = ""
             config = {}
             product_id = ""
             product_name = ""
             started_at = ""
 
+            thumbnail = ""
             if htmls:
                 html_file = htmls[0].name
                 headline = htmls[0].stem.replace("-", " ").title()[:80]
+                try:
+                    html_content = htmls[0].read_text()
+                    m = re.search(r'<img[^>]+src=["\']([^"\']+)', html_content)
+                    if m:
+                        thumbnail = m.group(1)
+                except Exception:
+                    pass
+                thumbnail = _extract_thumbnail(htmls[0])
 
             if drafts:
                 draft = json.loads(drafts[0].read_text())
@@ -136,6 +184,10 @@ async def _load_existing_pipelines():
                 ps = brief.get("product_summary", {})
                 product_name = ps.get("name", "")
 
+            # Extract thumbnail
+            if htmls:
+                thumbnail = _extract_thumbnail(htmls[0], product_id)
+
             # Use dir mtime as timestamp
             import os as _os
             mtime = datetime.fromtimestamp(_os.path.getmtime(str(d)))
@@ -148,7 +200,7 @@ async def _load_existing_pipelines():
                 "product_name": product_name,
                 "config": config,
                 "current_phase": "", "current_agent": "", "progress": 1.0 if status == "completed" else 0,
-                "error": "", "results": {"headline": headline, "qa_score": qa_score, "html_file": html_file},
+                "error": "", "results": {"headline": headline, "qa_score": qa_score, "html_file": html_file, "thumbnail": thumbnail},
             }
             logger.info(f"Loaded pipeline: {plid} ({status}) — {headline[:50]}")
         except Exception as e:
@@ -257,7 +309,7 @@ async def run_agent(plid: str, req: AgentRunReq, bg: BackgroundTasks):
 async def history():
     h = []
     for plid, s in pipelines.items():
-        h.append({"id": plid, "product_id": s["product_id"], "product_name": s.get("product_name",""), "product_url": s["product_url"], "status": s["status"], "started_at": s["started_at"], "completed_at": s.get("completed_at",""), "headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "config": s["config"], "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent","")})
+        h.append({"id": plid, "product_id": s["product_id"], "product_name": s.get("product_name",""), "product_url": s["product_url"], "status": s["status"], "started_at": s["started_at"], "completed_at": s.get("completed_at",""), "headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "thumbnail": s["results"].get("thumbnail",""), "config": s["config"], "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent",""), "results": {"headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "thumbnail": s["results"].get("thumbnail",""), "html_file": s["results"].get("html_file","")}})
     h.sort(key=lambda x: x["started_at"], reverse=True)
     return {"pipelines": h}
 
@@ -901,7 +953,20 @@ async def _run_pipeline_bg(plid, req):
             config=run_config,
         )
         s["status"] = "completed"; s["completed_at"] = datetime.utcnow().isoformat(); s["progress"] = 1.0
-        s["results"] = {"headline": result.get("slug",""), "qa_score": 0, "html_file": result.get("html_file","")}
+        # Extract thumbnail from generated HTML
+        _thumbnail = ""
+        try:
+            _html_fname = result.get("html_file", "")
+            if _html_fname:
+                _html_path = Path(f"data/output/{plid}") / Path(_html_fname).name
+                if _html_path.exists():
+                    _html_content = _html_path.read_text()
+                    _m = re.search(r'<img[^>]+src=["\']([^"\']+)', _html_content)
+                    if _m:
+                        _thumbnail = _m.group(1)
+        except Exception:
+            pass
+        s["results"] = {"headline": result.get("slug",""), "qa_score": 0, "html_file": result.get("html_file",""), "thumbnail": _thumbnail}
         await _emit(q, plid, "completed", "Done", "", 1.0)
     except Exception as e:
         s["status"] = "failed"; s["error"] = str(e); s["completed_at"] = datetime.utcnow().isoformat()
