@@ -46,7 +46,14 @@ class HTMLPublisherAgent(BaseAgent):
         content = advertorial_draft.get("content", {})
         seo = advertorial_draft.get("seo", {})
         if not product_name:
-            product_name = content.get("headline", "Product")[:60]
+            # Try to get actual product name from draft metadata, NOT the headline
+            product_name = (
+                advertorial_draft.get("product_name", "") or
+                advertorial_draft.get("metadata", {}).get("product_name", "") or
+                advertorial_draft.get("_config", {}).get("product_name", "") or
+                content.get("product_name", "") or
+                "Seese Pro™"
+            )
         if not author_name:
             author_name = "Editorial Team"
         if not slug:
@@ -133,7 +140,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "gift": '<strong>Gift idea:</strong> Get the bundle and save even more. Perfect for birthdays, holidays, or just treating yourself.',
                 "cta": "Check Availability", "cta_footer": "👉 Skip to offer — Check availability",
                 "badge1": "30-day money-back guarantee", "badge2": "Free shipping (2-5 days)",
-                "byline_by": "By", "product_img_alt": "Product image", "bundle_badge": "PRODUCT BUNDLE", "bundle_desc": "Product hero image with all accessories and price badge",
+                "byline_by": "By", "product_img_alt": "Product image", "bundle_badge": "PRODUCT BUNDLE", "bundle_desc": "Product hero image with all accessories and price badge", "sb_hook": "Limited offer — order now",
             },
             "fr": {
                 "offer_title": '⚠️ Offre Spéciale : <span class="accent">-50%</span> — Stock Limité',
@@ -145,7 +152,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "gift": '<strong>Idée cadeau :</strong> Prenez le pack et économisez encore plus. Parfait pour un anniversaire ou se faire plaisir.',
                 "cta": "Vérifier la Disponibilité", "cta_footer": "👉 Voir l'offre — Vérifier la disponibilité",
                 "badge1": "Satisfait ou remboursé 30 jours", "badge2": "Livraison gratuite (2-5 jours)",
-                "byline_by": "Par", "product_img_alt": "Image produit", "bundle_badge": "PACK PRODUIT", "bundle_desc": "Image du pack complet avec tous les accessoires et prix remisé",
+                "byline_by": "Par", "product_img_alt": "Image produit", "bundle_badge": "PACK PRODUIT", "bundle_desc": "Image du pack complet avec tous les accessoires et prix remisé", "sb_hook": "Offre limitée — commandez maintenant",
             },
             "es": {
                 "offer_title": '⚠️ Oferta Especial: <span class="accent">-50%</span> — Stock Limitado',
@@ -157,7 +164,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "gift": '<strong>Idea de regalo:</strong> Llévate el pack y ahorra aún más.',
                 "cta": "Ver Disponibilidad", "cta_footer": "👉 Ir a la oferta — Ver disponibilidad",
                 "badge1": "Garantía de devolución 30 días", "badge2": "Envío gratuito (2-5 días)",
-                "byline_by": "Por", "product_img_alt": "Imagen del producto", "bundle_badge": "PACK PRODUCTO", "bundle_desc": "Imagen del pack completo con accesorios y precio con descuento",
+                "byline_by": "Por", "product_img_alt": "Imagen del producto", "bundle_badge": "PACK PRODUCTO", "bundle_desc": "Imagen del pack completo con accesorios y precio con descuento", "sb_hook": "Oferta limitada — pide ahora",
             },
             "de": {
                 "offer_title": '⚠️ Sonderangebot: <span class="accent">-50%</span> — Begrenzter Vorrat',
@@ -169,7 +176,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "gift": '<strong>Geschenkidee:</strong> Holen Sie sich das Bundle und sparen Sie noch mehr.',
                 "cta": "Verfügbarkeit prüfen", "cta_footer": "👉 Zum Angebot — Verfügbarkeit prüfen",
                 "badge1": "30 Tage Geld-zurück-Garantie", "badge2": "Kostenloser Versand (2-5 Tage)",
-                "byline_by": "Von", "product_img_alt": "Produktbild", "bundle_badge": "PRODUKT-BUNDLE", "bundle_desc": "Produktbild mit allem Zubehör und Rabattpreis",
+                "byline_by": "Von", "product_img_alt": "Produktbild", "bundle_badge": "PRODUKT-BUNDLE", "bundle_desc": "Produktbild mit allem Zubehör und Rabattpreis", "sb_hook": "Begrenztes Angebot — jetzt bestellen",
             },
         }
         tx = i18n.get(lang, i18n["en"])
@@ -256,7 +263,7 @@ ul,ol{{padding-left:20px;padding-right:8px}}
   </div>
   <div class="sidebar">
     <div class="sidebar-card">
-      <div class="sb-title">{product_name}</div>
+      <div class="sb-title">{product_name}<br><span style="font-size:13px;font-weight:400;color:#555">{tx.get("sb_hook","")}</span></div>
       {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;">' if product_image_url else '<div class="sb-img">[' + tx["product_img_alt"] + ']</div>'}
       <a href="{product_url}" class="sb-cta">{tx["cta"]}</a>
       <div class="sb-badges">

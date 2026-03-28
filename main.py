@@ -266,6 +266,7 @@ class AdvertorialPipeline:
             image_prompts=image_prompts,
             video_prompts=video_prompts,
             product_url=product_url,
+            product_name=product_data.get("product_name", "") if product_data else "",
             lang=config.get("language", "en") if config else "en",
         )
 
