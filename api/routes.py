@@ -285,10 +285,9 @@ EDIT_SCRIPT = """
   // ── STYLES ──
   var style = document.createElement('style');
   style.textContent = `
-    [data-editable] { transition: outline .15s, outline-offset .15s; }
-    [data-editable]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; position: relative; }
-    [data-editable]:hover::after { content: '✎'; position: absolute; top: -12px; right: -12px; background: #f26722; color: #fff; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 9999; }
-    [data-editable][contenteditable="true"]:hover::after { display: none; }
+    [data-editable] { transition: outline .15s; cursor: pointer; }
+    [data-editable]:hover { outline: 1px dashed rgba(242,103,34,0.4) !important; outline-offset: 2px; }
+    [data-editable][contenteditable="true"] { outline: 2px solid #f26722 !important; outline-offset: 3px; cursor: text; }
     img[data-img-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
     .placeholder[data-media-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
     .placeholder[data-media-idx] { position: relative; }
