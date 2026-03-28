@@ -296,14 +296,13 @@ EDIT_SCRIPT = """
 
     /* ── TOOLBAR ── */
     #edit-toolbar {
-      position: fixed; top: -60px; left: 50%; transform: translateX(-50%);
+      position: absolute; display: none;
       background: #1a1a1a; border: 1px solid #333; border-radius: 10px;
-      padding: 6px 8px; display: flex; gap: 2px; align-items: center;
-      z-index: 99999; box-shadow: 0 4px 20px rgba(0,0,0,.5);
-      transition: top .25s ease, opacity .25s; opacity: 0;
+      padding: 6px 8px; display: none; gap: 2px; align-items: center;
+      z-index: 99999; box-shadow: 0 8px 30px rgba(0,0,0,.6);
       flex-wrap: wrap; max-width: 95vw;
     }
-    #edit-toolbar.visible { top: 10px; opacity: 1; }
+    #edit-toolbar.visible { display: flex; }
     #edit-toolbar .tb-sep { width: 1px; height: 22px; background: #333; margin: 0 4px; }
     #edit-toolbar button {
       background: none; border: 1px solid transparent; color: #ccc; cursor: pointer;
@@ -329,6 +328,9 @@ EDIT_SCRIPT = """
   var tb = document.createElement('div');
   tb.id = 'edit-toolbar';
   tb.innerHTML = `
+    <button data-cmd="undo" title="Undo">↩</button>
+    <button data-cmd="redo" title="Redo">↪</button>
+    <div class="tb-sep"></div>
     <button data-cmd="bold" title="Bold"><b>B</b></button>
     <button data-cmd="italic" title="Italic"><i>I</i></button>
     <button data-cmd="underline" title="Underline"><u>U</u></button>
@@ -346,14 +348,14 @@ EDIT_SCRIPT = """
     </select>
     <select data-action="fontName" title="Font">
       <option value="">Font</option>
-      <option value="Roboto">Roboto</option>
-      <option value="Montserrat">Montserrat</option>
-      <option value="Georgia">Georgia</option>
-      <option value="Arial">Arial</option>
-      <option value="Helvetica">Helvetica</option>
-      <option value="Times New Roman">Times</option>
-      <option value="Verdana">Verdana</option>
-      <option value="Courier New">Courier</option>
+      <option value="Roboto, sans-serif">Roboto</option>
+      <option value="Montserrat, sans-serif">Montserrat</option>
+      <option value="Georgia, serif">Georgia</option>
+      <option value="Arial, sans-serif">Arial</option>
+      <option value="Helvetica, sans-serif">Helvetica</option>
+      <option value="Times New Roman, serif">Times</option>
+      <option value="Verdana, sans-serif">Verdana</option>
+      <option value="Courier New, monospace">Courier</option>
     </select>
     <div class="tb-sep"></div>
     <input type="color" data-action="foreColor" value="#111111" title="Text Color">
@@ -386,13 +388,13 @@ EDIT_SCRIPT = """
   });
   tb.addEventListener('change', function(e) {
     var sel = e.target;
+    if (!activeEdit) return;
+    activeEdit.focus(); // re-focus to restore selection
     if (sel.dataset.action === 'fontSize') {
-      document.execCommand('fontSize', false, sel.value);
-      sel.value = '';
+      if (sel.value) document.execCommand('fontSize', false, sel.value);
     }
     if (sel.dataset.action === 'fontName') {
-      document.execCommand('fontName', false, sel.value);
-      sel.value = '';
+      if (sel.value) document.execCommand('fontName', false, sel.value);
     }
   });
   tb.addEventListener('input', function(e) {
@@ -412,7 +414,18 @@ EDIT_SCRIPT = """
     });
   }
 
-  function showToolbar() { tb.classList.add('visible'); }
+  function positionToolbar(el) {
+    var rect = el.getBoundingClientRect();
+    var tbH = 44;
+    var top = rect.top - tbH - 8 + window.scrollY;
+    if (top < window.scrollY + 4) top = rect.bottom + 8 + window.scrollY; // below if no room above
+    var left = rect.left + (rect.width / 2) - 200;
+    if (left < 8) left = 8;
+    if (left + 400 > window.innerWidth) left = window.innerWidth - 408;
+    tb.style.top = top + 'px';
+    tb.style.left = left + 'px';
+    tb.classList.add('visible');
+  }
   function hideToolbar() { tb.classList.remove('visible'); }
 
   // ── MARK ELEMENTS ──
@@ -456,7 +469,7 @@ EDIT_SCRIPT = """
       var sel = window.getSelection();
       sel.removeAllRanges();
       sel.addRange(range);
-      showToolbar();
+      positionToolbar(el);
       updateToolbarState();
       return;
     }
@@ -476,10 +489,13 @@ EDIT_SCRIPT = """
     finishEdit();
   }, true);
 
-  // Update toolbar state on selection change
+  // Update toolbar state on selection change + reposition on scroll
   document.addEventListener('selectionchange', function() {
     if (activeEdit) updateToolbarState();
   });
+  window.addEventListener('scroll', function() {
+    if (activeEdit) positionToolbar(activeEdit);
+  }, { passive: true });
 
   document.addEventListener('keydown', function(e) {
     if (!activeEdit) return;
