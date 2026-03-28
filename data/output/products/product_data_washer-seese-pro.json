@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "source_url": "https://seesepro.com/en-us/products/washer-seese-pro",
+    "extracted_at": "2026-03-28T14:30:00Z",
+    "shopify_handle": "washer-seese-pro",
+    "store_domain": "seesepro.com"
+  },
+  "product_info": {
+    "title": "Seese Pro™ Anywhere Washer",
+    "description_html": "",
+    "description_clean": "Portable cordless pressure washer. No tap needed — use a bucket, pool, or any water source. Lightweight (1.3kg / 2.9 lbs), one-handed use. Up to 1,450 PSI pressure. 24V brushless motor with industrial ABS housing. 50ft filtered hose included. Spray + foam system included. Removes dirt, mud, and grime without damaging surfaces. Fill, press, and clean.",
+    "price": {
+      "amount": 119.99,
+      "currency": "USD",
+      "compare_at_price": 249.99
+    },
+    "variants": [
+      {
+        "title": "Seese Pro™ Anywhere Washer",
+        "price": 119.99,
+        "sku": "",
+        "available": true
+      },
+      {
+        "title": "Ultimate Clean Bundle",
+        "price": 149.99,
+        "sku": "",
+        "available": true
+      }
+    ],
+    "vendor": "Seese Pro",
+    "product_type": "Portable Pressure Washer",
+    "tags": ["washer", "pressure washer", "cordless", "portable", "car wash", "outdoor cleaning"]
+  },
+  "composition": {
+    "ingredients": [],
+    "key_actives": [],
+    "certifications": [],
+    "warnings": []
+  },
+  "benefits": {
+    "main_benefits": [
+      "No tap required — works with any water source (bucket, pool, river)",
+      "One-handed use — lightweight and easy to operate",
+      "No installation, no preparation — fill, press, and clean",
+      "Removes dirt, mud, and grime without damaging surfaces",
+      "Safe on car paint, windows, and delicate surfaces with 25° or 40° nozzle",
+      "Cordless — no power outlet needed"
+    ],
+    "features": [
+      "Up to 1,450 PSI water pressure",
+      "24V brushless motor with industrial ABS housing",
+      "6-in-1 adjustable nozzle",
+      "25° and 40° nozzle options for gentle wide spray",
+      "Spray + Foam system (foam pot included)",
+      "50ft filtered hose included",
+      "Draw-from-anywhere water system",
+      "Rechargeable 21V high-capacity battery (included as free gift, $70 value)",
+      "Fast charger included",
+      "Premium carry case included",
+      "Weight: 1.3kg / 2.9 lbs",
+      "Portable design — use anywhere without tap or power outlet"
+    ],
+    "use_cases": [
+      {"scenario": "Washing car at home or anywhere", "outcome": "Clean car in minutes without a hose hookup"},
+      {"scenario": "Cleaning driveway, patio, or deck", "outcome": "Blast away mold, grime, and dirt from outdoor surfaces"},
+      {"scenario": "Cleaning RVs, boats, bikes", "outcome": "Portable cleaning on the go"},
+      {"scenario": "Cleaning outdoor furniture, fences, siding", "outcome": "Remove years of buildup easily"}
+    ],
+    "problem_solved": "Difficulty cleaning cars and outdoor surfaces without access to a water tap, hose, or power outlet",
+    "target_need": "Fast, effortless cleaning anywhere without heavy equipment or complicated setup"
+  },
+  "social_proof": {
+    "clinical_studies": [],
+    "certifications": ["Trademark protected", "Proprietary design specs"],
+    "press_mentions": []
+  },
+  "faq": [
+    {"question": "Do I need a water tap?", "answer": "No. Use a bucket, pool, or any water source."},
+    {"question": "Is it complicated to set up?", "answer": "No. Fill, press, and clean. That's it."},
+    {"question": "Will it damage my car paint?", "answer": "Not at all. Use the 25° or 40° nozzle for a gentle wide spray that's 100% safe on car paint, windows, and delicate surfaces."},
+    {"question": "Is it heavy?", "answer": "No. You can use it with one hand easily."},
+    {"question": "Who is this for?", "answer": "Anyone who wants to clean faster with less effort."},
+    {"question": "What can I clean with it?", "answer": "Cars, trucks, RVs, boats, driveways, decks, patios, fences, siding, outdoor furniture, bikes — you name it."}
+  ],
+  "offer": {
+    "bundles": ["Ultimate Clean Bundle — Save 50%"],
+    "discounts": ["50% OFF today ($249.99 → $119.99)", "FREE GIFT: High-Capacity 21V Battery ($70 value)", "FREE GIFT: Noise-Canceling Earplugs", "FREE GIFT: $15 Store Gift Card"],
+    "guarantees": ["30-day money-back guarantee"],
+    "shipping_info": "Ships within 24-48h from USA warehouses. 4-10 business days delivery.",
+    "cta_text": "GET THE ULTIMATE CLEAN BUNDLE"
+  },
+  "competitive": {
+    "unique_selling_points": [
+      "Works without any water tap or hose connection",
+      "Truly portable — use it anywhere outdoors",
+      "One-handed operation, no strength required",
+      "Safe on all surfaces including car paint"
+    ],
+    "vs_alternatives": [
+      "Traditional pressure washers require power outlet and hose connection",
+      "Garden hose doesn't provide enough pressure",
+      "Professional car wash is expensive and time-consuming",
+      "Cheaper cordless washers on Amazon have lower PSI and shorter battery life"
+    ],
+    "market_positioning": "Premium portable cordless pressure washer positioned above cheap Amazon alternatives, below professional-grade equipment. Targets convenience and portability over raw power."
+  },
+  "images": [
+    {"url": "https://seesepro.com/cdn/shop/files/washer-hero.jpg", "alt": "Seese Pro Washer", "position": 0},
+    {"url": "https://seesepro.com/cdn/shop/files/washer-in-use.jpg", "alt": "Using Seese Pro on car", "position": 1}
+  ]
+}

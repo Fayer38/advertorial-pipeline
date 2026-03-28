@@ -1,0 +1,40 @@
+# Configuration globale du pipeline advertorial
+# Copier en config.yaml et adapter les valeurs
+
+pipeline:
+  # Nombre max de tentatives pour chaque agent
+  max_retries: 3
+  # Répertoire de sortie
+  output_dir: "data/output"
+  # Répertoire des advertoriaux de référence
+  reference_dir: "data/reference_advertorials"
+
+llm:
+  # Modèle Claude à utiliser
+  model: "claude-sonnet-4-20250514"
+  # Température par défaut (0.0 = déterministe, 1.0 = créatif)
+  default_temperature: 0.3
+  # Tokens max par réponse
+  max_tokens: 4096
+
+extractor:
+  # Timeout pour les requêtes HTTP (secondes)
+  http_timeout: 15
+  # Taille max du texte HTML envoyé au LLM (caractères)
+  max_html_chars: 30000
+  # Nombre max d'images à inclure
+  max_images: 10
+
+copywriter:
+  # Température plus élevée pour la créativité
+  temperature: 0.7
+  # Tokens max pour la rédaction
+  max_tokens: 8192
+  # Nombre d'advertoriaux de référence à inclure dans le contexte
+  reference_count: 5
+
+qa:
+  # Score minimum pour passer le contrôle qualité (sur 10)
+  min_score: 7
+  # Nombre max d'itérations de réécriture
+  max_iterations: 3

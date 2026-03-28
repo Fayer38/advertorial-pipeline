@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "source_url": "https://seesepro.com/en-us/products/seese-pro-v9",
+    "extracted_at": "2026-03-28T16:10:00Z",
+    "shopify_handle": "seese-pro-v9",
+    "store_domain": "seesepro.com"
+  },
+  "product_info": {
+    "title": "Seese Pro™ Ultra-Light, Ultra-Powerful Blower",
+    "description_html": "",
+    "description_clean": "The world's most powerful one-handed blower. Ultra-light cordless blower with brushless motor that reaches 200+ MPH wind speed and 30,000+ RPM. Replaces your garage blower, air duster, dryer cloth, and de-icer — all in one device. Weighs just 950g / 2.1 lbs. Designed for one-handed use, year-round: blow leaves, dry cars, clear snow, dust garages, clean vents. 21V 3.0Ah lithium-ion battery with up to 40 minutes runtime. Built with high-durability ABS plastic and a brushless motor for years of use. Comes with compact storage case. No gas, no cords, no maintenance.",
+    "price": {
+      "amount": 119.99,
+      "currency": "USD",
+      "compare_at_price": 249.99
+    },
+    "variants": [
+      {
+        "title": "Seese Pro™ Blower",
+        "price": 119.99,
+        "sku": "",
+        "available": true
+      },
+      {
+        "title": "Ultimate Drying Bundle",
+        "price": 149.99,
+        "sku": "",
+        "available": true
+      }
+    ],
+    "vendor": "Seese Pro",
+    "product_type": "Cordless Handheld Blower",
+    "tags": ["blower", "leaf blower", "cordless", "portable", "car dryer", "snow removal", "dust blower", "handheld"]
+  },
+  "composition": {
+    "ingredients": [],
+    "key_actives": [],
+    "certifications": ["Trademark protected", "Proprietary turbine specs"],
+    "warnings": ["Makes noise — earplugs included", "Moisture-resistant but should not be used under heavy rain"]
+  },
+  "benefits": {
+    "main_benefits": [
+      "200+ MPH wind speed — rivals $300+ pro blowers in a compact handheld form",
+      "Weighs only 950g (2.1 lbs) — lighter than a bag of sugar, zero arm strain",
+      "One-handed use — no back pain, no muscle fatigue, even for seniors",
+      "40 minutes runtime per charge — enough for a full yard cleanup",
+      "Replaces 4+ tools: garage blower, air duster, dryer cloth, de-icer",
+      "Year-round tool: leaves in fall, snow in winter, dust in summer, car drying anytime",
+      "Cordless — no gas, no cords, no maintenance, no hassle",
+      "Brushless motor (30,000 RPM) — outlasts standard motors, consistent power"
+    ],
+    "features": [
+      "30,000+ RPM brushless turbine motor",
+      "200+ MPH wind speed / 1,200 CFM airflow",
+      "1,000g wind force push",
+      "21V 3.0Ah lithium-ion battery (included)",
+      "Compatible fast charger (included)",
+      "High-durability ABS plastic construction",
+      "Compact storage case (included, $25 value)",
+      "Earplugs included",
+      "Weight: 950g / 2.1 lbs",
+      "Precise and controlled airflow — safe for indoors and electronics",
+      "No metal tips or contact points — safe on car paint"
+    ],
+    "use_cases": [
+      {"scenario": "Fall leaf cleanup on patio, deck, driveway", "outcome": "400 sq ft patio cleared in under 5 minutes vs 25 min with a broom"},
+      {"scenario": "Car drying after wash", "outcome": "Streak-free drying in 3 minutes vs 15+ with towels, no scratches"},
+      {"scenario": "Winter windshield defrosting / light snow", "outcome": "Defrost windshield in under 2 minutes, no scraping"},
+      {"scenario": "Garage / workshop sawdust cleanup", "outcome": "Clears sawdust and debris in seconds"},
+      {"scenario": "Indoor cleaning — vents, floorboards, ceilings, electronics", "outcome": "Precise airflow safe for delicate spaces, keyboards, cameras"},
+      {"scenario": "Pet drying after baths", "outcome": "Quick contactless drying"},
+      {"scenario": "Outdoor event cleanup", "outcome": "Clear debris after events in minutes instead of hours"}
+    ],
+    "problem_solved": "Heavy, bulky, gas-powered blowers cause back pain, require setup, and are overkill for most homeowners. Traditional cleanup methods (raking, sweeping, towel drying) take too long and are physically exhausting.",
+    "target_need": "A lightweight, powerful, cordless tool that replaces multiple heavy tools and makes outdoor/indoor cleanup effortless and fast — without back pain, without gas, without cords"
+  },
+  "social_proof": {
+    "clinical_studies": [],
+    "certifications": ["Trademark protected", "Proprietary design specs", "Brushless motor technology (same tech as drones and Teslas)"],
+    "press_mentions": [],
+    "testimonials": [
+      {"name": "Robert V.", "quote": "Glad I chose Seese Pro over the others. If in doubt don't be — it's real and you will be satisfied with it. Many useful things you can do with it."},
+      {"name": "", "quote": "My balcony used to take 20 minutes to sweep. Now? 60 seconds and it's spotless. This has literally given me my mornings back."},
+      {"name": "", "quote": "I didn't expect this much power from something so light. Cleared my entire garage in 5 minutes — sawdust, leaves, everything."},
+      {"name": "", "quote": "I use this every single morning before my coffee. Takes 60 seconds to clear my entire balcony. It's become part of my routine now."},
+      {"name": "", "quote": "I was skeptical at $120, but this rivals $300+ pro blowers. My husband keeps stealing it from my garage."},
+      {"name": "", "quote": "I used to dread fall cleanups. My old blower was loud, heavy, and barely moved anything. The Seese Pro is shockingly powerful for how light it is. I cleared my entire backyard in under 15 minutes and didn't break a sweat."},
+      {"name": "Stephanie L.", "quote": "No more raking for me. I use this on my back deck twice a week and it's spotless in minutes. Honestly one of the smartest tools I've bought."},
+      {"name": "", "quote": "I've owned one of those bulky pro blowers before. This little thing blows harder and fits in my toolbox. Paid half the price and got double the convenience!"},
+      {"name": "", "quote": "This little machine replaced my bulky gas blower and I'm never going back."}
+    ]
+  },
+  "faq": [
+    {"question": "Is it powerful enough for real outdoor messes like leaves and patio dust?", "answer": "Absolutely. Despite its compact size, Seese Pro delivers a focused, high-pressure airflow strong enough to move leaves, dirt, and even wet debris off patios, garages, or decks. It's built for real-world results — not just light dust."},
+    {"question": "Is it too small to replace my big blower?", "answer": "That's the beauty of it. Seese Pro was built to replace bulk without losing performance. For most daily cleaning jobs, you'll never touch your big, heavy blower again. And your back will thank you."},
+    {"question": "Is it suitable for women, seniors, or first-time users?", "answer": "Yes. It's ultra-lightweight, easy to use, and requires no strength or prior experience."},
+    {"question": "Can I use it indoors (garage, workshop, home) without making a mess?", "answer": "Yes. The airflow is precise and controlled, making it perfect for small or delicate spaces."},
+    {"question": "Is it noisy?", "answer": "It does make noise — just like any high-speed blower. But we include earplugs with every Seese Pro. The sound is strong enough to feel the power, but not loud enough to disturb your neighbors."},
+    {"question": "Can I use it on my car without damaging the paint?", "answer": "Yes, it's perfect for paint, rims, grilles, mirrors, vents — and all those hard-to-reach areas. No metal tips or contact points."},
+    {"question": "Is it only for summer?", "answer": "No. It's a year-round tool: in winter, it defogs windshields and clears light snow. In summer, it dries cars, blows dust from garages, or cleans patios after mowing."},
+    {"question": "What's in the box?", "answer": "Every order includes the Seese Pro blower, a powerful 21V 3.0Ah lithium-ion battery, a compatible fast charger, and a compact storage case ($25 value — yours free)."},
+    {"question": "What if I don't like it?", "answer": "No stress. You're covered by our 30-day satisfaction guarantee. Try it, use it, test it. If you're not 100% happy, send it back — no questions asked."},
+    {"question": "Do I need special batteries like DeWalt or Milwaukee?", "answer": "No. Seese Pro includes its own dedicated battery — no need for any third-party system."}
+  ],
+  "offer": {
+    "bundles": ["Ultimate Drying Bundle — Save 55%", "Professional Bundle — Save 55%"],
+    "discounts": ["55% OFF today ($249.99 → $119.99)", "3 free gifts worth $110 included"],
+    "guarantees": ["30-day money-back guarantee", "Lifetime warranty (replacement)"],
+    "shipping_info": "Free shipping. Orders processed within 24-48h. Warehouses in Canada, France, Germany. Delivery 5-12 business days.",
+    "cta_text": "GET THE ULTIMATE DRYING BUNDLE"
+  },
+  "competitive": {
+    "unique_selling_points": [
+      "950g — lightest in its power class, lighter than a bag of sugar",
+      "200 MPH / 30,000 RPM — rivals $300+ pro blowers at half the price",
+      "Brushless turbine motor — same tech as drones and Teslas",
+      "Replaces 4+ tools in one (blower, duster, dryer, de-icer)",
+      "One-handed, no back pain — designed for seniors and anyone",
+      "Year-round versatility (not just a leaf blower)",
+      "Compact storage case included ($25 value)"
+    ],
+    "vs_alternatives": [
+      "Gas blowers: heavy (20-30 lbs), loud, require gas, maintenance, cause back pain",
+      "Corded electric blowers: limited range, tangled cords, still heavy",
+      "Cheap cordless blowers on Amazon: lower RPM, shorter battery, flimsy build",
+      "EGO, DeWalt, Milwaukee: more powerful but 5-10x heavier and 2-3x the price",
+      "Raking/sweeping: exhausting, time-consuming, old-fashioned",
+      "Towel drying car: leaves scratches, takes 15+ minutes"
+    ],
+    "market_positioning": "Premium ultralight cordless blower positioned as the 'smart replacement' for heavy gas blowers. Targets homeowners who want pro-level results without the bulk, the pain, and the price. Key differentiator: weight-to-power ratio (950g at 200 MPH) is unmatched in the market."
+  },
+  "images": [
+    {"url": "", "alt": "Seese Pro Blower main product shot", "position": 0},
+    {"url": "", "alt": "Seese Pro Blower being used on leaves", "position": 1},
+    {"url": "", "alt": "Seese Pro Blower being used to dry car", "position": 2}
+  ]
+}

@@ -1,0 +1,23 @@
+# Advertorial Pipeline - Dépendances Python
+
+# LLM
+anthropic>=0.40.0
+
+# Scraping
+aiohttp>=3.9.0
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+
+# Validation de données
+pydantic>=2.5.0
+
+# Configuration
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+
+# API REST
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+
+# Utilitaires
+asyncio-throttle>=1.0.0
