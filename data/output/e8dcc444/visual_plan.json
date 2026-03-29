@@ -1,0 +1,58 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Un homme d'environ 58-62 ans, silhouette ordinaire, vêtements casual (jean, chemise à carreaux), debout dans une allée résidentielle un matin d'automne. Il regarde vers le bas en direction d'un gros souffleur à essence posé sur le sol, l'expression mêlant fatigue anticipée et résignation. Des feuilles mortes dorées et orangées couvrent l'allée et la pelouse autour de lui. Lumière rasante du matin, tons dorés chauds. Pas de regard caméra — il est seul avec son dilemme.",
+      "mood": "Authentique, mélancolique mais reconnaissable, lumière d'automne chaude et dorée",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Intérieur d'un garage résidentiel bien rangé mais encombré. Un grand souffleur à essence poussiéreux est posé sur une étagère haute, clairement inutilisé depuis longtemps. Autour de lui, d'autres outils suspendus ou rangés. Lumière naturelle filtrant par la porte entrouverte du garage, créant un contraste doux entre l'ombre et la lumière. Pas de personnage — la scène parle d'elle-même : un outil abandonné, une routine interrompue.",
+      "mood": "Nostalgique, légèrement sombre, réaliste — pas dramatique",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "product_shot",
+      "description": "Gros plan sur une main masculine d'environ 60 ans — peau réaliste, légèrement marquée par l'âge — tenant le souffleur Seese Pro par la poignée avec une prise décontractée, bras le long du corps, sans effort visible. En arrière-plan flou : une terrasse en bois avec quelques feuilles fraîchement soufflées sur le côté. Lumière naturelle chaude d'après-midi. L'accent est mis sur la légèreté et l'aisance du geste.",
+      "mood": "Léger, naturel, rassurant — sentiment d'effort minimal",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Un homme de 65-70 ans assis sur les marches d'un porche en bois, détendu, les coudes sur les genoux. Le souffleur Seese Pro est posé à côté de lui contre les marches. En arrière-plan : une allée propre, sans feuilles, baignée dans la lumière dorée d'automne. Expression calme et satisfaite — pas de sourire forcé, juste la quiétude de quelqu'un qui a accompli ce qu'il avait à faire. Tenue simple : pantalon kaki, pull léger.",
+      "mood": "Sérénité, autonomie retrouvée, chaleur d'automne — ton documentaire, non publicitaire",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product_shot",
+      "description": "Flat lay soigné sur fond neutre crème ou gris très clair. Au centre : le souffleur Seese Pro Ultra-Light. Disposés autour de manière ordonnée mais naturelle : la batterie 21V, le chargeur rapide, la sacoche de transport rigide ouverte montrant l'intérieur, et les protections auditives. Légères ombres portées douces. Lumière de studio chaude et directionnelle. Aucun texte superposé — visuel pur, propre, haut de gamme sans être froid.",
+      "mood": "Professionnel, généreux, rassurant — impression d'un kit complet et bien pensé",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Une femme ou un homme de 60-65 ans debout sur une terrasse ou une allée parfaitement dégagée, tenant le souffleur Seese Pro d'une seule main le long du corps avec une posture naturelle et décontractée. Léger sourire sincère, regard légèrement vers l'horizon — pas vers la caméra. Lumière naturelle dorée de fin d'après-midi. Tenue décontractée. L'arrière-plan montre clairement une surface propre, sans feuilles. Ambiance de tâche accomplie, de dignité tranquille.",
+      "mood": "Confiant, chaleureux, digne — fierté discrète, pas triomphante",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Un homme d'environ 65-68 ans, corpulent mais digne, assis sur une chaise de jardin en plastique devant un garage ouvert. Matinée d'octobre crisp, lumière dorée rasante. Il tient son dos d'une main, regard baissé et fatigué. Un gros souffleur à essence de 22 livres est appuyé contre le mur du garage à côté de lui. L'allée est entièrement couverte de feuilles mortes orange et jaune. Aucun voisin visible — moment d'isolement silencieux.",
+      "mood": "Mélancolique mais familier, nostalgique, lumière dorée d'automne — pas dramatique, mais honnête et reconnaissable",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "product_shot",
+      "description": "Gros souffleur à essence poussiéreux et usé appuyé contre le mur intérieur d'un garage encombré. Pas de personne dans le cadre — juste l'outil imposant et le désordre ambiant : étagères chargées, boîtes, un vélo vieilli. Lumière de garage légèrement froide et indirecte. L'outil occupe le premier plan, massif et intimidant.",
+      "mood": "Lourd, encombrant, légèrement oppressant — le problème personnifié sans agressivité",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Deux hommes entre 68 et 72 ans, détendus et souriants, discutant dans une arrière-cour un matin d'automne. L'un d'eux tient le Seese Pro d'une seule main, de façon décontractée, comme on tiendrait une tasse de café. Érables matures en arrière-plan avec feuillage orange et jaune. Lumière chaude de début de matinée. Ambiance voisinage authentique, pas de mise en scène forcée.",
+      "mood": "Chaleureux, social, masculin sans être sportif — la confiance tranquille de deux hommes qui ont tout vu",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Un homme d'environ 65-68 ans debout sur son allée, utilisant le Seese Pro d'une seule main, le bras légèrement tendu, posture détendue et droite. Les feuilles tourbillonnent autour de lui. Lumière de fin d'après-midi (golden hour), ombre longue sur l'allée. Son visage montre une légère surprise satisfaite. Maison de banlieue propre en arrière-plan, voiture familiale visible.",
+      "mood": "Libérateur, léger, doré — le contraste silencieux avec la scène d'ouverture",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "lifestyle",
+      "description": "Le même homme, début de printemps, debout dans son allée parfaitement dégagée. Il tient le Seese Pro au bout du bras, bas, décontracté — pas en posture de démonstration. Regard calme et satisfait vers l'allée propre. Arbres matures avec bourgeons naissants, lumière douce de matinée printanière, légère condensation visible dans l'air. Maison bien entretenue derrière lui.",
+      "mood": "Fier, serein, autonome — la victoire silencieuse d'un homme qui a repris le contrôle",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "product_shot",
+      "description": "Le Seese Pro centré sur une surface neutre (béton clair ou bois blanchi), sa mallette rigide compacte ouverte à côté de lui avec tous les accessoires nettement disposés : batterie, chargeur, bouchons d'oreilles, 3 cadeaux bonus identifiables. Lumière naturelle latérale douce. Badge '55% OFF' discret mais lisible dans le coin supérieur droit. Composition ordonnée et rassurante, pas de mise en scène agressive.",
+      "mood": "Clair, honnête, premium sans être froid — la promesse de simplicité dans la présentation elle-même",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "product_shot",
+      "description": "Le Seese Pro seul, centré sur fond blanc pur, légère ombre portée subtile pour lui donner du volume. Les trois cadeaux inclus disposés symétriquement autour de lui. Badge '55% OFF' bien visible en haut à gauche, icône garantie à vie en bas. Composition minimaliste, confiance et clarté — le dernier argument visuel avant le clic.",
+      "mood": "Épuré, confiant, sans friction — clarté totale pour maximiser la conversion",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    }
+  ]
+}

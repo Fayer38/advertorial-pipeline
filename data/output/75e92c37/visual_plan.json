@@ -1,0 +1,67 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Femme de 62-65 ans, cheveux gris naturels, sourire détendu et authentique, tenant le Seese Pro d'une seule main le long du corps. Elle se tient sur une terrasse en brique terracotta jonchée de quelques feuilles mortes dorées. Lumière de fin d'après-midi chaude et rasante. Elle regarde légèrement hors cadre avec une expression de fierté tranquille — pas d'effort visible, juste quelqu'un qui prend soin de chez elle.",
+      "mood": "Chaleureux, automnal, confiant, authentique. Palette dorée-terracotta. Lumière golden hour.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "product_shot",
+      "description": "Gros plan du Seese Pro tenu en main par une main masculine âgée aux veines apparentes — prise ferme mais décontractée, pouce sur le bouton. À côté, comparaison de taille intuitive : le blower posé contre une bouteille d'eau standard et un mug de café. Fond extérieur légèrement flou, ciel clair. Lumière naturelle nette qui fait ressortir la compacité et le côté solide du produit.",
+      "mood": "Clair, direct, rassurant. Met en valeur la légèreté sans paraître fragile.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "product_shot",
+      "description": "Flat lay soigné sur une surface en bois clair aux tons beige-chêne. Le Seese Pro est centré, entouré de la batterie de rechange, de la housse de transport compacte et des bouchons d'oreilles. Chaque élément est espacé proprement, légèrement incliné pour le dynamisme. Une feuille d'automne séchée posée discrètement dans un coin pour rappeler l'univers saison. Lumière naturelle douce, ombres légères.",
+      "mood": "Premium, organisé, généreux. Donne l'impression d'un vrai beau cadeau — pas d'une promo bazar.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Grille de quatre photos authentiques en 2x2 : (1) Homme de 68 ans en chemise à carreaux soufflant les feuilles d'une allée ensoleillée, bras détendu, posture droite — satisfaction visible. (2) Femme de 65 ans dirigeant le flux d'air sur le capot d'une voiture propre, souriant légèrement. (3) Homme en veste d'hiver légère dégageant une fine couche de neige d'un chemin pavé, geste précis et sans effort. (4) Gros plan serré sur une main âgée aux traits marqués tenant le Seese Pro, pouce posé sur le bouton — image de maîtrise et de compétence tranquille. Toutes en lumière naturelle, teintes vertes et terracotta.",
+      "mood": "Authentique, varié, humain. Zéro perfection de stock photo — vraie vie, vraies personnes seniors actives.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "testimonial",
+      "description": "Mise en page style capture d'avis vérifiés : fond blanc cassé, étoiles dorées 5/5, photo ronde de profil authentique (femme d'environ 67 ans, sourire chaleureux), texte de citation en police serif lisible, nom et ville en dessous. Design épuré, crédible, légèrement artisanal — pas trop corporate. Badge 'Achat vérifié' visible.",
+      "mood": "Crédible, chaleureux, simple. Inspire confiance sans être clinique.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product_shot",
+      "description": "Photo produit héro sur fond blanc chaud (off-white légèrement crème). Le Seese Pro est centré, les accessoires (housse, batterie, bouchons) disposés en éventail élégant à sa droite. Superposition graphique sobre : badge rond '55% OFF — TODAY ONLY' en haut à gauche, prix barré $249.99 et nouveau prix $119.99 en rouge terracotta. La composition dégage confiance et solidité — aucun élément criard ou 'soldes de fin de saison'.",
+      "mood": "Premium, net, urgent sans être agressif. Solide et digne de confiance.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Femme de 60-65 ans debout sur une terrasse entièrement dégagée de feuilles, en fin d'après-midi d'automne. Elle tient le Seese Pro nonchalamment à son côté, bras le long du corps. Elle regarde légèrement hors cadre vers la gauche avec une expression calme et satisfaite — ni pose forcée, ni sourire commercial. Derrière elle : carrelage terracotta propre, quelques pots de fleurs, feuillage doré-roux en arrière-plan flou. Lumière chaude rasante, ambiance domestique apaisée.",
+      "mood": "Fierté tranquille, indépendance retrouvée, chaleur automnale. L'image qui dit tout sans un mot.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    }
+  ]
+}

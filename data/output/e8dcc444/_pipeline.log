@@ -2,3 +2,10 @@
 [21:24:55] [INFO] Phase 1 | Starting | running | 0%
 [21:24:55] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
 [21:26:12] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[21:29:02] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[21:29:30] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[21:29:30] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[21:29:55] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[21:31:12] [INFO] Pipeline completed — html=data/output/e8dcc444/i-couldn-t-start-my-own-leaf-blower-anymore-so-i-built-a-bet.html words=1959
+[21:31:12] [INFO] Done |  | completed | 100%
+[21:31:12] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)

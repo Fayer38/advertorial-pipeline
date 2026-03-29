@@ -1,0 +1,45 @@
+{
+  "overall_score": 6.0,
+  "passed": false,
+  "criteria": {
+    "hook_strength": {
+      "score": 6,
+      "feedback": "Le hook repose sur une statistique d'études publiées — crédible, mais froid et impersonnel. Il s'adresse à 'les adultes de plus de 55 ans' en troisième personne, jamais au lecteur directement. Le brief prévoyait trois hooks émotionnels et personnels ('À 60 ans, je pensais devoir arrêter...') qui ont été ignorés au profit d'un angle clinique. La phrase d'accroche est longue (23 mots) et ne crée pas d'urgence émotionnelle immédiate pour un homeowner qui a mal au dos le samedi matin. Suggestion concrète : remplacer l'alert clinique par le hook personnel du brief — 'À 60 ans, je pensais devoir arrêter d'entretenir mon jardin moi-même. Ce petit appareil m'a prouvé que j'avais tort.' — puis introduire la statistique comme preuve dans le paragraphe suivant, pas comme titre."
+    },
+    "story_flow": {
+      "score": 6,
+      "feedback": "La structure logique est correcte (problème → biomécanique → comparaison → solution → preuves → recommandation → offre → CTA) mais les transitions sont académiques, pas narratives. Il n'y a aucun bucket brigade ('Voilà pourquoi...', 'Mais voici ce que personne ne vous dit...', 'Et c'est là que tout change.'). Le passage de la section comparative à la section produit est particulièrement abrupt — on passe d'un tableau à 'The Seese Pro was engineered from a different clinical premise' sans transition émotionnelle. Le lecteur cible (65 ans, dos fragile) décrochera probablement après les 600 premiers mots, trop denses. Ajouter au moins 4-5 bucket brigades aux moments de transition clés."
+    },
+    "proof_density": {
+      "score": 8,
+      "feedback": "Point fort de l'advertorial. Trois études citées avec sources complètes, deux études avec taille d'échantillon (n=3,812 et n=2,400), tableau comparatif, quatre statistiques clés (87%, 94%, 91%, 78%), deux cas cliniques nommés avec suivi à 12 semaines. La densité est excellente. Bémol : les cas cliniques sont rédigés comme des dossiers médicaux ('Patient presents at 67 with chronic L4-L5...') ce qui réduit leur impact émotionnel. La seule citation directe percutante ('I feel like myself again') est enfouie dans 200 mots de jargon clinique. Reformuler les cas en témoignages directs du patient, pas du thérapeute."
+    },
+    "cta_clarity": {
+      "score": 6,
+      "feedback": "Le CTA est présent et le prix est clairement indiqué ($119.99, -55%). La garantie 30 jours et la garantie à vie sont mentionnées. Cependant : (1) il n'y a aucune urgence réelle — 'currently available at promotional pricing' est vague et non crédible, (2) le CTA n'apparaît qu'après 2466 mots sans aucun CTA secondaire intermédiaire, (3) l'ancrage prix ($249.99 → $119.99) est mentionné dans la section offre mais pas répété dans le CTA final. Suggestion : ajouter 'Stock limité — cette offre expire le [date]' ou 'Plus de 4,200 unités commandées ce mois' pour créer une urgence justifiée. Ajouter un mini-CTA après la section preuves."
+    },
+    "emotional_arc": {
+      "score": 5,
+      "feedback": "C'est le critère le plus faible. L'arc émotionnel du brief (douleur → espoir → confiance → action) est intellectualisé à l'extrême. La douleur est décrite en termes biomécaniques ('lumbar load of 4.75 to 7.6 kilograms') jamais en termes vécus ('vous rentrez avec le dos en feu et vous vous dites que c'est peut-être la dernière fois'). Il n'y a aucun future pacing : nulle part le lecteur est invité à imaginer sa vie dans 30 jours — son jardin propre, son dos intact, sa fierté d'avoir fait ça seul. Le passage le plus émotionnel ('the psychological cost of deferred autonomy') reste clinique alors qu'il devrait être le pic émotionnel de l'article. Ajouter un paragraphe de 80-100 mots de future pacing concret après la section preuves : 'Imaginez dans trois semaines...' Réécrire l'intro du problème en première ou deuxième personne."
+    },
+    "readability": {
+      "score": 4,
+      "feedback": "Problème majeur. (1) Longueur : 2466 mots, soit 65-210% au-dessus de la fenêtre optimale 800-1500. (2) Jargon clinique inaccessible au lecteur cible : 'L3-L5 vertebrae', 'Hand-Arm Vibration Syndrome (HAVS)', 'Oswestry Disability Index', 'QuickDASH', 'brushless motor topology', 'retrospective cohort study', 'p<0.01'. Un homeowner de 65 ans ne lit pas le Journal of Biomechanical Engineering. (3) Phrases excessivement longues : 'For a 60-year-old adult, a 5kg blower generates the functional equivalent of 25 to 40 kilograms of spinal compression during each sustained hold' = 35 mots. (4) Paragraphes de 8-10 lignes sans aération. Actions requises : couper ~1000 mots, remplacer tout le jargon médical par des équivalents courants, limiter les phrases à 15-20 mots maximum, aérer avec des paragraphes de 2-3 lignes."
+    },
+    "similarity_to_best": {
+      "score": 5,
+      "feedback": "L'advertorial est structuré mais le ton est celui d'un article de revue médicale, pas d'un advertorial éditorial. Un lecteur de 60 ans identifiera immédiatement qu'il s'agit d'une publicité déguisée en étude clinique — ce qui génère de la méfiance, pas de la confiance. Les meilleurs advertoriaux du genre ressemblent à l'article d'un magazine grand public (Readers Digest, AARP Magazine) écrit par quelqu'un qui vous ressemble. Ici, le narrateur 'physical therapist with 25 years' est introduit seulement à 80% du texte, trop tard pour établir un rapport. La persona du PT est bonne mais doit être présente dès le hook, et son témoignage doit être personnel et chaleureux, pas clinique. Reécrire en prenant le PT comme voix narrative dès la première ligne."
+    }
+  },
+  "improvements": [
+    "Remplacer le hook clinique par l'accroche personnelle du brief : 'À 60 ans, je pensais devoir arrêter d'entretenir mon jardin moi-même. Ce petit appareil m'a prouvé que j'avais tort.' — puis intégrer la statistique d'études en deuxième paragraphe comme preuve, pas comme titre",
+    "Couper environ 1000 mots pour atteindre 1400-1500 mots : éliminer ou condenser les sections biomécanique technique (paragraphe sur les Hz et HAVS) et la section comparative marché",
+    "Remplacer tout le jargon clinique par des équivalents courants : 'L3-L5' → 'bas du dos', 'HAVS' → 'douleurs chroniques aux mains et bras', 'Oswestry Disability Index' → 'niveau de douleur quotidienne', 'brushless motor' → 'moteur nouvelle génération'",
+    "Ajouter un paragraphe de future pacing de 80-100 mots après la section preuves : 'Imaginez dans 3 semaines : votre allée propre en 5 minutes, le dos intact, sans avoir demandé d'aide à personne. Ce sentiment-là...'",
+    "Réécrire les deux cas cliniques en témoignages directs du patient (première personne) : transformer 'Patient presents at 67 with chronic...' en 'Robert, 67 ans, Phoenix : Je passais les deux jours après avoir tondu à me tenir le dos...'",
+    "Introduire la persona du kinésithérapeute dès le début de l'article (hook ou deuxième paragraphe) pour établir la crédibilité narrative avant de présenter les preuves",
+    "Ajouter 4-5 bucket brigades aux transitions clés : entre problème et comparaison, entre comparaison et produit, entre preuves et recommandation",
+    "Renforcer l'urgence du CTA avec un élément de stock ou de délai concret, et ajouter un mini-CTA après la section preuves (à mi-article)"
+  ],
+  "version": 1
+}

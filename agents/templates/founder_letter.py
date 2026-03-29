@@ -174,7 +174,7 @@ blockquote{{border-left:4px solid #b8844e;margin:24px 0;padding:16px 22px;backgr
 .stat-box .stat-label{{font-size:13px;color:#a08060;margin-top:6px}}
 
 /* ── TABLE ── */
-.comparison-table{{width:100%;border-collapse:collapse;margin:20px 0;font-size:16px}}
+.comparison-table{{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}}
 .comparison-table th{{background:#faf6ee;padding:11px 14px;text-align:left;font-family:'Playfair Display',serif;font-size:13px;font-weight:700;border-bottom:2px solid #e8e0d0;color:#1a1208}}
 .comparison-table td{{padding:11px 14px;border-bottom:1px solid #eee8e0;color:#2e2416}}
 .comparison-table .good{{color:#3d7a3d;font-weight:700}}

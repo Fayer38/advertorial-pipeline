@@ -96,12 +96,7 @@ class HTMLPublisherAgent(BaseAgent):
         """Inject logo header, announcement bar, and footer into any template HTML."""
         LOGO_URL = "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Design_sans_titre_15.png?v=1774625309"
         
-        # Announcement bar
-        announcement = f'''<div id="adv-announcement" style="background:#111;color:#fff;text-align:center;padding:10px 16px;font-size:13px;font-family:system-ui,sans-serif;">
-  🚚 <strong>FREE SHIPPING</strong> on all orders · 30-Day Money-Back Guarantee · ⭐ 4.9/5 (2,400+ reviews)
-</div>'''
-        
-        # Disclosure + Logo header
+        # Standard header: Disclaimer + Logo ONLY (no announcement bar)
         header = f'''<div id="adv-disclosure" style="text-align:center;padding:3px 0;background:#fafafa;border-bottom:1px solid #f0f0f0;font-size:9px;color:#c0c0c0;letter-spacing:0.03em;font-family:system-ui,sans-serif;">Advertorial</div>
 <div id="adv-header-logo" style="text-align:center;padding:14px 0 10px;background:#fff;border-bottom:1px solid #eee;">
   <a href="{product_url}" style="text-decoration:none;"><img src="{LOGO_URL}" alt="{product_name}" style="height:52px;max-width:260px;object-fit:contain;"></a>
@@ -113,12 +108,12 @@ class HTMLPublisherAgent(BaseAgent):
   <p style="font-size:10px;color:#999;line-height:1.6;max-width:700px;margin:0 auto;">&copy; 2026 All rights reserved. All content, images, and materials on this website are protected by international copyright and intellectual property laws. Unauthorized reproduction, distribution, or modification of any materials is strictly prohibited.</p>
 </footer>'''
         
-        # Inject announcement + header after <body>
-        if "adv-announcement" not in html:
+        # Inject disclaimer + logo after <body>
+        if "adv-disclosure" not in html:
             body_match = re.search(r'(<body[^>]*>)', html, re.IGNORECASE)
             if body_match:
                 pos = body_match.end()
-                html = html[:pos] + "\n" + announcement + "\n" + header + "\n" + html[pos:]
+                html = html[:pos] + "\n" + header + "\n" + html[pos:]
         
         # Inject footer before </body>
         if "adv-footer" not in html:
@@ -309,7 +304,7 @@ em{{color:#444;font-style:italic}}
 .stat-box{{flex:1;min-width:130px;background:#fff5f0;border:1px solid #f9cdb8;border-radius:8px;padding:14px;text-align:center}}
 .stat-box .stat-num{{font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;color:#f26722;display:block}}
 .stat-box .stat-label{{font-size:13px;color:#666;margin-top:4px;line-height:1.4}}
-.comparison-table{{width:100%;border-collapse:collapse;margin:14px 0;font-size:16px}}
+.comparison-table{{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}}
 .comparison-table th{{background:#f7f7f7;padding:11px 14px;text-align:left;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;border-bottom:2px solid #eee}}
 .comparison-table td{{padding:11px 14px;border-bottom:1px solid #eee;vertical-align:top}}
 .comparison-table tr:last-child td{{border-bottom:none}}

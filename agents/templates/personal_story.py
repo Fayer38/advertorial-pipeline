@@ -184,7 +184,7 @@ blockquote{{border-left:4px solid #111;margin:24px 0;padding:16px 22px;backgroun
 .stat-box{{flex:1;min-width:130px;background:#f5f5f5;border-radius:8px;padding:16px;text-align:center}}
 .stat-box .stat-num{{font-family:'DM Serif Display',serif;font-size:30px;color:#111;display:block;line-height:1}}
 .stat-box .stat-label{{font-size:13px;color:#777;margin-top:6px}}
-.comparison-table{{width:100%;border-collapse:collapse;margin:20px 0;font-size:16px}}
+.comparison-table{{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}}
 .comparison-table th{{background:#111;color:#fff;padding:11px 14px;text-align:left;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}}
 .comparison-table tr:nth-child(even) td{{background:#fafafa}}
 .comparison-table td{{padding:11px 14px;border-bottom:1px solid #eee;color:#2a2a2a}}
@@ -239,13 +239,6 @@ h1{{font-size:32px}}
 </style>
 </head>
 <body>
-
-<!-- MAGAZINE TOP BAR -->
-<div class="mag-topbar">
-  <span class="mag-name">Personal Stories</span>
-  <span class="mag-section-tag">Real People · Real Results</span>
-  <span class="mag-date">{today}</span>
-</div>
 
 <!-- ARTICLE HERO -->
 <div class="article-hero">

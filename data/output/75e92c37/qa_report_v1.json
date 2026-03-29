@@ -1,0 +1,44 @@
+{
+  "overall_score": 7.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le hook est solide : ouverture à la première personne, identification immédiate avec l'avatar 55+, et la ligne 'I hated that. Not the leaves. The asking.' est un moment de copywriting authentique. La démonstration de la voisine est une preuve sociale naturelle bien insérée. Deux points perdus : (1) la transition vers le prix dès la fin du hook brise le momentum émotionnel avant que le lecteur soit suffisamment engagé, (2) la headline mentionne '55% Off' ce qui sonne immédiatement comme une pub avant même que l'histoire commence."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "La structure générale fonctionne mais deux ruptures de rythme importantes : (1) Le passage du hook émotionnel ('I hated that. Not the leaves. The asking.') directement à 'Why Is It Half Price Right Now?' est trop brusque — il manque un paragraphe de transition qui approfondit le problème et agit comme pont vers la solution avant de parler du prix. (2) La section 'Here's Exactly What You Get Today' avec les listes à puces et prix barrés tue complètement le rythme narratif — cela ressemble à une fiche produit e-commerce insérée dans un article. Suggestion : fusionner les éléments du bundle dans la narration plutôt qu'en liste tabulaire, ou au minimum la placer APRÈS les témoignages."
+    },
+    "proof_density": {
+      "score": 6,
+      "feedback": "Les 4 témoignages sont bien écrits et spécifiques (noms, âges, villes, use cases distincts), c'est le point fort. Mais les statistiques '12,847 units sold' et '77% claimed' manquent de source et sonnent comme des chiffres marketing inventés — un lecteur sceptique de 60+ ans ne les croira pas. Il manque : (1) au moins une certification ou validation technique externe (ex: testé par un organisme, recommandé par une association de jardinage, ou couverture presse), (2) une spécification technique prouvée pour le '200+ MPH airflow' — un lien vers un test ou une comparaison avec les standards du marché renforcerait la crédibilité, (3) un témoignage vidéo mentionné ou un nombre de reviews vérifiables (ex: '4.9/5 sur 2,400+ avis Amazon vérifiés'). Suggestion concrète : remplacer les stats marketing par 'Rated 4.9/5 from 2,400+ verified purchasers' avec une source crédible."
+    },
+    "cta_clarity": {
+      "score": 8,
+      "feedback": "CTA clair, bouton rouge impossible à rater, prix répété, garantie bien mise en avant. Le seul axe d'amélioration : l'urgence repose uniquement sur la rareté du stock ('once units run out'), un mécanisme devenu trop utilisé pour être crédible. Suggestion : ajouter une urgence complémentaire ancrée dans la saison — ex: 'Spring cleanup starts in [X] weeks — orders placed today ship in 2 business days' — ce qui est à la fois réel et actionnable pour le lecteur."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "Le début (douleur + honte de demander de l'aide) et la fin de la section témoignages ('being capable again, handling your own home on your own terms') sont émotionnellement forts. Robert D. qui 'almost cried' est un moment excellent. Mais l'arc est brisé par les deux sections commerciales du milieu (pourquoi le prix, ce que vous recevez) qui sortent complètement le lecteur de l'état émotionnel. Le future pacing est trop concentré sur une seule ligne dans le CTA final. Suggestion concrète : ajouter un paragraphe de future pacing explicite après les témoignages, de type : 'Picture this Saturday morning: coffee in one hand, Seese Pro in the other. Driveway clear in four minutes. Car dry before you even finish your cup. Your neighbor waving from across the street — wondering what changed.' Ce paragraphe devrait venir AVANT la récapitulation de l'offre."
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Paragraphes courts, phrases percutantes, bon usage du gras sur les éléments clés. Le formatage HTML avec prix barrés et texte rouge est fonctionnel. 1278 mots : longueur idéale. Seul point faible : la duplication quasi-identique de la liste bundle entre 'Here's Exactly What You Get Today' et la section '[OFFER]' alourdit inutilement l'article — le lecteur a l'impression de lire deux fois la même chose, ce qui crée une friction mentale et peut donner un sentiment de padding commercial."
+    },
+    "similarity_to_best": {
+      "score": 7,
+      "feedback": "La structure hook → problème → solution → preuve → offre → CTA est respectée. Le ton est éditorial dans les sections narratives. Mais deux éléments trahissent la nature publicitaire : (1) La section 'Why Is It Half Price Right Now?' est un classique des advertoriaux discount mais reste trop transparente — le lecteur de 60+ ans reconnaît immédiatement ce pattern 'overstock justification'. Une reformulation plus subtile en angle éditorial ('How a manufacturer glut created the best deal of the season for homeowners') serait plus naturelle. (2) La double liste bundle identique sent le copy-paste de sales page. Un vrai article éditorial ne présenterait pas deux fois la même liste dans le même texte."
+    }
+  },
+  "improvements": [
+    "Retirer la mention '55% Off' de la headline et la remplacer par quelque chose d'éditorial comme 'The 2lb Blower That's Giving Thousands of Homeowners Their Independence Back'",
+    "Ajouter un paragraphe de transition entre le hook et 'Why Is It Half Price' qui approfondit le problème physique des vieux souffleurs avant d'aborder le prix",
+    "Supprimer la liste bundle en doublon dans la section [OFFER] ou au minimum différencier les deux présentations",
+    "Remplacer les stats '12,847 units' et '77% claimed' par un nombre d'avis vérifiables avec source (ex: 'Amazon verified reviews') pour crédibiliser les chiffres auprès d'un public sceptique",
+    "Ajouter un paragraphe de future pacing spécifique après les témoignages : décrire une matinée type du lecteur 30 jours après l'achat, avec des détails sensoriels concrets (café à la main, allée propre en 4 minutes, voisin qui salue)",
+    "Reformuler la section 'Why Is It Half Price' avec un angle plus éditorial et moins transparent — ou la supprimer et intégrer la justification du prix directement dans la section offre en une phrase",
+    "Ajouter une preuve externe crédible : certification technique, couverture dans un magazine jardinage senior, ou comparaison avec standard industriel pour le '200+ MPH airflow'"
+  ],
+  "version": 1
+}

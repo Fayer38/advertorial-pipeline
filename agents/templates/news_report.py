@@ -26,11 +26,16 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
         img_url = image_map.get(i, "")
         parts = []
 
-        # Image BEFORE heading with caption
+        if heading:
+            parts.append(f'<h2 class="sec-head">{heading}</h2>')
+        if body_html:
+            parts.append(f'<div class="art-body">{body_html}</div>')
+
+        # Image AFTER body text — editorial placement
         if img_url:
             caption = placeholder.get("description", "") or heading
             parts.append(f'''<figure class="art-figure">
-  <img src="{img_url}" alt="{heading}">
+  <img src="{img_url}" alt="{heading}" loading="lazy">
   {"<figcaption>" + caption + "</figcaption>" if caption else ""}
 </figure>''')
         elif placeholder.get("description"):
@@ -39,12 +44,7 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
             if p_type == "VIDEO":
                 parts.append(f'<div class="placeholder video-ph"><div class="tbadge">VIDEO</div><div class="play-icon">&#9654;</div><p>{desc}</p></div>')
             else:
-                parts.append(f'<div class="placeholder"><div class="tbadge">{p_type}</div><br>{desc}</div>')
-
-        if heading:
-            parts.append(f'<h2 class="sec-head">{heading}</h2>')
-        if body_html:
-            parts.append(f'<div class="art-body">{body_html}</div>')
+                parts.append(f'<div class="placeholder"><div class="tbadge">{p_type}</div><span style="display:block;margin-top:6px;color:#999;font-size:13px;font-style:italic">{desc}</span></div>')
 
         if parts:
             body_parts.append("\n".join(parts))
@@ -125,7 +125,7 @@ h1{{font-family:'Source Serif 4',serif;font-weight:900;font-size:36px;line-heigh
 .stat-box .stat-label{{font-size:13px;color:#666;margin-top:4px}}
 
 /* COMPARISON TABLE */
-.comparison-table{{width:100%;border-collapse:collapse;margin:20px 0;font-size:16px}}
+.comparison-table{{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}}
 .comparison-table th{{background:#0d1f38;color:#fff;padding:12px 14px;text-align:left;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}}
 .comparison-table td{{padding:11px 14px;border-bottom:1px solid #eee}}
 .comparison-table .good{{color:#1a8f3a;font-weight:700}}
@@ -176,6 +176,7 @@ h1{{font-family:'Source Serif 4',serif;font-weight:900;font-size:36px;line-heigh
 .sticky-footer a{{color:#fff;text-decoration:none;font-weight:700;font-size:16px}}
 .sticky-footer a .arr{{color:#ff8080}}
 
+/* TABLE MOBILE FIX */
 /* RESPONSIVE */
 @media(max-width:740px){{
   .page-wrap{{margin:0;padding:0}}
@@ -191,22 +192,6 @@ h1{{font-family:'Source Serif 4',serif;font-weight:900;font-size:36px;line-heigh
 </style>
 </head>
 <body>
-
-<nav class="top-nav">
-  <a href="#" class="pub-name">THE DAILY HEALTH REPORT</a>
-  <ul class="nav-links">
-    <li><a href="#">Health</a></li>
-    <li><a href="#">Science</a></li>
-    <li><a href="#">Investigations</a></li>
-    <li><a href="#">Reviews</a></li>
-  </ul>
-  <span class="nav-date">{today}</span>
-</nav>
-
-<div class="breaking-banner">
-  <span class="brk-pill">INVESTIGATION</span>
-  <span class="brk-text">⚠️ This report has been independently verified — share before it's removed</span>
-</div>
 
 <div class="page-wrap">
   <article class="article-card">
