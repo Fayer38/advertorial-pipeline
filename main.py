@@ -211,6 +211,13 @@ class AdvertorialPipeline:
             }
             logger.info(f"  Config injectée: langue={lang}, angle={config.get('angle')}, tone={config.get('tone')}")
 
+            # Re-save brief with _config so checkpoint resume works
+            import re as _re
+            _pname = structured_brief.get("product_summary", {}).get("name", "product")
+            _handle = _re.sub(r'[^\w\-]', '-', _pname)[:40].strip('-') or "product"
+            self.info_organizer.save_output(structured_brief, f"structured_brief_{_handle}.json")
+            logger.info(f"  Brief re-saved with _config for checkpoint")
+
         # ══════════════════════════════════════════════════════════
         # PHASE 3 : RÉDACTION
         # ══════════════════════════════════════════════════════════

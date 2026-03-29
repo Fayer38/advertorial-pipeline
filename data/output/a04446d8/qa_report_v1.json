@@ -1,0 +1,44 @@
+{
+  "overall_score": 8.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le hook fonctionne bien : la citation crée une identification immédiate, et la phrase 'wondering if today is the day you finally call your son-in-law' est une formulation précise et émotionnellement chargée qui cible exactement le pain point de l'avatar. Légèrement en dessous du 9-10 car l'ouverture en citation est passive — le lecteur est observateur avant d'être interpellé. Une attaque directe à la deuxième personne dès la première ligne aurait été plus percutante."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "La progression générale est solide (fondateur → père blessé → solution → problème → solution → preuves → offre → CTA) et les bucket brigades sont bien utilisés ('Now here's the part I wish I didn't have to tell you'). Le point de friction majeur : la transition entre l'histoire du père et la justification de la liquidation des stocks (cancer de la femme du co-fondateur + prêt bancaire) est abrupte et sent la mécanique de copywriting trop visible. Un lecteur sceptique peut décrocher ici, percevant la manipulation. La section [PROBLEM] aurait aussi bénéficié d'un meilleur pont avec la section [STORY] — le retour à l'avatar générique après la narration personnelle crée une légère cassure de rythme."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Deux témoignages bien ciblés (Robert T., 71 ans, Scottsdale ; Margaret H., 63 ans, Boca Raton) avec des détails spécifiques crédibles. La table comparative et les stats visuelles renforcent la crédibilité. Cependant : (1) Le warning box ('Outdoor power tools are among the leading causes of back and shoulder injuries in adults over 55') n'est attribué à aucune source — citer l'AARP, le NIH, ou un rapport de la CPSC transformerait cette affirmation en preuve. (2) Aucun expert tiers (orthopédiste, physiothérapeute) ne valide la promesse d'absence de douleur. (3) Aucune certification produit mentionnée. Suggestion concrète : ajouter une citation de type 'Dr. [Nom], orthopédic surgeon at [institution] : «Tools over 10 lbs are the primary trigger of rotator cuff injuries in patients over 60»' dans la section [PROBLEM] ou [SOLUTION]."
+    },
+    "cta_clarity": {
+      "score": 8,
+      "feedback": "CTA clair, bouton bien formulé ('Claim Your 55% Discount — Try It Risk-Free for 30 Days'), garanties lisibles en bas de page. L'urgence est présente mais reste vague ('end of next month', 'fixed number of units') — sans compteur ou chiffre exact de stock restant, elle manque de mordant. Suggestion : préciser 'Only 847 units remaining at this price' ou ajouter une ligne de type 'This offer expires [date spécifique]' pour ancrer l'urgence dans le réel."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'arc douleur → empathie → espoir est bien exécuté. La phrase 'That's not a solution — that's a surrender' est particulièrement forte. Là où l'article perd des points : le future pacing est quasi absent. Après la présentation du produit, il n'y a pas de paragraphe qui fait vivre au lecteur sa vie transformée. Suggestion concrète : insérer après la liste des 4 outils remplacés un paragraphe du type : 'Picture next Saturday morning. You wake up, coffee in hand, walk out to the driveway. The leaves are down. You reach for the Seese Pro — two pounds in your palm — and in eight minutes it's done. No sore back by noon. No call to ask for help. Just you, your house, and the quiet satisfaction of still doing it yourself.'"
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Très bon niveau : paragraphes courts, usage du gras pertinent, alternance de formats (liste, tableau, stats visuelles, témoignages encadrés) qui aèrent la lecture. Le texte est accessible et évite le jargon inutile. Légère réserve : à 1473 mots, on est juste au-delà du seuil optimal ; quelques coupes dans la section [OFFER] (qui répète des informations déjà dites) rendraient l'ensemble plus serré."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "Structure calquée sur les meilleurs advertoriaux du segment (hook personnel → fondateur histoire → problème → solution → preuves → offre → CTA). Le ton reste éditorial dans la grande majorité de l'article. Le point de vigilance : la section [OFFER] avec 'Why I'm Practically Giving These Away' est le passage qui sonne le plus 'pub' — le mécanisme de justification du rabais (cancer + prêt bancaire) est une technique très connue qui peut déclencher de la méfiance chez des lecteurs qui ont déjà vu ce pattern. L'ensemble reste cependant dans les standards des top advertoriaux de la catégorie outils/autonomie senior."
+    }
+  },
+  "improvements": [
+    "Ouvrir le hook en interpellant directement le lecteur à la 2e personne avant la citation, pour capter plus agressivement dès la première ligne",
+    "Rendre la transition 'cancer du co-fondateur / prêt bancaire' plus naturelle ou remplacer par une justification moins chargée émotionnellement (ex. : décision stratégique de lancement direct-to-consumer à prix réduit pour contourner les retailers)",
+    "Attribuer le warning stat à une source réelle et identifiable (CPSC, AARP, NIH) pour transformer l'affirmation en preuve concrète",
+    "Ajouter une validation expert tiers — orthopédiste ou kinésithérapeute — qui confirme que le poids et le mode d'utilisation réduisent le risque de blessure",
+    "Insérer un paragraphe de future pacing immédiatement après la liste des 4 outils remplacés, décrivant une matinée type du lecteur 30 jours après l'achat",
+    "Préciser le nombre exact d'unités restantes ou une date limite dans le CTA pour rendre l'urgence concrète et crédible",
+    "Couper environ 100-150 mots dans la section [OFFER] pour éliminer les redondances avec ce qui a déjà été dit dans [STORY]"
+  ],
+  "version": 1
+}

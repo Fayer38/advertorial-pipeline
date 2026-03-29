@@ -14,3 +14,17 @@ overall_score
 overall_score
   Input should be a valid integer, got a number with a fractional part [type=int_from_float, input_value=7.6, input_type=float]
     For further information visit https://errors.pydantic.dev/2.12/v/int_from_float | failed | 85%
+[10:24:17] [INFO] RETRY triggered — resuming from checkpoint
+[10:24:17] [INFO] Pipeline started — product=seese-pro-v9 template=editorial angle=testimonial lang=en
+[10:24:17] [INFO] CHECKPOINT: Skipping Phase 1-2 (brief exists: structured_brief_seese-pro-v9.json)
+[10:24:17] [INFO] Phase 2 — Structuring | checkpoint | running | 30%
+[10:24:17] [INFO] CHECKPOINT: Skipping Phase 3 (draft exists: advertorial_draft_Seese_Pro__Ultra-Light__Ultra-Powerful_B_v1.json)
+[10:24:17] [INFO] Phase 3 — Writing | checkpoint | running | 50%
+[10:24:17] [INFO] CHECKPOINT: Skipping Phase 4 (prompts exist)
+[10:24:17] [INFO] Phase 4 — Visuals | checkpoint | running | 70%
+[10:24:17] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[10:25:32] [INFO] Phase 5 completed — QA done
+[10:25:32] [INFO] Phase 6 — Publishing | html_publisher | running | 95%
+[10:25:32] [INFO] Phase 6 completed — HTML published
+[10:25:32] [INFO] Pipeline completed — html=data/output/a04446d8/at-68-i-finally-stopped-asking-my-kids-to-help-with-the-yard.html words=1473
+[10:25:32] [INFO] Done |  | completed | 100%
