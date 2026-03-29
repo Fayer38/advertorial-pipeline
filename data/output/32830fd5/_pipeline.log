@@ -15,3 +15,8 @@
 [21:02:41] [INFO] CHECKPOINT: Skipping Phase 4 (prompts exist)
 [21:02:41] [INFO] Phase 4 — Visuals | checkpoint | running | 70%
 [21:02:41] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[21:07:27] [INFO] Phase 5 completed — QA done
+[21:07:27] [INFO] Phase 6 — Publishing | html_publisher | running | 95%
+[21:07:27] [INFO] Phase 6 completed — HTML published
+[21:07:27] [INFO] Pipeline completed — html=data/output/32830fd5/at-65-i-finally-stopped-asking-my-son-to-clear-the-driveway.html words=1124
+[21:07:27] [INFO] Done |  | completed | 100%

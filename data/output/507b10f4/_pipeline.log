@@ -2,3 +2,10 @@
 [21:02:25] [INFO] Phase 1 | Starting | running | 0%
 [21:02:25] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
 [21:03:52] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[21:06:44] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[21:07:18] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[21:07:18] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[21:08:49] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[21:10:06] [INFO] Pipeline completed — html=data/output/507b10f4/i-stopped-doing-my-own-yard-work-then-i-found-this-2-1lb-blo.html words=1707
+[21:10:06] [INFO] Done |  | completed | 100%
+[21:10:06] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)

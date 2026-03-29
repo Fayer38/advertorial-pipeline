@@ -1,0 +1,44 @@
+{
+  "overall_score": 7.4,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le hook est solide : ouverture désarmante ('I'll be straight with you'), détails spécifiques (18 livres, spasmes dorsaux, la honte du démarreur), et la scène du voisin est cinématographique. Le point de bascule émotionnel ('A little more like someone who needed help') touche directement l'identité de la cible. Légère friction : la transition vers '55% off flash sale' dans les derniers paragraphes du hook casse le momentum narratif — le lecteur vient d'être émotionnellement investi, et la promo arrive trop tôt, avant que la solution ne soit suffisamment installée."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "Le flow global est correct et la structure narrative tient la route. Mais le pivot entre le hook personnel et la section 'Why Is It 55% Off?' est trop abrupt — on passe d'une histoire émotionnelle à une justification commerciale sans transition naturelle. Ajoutez une phrase-pont du type : 'Before I tell you exactly what's in the box and why today's price is different — let me tell you what happened the first time I actually used it.' La section specs/bullet-list est utile mais casse le rythme narratif; envisagez d'intercaler un micro-récit d'usage avant la liste. La section offre contient également un paragraphe très dense (comparaison multi-outils) qui ralentit la lecture au moment où le lecteur devrait accélérer vers le CTA."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "4 témoignages qualitatifs avec prénom, âge, ville et étoiles — bien fait. Les stats (12 847 unités, 4.9★, 77% claimed) sont bien intégrées. Les specs techniques sont précises. Cependant : (1) aucune source tierce — pas de certification, pas d'endorsement d'un ergothérapeute ou spécialiste en douleurs articulaires, ce qui serait particulièrement puissant pour une cible 55+. (2) Les témoignages sont tous 5 étoiles sans la moindre nuance — cela les rend moins crédibles. Ajoutez un témoignage 4 étoiles avec une objection initiale résolue. (3) La stat '77% claimed' apparaît à deux reprises sans mise à jour apparente — cela crée un effet de recyclage. Suggestion concrète : intégrez une citation d'un kinésithérapeute ou médecin du type 'At under 1kg, sustained use causes negligible joint strain compared to tools above 5kg — Dr. [Name], Physical Therapist, [City].'"
+    },
+    "cta_clarity": {
+      "score": 8,
+      "feedback": "CTA visuellement fort, bouton rouge bien visible, récapitulatif des garanties en dessous en une ligne. L'ajout de la citation de Carol F. en fin de CTA ('I waited three days... don't make the same mistake') est une excellente technique de last-mile social proof. Légère faiblesse : le compteur d'urgence ('23% remaining') est statique dans un article — si possible, envisagez une mention dynamique ou horodatée ('As of [time] today, 23% of flash sale inventory remains'). La garantie lifetime est mentionnée deux fois mais jamais présentée comme un argument de confiance d'entreprise — ajoutez une ligne sur 'why they can offer this' pour rendre la garantie plus crédible."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'arc douleur → honte → espoir est bien construit dans le hook. Le paragraphe 'It's not really about the leaves — it's about being the kind of person who still takes care of their own house' est le meilleur passage de l'advertorial : il nomme l'enjeu identitaire profond. Mais cet insight arrive trop tard (section testimonials) et n'est pas suivi d'un véritable future pacing. Ajoutez un paragraphe dédié après les témoignages qui projette le lecteur dans sa nouvelle réalité : 'Picture the first Saturday morning after it arrives. You're outside by 8am. Coffee still in hand. The Seese Pro fits in one. Twelve minutes later, the driveway is clear, the patio is done, and you're back inside — no spasms, no borrowed time, no one to call. Just you, and a house that still feels like yours.' La section specs/offre est trop rationnelle — l'émotion chute pendant 300 mots."
+    },
+    "readability": {
+      "score": 7,
+      "feedback": "Bon usage général des paragraphes courts et du gras. Les sections avec listes à puces et les stat-boxes aèrent bien la lecture. Deux problèmes : (1) L'article fait 1707 mots — au-dessus de la fourchette optimale (800-1500). La section 'Here's Everything You Get' est fonctionnelle mais longue; la comparaison multi-outils dans la section Offer pourrait être condensée de moitié. (2) Le paragraphe 'At $119.99, you are not just buying a blower...' est une longue phrase complexe qui accumule les parenthèses et les prix — à découper en 3 phrases courtes ou à reformater en liste visuelle. Suggestion : coupez 200-250 mots dans les sections produit et offre sans perdre d'information clé."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "La structure est solide et le ton reste majoritairement éditorial. La section 'Why Is It 55% Off? Here's the Honest Answer' est un excellent exemple de reframing proactif d'objection — c'est une technique de top advertorial bien exécutée. Le premier paragraphe du hook ('I'll be straight with you') pose un contrat de lecture authentique. Point faible : la section Offer bascule vers un registre trop commercial ('Here is the offer, clearly stated', la liste de remplacements d'outils) qui rompt le ton éditorial construit jusqu'ici. Reformulez en gardant la voix narrative du début : au lieu de 'At $119.99, you are not just buying a blower', essayez 'Here is what surprised me most when I actually started using it every week — I stopped reaching for five other tools.'"
+    }
+  },
+  "improvements": [
+    "Déplacer ou diluer la mention 'flash sale 55% off' dans le hook — attendre au moins un paragraphe supplémentaire avant d'introduire le prix, pour ne pas rompre l'immersion émotionnelle trop tôt",
+    "Ajouter une phrase-pont narrative entre le hook et la section 'Why Is It 55% Off' — par exemple une micro-scène de première utilisation pour maintenir le momentum émotionnel",
+    "Intégrer une preuve tierce crédible pour la cible 55+ : citation d'un kinésithérapeute ou ergothérapeute sur le poids et la douleur articulaire, idéalement avec nom et titre",
+    "Ajouter un paragraphe de future pacing explicite après les témoignages : projeter le lecteur dans sa première matinée d'utilisation — sensations physiques, autonomie retrouvée, fierté",
+    "Remonter et amplifier l'insight identitaire ('it's not about the leaves') plus tôt dans l'article — dès la section problème, pas seulement dans les témoignages",
+    "Condenser l'article de ~200 mots : réduire la liste de comparaison multi-outils dans la section Offer et raccourcir le paragraphe dense sur les remplacements d'outils",
+    "Reformuler le début de la section Offer pour maintenir la voix narrative éditoriale plutôt que de basculer vers une liste commerciale directe"
+  ],
+  "version": 1
+}
