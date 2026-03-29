@@ -1,0 +1,95 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "65-year-old woman with natural gray hair, light cardigan and jeans, holding compact cordless handheld electric blower with one hand at hip height, subtle confident smile, standing on clean wooden deck, blurred autumn foliage background, warm golden late-afternoon raking light, soft long shadows on wood planks, authentic lifestyle photography, photorealistic, hyperdetailed, 8k, cinematic golden hour lighting, no staging --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, grainy, noisy, distorted, watermark, text, logo, stock photo look, artificial pose, extra limbs, extra fingers, mutated hands, bad anatomy, young person, oversaturated",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "65-year-old woman standing in open residential garage doorway, arms crossed, quietly gazing at old dusty gas-powered leaf blower leaning against back wall, expression of calm resignation, natural daylight streaming through open garage door casting strong shadows on the bulky dusty blower, authentic home garage interior, tools and cardboard boxes in background, photorealistic, hyperdetailed, documentary photography style, intimate atmosphere --ar 4:5 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, grainy, noisy, distorted, watermark, text, logo, dramatic expression, anger, artificial staging, extra limbs, mutated hands, bad anatomy, young person, oversaturated",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "65-year-old man seen in profile standing on residential concrete driveway, one hand resting on lower back in effort and discomfort gesture, large heavy gas-powered leaf blower sitting on ground beside him, tired but understated facial expression, slightly overexposed natural daylight emphasizing physical effort, ordinary suburban house in soft background with garden, photorealistic, hyperdetailed, authentic documentary photography, empathetic everyday scene --ar 4:5 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, grainy, noisy, distorted, watermark, text, logo, overdramatic expression, tears, artificial staging, extra limbs, mutated hands, bad anatomy, young person, oversaturated",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "dynamic extreme close-up, compact cordless handheld electric blower held in single aged woman's hand with relaxed light grip, aimed at wooden deck surface, dry autumn leaves frozen mid-air in scattered fan pattern caught by high-speed shutter, warm golden lateral sidelight illuminating swirling air current and leaves in flight, soft bokeh wooden deck planks background, product photography, photorealistic, hyperdetailed, 8k, cinematic warm side lighting, sense of effortless power --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, grainy, noisy, distorted, watermark, text, logo, extra limbs, mutated hands, bad anatomy, young hand, artificial CGI leaves, oversaturated, aggressive composition",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "horizontal split-screen comparison, left half: aged hands vigorously scrubbing dark car hood with soapy chamois cloth, chaotic water droplets and disordered wet reflections, physical effort visible, right half: compact cordless handheld electric blower held contactless above identical dark car surface, water droplets spraying outward in clean arc pattern, surface visibly clean beneath, identical camera angle and framing on both sides, neutral slightly sunny outdoor natural light, documentary comparison photography, photorealistic, hyperdetailed, factual tone --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, grainy, noisy, distorted, watermark, text, logo, graphic overlay, arrows, labels, artificial CGI, extra limbs, mutated hands, bad anatomy, oversaturated, infomercial look",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "flat lay product photography, compact cordless handheld electric blower placed diagonally at center on natural beige linen textile background, 21V battery pack positioned to the left, rapid charger in upper right corner, compact fabric carrying bag in lower right corner, generous even spacing between all elements, soft diffused natural studio light with gentle organic drop shadows, premium editorial catalog style, no text overlay, refined minimal composition, photorealistic, hyperdetailed, sharp focus, product photography --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, grainy, noisy, distorted, watermark, text, logo, busy background, colored background, cluttered composition, harsh shadows, plastic look, cheap product photography, oversaturated",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "65-70 year old couple man and woman standing relaxed together in front of well-maintained residential home with brick facade and neatly trimmed shrubs, one of them holding compact cordless handheld electric blower naturally at their side the way one holds a coffee mug, genuine unposed smiles, warm early morning or late afternoon soft golden light, calm proud atmosphere, tidy suburban garden visible, photorealistic, hyperdetailed, 8k, authentic lifestyle photography, warm natural light, independent homeowners --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, grainy, noisy, distorted, watermark, text, logo, infomercial staging, forced smiles, extra limbs, extra fingers, mutated hands, bad anatomy, young people, oversaturated, stock photo look",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

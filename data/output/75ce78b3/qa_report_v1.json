@@ -1,0 +1,43 @@
+{
+  "overall_score": 7.9,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 7,
+      "feedback": "Le hook fonctionne grâce à la tension 'I told him I had it covered / I didn't have it covered' — c'est honnête et relatable. Mais il monte trop lentement : trois paragraphes avant la révélation du voisin, c'est un scroll de trop sur mobile. Aucun des hooks prévus dans le brief ('My back told me to quit gardening. A 2-pound tool told me otherwise.') n'a été utilisé — ils auraient été bien plus percutants et auraient arrêté le scroll dès la première ligne. Le hook actuel est bon pour les lecteurs qui s'accrochent, mais risque de perdre les plus impatients."
+    },
+    "story_flow": {
+      "score": 8,
+      "feedback": "La structure suit parfaitement le chemin éprouvé et les bucket brigades sont bien utilisées ('And that's on a good day', 'None of those are real solutions', 'But here's what surprised me'). Seul point faible : la transition entre la section [PROOF] et [OFFER] est légèrement abrupte. Carol disparaît du récit à partir de la section Offer, on passe d'une voix personnelle à un ton plus commercial. Un pont narratif manque ici."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Deux témoignages crédibles, des statistiques concrètes (400 sq ft / 5 min, 40-min battery, 8 cleanups per charge), une table de comparaison et des specs techniques. C'est solide. Ce qui manque : (1) la claim sur le 'rotator cuff injury' dans la warning box est présentée comme un fait sans source — ajoutez une attribution minimale ('according to orthopedic data' ou un organisme connu) pour ne pas sonner comme de la peur gratuite ; (2) il n'y a aucun indicateur social à l'échelle ('over 47,000 homeowners', '4.8 stars from 6,200 reviews') — ce type de preuve quantitative massive est systématiquement présent dans les top advertoriaux de ce segment."
+    },
+    "cta_clarity": {
+      "score": 8,
+      "feedback": "CTA visuellement clair, copy du bouton direct et mémorable, garanties listées en subtext. Le payoff émotionnel 'I've got it' juste avant le CTA est excellent. Ce qui freine le score à 8 : il n'y a aucun mécanisme d'urgence réel. '55% off today' suggère une date limite mais ne la rend pas tangible (pas de 'offer ends Sunday', pas de stock restant, pas de 'we only ship X units per week'). Pour un public 55+ sceptique, l'urgence doit être justifiée et crédible, pas juste un label."
+    },
+    "emotional_arc": {
+      "score": 8,
+      "feedback": "L'arc douleur → identité → espoir → confiance → action est bien construit, et la phrase 'This is my home. I take care of it.' est le meilleur moment de l'advertorial — elle ancre l'identité de la cible parfaitement. Le future pacing existe dans le CTA final (son call, photo de l'allée propre) mais il reste court. Opportunité manquée : un paragraphe de future pacing dédié après les bénéfices aurait fait monter l'arc émotionnel d'un cran — ex. 'Imagine this coming Saturday : no pain the day after, no asking anyone for help, just your driveway, your car, your yard — taken care of. By you.'"
+    },
+    "readability": {
+      "score": 9,
+      "feedback": "Excellent : paragraphes courts, phrases percutantes, usage du gras bien dosé, éléments visuels (warning box, stat boxes, table, tip box) qui aèrent la lecture et renforcent les messages clés. 1231 mots, dans la cible. Minuscule remarque : la section [OFFER] contient les passages les plus denses de l'article, avec des phrases plus longues — c'est précisément là où l'attention du lecteur commence à baisser."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "Structure canonique respectée, voix éditoriale maintenue sur 90% du texte, techniques de copywriting bien intégrées (spécificité, social proof, risk reversal, identité avatar). La section [OFFER] glisse légèrement vers le mode catalogue ('Every order includes three free gifts valued at $110') — reformuler en restant dans la voix de Carol renforcerait la cohérence : ex. 'They sent me the carry case, the charger, and the ear protection in the same box. I didn't ask for any of it. That's just how they ship it.' Le ton éditorial doit tenir jusqu'au dernier paragraphe."
+    }
+  },
+  "improvements": [
+    "Remplacer le hook actuel par l'une des variantes du brief — ex. 'My back told me to quit yard work. A 2-pound tool told me otherwise.' — pour arrêter le scroll dès la première ligne sans sacrifier l'histoire de Carol",
+    "Ajouter une attribution crédible à la claim rotator cuff ('according to the American Academy of Orthopaedic Surgeons' ou équivalent) pour transformer une assertion en preuve",
+    "Ajouter un indicateur de social proof à l'échelle dans la section [PROOF] : nombre de clients, note agrégée, ou volume de ventes — ex. 'More than 50,000 homeowners have switched'",
+    "Insérer un paragraphe de future pacing entre [PROOF] et [OFFER] : faire visualiser concrètement le prochain samedi matin sans douleur, sans aide, avec une allée propre",
+    "Créer un mécanisme d'urgence crédible et justifié dans le CTA : date limite de l'offre, stock restant visible, ou raison narrative ('we restock every two weeks and the last batch sold out in 4 days')",
+    "Réécrire la section [OFFER] dans la voix de Carol plutôt qu'en mode catalogue, pour maintenir le ton éditorial jusqu'au bouton CTA"
+  ],
+  "version": 1
+}

@@ -1,3 +1,11 @@
 [16:27:20] [INFO] Pipeline started — product=seese-pro-v9 template=personal-story angle=testimonial lang=en
 [16:27:20] [INFO] Phase 1 | Starting | running | 0%
 [16:27:20] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
+[16:29:01] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[16:32:59] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[16:33:38] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[16:33:38] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[16:34:26] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[16:35:43] [INFO] Pipeline completed — html=data/output/b2856654/at-67-i-stopped-dreading-yard-work-and-started-doing-it-all.html words=1376
+[16:35:43] [INFO] Done |  | completed | 100%
+[16:35:43] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)

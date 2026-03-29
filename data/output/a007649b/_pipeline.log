@@ -1,3 +1,11 @@
 [16:27:18] [INFO] Pipeline started — product=seese-pro-v9 template=founder-letter angle=testimonial lang=en
 [16:27:18] [INFO] Phase 1 | Starting | running | 0%
 [16:27:19] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
+[16:29:07] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[16:31:41] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[16:32:08] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[16:32:08] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[16:32:49] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[16:34:03] [INFO] Pipeline completed — html=data/output/a007649b/at-63-i-finally-keep-my-yard-spotless-without-spending-the-n.html words=1237
+[16:34:03] [INFO] Done |  | completed | 100%
+[16:34:03] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)

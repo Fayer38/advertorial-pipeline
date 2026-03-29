@@ -1,0 +1,67 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Man in his early 60s, dressed casually in a flannel shirt and jeans, standing upright on a sunny autumn driveway, holding a small compact blower loosely in one hand at hip height. Dry leaves swirl away from him across the concrete. His posture is relaxed, shoulders down, slight smile — the look of someone who just realized something. Warm golden morning light filters through nearby oak trees. Background: a well-kept suburban home with mature trees in peak fall color.",
+      "mood": "Warm, authentic, quietly triumphant. Golden autumn light. Real suburban setting, not staged.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Man in his early 60s standing at the end of a clean, freshly blown driveway, arms relaxed at his sides, looking toward the camera with a calm, satisfied expression. Behind him: a well-maintained mid-century home, tidy lawn, no clutter. Warm late-afternoon light, long shadows. His posture communicates pride without arrogance — a man who has always taken care of his own home.",
+      "mood": "Grounded, nostalgic, proud. Warm afternoon light. Authentically domestic.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Man in his late 50s leaning forward with visible effort, both hands gripping the handle of a large gas blower. His back is slightly hunched, face showing strain and fatigue. The driveway is covered in wet leaves. Overcast flat light, muted colors — grey sky, damp concrete. The contrast with the hero image should be stark: this is the 'before' energy.",
+      "mood": "Heavy, fatigued, relatable struggle. Overcast and muted. Empathetic — not mocking.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Woman in her early 60s, fully upright, posture completely relaxed, holding the Seese Pro extended in one hand at waist height. She's on a suburban driveway, leaves blowing away ahead of her. Her free hand hangs naturally at her side — one-handed, effortless. Warm autumn morning light. Expression: calm confidence, almost amused at how easy it is. Neighbor's house visible softly in the background.",
+      "mood": "Effortless, confident, warm autumn light. The visual counterpoint to the struggle image.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "testimonial",
+      "description": "Split layout: left side shows a close-up of a hand — older, relaxed, naturally aged — loosely gripping the Seese Pro's ergonomic handle. The grip is comfortable and casual, not tense. Right side shows a styled quote card with Robert's review text, his name, location, star rating, and a small portrait-style photo of a man in his late 60s, outdoors, smiling naturally. Clean warm neutral background throughout.",
+      "mood": "Trustworthy, warm, human. Real face, real hands. Not clinical.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "product shot",
+      "description": "Top-down flat lay on a warm off-white linen surface. Center: the Seese Pro blower. Arranged neatly around it: the battery pack, the charger cable, and any included accessories (nozzle attachments). Clean, uncluttered spacing between each item. Subtle shadows. Premium unboxing aesthetic — communicates completeness and thoughtful design. No text overlay needed.",
+      "mood": "Clean, premium, organized. Soft diffused studio light. Conveys value and completeness.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "lifestyle",
+      "description": "Senior woman, mid-60s, holding the Seese Pro up with one hand at chest height, looking directly into the camera with a warm, confident smile. She's standing in front of a clean bright exterior wall or a softly blurred home façade. Her posture is open and upright. The product is clearly visible and central in frame. Bright, airy light — crisp and energetic, not harsh.",
+      "mood": "Confident, direct, warm. Clean bright background. The emotional payoff — pride and ease.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}

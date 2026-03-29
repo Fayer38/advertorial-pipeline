@@ -1,0 +1,45 @@
+{
+  "overall_score": 7.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le titre est fort : l'âge précis (63 ans), la promesse concrète (yard spotless), et le bénéfice négatif évité (couch the next day) créent une accroche ciblée. Le sous-titre renchérit efficacement avec le '2-pound'. L'ouverture narrative 'My old gas blower was slowly breaking me' est viscérale. Le reframe 'The problem wasn't me. It was the tool.' est l'une des meilleures lignes de l'article. Ce qui manque : le hook titre ne pose pas de question ni ne crée de tension narrative — il annonce le résultat trop tôt, réduisant la curiosité de continuer. Une version en question ('Why are thousands of homeowners over 55 trading in their gas blower for this 2-pound device?') pourrait mieux arrêter le scroll."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "La structure globale est propre et Gary est un avatar crédible et bien construit. La scène chez la voisine Carol est une transition narrative efficace et naturelle. Cependant, deux ruptures de rythme notables : (1) le passage du 'problem' à 'solution' est bridgé par cette scène Carol qui fonctionne, mais le bloc de statistiques visuelles (stat-row) interrompt le flux narratif juste avant — il déplace le lecteur d'une histoire vers une infographie, cassant l'immersion. (2) La section [PROOF] démarre bien avec Robert H. mais dérive vers une explication technique des moteurs brushless trop longue et froide (2 paragraphes de specs). Ce passage fait décrocher le lecteur juste avant l'offre. Suggestion : réduire l'explication brushless à une phrase, insérer un troisième témoignage à la place pour maintenir le momentum émotionnel."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Deux témoignages nommés et géolocalisés (Robert H., Boise + Patricia G., Knoxville) — c'est bien. La stat-row avec 4 chiffres ajoute de la crédibilité visuelle. Le warning-box sur les blessures est pertinent mais gagnerait à citer une source (ex: 'According to the American Physical Therapy Association'). Ce qui manque pour dépasser 7 : (1) aucune certification ou validation tierce du produit lui-même — une mention type 'CE certified', 'tested by [lab]' ou une reconnaissance média renforcerait la crédibilité ; (2) 'thousands of homeowners who've already made the switch' est trop vague — remplacez par un chiffre précis ('over 47,000 homeowners') ; (3) la claim '200+ MPH / 30,000 RPM' est avancée sans source — ajoutez 'independently verified by [source]' ou au minimum 'as measured by [standard]'."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Le CTA est clair, le bouton est bien formulé ('Claim Your 55% Discount + 3 Free Gifts →'), les deux garanties sont bien listées. La friction est réduite ('no questions, no hassle, no forms'). Ce qui affaiblit l'urgence : 'for as long as this promotion runs' est trop vague pour créer une vraie pression temporelle — le lecteur ne sait pas si la promo finit dans 2 heures ou 2 mois. Suggestion concrète : remplacez par 'This promotion expires [date fixe ou rolling : Sunday at midnight / when current stock runs out]' + ajoutez une ligne de stock limité type 'Only 47 units left at this price' pour combiner urgence temporelle et rareté. La mention des 3 free gifts dans la section offre mériterait aussi d'être plus détaillée — leur valeur est annoncée ($110) mais leur contenu reste flou, ce qui réduit la valeur perçue."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'arc douleur → espoir → confiance est présent et fonctionnel. 'I wasn't ready to give up. I just needed something that worked with my body — not against it' est la ligne émotionnellement la plus forte de l'article et cible parfaitement l'avatar. La honte silencieuse ('quietly started to shift', 'slowly breaking me') est bien capturée. Ce qui manque : le future pacing est quasi absent. Après la section [OFFER], il devrait y avoir un paragraphe entier qui fait visualiser la vie du lecteur 30 jours après l'achat — ex: 'Picture this: It's November. There's a foot of leaves on the driveway. You walk out with the Seese Pro, clear the whole thing in 4 minutes, one-handed, no back pain. You come inside, make coffee, and wonder why you waited so long.' Ce type de visualisation concrète et sensorielle transforme un achat fonctionnel en décision émotionnelle."
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Très bonne lisibilité globale : paragraphes courts, gras utilisé stratégiquement, sous-titres clairs, bon usage des éléments visuels (table, stat-row, testimonials). 1237 mots est dans la plage idéale. Un léger point de friction : la section technique sur les moteurs brushless ('The technical side is just as solid...') utilise un registre plus froid et dense que le reste du texte — deux paragraphes consécutifs sans aucun élément conversationnel ou de rupture. Suggestion : insérer une ligne d'accroche avant ce bloc du type 'Here's the part that surprised me most about why it actually works' pour réintroduire la voix de Gary et maintenir le registre éditorial."
+    },
+    "similarity_to_best": {
+      "score": 7,
+      "feedback": "La structure hook → story → problem → solution → proof → offer → CTA est bien respectée et la voix éditoriale de Gary est cohérente sur 80% de l'article. L'advertorial évite les pièges classiques de la pub trop évidente. Deux points qui le font encore sonner légèrement 'ad' : (1) la section [OFFER] utilise des formulations typiquement publicitaires ('Your order today also includes three bonus gifts') — reformuler en mode éditorial : 'What surprised me was what came in the box beyond the blower itself...' ; (2) la comparaison table est utile mais son header 'Old Gas Blower + Tools vs Seese Pro™' est trop commercial — une table intégrée dans le corps du texte avec un commentaire narratif autour serait plus naturelle. L'absence d'un passage type 'I was skeptical at first' plus élaboré (la résistance initiale de Gary) affaiblit aussi la crédibilité éditoriale."
+    }
+  },
+  "improvements": [
+    "Reformuler le titre en question pour créer plus de curiosité : 'Why Are Homeowners Over 55 Trading Their Gas Blowers for This 2-Pound Device?' plutôt qu'annoncer le résultat dès le début",
+    "Remplacer 'thousands of homeowners' par un chiffre précis et vérifiable (ex: 'over 47,000 homeowners across North America')",
+    "Ajouter une source ou certification pour la claim '200+ MPH / 30,000 RPM' et pour la statistique blessures du warning-box",
+    "Réduire le bloc d'explication brushless motor à 1 phrase et le remplacer par un 3e témoignage pour maintenir le momentum émotionnel avant l'offre",
+    "Ajouter un paragraphe de future pacing après la section bénéfices : faire visualiser concrètement la vie du lecteur 30 jours après l'achat (scène sensorielle, saison précise, ressenti physique)",
+    "Renforcer l'urgence du CTA avec une date limite précise ou un compteur de stock limité ('Only 47 units left at this price') plutôt que 'for as long as this promotion runs'",
+    "Détailler les 3 free gifts dans la section offre (nom + valeur individuelle) pour rendre la valeur perçue concrète plutôt qu'abstraite ('valued at $110')",
+    "Reformuler l'ouverture de la section [OFFER] en mode éditorial plutôt que promotionnel pour maintenir le ton naturel de Gary jusqu'à la fin"
+  ],
+  "version": 1
+}

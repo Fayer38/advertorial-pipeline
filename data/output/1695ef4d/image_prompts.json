@@ -1,0 +1,82 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "silver-haired man aged 65-70, relaxed natural expression, calm satisfied smile looking directly at camera, holding compact cordless handheld leaf blower effortlessly in one hand at waist height, holding ceramic coffee mug in other hand, clean stone patio, dry autumn leaves swirling away in background, warm golden morning light, soft mist in distance, tidy well-maintained home garden backdrop, upright natural posture, authentic lifestyle photography, photorealistic, hyperdetailed, cinematic lighting, 8k, professional photography, warm amber tones, genuine not staged --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, fake smile, oversaturated, plastic skin, stiff pose",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "senior man 60-65 years old, slightly hunched posture, one hand pressed against lower back, expression of quiet fatigue and mild frustration, standing in dim garage doorway threshold, large heavy bulky gas-powered leaf blower resting on concrete floor beside him, visible rubber hoses pull cord heavy engine and bulk, warm golden exterior autumn light behind him contrasting with dark cluttered dim garage interior, backlit silhouette effect, visual weight of old machine emphasized, authentic relatable exhaustion, photorealistic, cinematic lighting, natural depth of field, 8k --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, overly dramatic, theatrical, stock photo, fake expression",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "extreme macro close-up, senior man's hand, slightly weathered aged skin, natural wrinkles and veins, relaxed firm grip on compact cordless handheld leaf blower, no strain visible in fingers or wrist, effortless hold, background blurred wet oak leaves lifting off terracotta brick patio surface, motion blur on leaves implying powerful airflow, shallow depth of field, hand and product tack sharp, natural autumn daylight, warm tones, hyperdetailed skin texture, product photography meets lifestyle, 8k macro, tactile realism --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry product, distorted hands, grainy, low quality, watermark, text, logo, extra fingers, mutated hands, bad anatomy, young hand, smooth unaged skin, artificial lighting",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "four-panel photo grid collage, same compact cordless handheld leaf blower featured consistently in all four panels, top-left panel: aged senior hand clearing damp fallen autumn leaves from stone patio warm amber tones, top-right panel: winter morning frost on parked car windshield being blown clear cold blue-white light, bottom-left panel: spring setting contactless drying of freshly washed car no cloth needed soft daylight, bottom-right panel: summer clean concrete garage floor dust and debris swept toward open door bright natural light, each panel warm realistic domestic setting, photorealistic natural lighting per season, product design identical across panels, 8k, hyperdetailed --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, inconsistent product design, oversaturated, stock photo, mismatched panels, bad grid alignment",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "flat lay top-down product photography, compact cordless handheld leaf blower centered on clean light natural oak wood surface, 21V lithium-ion battery pack placed to one side, rapid wall charger, compact open zippered carrying case, ear protection muffs, all items arranged with generous breathing room between them, soft even diffused overhead studio lighting, no harsh shadows, neutral warm color palette off-whites warm grays and product's own colors, premium organized gift unboxing aesthetic, minimal composition, hyperdetailed, 8k product photography, editorial style --ar 4:5 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, harsh shadows, cluttered, messy arrangement, dark background, oversaturated, reflections, lens flare",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "senior man 65-70 years old, upright comfortable natural posture, outdoors on clean stone patio, autumn foliage trees in background, holding compact cordless handheld leaf blower loosely at side in one hand resting naturally, looking slightly off-camera with genuine unhurried relaxed smile, expression of quiet satisfaction after finishing a task with ease, warm golden afternoon light, well-kept home exterior facade visible in background, autumn leaves on ground, authentic candid moment feel, pride and ease, photorealistic, cinematic natural lighting, lifestyle photography, hyperdetailed, 8k --ar 4:5 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, forced smile, stock photo pose, stiff, advertisement look, oversaturated, plastic skin",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

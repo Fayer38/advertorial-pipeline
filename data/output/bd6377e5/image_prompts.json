@@ -1,0 +1,95 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "62-year-old person friendly ordinary physique, standing relaxed on clean well-maintained stone terrace, compact cordless handheld leaf blower held effortlessly at side one hand arm hanging naturally, subtle smile gazing toward horizon quiet satisfaction, casual light knit sweater cargo pants, autumn foliage orange and amber in garden flower beds background not on terrace, typical north american suburban house exterior, late morning warm golden light soft shadows, candid authentic moment not advertising pose, photorealistic hyperdetailed 8k cinematic lighting professional photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo feel, artificial forced pose, oversized heavy blower, dramatic expression, leaves on terrace",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "62-year-old homeowner standing close to large window in cozy living room or kitchen interior, gazing outside with melancholic gently resigned expression, driveway and yard densely covered in fallen dead leaves visible through window glass, warm amber interior light contrasting sharply with cold grey overcast exterior, soft window glow on face, introspective quiet moment, no tools or products visible, depth of field foreground interior bokeh, photorealistic candid authentic photography 8k professional",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, dramatic crying, exaggerated sadness, leaf blower, tools, stock photo, looking at camera",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "65-year-old person standing in residential backyard, slightly slumped posture one hand resting on lower back, large heavy bulky old gasoline leaf blower sitting on ground beside them, honest tired expression not exaggerated or dramatic, early afternoon diffused overcast sky flat neutral light, scattered dry fallen leaves on ground around feet, empathetic realistic moment, muted desaturated color palette cool tones, photorealistic candid photography 8k professional, no product glamorization",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, dramatic pain, exaggerated suffering, theatrical expression, stock photo, extra limbs, mutated hands, bad anatomy, vibrant saturated colors",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "64-year-old person using compact lightweight cordless handheld leaf blower with single hand relaxed arm at side, blowing pile of wet maple leaves on residential driveway, natural relaxed body posture like casually holding a smartphone not a drill, slight genuine smile eyes on the result, leaves visibly airborne and flying conveying real power, warm early afternoon autumn light, rich orange yellow red foliage in background trees, photorealistic hyperdetailed 8k cinematic lighting professional photography authentic candid",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, tense strained posture, dramatic effort face, two-handed grip, stock photo, extra limbs, extra fingers, bad anatomy, oversized blower",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "horizontal split diptych two equal panels side by side, LEFT PANEL: 62-year-old person standing beside freshly washed car using compact cordless handheld leaf blower to dry car bodywork wide fluid gesture bright spring sunshine warm golden reflections gleaming paint surface, RIGHT PANEL: same person wearing light jacket on winter morning using same compact cordless handheld leaf blower to clear frost from car windshield delicate steam visible cold crisp blue morning light, identical framing and person height both panels, both scenes conveying effortless autonomous confidence, photorealistic 8k professional photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, inconsistent person, mismatched framing, dramatic effort, stock photo, extra limbs, bad anatomy, cluttered background",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "professional overhead flat lay product photography, compact cordless handheld leaf blower centered prominently, 21V battery pack positioned left side, fast charger bottom left corner, black fabric carrying case top right corner, three small accessory nozzles arranged harmoniously around main unit, light natural warm wood surface with subtle grain texture, soft warm studio lighting gentle natural soft shadows no harsh glare, no text labels or branding visible, premium artisanal aesthetic not sterile catalog, clean organized balanced composition, photorealistic hyperdetailed 8k commercial product photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, white clinical background, harsh shadows, cluttered messy, cheap plastic look, visible brand labels, floating objects",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "62-year-old person standing at far end of completely cleared clean residential driveway, viewed from behind or three-quarter rear angle, compact cordless handheld leaf blower held casually at full arm's length like carrying a light grocery bag, straight relaxed upright posture gazing down the clean driveway ahead, golden hour late afternoon sun long soft warm shadow stretching forward, residential house with tidy maintained garden visible in soft background, no eye contact with camera intimate private moment of quiet accomplishment, photorealistic hyperdetailed 8k cinematic golden hour lighting professional photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, looking at camera, dramatic heroic pose, leaves on driveway, stock photo, extra limbs, bad anatomy, cluttered yard",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}
