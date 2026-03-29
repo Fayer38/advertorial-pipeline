@@ -183,12 +183,20 @@ class HTMLPublisherAgent(BaseAgent):
         tx = i18n.get(lang, i18n["en"])
 
         # Dispatch to alternative templates
-        if template == "health-journal":
-            from agents.templates.health_journal import build_html
-            return build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang, tx)
-        elif template == "listicle":
-            from agents.templates.listicle import build_html
-            return build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang, tx)
+        # Dispatch to template modules
+        _template_modules = {
+            "health-journal": "agents.templates.health_journal",
+            "listicle": "agents.templates.listicle",
+            "news-report": "agents.templates.news_report",
+            "founder-letter": "agents.templates.founder_letter",
+            "personal-story": "agents.templates.personal_story",
+            "medical-authority": "agents.templates.medical_authority",
+            "urgency-sale": "agents.templates.urgency_sale",
+        }
+        if template in _template_modules:
+            import importlib
+            mod = importlib.import_module(_template_modules[template])
+            return mod.build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang, tx)
 
         # Default: editorial template (v2 — enhanced with stat-row, comparison table, testimonials, warning boxes, SVG icons)
         SVG_CHECK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f26722" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#f26722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
