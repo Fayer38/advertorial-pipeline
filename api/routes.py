@@ -144,6 +144,15 @@ def _delete_product_file(pid: str):
     fpath = Path("data/output/products") / f"product_data_{pid}.json"
     if fpath.exists(): fpath.unlink()
 
+def _save_pipeline_state(plid: str):
+    """Persist pipeline state to disk so it survives restarts."""
+    p = pipelines.get(plid)
+    if not p: return
+    state_dir = Path(f"data/output/{plid}")
+    state_dir.mkdir(parents=True, exist_ok=True)
+    state_file = state_dir / "_pipeline_state.json"
+    state_file.write_text(json.dumps(p, default=str, ensure_ascii=False))
+
 # ── LOAD EXISTING PIPELINES ON STARTUP ──
 @app.on_event("startup")
 async def _load_existing_pipelines():
@@ -154,7 +163,22 @@ async def _load_existing_pipelines():
         if not d.is_dir() or d.name == "products":
             continue
         plid = d.name
-        # Check if there's a draft or HTML
+        # Prefer persisted pipeline state if available
+        state_file = d / "_pipeline_state.json"
+        if state_file.exists():
+            try:
+                state = json.loads(state_file.read_text())
+                # Mark running/pending pipelines as failed (they died with the restart)
+                if state.get("status") in ("running", "pending"):
+                    state["status"] = "failed"
+                    state["error"] = "Pipeline interrupted by server restart"
+                    state["completed_at"] = datetime.utcnow().isoformat()
+                pipelines[plid] = state
+                logger.info(f"Restored pipeline: {plid} ({state['status']}) from state file")
+                continue
+            except Exception as e:
+                logger.warning(f"Bad state file for {plid}: {e}")
+        # Fallback: reconstruct from files
         drafts = list(d.glob("advertorial_draft*.json"))
         htmls = list(d.glob("*.html"))
         briefs = list(d.glob("structured_brief*.json"))
@@ -304,6 +328,7 @@ async def start_pipeline(req: PipelineStartReq, bg: BackgroundTasks):
     plid = str(uuid.uuid4())[:8]
     pipelines[plid] = {"id": plid, "status": "pending", "started_at": datetime.utcnow().isoformat(), "completed_at": "", "product_id": req.product_id, "product_url": product["url"], "product_name": product.get("name",""), "config": {"angle": req.angle, "structure": req.structure, "persona": req.persona, "tone": req.tone, "language": req.language, "brief": req.brief, "template": req.template}, "current_phase": "", "current_agent": "", "progress": 0.0, "error": "", "results": {}}
     pipeline_events[plid] = asyncio.Queue()
+    _save_pipeline_state(plid)
     bg.add_task(_run_pipeline_bg, plid, req)
     return {"pipeline_id": plid, "status": "pending", "product": product.get("name","")}
 
@@ -1710,6 +1735,7 @@ def _patch(pipeline, q, plid):
 async def _emit(q, plid, status, phase, agent, progress):
     if plid in pipelines:
         pipelines[plid]["status"]=status; pipelines[plid]["current_phase"]=phase; pipelines[plid]["current_agent"]=agent; pipelines[plid]["progress"]=progress
+        _save_pipeline_state(plid)
     ev = {"type":"progress","pipeline_id":plid,"status":status,"current_phase":phase,"current_agent":agent,"progress":progress,"timestamp":datetime.utcnow().isoformat()}
     try: await q.put(ev)
     except: pass
