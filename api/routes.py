@@ -1266,6 +1266,30 @@ EDIT_SCRIPT = """
   }, { passive: true });
 
   document.addEventListener('keydown', function(e) {
+    // Ctrl+Z / Cmd+Z — undo
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+      if (activeEdit) {
+        // Let browser handle native contenteditable undo
+        return;
+      }
+      e.preventDefault();
+      globalUndo();
+      return;
+    }
+    // Ctrl+Shift+Z / Cmd+Shift+Z — redo
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && e.shiftKey) {
+      if (activeEdit) return; // native redo
+      e.preventDefault();
+      globalRedo();
+      return;
+    }
+    // Ctrl+Y — redo
+    if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
+      if (activeEdit) return;
+      e.preventDefault();
+      globalRedo();
+      return;
+    }
     if (!activeEdit) return;
     if (e.key === 'Escape') { finishEdit(); e.preventDefault(); }
     var tag = activeEdit.tagName.toLowerCase();
@@ -1280,8 +1304,14 @@ EDIT_SCRIPT = """
       var el = document.querySelector('[data-editable="' + e.data.field + '"]');
       if (el) el.innerHTML = e.data.value;
     }
-    if (e.data && e.data.type === 'undo') { globalUndo(); return; }
-    if (e.data && e.data.type === 'redo') { globalRedo(); return; }
+    if (e.data && e.data.type === 'undo') {
+      if (activeEdit) { document.execCommand('undo'); } else { globalUndo(); }
+      return;
+    }
+    if (e.data && e.data.type === 'redo') {
+      if (activeEdit) { document.execCommand('redo'); } else { globalRedo(); }
+      return;
+    }
     if (e.data && e.data.type === 'reset-all') { if(window._advResetAll) window._advResetAll(); return; }
     if (e.data && e.data.type === 'get-html') {
       finishEdit();
