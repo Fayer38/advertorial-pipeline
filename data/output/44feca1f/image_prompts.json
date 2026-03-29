@@ -1,0 +1,95 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "woman in her early 60s, natural silver-brown hair, relaxed posture on weathered wooden deck covered in fallen oak leaves, holding a compact modern cordless electric leaf blower loosely at her side, arm barely raised, facing slightly away from camera toward the yard, quiet gentle smile, golden late-afternoon backlight creating warm halo around her silhouette, long shadows across wooden planks, ocre and amber autumn palette, soft lens flare, photorealistic, cinematic lighting, lifestyle photography, authentic documentary feel, Canon 85mm f/1.8, shallow depth of field, warm color grade",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, overly posed, forced smile, stiff posture, cartoon, illustration, young woman, heavy effort, tension, dramatic action",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "woman in her early 60s, natural look, seated at round wooden kitchen table, both hands wrapped around a ceramic coffee mug, looking slightly off-camera with calm reflective expression, soft diffused morning light, window behind her showing blurred orange and yellow autumn trees, warm lived-in interior, wood grain table surface, cream and warm beige tones, intimate and honest framing, no staging, photorealistic, lifestyle photography, natural window light, 50mm f/2.0, soft bokeh, muted warm palette, documentary intimacy",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, forced smile, theatrical pose, bright harsh light, cold tones, young woman, over-staged kitchen",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "split-screen product comparison, left half: large heavy dusty orange gas-powered leaf blower leaning against a garage wall, dirty starter cord visible, imposing and bulky, slightly worn, right half: compact modern sleek cordless electric leaf blower sitting flat in an open relaxed palm, small and lightweight, clean design, neutral light concrete background throughout, even soft studio lighting, no dramatic shadows, minimalist product photography, objective factual composition, symmetrical layout, hyperdetailed, 8k, commercial product photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, overlaid labels, arrows, infographic elements, dramatic lighting, dark background, artistic filters, both blowers in same frame without split",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "extreme close-up of a mature woman's relaxed hand, 60s age, natural nails no nail polish, lightly cradling a compact modern cordless electric leaf blower effortlessly in one open palm, the blower is small, sleek, lightweight, fits entirely in hand, background is a soft bokeh of a wooden deck with autumn leaves swirling in motion blur, warm golden late-afternoon light, glowing amber and ochre bokeh spheres, sense of physical lightness and ease, product photography meets lifestyle, Canon 100mm macro, f/2.8, sharp focus on hand and blower, hyperdetailed skin texture",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra fingers, mutated hands, bad anatomy, young hands, manicured nails, tight grip, strain, effort, dark background, studio background",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "four-panel 2x2 grid photo collage, consistent warm natural light and real domestic settings, top-left: man in late 60s standing fully upright on long leaf-covered driveway holding compact cordless electric leaf blower with a relaxed arm, no bending or straining, top-right: same compact blower aimed at a wet car door, water droplets flying sideways in motion blur, bottom-left: blower clearing light frost from a car windshield in cool morning air with visible breath mist, bottom-right: blower blowing fine sawdust off a wooden workshop bench with wood shavings scattering, all panels feel authentic and unposed, warm earth tones, documentary lifestyle photography, 35mm, photorealistic, natural light",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, mutated hands, bad anatomy, stock photo aesthetic, overly staged, dramatic lighting, single panel, merged scenes, inconsistent style",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "flat lay product photography, light pearl grey surface, soft overhead natural studio light, centered compact modern cordless electric leaf blower, surrounding items arranged with generous spacing: a rapid charger with cable coiled neatly beside it, an open hard-shell carrying case with foam cutout interior showing the blower's molded slot, small foam earplugs in sealed packaging, clean organized composition, premium unboxing aesthetic, no props or decorative items, soft even shadows, everything included kit, hyperdetailed, 8k, commercial product photography, overhead top-down shot",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, dark background, dramatic shadows, cluttered, decorative props, plants, hands, lifestyle context, color backgrounds",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "person in their early 60s, natural appearance, standing outdoors on a residential path or driveway, holding a compact modern cordless electric leaf blower loosely at their side — arm down, blower not raised, not in active use, unhurried relaxed posture with slight weight shift to one foot, subtle barely-there smile, eyes gently toward camera, background is soft-focus autumn trees and residential yard, warm golden late-afternoon light, shallow depth of field, muted amber and green bokeh, the image reads quiet competence and ease, photorealistic, lifestyle photography, 85mm f/1.8, warm color grade, authentic not triumphant",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, forced smile, triumphant pose, active blowing, raised arm, dramatic expression, strained posture, young person",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

@@ -1897,6 +1897,11 @@ def _patch(pipeline, q, plid):
 
 async def _emit(q, plid, status, phase, agent, progress):
     if plid in pipelines:
+        # Never overwrite a terminal status (completed/failed) with a running status
+        current = pipelines[plid].get("status", "")
+        if current in ("completed", "failed") and status == "running":
+            _log_pipeline(plid, "info", f"{phase} | {agent} | {status} | {progress*100:.0f}% (skipped — already {current})")
+            return
         pipelines[plid]["status"]=status; pipelines[plid]["current_phase"]=phase; pipelines[plid]["current_agent"]=agent; pipelines[plid]["progress"]=progress
         _save_pipeline_state(plid)
     _log_pipeline(plid, "info" if status != "failed" else "error", f"{phase} | {agent} | {status} | {progress*100:.0f}%")

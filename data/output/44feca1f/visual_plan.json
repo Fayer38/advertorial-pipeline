@@ -1,0 +1,67 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Woman in her early 60s, natural look, standing relaxed on a wooden deck covered in autumn leaves. She holds the Seese Pro blower loosely in one hand at her side, arm barely engaged. She faces slightly away from camera, looking at the yard, with a quiet smile. Golden late-afternoon backlight creates a warm halo. Fallen oak leaves on weathered wood planks. No effort, no tension — the posture communicates ease and calm ownership.",
+      "mood": "Chaleureux, aérien, soulagement tranquille — lumière de fin d'après-midi dorée, tons ocre et brun, atmosphère de maison bien entretenue",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Woman in her early 60s seated at a round kitchen table, hands wrapped around a ceramic mug of coffee, looking slightly off-camera with a reflective but composed expression. Behind her, a window shows blurred autumn trees with orange and yellow leaves. Interior is warm and lived-in: wood table, soft natural light filtering in. The scene is honest and intimate — no dramatic staging, no forced smile.",
+      "mood": "Introspectif, chaleureux, authentique — lumière naturelle diffuse, palette crème et bois, ambiance matin calme",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "product shot",
+      "description": "Clean split-screen composition on a neutral light concrete background. Left half: a large dusty orange gas blower leaning against a garage wall, heavy and imposing, slightly dirty, starter cord visible. Right half: the Seese Pro blower sitting flat in the open palm of one relaxed hand, small and modern. No text overlays. The contrast in scale and implied weight is self-evident. Even lighting, no shadows dramatizing either side.",
+      "mood": "Factuel, direct, contrasté — éclairage studio neutre, fond gris clair, mise en scène minimaliste sans exagération",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "product shot",
+      "description": "Close-up of a woman's relaxed, mature hand (60s, no nail polish or simple natural nails) holding the Seese Pro blower effortlessly, almost like cradling it. In the background, slightly blurred, a wooden deck with autumn leaves swirling in motion blur. The blower looks compact, light, and modern against the warm outdoor bokeh. The point of the image: this thing fits in one hand and stays there without effort.",
+      "mood": "Léger, naturel, confiant — lumière dorée de fin d'après-midi, fond bokeh automnal, sensation de légèreté physique",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "lifestyle",
+      "description": "2x2 grid of four distinct lifestyle vignettes, each framed consistently with warm natural light and a real-home setting. Top-left: a man in his late 60s standing fully upright on a long leaf-covered driveway, using the Seese Pro with a relaxed arm — not bent over, not straining. Top-right: the blower aimed at a wet car door, water droplets flying sideways, slight motion blur. Bottom-left: the blower clearing a light frost from a car windshield, breath-mist in cool morning air. Bottom-right: the blower blowing fine sawdust off a workshop bench, wood shavings scattering. All four scenes feel competent, real, and domestic — not staged stock photography.",
+      "mood": "Compétent, polyvalent, rassurant — lumière naturelle chaude dans chaque vignette, couleurs terre et bois, ton documentary lifestyle",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "product shot",
+      "description": "Flat lay shot on a clean light grey surface, natural overhead light. The Seese Pro blower is centered. Arranged around it: a rapid charger with cable coiled neatly, an open hard-shell carrying case lined with foam cutouts (empty, showing the blower's slot), and a small pair of foam earplugs still in their packaging. Spacing is generous and organized. No props, no decorative items. The arrangement conveys value and completeness — everything you need is included.",
+      "mood": "Propre, premium, rassurant — éclairage studio doux overhead, fond gris perle, ombres légères et douces, esthétique produit soignée",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "lifestyle",
+      "description": "A person in their early-to-mid 60s (man or woman) standing outdoors on a path or driveway, holding the Seese Pro in one relaxed hand at their side — not raised, not in active use. The pose is unhurried: slight weight shift to one foot, barely-there smile, eyes slightly toward camera. Background is soft-focus autumn trees and a residential yard. The image should read: this is what 'done, no pain, satisfied' looks like. Not triumphant, not strained — just quietly capable.",
+      "mood": "Confiant, serein, quotidien — lumière dorée de fin d'après-midi, palette chaude automnale, ton naturel et crédible sans hyperbole",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}
