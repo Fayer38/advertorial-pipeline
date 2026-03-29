@@ -5,7 +5,7 @@ import asyncio, json, logging, re, uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -103,27 +103,46 @@ async def _load_existing_products():
             pi = data.get("product_info", {})
             pr = pi.get("price", {})
             bn = data.get("benefits", {})
+            top = data.get("_top", {})
             products[pid] = {
                 "id": pid,
-                "url": pi.get("url", ""),
-                "name": pi.get("title", pid),
-                "category": pi.get("product_type", ""),
-                "price": f"${pr.get('amount', 0)}" if isinstance(pr, dict) else str(pr),
-                "compare_price": f"${pr.get('compare_at_price', 0)}" if isinstance(pr, dict) and pr.get("compare_at_price") else "",
-                "benefits": bn.get("main_benefits", [])[:4] if isinstance(bn, dict) else [],
-                "problem": bn.get("problem_solved", "") if isinstance(bn, dict) else "",
-                "audience": "",
+                "url": top.get("url", pi.get("url", "")),
+                "name": top.get("name", pi.get("title", pid)),
+                "category": top.get("category", pi.get("product_type", "")),
+                "price": top.get("price", f"${pr.get('amount', 0)}" if isinstance(pr, dict) else str(pr)),
+                "compare_price": top.get("compare_price", f"${pr.get('compare_at_price', 0)}" if isinstance(pr, dict) and pr.get("compare_at_price") else ""),
+                "benefits": top.get("benefits", bn.get("main_benefits", [])[:4] if isinstance(bn, dict) else []),
+                "problem": top.get("problem", bn.get("problem_solved", "") if isinstance(bn, dict) else ""),
+                "audience": top.get("audience", ""),
                 "status": "ready",
                 "analyzed_at": datetime.utcnow().isoformat(),
                 "data": data,
-                "suggested_angle": "testimonial",
-                "suggested_structure": "pas",
-                "suggested_tone": "conversational",
-                "suggested_persona": "",
+                "suggested_angle": top.get("suggested_angle", "testimonial"),
+                "suggested_structure": top.get("suggested_structure", "pas"),
+                "suggested_tone": top.get("suggested_tone", "conversational"),
+                "suggested_persona": top.get("suggested_persona", ""),
             }
             logger.info(f"Loaded product: {pid} ({products[pid]['name']})")
         except Exception as e:
             logger.error(f"Failed to load {f}: {e}")
+
+def _save_product(pid: str):
+    """Persist product to disk."""
+    prod_dir = Path("data/output/products")
+    prod_dir.mkdir(parents=True, exist_ok=True)
+    p = products.get(pid)
+    if not p: return
+    fpath = prod_dir / f"product_data_{pid}.json"
+    # Save the full data blob, merging top-level fields back in
+    save_data = dict(p.get("data", {}))
+    # Also store top-level fields so they survive reloads
+    save_data["_top"] = {k: p[k] for k in ("name","url","category","price","compare_price","benefits","problem","audience","suggested_angle","suggested_structure","suggested_tone","suggested_persona") if k in p}
+    fpath.write_text(json.dumps(save_data, indent=2, ensure_ascii=False))
+    logger.info(f"Saved product: {pid}")
+
+def _delete_product_file(pid: str):
+    fpath = Path("data/output/products") / f"product_data_{pid}.json"
+    if fpath.exists(): fpath.unlink()
 
 # ── LOAD EXISTING PIPELINES ON STARTUP ──
 @app.on_event("startup")
@@ -252,10 +271,29 @@ async def get_product(pid: str):
     if pid not in products: raise HTTPException(404, "Product not found")
     return products[pid]
 
+@app.put("/products/{pid}")
+async def update_product(pid: str, req: dict = Body(...)):
+    if pid not in products: raise HTTPException(404, "Product not found")
+    p = products[pid]
+    # Update top-level scalar/list fields
+    allowed_top = {"name","url","category","price","compare_price","benefits","problem","audience","suggested_angle","suggested_structure","suggested_tone","suggested_persona"}
+    for k, v in req.items():
+        if k in allowed_top:
+            p[k] = v
+        elif k == "data" and isinstance(v, dict):
+            # Merge nested data
+            if "data" not in p: p["data"] = {}
+            for dk, dv in v.items():
+                p["data"][dk] = dv
+    # Persist to disk
+    _save_product(pid)
+    return p
+
 @app.delete("/products/{pid}")
 async def delete_product(pid: str):
     if pid not in products: raise HTTPException(404, "Product not found")
     del products[pid]
+    _delete_product_file(pid)
     return {"deleted": pid}
 
 # ── PIPELINE ──
