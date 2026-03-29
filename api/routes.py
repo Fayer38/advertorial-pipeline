@@ -420,6 +420,8 @@ async def save_html(plid: str, req: SaveHtmlReq):
     clean = re.sub(r'<div class="drop-indicator">.*?</div>', '', clean, flags=re.DOTALL)
     clean = re.sub(r'\s+class="img-selected"', '', clean)
     clean = re.sub(r'\s+class="dragging"', '', clean)
+    # Unwrap img-block-wrap divs
+    clean = re.sub(r'<div class="img-block-wrap"[^>]*>(.*?)</div>', r'\1', clean, flags=re.DOTALL)
     # Ensure header logo is present
     clean = _inject_header_logo(clean)
     htmls[0].write_text(clean, encoding="utf-8")
@@ -440,8 +442,8 @@ EDIT_SCRIPT = """
     [data-editable][contenteditable="true"] { outline: 2px solid #f26722 !important; outline-offset: 3px; cursor: text; }
 
     /* Block controls (drag + duplicate) */
-    [data-editable], .img-set, .placeholder[data-media-idx], img[data-img-idx] { position: relative; }
-    [data-editable]::before, .img-set::before, .placeholder[data-media-idx]::before, img[data-img-idx]::before {
+    [data-editable], .img-set, .placeholder[data-media-idx], img[data-img-idx], .img-block-wrap { position: relative; }
+    [data-editable]::before, .img-set::before, .placeholder[data-media-idx]::before, img[data-img-idx]::before, .img-block-wrap::before {
       content: ''; position: absolute; left: -42px; top: 0; width: 42px; height: 100%;
       pointer-events: auto;
     }
@@ -453,7 +455,8 @@ EDIT_SCRIPT = """
     [data-editable]:hover > .block-controls,
     .img-set:hover > .block-controls,
     .placeholder:hover > .block-controls,
-    img[data-img-idx]:hover > .block-controls { opacity: 1; }
+    img[data-img-idx]:hover > .block-controls,
+    .img-block-wrap:hover > .block-controls { opacity: 1; }
     .block-controls button {
       width: 26px; height: 26px; border-radius: 6px; border: 1px solid #ddd;
       background: #fff; color: #666; font-size: 12px; cursor: pointer;
@@ -983,15 +986,29 @@ EDIT_SCRIPT = """
     var blocks = document.querySelectorAll('[data-editable], img[data-img-idx]:not(#adv-header-logo img), .img-set, .placeholder[data-media-idx]');
     blocks.forEach(function(block) {
       if (block.closest('#adv-header-logo') || block.closest('#img-panel') || block.closest('#edit-toolbar')) return;
-      if (block.querySelector('.block-controls')) return;
+      // For <img> elements: wrap in a div first (img can't have children)
+      var target = block;
+      if (block.tagName === 'IMG') {
+        if (block.parentNode && block.parentNode.classList && block.parentNode.classList.contains('img-block-wrap')) {
+          target = block.parentNode; // already wrapped
+        } else {
+          var wrap = document.createElement('div');
+          wrap.className = 'img-block-wrap';
+          wrap.style.position = 'relative';
+          block.parentNode.insertBefore(wrap, block);
+          wrap.appendChild(block);
+          target = wrap;
+        }
+      }
+      if (target.querySelector('.block-controls')) return;
       var ctrl = document.createElement('div');
       ctrl.className = 'block-controls';
       ctrl.innerHTML =
         '<button class="block-ctrl-drag" title="Drag to reorder" draggable="false">⠿</button>' +
         '<button class="block-ctrl-dup" title="Duplicate">⧉</button>' +
         '<button class="block-ctrl-del" title="Delete">🗑</button>';
-      block.style.position = 'relative';
-      block.insertBefore(ctrl, block.firstChild);
+      target.style.position = 'relative';
+      target.insertBefore(ctrl, target.firstChild);
     });
   }
   addBlockControls();
@@ -1004,7 +1021,7 @@ EDIT_SCRIPT = """
 
   function getBlockParent(el) {
     // Get the nearest draggable block
-    return el.closest('[data-editable], .img-set, .placeholder[data-media-idx], img[data-img-idx]');
+    return el.closest('[data-editable], .img-set, .placeholder[data-media-idx], img[data-img-idx], .img-block-wrap');
   }
 
   function getAllBlocks() {
@@ -1018,7 +1035,7 @@ EDIT_SCRIPT = """
     var dragBtn = e.target.closest('.block-ctrl-drag');
     if (!dragBtn) return;
     e.preventDefault();
-    var block = dragBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx]');
+    var block = dragBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx], .img-block-wrap');
     if (!block) return;
     dragTimeout = setTimeout(function() { startDrag(block, e); }, 150);
   });
@@ -1081,7 +1098,7 @@ EDIT_SCRIPT = """
     if (!dupBtn) return;
     e.preventDefault();
     e.stopPropagation();
-    var block = dupBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx]');
+    var block = dupBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx], .img-block-wrap');
     if (!block) return;
     var clone = block.cloneNode(true);
     // Remove controls from clone (will be re-added)
@@ -1098,7 +1115,7 @@ EDIT_SCRIPT = """
     if (!delBtn) return;
     e.preventDefault();
     e.stopPropagation();
-    var block = delBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx]');
+    var block = delBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx], .img-block-wrap');
     if (!block) return;
     block.remove();
     closePanel();
@@ -1323,6 +1340,11 @@ EDIT_SCRIPT = """
       if (panelEl) panelEl.remove();
       document.querySelectorAll('.img-selected').forEach(function(el) { el.classList.remove('img-selected'); });
       document.querySelectorAll('.block-controls').forEach(function(c) { c.remove(); });
+      // Unwrap img-block-wrap
+      document.querySelectorAll('.img-block-wrap').forEach(function(w) {
+        while (w.firstChild) w.parentNode.insertBefore(w.firstChild, w);
+        w.remove();
+      });
       document.querySelectorAll('.drop-indicator').forEach(function(c) { c.remove(); });
       document.querySelectorAll('.dragging').forEach(function(c) { c.classList.remove('dragging'); });
       window.parent.postMessage({ type: 'current-html', html: document.documentElement.outerHTML }, '*');
