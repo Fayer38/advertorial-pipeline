@@ -21,7 +21,7 @@ DEFAULT_MODEL = "claude-sonnet-4"
 PROXY_BASE = os.getenv("LLM_PROXY_URL", "http://localhost:3456")
 MAX_RETRIES = 5
 RETRY_DELAY = 3
-CALL_TIMEOUT = 120  # 2 min max per call
+CALL_TIMEOUT = 300  # 5 min max per call (copywriter needs more time for long articles)
 
 
 class LLMClient:
