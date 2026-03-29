@@ -207,6 +207,7 @@ class AdvertorialPipeline:
                 "tone": config.get("tone", "conversational"),
                 "persona": config.get("persona", ""),
                 "brief": config.get("brief", ""),
+                "template": config.get("template", "editorial"),
             }
             logger.info(f"  Config injectée: langue={lang}, angle={config.get('angle')}, tone={config.get('tone')}")
 
@@ -268,6 +269,7 @@ class AdvertorialPipeline:
             product_url=product_url,
             product_name=product_data.get("product_name", "") if product_data else "",
             lang=config.get("language", "en") if config else "en",
+            template=config.get("template", "editorial") if config else "editorial",
         )
 
         # ══════════════════════════════════════════════════════════

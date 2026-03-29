@@ -301,6 +301,15 @@ class CopywriterAgent(BaseAgent):
             if cfg.get("brief"):
                 parts.append(f"**BRIEF ADDITIONNEL** : {cfg['brief']}")
 
+        # ── COMPOSANTS HTML DU TEMPLATE ──
+        template_id = cfg.get("template", "editorial")
+        try:
+            from agents.prompts.template_components import get_template_instructions
+            template_instructions = get_template_instructions(template_id)
+            parts.append(f"\n\n---\n{template_instructions}")
+        except Exception as e:
+            self.logger.warning(f"Could not load template instructions: {e}")
+
         # ── INSTRUCTION FINALE ──
         parts.append(f"\n\n---\n")
         if qa_feedback:
