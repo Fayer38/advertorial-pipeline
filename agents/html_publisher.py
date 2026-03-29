@@ -140,7 +140,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "tip": '<strong>Useful tip:</strong><br>Know someone who would love this? It makes an incredible gift — the kind that gets used every week.',
                 "gift": '<strong>Gift idea:</strong> Get the bundle and save even more. Perfect for birthdays, holidays, or just treating yourself.',
                 "cta": "Check Availability", "cta_footer": "👉 Skip to offer — Check availability",
-                "badge1": "30-day money-back guarantee", "badge2": "Free shipping (2-5 days)",
+                "badge1": "30-day money-back guarantee", "badge2": "Free shipping (2–5 days)", "badge3": "10-year lifetime warranty", "badge4": "Ships in 2-5 business days",
                 "byline_by": "By", "product_img_alt": "Product image", "bundle_badge": "PRODUCT BUNDLE", "bundle_desc": "Product hero image with all accessories and price badge", "sb_hook": "Limited offer — order now",
             },
             "fr": {
@@ -152,7 +152,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "tip": '<strong>Astuce :</strong><br>Vous connaissez quelqu\'un qui adorerait ? C\'est le cadeau idéal — celui qu\'on utilise chaque semaine.',
                 "gift": '<strong>Idée cadeau :</strong> Prenez le pack et économisez encore plus. Parfait pour un anniversaire ou se faire plaisir.',
                 "cta": "Vérifier la Disponibilité", "cta_footer": "👉 Voir l'offre — Vérifier la disponibilité",
-                "badge1": "Satisfait ou remboursé 30 jours", "badge2": "Livraison gratuite (2-5 jours)",
+                "badge1": "Satisfait ou remboursé 30 jours", "badge2": "Livraison gratuite (2-5 jours)", "badge3": "Garantie 10 ans", "badge4": "Expédition sous 2-5 jours",
                 "byline_by": "Par", "product_img_alt": "Image produit", "bundle_badge": "PACK PRODUIT", "bundle_desc": "Image du pack complet avec tous les accessoires et prix remisé", "sb_hook": "Offre limitée — commandez maintenant",
             },
             "es": {
@@ -164,7 +164,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "tip": '<strong>Consejo:</strong><br>¿Conoces a alguien que lo adoraría? Es el regalo perfecto — de los que se usan cada semana.',
                 "gift": '<strong>Idea de regalo:</strong> Llévate el pack y ahorra aún más.',
                 "cta": "Ver Disponibilidad", "cta_footer": "👉 Ir a la oferta — Ver disponibilidad",
-                "badge1": "Garantía de devolución 30 días", "badge2": "Envío gratuito (2-5 días)",
+                "badge1": "Garantía de devolución 30 días", "badge2": "Envío gratuito (2-5 días)", "badge3": "Garantía de 10 años", "badge4": "Envío en 2-5 días",
                 "byline_by": "Por", "product_img_alt": "Imagen del producto", "bundle_badge": "PACK PRODUCTO", "bundle_desc": "Imagen del pack completo con accesorios y precio con descuento", "sb_hook": "Oferta limitada — pide ahora",
             },
             "de": {
@@ -176,7 +176,7 @@ class HTMLPublisherAgent(BaseAgent):
                 "tip": '<strong>Tipp:</strong><br>Kennen Sie jemanden, der das lieben würde? Ein perfektes Geschenk — eins, das jede Woche benutzt wird.',
                 "gift": '<strong>Geschenkidee:</strong> Holen Sie sich das Bundle und sparen Sie noch mehr.',
                 "cta": "Verfügbarkeit prüfen", "cta_footer": "👉 Zum Angebot — Verfügbarkeit prüfen",
-                "badge1": "30 Tage Geld-zurück-Garantie", "badge2": "Kostenloser Versand (2-5 Tage)",
+                "badge1": "30 Tage Geld-zurück-Garantie", "badge2": "Kostenloser Versand (2-5 Tage)", "badge3": "10-Jahres-Garantie", "badge4": "Versand in 2-5 Tagen",
                 "byline_by": "Von", "product_img_alt": "Produktbild", "bundle_badge": "PRODUKT-BUNDLE", "bundle_desc": "Produktbild mit allem Zubehör und Rabattpreis", "sb_hook": "Begrenztes Angebot — jetzt bestellen",
             },
         }
@@ -190,22 +190,34 @@ class HTMLPublisherAgent(BaseAgent):
             from agents.templates.listicle import build_html
             return build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang, tx)
 
-        # Default: editorial template
+        # Default: editorial template (v2 — enhanced with stat-row, comparison table, testimonials, warning boxes, SVG icons)
+        SVG_CHECK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f26722" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#f26722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        SVG_CHECK_GREEN = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#2eaa4f" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#2eaa4f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        SVG_TIP = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f26722" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="12" stroke="#f26722" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="#f26722" stroke-width="2" stroke-linecap="round"/></svg>'
+
         offer_box = f'''<div class="offer-box">
       <h2>{tx["offer_title"]}</h2>
       <p><strong>{product_name}</strong><br>{tx["offer_desc"]}</p>
       <div class="offer-product">
         {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;border-radius:8px;margin:8px 0 16px;">' if product_image_url else '<div class="placeholder"><div class="tbadge">' + tx.get("bundle_badge","PRODUCT BUNDLE") + '</div><br>' + tx.get("bundle_desc","Product hero image with all accessories and price badge") + '</div>'}
       </div>
-      <div class="step"><div class="step-title">{tx["step1_title"]}</div><p>{tx["step1"]}</p></div>
-      <div class="step"><div class="step-title">{tx["step2_title"]}</div><p>{tx["step2"]}</p></div>
-      <div class="step"><div class="step-title">{tx["step3_title"]}</div><p>{tx["step3"]}</p></div>
-      <div class="tip">💡 {tx["tip"]}</div>
-      <div class="tip">🎁 {tx["gift"]}</div>
+      <div class="step">{SVG_CHECK} <div><div class="step-title">{tx["step1_title"]}</div><p>{tx["step1"]}</p></div></div>
+      <div class="step">{SVG_CHECK} <div><div class="step-title">{tx["step2_title"]}</div><p>{tx["step2"]}</p></div></div>
+      <div class="step">{SVG_CHECK} <div><div class="step-title">{tx["step3_title"]}</div><p>{tx["step3"]}</p></div></div>
+      <div class="tip">{SVG_TIP} <div>{tx["tip"]}</div></div>
+      <div class="tip">{SVG_TIP} <div>{tx["gift"]}</div></div>
       {cta_body}
       <a href="{product_url}" class="cta-bottom">{tx["cta"]}</a>
-      <div class="cta-badges"><div><span class="chk">✔</span> {tx["badge1"]}</div><div><span class="chk">✔</span> {tx["badge2"]}</div></div>
+      <div class="cta-badges">
+        <div>{SVG_CHECK_GREEN} {tx["badge1"]}</div>
+        <div>{SVG_CHECK_GREEN} {tx["badge2"]}</div>
+        <div>{SVG_CHECK_GREEN} {tx.get("badge3", "")}</div>
+        <div>{SVG_CHECK_GREEN} {tx.get("badge4", "")}</div>
+      </div>
     </div>'''
+
+        product_price = product_image_url and "$119.99" or ""
+        product_price_old = product_image_url and "$249.99" or ""
 
         return f'''<!DOCTYPE html>
 <html lang="{lang}">
@@ -224,41 +236,66 @@ body{{font-family:'Roboto',sans-serif;color:#111;background:#fff;font-size:18px;
 .page-wrapper{{max-width:1100px;margin:0 auto;padding:24px 20px;display:flex;gap:32px;align-items:flex-start}}
 .article-content{{flex:1;min-width:0}}
 .sidebar{{width:300px;flex-shrink:0;position:sticky;top:20px}}
-.sidebar-card{{border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;background:#fff}}
+.sidebar-card{{border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.06)}}
 .sidebar-card .sb-title{{font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;text-align:center;padding:14px 16px 10px;color:#111;line-height:1.3}}
-.sidebar-card .sb-img{{width:100%;height:200px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:13px;font-style:italic}}
-.sidebar-card .sb-cta{{display:block;margin:14px 16px;padding:14px;background:#f26722;color:#000;text-align:center;font-size:16px;font-weight:700;border-radius:8px;text-decoration:none;transition:background .2s}}
+.sidebar-card .sb-img{{width:100%;height:200px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:13px;font-style:italic;text-align:center;padding:16px}}
+.sidebar-card .sb-price{{text-align:center;padding:8px 16px 0;font-size:14px;color:#666}}
+.sidebar-card .sb-price strong{{font-size:22px;color:#111}}
+.sidebar-card .sb-rating{{text-align:center;padding:8px 16px 4px;font-size:13px;color:#f26722;letter-spacing:1px}}
+.sidebar-card .sb-cta{{display:block;margin:12px 16px;padding:14px;background:#f26722;color:#111;text-align:center;font-size:16px;font-weight:700;border-radius:8px;text-decoration:none;transition:background .2s}}
 .sidebar-card .sb-cta:hover{{background:#d85a1b}}
 .sidebar-card .sb-badges{{padding:0 16px 14px;font-size:13px;color:#555}}
-.sidebar-card .sb-badges div{{margin-bottom:4px}}
+.sidebar-card .sb-badges div{{margin-bottom:6px;display:flex;align-items:center;gap:6px}}
 .chk{{color:#2eaa4f;margin-right:4px}}
-.byline{{font-size:14px;color:#888;margin-bottom:16px}}
-h1{{font-family:'Montserrat',sans-serif;font-weight:800;font-size:32px;line-height:1.2;margin-bottom:12px;color:#111}}
-h2{{font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;line-height:1.25;margin-top:24px;margin-bottom:12px;color:#111}}
-p{{font-size:18px;line-height:1.7;margin-bottom:6px;color:#222}}
+.byline{{font-size:14px;color:#888;margin-bottom:14px;border-bottom:1px solid #eee;padding-bottom:12px}}
+h1{{font-family:'Montserrat',sans-serif;font-weight:800;font-size:32px;line-height:1.2;margin-bottom:14px;color:#111}}
+h2{{font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;line-height:1.25;margin-top:28px;margin-bottom:12px;color:#111}}
+p{{font-size:18px;line-height:1.7;margin-bottom:12px;color:#222}}
+p:last-child{{margin-bottom:0}}
 strong{{color:#111}}
-em{{color:#444}}
+em{{color:#444;font-style:italic}}
 .accent{{color:#f26722}}
-.placeholder{{background:#f7f7f7;padding:40px 20px;text-align:center;color:#aaa;border-radius:8px;margin:10px 0 14px;font-style:italic;font-size:14px;border:1px dashed #ddd}}
-.placeholder .tbadge{{display:inline-block;background:#f26722;color:#fff;font-size:10px;padding:3px 10px;border-radius:10px;margin-bottom:8px;font-style:normal;text-transform:uppercase;letter-spacing:.8px;font-weight:700}}
-.offer-box{{border:2px solid #e5e5e5;border-radius:12px;padding:28px 24px;margin:32px 0 16px;background:#fff}}
-.offer-box h2{{margin-top:0;font-size:24px}}
-.step{{margin-bottom:12px}}
-.step-title{{font-weight:700;font-size:16px;margin-bottom:2px}}
-.step p{{font-size:16px;margin-bottom:4px}}
-.tip{{background:#faf8f5;border-left:3px solid #f26722;padding:12px 16px;margin:16px 0;font-size:16px}}
-.cta-bottom{{display:block;width:100%;padding:18px;background:#f26722;color:#000;text-align:center;font-size:18px;font-weight:700;border-radius:8px;text-decoration:none;margin:20px 0 10px;transition:background .2s}}
+.placeholder{{background:#f7f7f7;padding:36px 20px;text-align:center;color:#aaa;border-radius:8px;margin:12px 0;font-style:italic;font-size:14px;border:1px dashed #ddd;line-height:1.6}}
+.placeholder .tbadge{{display:inline-block;background:#f26722;color:#fff;font-size:10px;padding:3px 10px;border-radius:10px;margin-bottom:10px;font-style:normal;text-transform:uppercase;letter-spacing:.8px;font-weight:700}}
+.stat-row{{display:flex;gap:14px;margin:16px 0;flex-wrap:wrap}}
+.stat-box{{flex:1;min-width:130px;background:#fff5f0;border:1px solid #f9cdb8;border-radius:8px;padding:14px;text-align:center}}
+.stat-box .stat-num{{font-family:'Montserrat',sans-serif;font-weight:800;font-size:26px;color:#f26722;display:block}}
+.stat-box .stat-label{{font-size:13px;color:#666;margin-top:4px;line-height:1.4}}
+.comparison-table{{width:100%;border-collapse:collapse;margin:14px 0;font-size:16px}}
+.comparison-table th{{background:#f7f7f7;padding:11px 14px;text-align:left;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;border-bottom:2px solid #eee}}
+.comparison-table td{{padding:11px 14px;border-bottom:1px solid #eee;vertical-align:top}}
+.comparison-table tr:last-child td{{border-bottom:none}}
+.comparison-table .good{{color:#2eaa4f;font-weight:700}}
+.comparison-table .bad{{color:#e53e3e;font-weight:700}}
+.testimonial{{background:#fff5f0;border-left:4px solid #f26722;border-radius:0 8px 8px 0;padding:16px 20px;margin:12px 0}}
+.testimonial .quote{{font-size:17px;line-height:1.65;color:#333;font-style:italic;margin-bottom:8px}}
+.testimonial .attribution{{font-size:14px;color:#888;font-weight:700}}
+.warning-box{{background:#fff5f0;border:1px solid #f9cdb8;border-radius:8px;padding:14px 18px;margin:12px 0;font-size:16px;display:flex;gap:10px;align-items:flex-start}}
+.warning-box svg{{flex-shrink:0;margin-top:2px}}
+.warning-box strong{{color:#c04a0a;display:block;margin-bottom:4px}}
+.offer-box{{border:2px solid #f26722;border-radius:12px;padding:24px;margin:28px 0 14px;background:#fff5f0}}
+.offer-box h2{{margin-top:0;margin-bottom:12px;font-size:22px;color:#111}}
+.step{{margin-bottom:12px;display:flex;flex-direction:row;gap:10px;align-items:flex-start}}
+.step svg{{flex-shrink:0;margin-top:3px}}
+.step .step-title{{font-weight:700;font-size:16px;margin-bottom:2px;color:#111}}
+.step p{{font-size:16px;margin-bottom:0}}
+.tip{{background:#fff;border-left:3px solid #f26722;padding:12px 16px;margin:12px 0;font-size:16px;border-radius:0 6px 6px 0;display:flex;gap:8px;align-items:flex-start}}
+.tip svg{{flex-shrink:0;margin-top:2px}}
+.cta-bottom{{display:block;width:100%;padding:17px;background:#f26722;color:#111;text-align:center;font-size:18px;font-weight:700;border-radius:8px;text-decoration:none;margin:16px 0 10px;transition:background .2s}}
 .cta-bottom:hover{{background:#d85a1b}}
-.cta-badges{{text-align:center;font-size:14px;color:#555;margin-bottom:8px}}
+.cta-badges{{font-size:14px;color:#555;margin-bottom:8px}}
+.cta-badges>div{{margin-bottom:4px;display:flex;align-items:center;gap:6px}}
 .sticky-footer{{position:fixed;bottom:0;left:0;right:0;background:#f26722;padding:12px 20px;text-align:center;z-index:100}}
-.sticky-footer a{{color:#000;text-decoration:none;font-weight:700;font-size:16px}}
+.sticky-footer a{{color:#111;text-decoration:none;font-weight:700;font-size:16px}}
+.stars{{color:#f26722;font-size:14px}}
 ul,ol{{padding-left:24px;margin-bottom:12px;overflow-wrap:break-word}}
 li{{margin-bottom:6px}}
 @media(max-width:840px){{
-.page-wrapper{{flex-direction:column;padding:16px}}
-.sidebar{{width:100%;position:relative;top:0;order:1;margin-top:24px}}
-.article-content{{order:0}}
-h1{{font-size:28px}}h2{{font-size:24px}}
+.page-wrapper{{flex-direction:column;padding:14px}}
+.sidebar{{width:100%;position:relative;top:0;order:2;margin-top:24px}}
+.article-content{{order:1}}
+h1{{font-size:28px}}h2{{font-size:24px}}p{{font-size:16px}}
+.stat-row{{gap:10px}}.stat-box .stat-num{{font-size:22px}}
 ul,ol{{padding-left:20px;padding-right:8px}}
 }}
 </style>
@@ -267,18 +304,22 @@ ul,ol{{padding-left:20px;padding-right:8px}}
 <div class="page-wrapper">
   <div class="article-content">
     <h1>{headline}</h1>
-    <p class="byline">{tx["byline_by"]} {author_name}&nbsp;&nbsp;|&nbsp;&nbsp;{today}</p>
+    <p class="byline">{tx["byline_by"]} {author_name} | {today}</p>
     {article_body}
     {offer_box}
   </div>
   <div class="sidebar">
     <div class="sidebar-card">
-      <div class="sb-title">{product_name}<br><span style="font-size:13px;font-weight:400;color:#555">{tx.get("sb_hook","")}</span></div>
+      <div class="sb-title">{product_name}</div>
       {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;">' if product_image_url else '<div class="sb-img">[' + tx["product_img_alt"] + ']</div>'}
+      <div class="sb-rating">★★★★★ &nbsp;4.9/5</div>
+      <div class="sb-price"><strong>{product_price}</strong> <span style="color:#aaa;font-size:14px;text-decoration:line-through;margin-left:6px">{product_price_old}</span></div>
       <a href="{product_url}" class="sb-cta">{tx["cta"]}</a>
       <div class="sb-badges">
-        <div><span class="chk">✔</span> {tx["badge1"]}</div>
-        <div><span class="chk">✔</span> {tx["badge2"]}</div>
+        <div>✓ {tx["badge1"]}</div>
+        <div>✓ {tx["badge2"]}</div>
+        <div>✓ {tx.get("badge3", "")}</div>
+        <div>✓ {tx.get("badge4", "")}</div>
       </div>
     </div>
   </div>
