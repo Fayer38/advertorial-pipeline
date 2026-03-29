@@ -1,0 +1,95 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "split-screen horizontal comparison photograph, left side: 60-65 year old man hunched forward 30 degrees, tense expression, struggling with large heavy orange gas-powered leaf blower on concrete driveway, visible effort and fatigue in posture, right side: similar age man standing perfectly upright on same sunny concrete driveway, holding small compact white and gray cordless leaf blower effortlessly with one hand, relaxed shoulders, quiet satisfaction on face, sharp vertical dividing line center frame, late morning warm sunlight, blue sky background, clean residential setting, few autumn leaves on left side, photorealistic, cinematic lighting, 8k, professional photography, authentic documentary style",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, stock photo, extra limbs, extra fingers, mutated hands, bad anatomy, medical imagery, alarming tone, cartoon",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "clean modern editorial infographic, warm off-white background, two stylized profile silhouettes side by side, left silhouette bent forward 30 degrees holding large heavy leaf blower, arrow label '5 kg — asymmetric load', right silhouette standing perfectly straight holding small lightweight blower with one relaxed arm, label '950 g — arm relaxed', colored arc indicators showing lumbar curvature angle for each posture, warm beige palette, sage green and anthracite gray accents, clean sans-serif typography, headline 'The weight difference changes everything', minimal icons, lifestyle magazine editorial aesthetic, modern health publication style, flat design with subtle depth",
+      "negative_prompt": "ugly, blurry, distorted, low quality, watermark, clinical white, medical imagery, hospital aesthetic, complex diagram, overly technical, stock photo style, extra details, noise, graininess",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "62-65 year old man, short gray hair, wearing clean casual beige polo shirt, standing perfectly upright and straight on beautiful wooden deck or stone patio, holding small compact white and gray cordless leaf blower effortlessly with one hand arm slightly extended, other hand relaxed in pocket, well-maintained garden behind him with lush green vegetation, blue autumn sky, warm golden mid-morning light, calm focused expression, posture of confident mastery over his tool, american shot mid-thigh framing, photorealistic, 8k, professional lifestyle photography, natural depth of field, sharp focus on subject, warm amber tones",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, frail appearance, medical context, stock photo, hunched posture, assisted living aesthetic, overexposed",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "clean horizontal editorial infographic layout, very light gray or white background, four bold statistic blocks in a row, large bold numbers '400 sq ft / 5 min', '80% less time', '30 sec dried car', short subtitle beneath each, minimalist icons above each stat — leaf, stopwatch, car, workshop, two-column comparison table below Seese Pro vs Traditional Method, alternating white and very light gray rows, subtle green and red accent indicators, modern sans-serif typography, small leaf icon, chronometer icon, car silhouette icon, lifestyle magazine graphic design, green and gold color accents, credible editorial aesthetic",
+      "negative_prompt": "ugly, blurry, distorted, low quality, watermark, clinical sterile white, medical look, overly complex diagram, illegible text, noise, graininess, harsh colors, stock photo, cartoonish",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "two portrait vignettes side by side, landscape format, left vignette: 65-70 year old man standing on immaculate gravel or concrete driveway holding small compact white gray cordless leaf blower with one hand, looking down at clean path with quiet satisfied expression, right vignette: 68-72 year old woman on clean terrace or patio, same relaxed upright posture, slight pride in expression, both with green lawn and trimmed hedge behind them, warm golden late afternoon light in both frames, authentic real person not stock photo aesthetic, dignified and autonomous, text caption area beneath each vignette for name age italic quote, photorealistic, 8k, cinematic warm light, natural depth of field",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, assisted living tone, medical imagery, frail, sad expressions, overexposed, artificial smile",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "premium product flat lay on light natural oak or pine wood surface, organized airy composition, small compact white and gray cordless leaf blower centered slightly angled showing profile, open hard carrying case with foam interior left side, 21V battery and fast charger right side, hearing protection lower right, few dried autumn leaves and small branch as natural props, small '55% OFF' badge and 'Lifetime Warranty' seal upper right corner clean typography, soft overhead natural zenithal light no harsh shadows, warm artisanal tone, high-end outdoor catalog aesthetic, sharp focus throughout, photorealistic, 8k, professional product photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, logo, cold clinical light, harsh shadows, floating objects, e-commerce white background, overly stylized, extra clutter, bad reflections",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 8,
+      "platform": "midjourney",
+      "prompt": "small compact white and gray cordless leaf blower product hero shot, placed on natural stone or weathered wood surface outdoors, slightly three-quarter angle, sharp and well-lit, soft bokeh garden background with deep greens, warm late afternoon golden light, price typography overlay centered below product '$119.99' large bold text, '$249.99' with elegant red strikethrough above it, sage green CTA button simulation 'Try It Risk-Free — 30 Days' white text below, maximum breathing space around product, minimal composition, warm residential garden ambiance, photorealistic, 8k, professional advertising photography, natural depth of field",
+      "negative_prompt": "ugly, deformed, noisy, blurry distorted product, grainy, low quality, watermark, harsh light, aggressive colors, cluttered background, extra objects, bad reflections, overexposed, neon colors, cold tone, stock photo feel",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

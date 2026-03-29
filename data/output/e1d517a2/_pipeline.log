@@ -1,0 +1,11 @@
+[20:53:30] [INFO] Pipeline started — product=seese-pro-v9 template=news-report angle=testimonial lang=en
+[20:53:30] [INFO] Phase 1 | Starting | running | 0%
+[20:53:30] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
+[20:54:54] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[20:57:13] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[20:58:00] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[20:58:00] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[20:58:45] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[20:59:54] [INFO] Pipeline completed — html=data/output/e1d517a2/at-68-i-cleaned-my-entire-patio-in-4-minutes-without-calling.html words=1350
+[20:59:54] [INFO] Done |  | completed | 100%
+[20:59:54] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)

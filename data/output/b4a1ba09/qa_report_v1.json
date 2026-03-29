@@ -1,0 +1,44 @@
+{
+  "overall_score": 8.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le titre 'A Letter From the Man Who Refused to Call His Kids for Help' est excellent : il cible le pain point central (dépendance) avec une formulation émotionnellement chargée. L'ouverture avec la scène du garage est très spécifique (Husqvarna, 15 ans, seau, 10 minutes) et crée une identification immédiate. La ligne 'if you're reading this letter, I suspect you already know exactly what I mean' établit une complicité puissante. Légère faiblesse : 'Dear friend' en ouverture est daté et peut signaler la pub avant que la magie ne prenne. Le hook gagnerait à démarrer directement par la scène du garage sans la salutation."
+    },
+    "story_flow": {
+      "score": 8,
+      "feedback": "La progression est fluide et logique : garage → honte progressive → point de rupture → construction → démonstration → témoignage → offre. Les quatre sections du corps s'enchaînent bien. Légères faiblesses : la transition vers 'Why I'm writing to you today' est un peu mécanique — le changement de registre (storytelling → business) est perceptible. Les bucket brigades sont présentes ('Here's the part that still surprises me') mais insuffisamment utilisées dans les sections intermédiaires. Ajouter 2-3 phrases-pivots courtes type 'Voilà ce que j'ai découvert.' entre les grands blocs."
+    },
+    "proof_density": {
+      "score": 6,
+      "feedback": "C'est le point faible principal. Les preuves se limitent à : (1) specs techniques non vérifiées par un tiers (200 mph, 30k RPM), (2) un chronométrage personnel (4 min 40 sec), (3) un seul témoignage (Margaret). Pour un sceptique de 65 ans qui a brûlé de l'argent sur des gadgets inutiles, ce n'est pas suffisant. Améliorations concrètes : intégrer au moins 2 témoignages supplémentaires avec noms, âges et villes différents ; ajouter une phrase sur une certification ou un test indépendant ('testé par [lab/publication]') ; inclure un élément social proof chiffré ('plus de 12 000 propriétaires l'ont adopté depuis 2021'). Le témoignage de Margaret est bien écrit et crédible — dupliquer ce format 2 fois de plus."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "L'offre est claire et bien construite : prix barré ($249.99 → $119.99), 55% sans coupon, kit complet, garantie à vie, remboursement 30 jours, livraison gratuite. La garantie à vie est un différenciateur fort bien mis en valeur. Faiblesse principale : l'urgence 'this week only' est mentionnée dans le titre mais quasi-absente du CTA lui-même. Le lecteur qui scrolle directement au bas ne la voit pas. Suggestion concrète : ajouter dans la section CTA une ligne explicite — 'Ce prix de $119.99 est disponible jusqu'au [date J+5] ou jusqu'à épuisement des 200 kits disponibles.' Le bouton CTA ('Claim your 55% discount...') est bien rédigé mais gagnerait un verbe d'action plus fort : 'Start my 30-day trial — ships in 48 hours'."
+    },
+    "emotional_arc": {
+      "score": 8,
+      "feedback": "L'arc émotionnel est bien construit : honte (avoiding jobs, 'quiet stubborn shame') → détermination ('I wasn't going to accept this') → victoire (le patio en 4h40, le rire) → identification via Margaret ('I feel like myself again'). La phrase 'something important was slipping away from me — something I hadn't given a name to yet' est particulièrement puissante car elle nomme l'innommable. Faiblesse : le future pacing est quasiment absent. Après la section offre, il manque un paragraphe de 3-4 lignes projetant le lecteur 30 jours plus tard : 'Imaginez ce samedi matin. Vous prenez le Seese Pro, pas parce que vous devez, mais parce que vous en avez envie. Votre cour est nette en 6 minutes. Votre voiture brille. Et personne ne vous a aidé.' Ce seul ajout ferait monter le score à 9."
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Prose accessible, ton conversationnel constant, paragraphes de longueur raisonnable. Le vocabulaire est adapté à la cible (pas de jargon technique excessif). 1433 mots : longueur idéale. Légères faiblesses : certains paragraphes dans le corps (notamment 'Then somewhere around my early sixties...') atteignent 6-7 lignes — à découper. La section offre gagnerait à utiliser 2-3 puces pour lister les composants du kit plutôt qu'une phrase dense. Le formatage HTML est minimal mais fonctionnel."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "Le format lettre personnelle signée est une technique de direct response éprouvée et bien exécutée. La structure hook → story → problem → invention → proof → offer → CTA est respectée. Le ton reste éditorial tout au long — on ne sent pas la pub avant la section offre. La voix de Tom Haskell est cohérente et crédible. Légère faiblesse : la section 'Here's what you get when you order this week' bascule vers un registre plus commercial standard. Reformuler en restant dans la voix de Tom : 'Ce que je vous envoie quand vous commandez cette semaine' avec une liste simple plutôt qu'un paragraphe de vente classique."
+    }
+  },
+  "improvements": [
+    "Supprimer 'Dear friend,' et ouvrir directement par la scène du garage pour éviter le signal publicitaire immédiat",
+    "Ajouter 2 témoignages supplémentaires (noms, âges, villes différents) en suivant le format Margaret — idéalement un homme et une femme, problèmes légèrement différents",
+    "Intégrer un élément de social proof chiffré dans le corps : '12 000+ propriétaires' ou 'noté 4.8/5 sur X avis vérifiés'",
+    "Renforcer l'urgence dans la section CTA : date limite explicite ou nombre d'unités restantes (ex. '147 kits disponibles à ce prix')",
+    "Ajouter un paragraphe de future pacing de 4 lignes après la section offre, projetant le lecteur dans sa vie 30 jours après l'achat",
+    "Découper les paragraphes de 6+ lignes dans le corps en 2 blocs séparés pour améliorer l'aération visuelle",
+    "Reformuler la section 'Here's what you get' en restant dans la voix de Tom avec une liste à puces pour le kit"
+  ],
+  "version": 1
+}

@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "created_at": "2026-03-29T20:55:30.340713",
+    "product_url": "https://seesepro.com/en-us/products/seese-pro-v9",
+    "confidence_score": 0.62
+  },
+  "product_summary": {
+    "name": "Seese Pro™ Ultra-Light, Ultra-Powerful Blower",
+    "one_liner": "Un souffleur sans fil d'à peine 950g qui remplace votre vieux souffleur à essence, votre chiffon de séchage et votre grattoir à neige — avec une seule main et zéro douleur dans le dos",
+    "category": "Outil de nettoyage extérieur/intérieur sans fil",
+    "price_point": "milieu de gamme"
+  },
+  "avatar_profile": {
+    "who": "Homme ou femme de 55 ans et plus, propriétaire de maison avec terrasse, allée ou garage, qui veut encore s'occuper de chez lui sans dépendre des autres. A probablement déjà un vieux souffleur lourd ou passe du temps à râteler — et en souffre physiquement.",
+    "main_problem": "Les outils classiques sont trop lourds, trop contraignants, trop douloureux — ce qui force à demander de l'aide pour des tâches qu'on devrait pouvoir gérer seul",
+    "desired_outcome": "Rester autonome et indépendant chez soi, entretenir sa maison sans effort ni douleur — avec la fierté de tout gérer seul, même après 60 ans",
+    "emotional_state_before": "Découragé par l'effort physique, frustré par des outils encombrants, parfois honteux de devoir demander de l'aide pour de petites tâches du quotidien",
+    "emotional_state_after": "Soulagé, fier, autonome — capable de faire en 5 minutes ce qui prenait une heure d'effort physique"
+  },
+  "copy_ammunition": {
+    "primary_angle": {
+      "angle_name": "L'autonomie retrouvée après 60 ans",
+      "why": "Pour un senior 55+, la peur profonde n'est pas 'mon dos fait mal' — c'est 'je perds le contrôle de ma maison' et 'je dois demander de l'aide'. L'angle autonomie touche l'identité : rester capable, indépendant, actif. Il est plus fort que l'angle confort ou performance parce qu'il résonne avec la dignité. La légèreté extrême du produit (950g) + l'usage une main + la simplicité radicale (pas de gaz, pas d'entretien, pas de câble) répondent exactement à cette peur identitaire.",
+      "hook_template": "À [âge], j'ai arrêté de demander à mes enfants de venir râteler — voici comment je fais tout seul en 5 minutes"
+    },
+    "secondary_angles": [
+      {
+        "angle_name": "Le dos libéré",
+        "hook_template": "Le souffleur que votre dos attendait depuis des années"
+      },
+      {
+        "angle_name": "4 outils remplacés par 1 seul",
+        "hook_template": "J'ai jeté mon souffleur à essence, mon chiffon de séchage et mon grattoir à neige — un seul appareil fait tout"
+      },
+      {
+        "angle_name": "La puissance pro sans le prix pro",
+        "hook_template": "Les souffleurs à 300€ font pareil — mais Seese Pro pèse 950g et coûte moitié moins"
+      }
+    ],
+    "hooks": [
+      "À 65 ans, j'entretiens seul ma terrasse, mon allée et mon garage — sans forcer, sans douleur, en 5 minutes",
+      "Plus léger qu'un sac de sucre. Plus puissant que votre vieux souffleur à essence.",
+      "Fini les heures de ratissage. Fini le dos cassé. Fini les outils encombrants qui traînent dans le garage.",
+      "Le souffleur qu'on peut utiliser d'une seule main — et qui souffle à plus de 200 km/h",
+      "J'avais un gros souffleur à essence. Je ne l'ai pas ressorti depuis que j'ai le Seese Pro.",
+      "Comment nettoyer 40m² de terrasse en moins de 5 minutes — sans effort et sans douleur",
+      "Sécher ma voiture sans rayures, dégager la neige, souffler les feuilles : un seul appareil toute l'année",
+      "55% de réduction aujourd'hui — livraison gratuite depuis les entrepôts en France"
+    ],
+    "key_benefits_ranked": [
+      "Usage d'une seule main, sans douleur dans le dos — conçu spécifiquement pour les seniors et toute personne qui ne veut pas forcer",
+      "Seulement 950g — plus léger qu'un sac de sucre, zéro fatigue musculaire même après 40 minutes d'utilisation",
+      "Remplace 4+ outils encombrants : souffleur de garage, dépoussiéreur, chiffon de séchage, grattoir à glace — fini le garage surchargé",
+      "Zéro entretien, zéro essence, zéro câble à brancher — prêt à l'emploi en 2 secondes, rangé en 2 secondes",
+      "40 minutes d'autonomie par charge — suffisant pour nettoyer toute une propriété en une session",
+      "200+ MPH / 30 000 RPM — puissance d'un souffleur professionnel à 300€+ dans un format compact",
+      "Outil 4 saisons : feuilles en automne, neige en hiver, poussière en été, voiture toute l'année",
+      "Garantie à vie + satisfait ou remboursé 30 jours — aucun risque à l'achat"
+    ],
+    "proof_elements": [
+      "200+ MPH de vitesse d'air et 30 000+ RPM mesurés — spécifications qui rivalisent avec les souffleurs pros à 300€+",
+      "Cas d'usage documenté : terrasse de 40m² nettoyée en moins de 5 minutes vs 25 min au balai",
+      "Cas d'usage documenté : séchage voiture en 3 minutes vs 15 min+ avec un chiffon, sans rayures",
+      "Cas d'usage documenté : dégivrage pare-brise en moins de 2 minutes, sans gratter",
+      "Moteur brushless sans balais — même technologie que les drones et les Tesla, conçu pour durer des années sans entretien",
+      "Poids certifié 950g / 2.1 lbs — revendiqué comme le plus léger dans sa catégorie de puissance",
+      "Garantie à vie avec remplacement — signal fort de confiance dans la durabilité produit",
+      "Marque déposée et spécifications turbine propriétaires — produit protégé intellectuellement",
+      "MANQUANT : témoignages clients vérifiés, nombre total de clients, avis indépendants, études tierces"
+    ],
+    "objection_handlers": [
+      {
+        "objection": "C'est encore un gadget qui ne va pas durer",
+        "response": "Moteur brushless sans balais (même technologie que les drones et les Tesla), plastique ABS haute durabilité, et garantie à vie avec remplacement. Pas un gadget — un outil conçu pour durer des années sans aucun entretien."
+      },
+      {
+        "objection": "J'ai déjà un souffleur, pourquoi en acheter un autre",
+        "response": "Votre ancien souffleur pèse probablement 3 à 5 kg et prend de la place. Seese Pro pèse 950g, se range dans une mallette compacte, et remplace aussi votre chiffon de séchage et votre grattoir à neige. La plupart des gens ne ressortent plus leur ancien souffleur après."
+      },
+      {
+        "objection": "119,99€ c'est trop cher pour un souffleur portatif",
+        "response": "Revient à 0,33€ par jour sur un an — moins qu'un café. Seese Pro remplace 4 outils à acheter séparément. Et aujourd'hui c'est 55% de réduction sur le prix normal de 249,99€."
+      },
+      {
+        "objection": "Est-ce qu'il est vraiment assez puissant pour de vrais travaux ?",
+        "response": "200+ MPH de vitesse d'air — c'est la puissance des souffleurs pros à 300€+. En pratique : une terrasse de 40m² nettoyée en moins de 5 minutes là où un balai prend 25 minutes."
+      },
+      {
+        "objection": "Je ne suis pas sûr de savoir l'utiliser correctement",
+        "response": "Aucune expérience requise. Une seule main suffit. Pas d'essence, pas de câble, pas de réglage. Vous l'allumez, vous soufflez — c'est tout. Conçu pour être utilisé dès la première minute."
+      },
+      {
+        "objection": "Et si ça ne me convient pas ?",
+        "response": "Satisfait ou remboursé sous 30 jours, sans conditions. Et garantie à vie avec remplacement si jamais il y a un problème. Vous ne prenez aucun risque."
+      }
+    ],
+    "urgency_elements": [
+      "Promotion 55% active — prix normal 249,99€, aujourd'hui 119,99€ (durée non communiquée, traiter comme limitée dans le temps)",
+      "3 cadeaux gratuits d'une valeur de 110€ inclus dans l'offre actuelle",
+      "MANQUANT : données de stock réel, historique de rupture, date de fin de promotion confirmée — ne pas inventer"
+    ],
+    "cta_options": [
+      "Essayez sans risque pendant 30 jours — satisfait ou remboursé",
+      "Profitez des 55% de réduction aujourd'hui — livraison gratuite depuis la France",
+      "Commandez maintenant et recevez 3 cadeaux gratuits (valeur 110€)"
+    ]
+  },
+  "visual_notes": {
+    "product_description": "MANQUANT — Description image (Agent 3) non fournie. Données texte disponibles : souffleur portatif compact, design moderne, probablement coloris sombre (noir/gris) avec accents de couleur vive, poignée ergonomique pistolet, buse orientable, batterie 21V amovible, mallette de rangement rigide compacte incluse. À confirmer avec visuels réels.",
+    "suggested_scenes": [
+      "Hero : souffleur tenu d'une seule main par une personne de 60+ ans, sourire naturel et détendu, terrasse propre en arrière-plan — lumière dorée d'automne",
+      "Section problème : personne âgée peinant avec un vieux râteau ou un lourd souffleur à essence, expression de fatigue physique visible",
+      "Section solution : même profil de personne utilisant Seese Pro d'une main, posture détendue, espace nettoyé en quelques secondes",
+      "Comparaison de poids : souffleur lourd traditionnel à gauche vs Seese Pro à droite, posé à côté d'un sac de sucre 1kg pour visualiser le poids",
+      "Cas d'usage voiture : souffleur utilisé pour sécher une carrosserie propre, sans contact, aspect soigné",
+      "Cas d'usage hiver : léger souffle de neige sur un pare-brise, facilité d'usage par temps froid",
+      "Unboxing : mallette ouverte avec contenu complet visible — souffleur, batterie, chargeur, bouchons d'oreilles, mallette",
+      "Lifestyle rangement : Seese Pro dans sa mallette posée dans un garage bien organisé, sentiment de contrôle et d'ordre"
+    ],
+    "mood": "Chaleureux, rassurant, actif — surtout pas médical ni associé à la fragilité. Montrer la compétence et l'autonomie. Tons chauds automne/été, extérieurs résidentiels, lumières naturelles. L'avatar doit avoir l'air capable et satisfait, pas assisté."
+  }
+}

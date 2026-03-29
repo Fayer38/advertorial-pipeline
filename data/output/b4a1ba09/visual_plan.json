@@ -1,0 +1,58 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "A silver-haired man in his mid-60s, fit but visibly pausing, sits on an overturned bucket or a low step inside a tidy garage. A large, dusty gas leaf blower rests on the concrete floor beside him. He looks down at it, one forearm on his knee — not defeated, just quietly reconsidering. Warm morning light floods in from the open garage door behind him, casting a long shadow. The garage is organized and personal, not staged — tools on pegboard, a worn workbench visible in the background.",
+      "mood": "Réflexif, authentique, intime. Lumière dorée du matin. Ni dramatique ni mélodramatique — juste un moment de vérité silencieux que l'avatar reconnaîtra immédiatement.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "before_after",
+      "description": "Split screen horizontal. Gauche : gros plan sur un souffleur thermique imposant posé seul sur un sol en béton de garage — poussiéreux, encombrant, les tuyaux enchevêtrés, symbole de lourdeur. Droite : le même homme cheveux gris, debout sur une allée propre, tenant le Seese Pro d'une seule main détendue le long du corps. Il sourit légèrement, naturellement. Arbres d'automne flamboyants en arrière-plan. Posture droite, décontractée — aucun effort apparent.",
+      "mood": "Contraste net mais sans caricature. Côté gauche : tons froids, ombres, désordre. Côté droit : lumière chaude, espace dégagé, confiance tranquille.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Homme actif de 60-65 ans debout sur une terrasse en pierres naturelles, tenant le Seese Pro sans effort dans une main, bras relâché le long du corps. Le sol est impeccablement propre. À la lisière de la terrasse, un tas de feuilles mortes humides — le résultat du travail accompli. Lumière matinale dorée, légère brume d'automne. La posture est calme et satisfaite — un artisan contemplant un travail bien fait. Vêtements pratiques mais soignés : flanelle, pantalon cargo propre.",
+      "mood": "Fierté tranquille, autonomie, satisfaction domestique. Chaleureux et naturel — jamais publicitaire. La scène ressemble à une photo prise par un ami, pas par un studio.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "product_shot",
+      "description": "Gros plan serré sur deux mains d'homme — peaux âgées, veines visibles, callosités d'un artisan — tenant le Seese Pro avec douceur, presque délicatesse. Le souffleur repose dans les paumes ouvertes comme quelque chose de précieux. Arrière-plan : jardin d'automne en bokeh doux — oranges et roux flous. Prise de vue légèrement plongeante pour montrer les mains et la compacité du produit.",
+      "mood": "Intime, personnel, artisanal. La chaleur humaine prime sur le côté produit. Ces mains racontent trente ans de travail — et ce qu'elles tiennent est une solution qu'elles ont elles-mêmes fabriquée.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product_shot",
+      "description": "Flat lay soigné sur surface neutre légèrement texturée (bois clair ou lin naturel). Disposition aérée et logique : le Seese Pro en position centrale, la batterie 21V et le chargeur rapide à sa droite, la sacoche de transport ouverte en bas — révélant que tout s'y range parfaitement. Deux petits badges superposés dans le coin supérieur droit : '55% OFF — $119.99 today' et 'Lifetime Warranty Included'. Aucun élément superflu. Lumière naturelle douce, légères ombres portées pour la profondeur.",
+      "mood": "Clair, rassurant, honnête. Pas de mise en scène agressive. L'image dit : voilà exactement ce que vous recevez, rien de caché.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Le Seese Pro tenu dans une seule main, à hauteur de hanche, bras légèrement tendu vers le spectateur — angle proche d'une première personne suggérant 'imaginez le tenir'. Arrière-plan : jardin d'automne avec feuillage doré flou, lumière chaude de fin d'après-midi. Deux badges superposés : '55% OFF TODAY — $119.99' en haut, '30-Day Risk-Free Trial' en bas. La main qui tient le produit est celle d'un homme mature — naturelle, pas de mannequin. L'image est chaude, directe, invitante.",
+      "mood": "Chaleureux, engageant, confiant sans être agressif. L'appel à l'action est visuel autant que textuel — on veut tenir ce produit.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}

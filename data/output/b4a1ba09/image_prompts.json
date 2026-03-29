@@ -1,0 +1,82 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "silver-haired fit man mid-60s sitting on overturned bucket inside organized garage, forearm resting on knee, looking down pensively at large dusty gas-powered leaf blower on concrete floor beside him, quiet moment of reflection, warm golden morning light flooding through open garage door casting long shadows across concrete floor, pegboard with hand tools on back wall, worn wooden workbench visible in background, personal lived-in space not staged, authentic candid intimate moment, photorealistic, cinematic warm lighting, professional photography, 8k hyperdetailed --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, staged, stock photo look, dramatic expression, crying, extra limbs, extra fingers, mutated hands, bad anatomy, artificial lighting, studio backdrop",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "horizontal split screen composition, left side cool desaturated tones: heavy imposing gas-powered leaf blower alone on gray garage concrete floor, dusty surface, tangled rubber hoses, dark oppressive shadows, cluttered background, right side warm golden tones: fit silver-haired man mid-60s standing on clean suburban driveway, holding compact cordless electric leaf blower single hand relaxed along body, slight genuine natural smile, vibrant autumn trees orange and red foliage background, upright confident relaxed posture, golden afternoon light, before and after visual concept, photorealistic, cinematic lighting, professional photography --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, caricature, exaggerated expressions, extra limbs, extra fingers, mutated hands, bad anatomy, unnatural posture, comic style",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "active fit man 60-65 years old standing on natural stone terrace, holding compact lightweight cordless electric leaf blower effortlessly in one hand arm fully relaxed at side, immaculately clean stone paving, neat pile of wet autumn leaves gathered at terrace edge, soft golden morning light, delicate autumn mist atmosphere, calm satisfied expression of craftsman contemplating finished work, practical clothing flannel shirt clean cargo pants, candid natural authentic feel, warm intimate photography, photorealistic, professional outdoor photography, shallow depth of field --ar 4:5 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, staged advertising look, forced smile, extra limbs, extra fingers, mutated hands, bad anatomy, studio lighting, unnatural pose",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "extreme close-up two aged craftsman hands, visible veins, weathered calloused skin, gently cradling compact cordless electric leaf blower in open upturned palms, held with delicacy like something precious, slightly overhead angle emphasizing hands and product compactness, soft bokeh autumn garden background, blurred orange rust amber foliage, warm intimate natural light, emotional connection between hands and tool, photorealistic macro photography, sharp focus on hands and product, beautiful shallow depth of field --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, young hands, clean manicured hands, extra fingers, mutated hands, bad anatomy, harsh lighting, clinical background",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "professional flat lay product photography, light oak wood grain surface subtle texture, compact cordless electric leaf blower centered as hero product, 21V lithium battery pack and rapid charger arranged neatly to the right, open zippered canvas carrying bag at bottom revealing all components fitting perfectly inside, airy logical composition with breathing room, two clean badge overlays upper right corner: first badge reads '55% OFF — $119.99 today', second badge reads 'Lifetime Warranty Included', soft diffused natural window light, gentle precise drop shadows adding depth, minimalist honest commercial product photography, hyperdetailed, 8k --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, extra watermarks, unauthorized text, cluttered props, dirty surface, harsh shadows, overexposed, artificial studio look, missing components, disorganized layout",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "compact cordless electric leaf blower held at hip height in single mature man's hand, arm slightly extended toward camera, near first-person POV inviting perspective, weathered natural hand not a model hand, creased skin visible knuckles, blurred bokeh golden autumn garden background, warm late afternoon sunlight flare, inviting and direct composition, two clean badge overlays: '55% OFF TODAY — $119.99' upper area, '30-Day Risk-Free Trial' lower area, warm confident intimate mood, photorealistic, shallow depth of field, professional lifestyle photography --ar 4:5 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, unauthorized text, young hand, manicured hand, extra fingers, mutated hands, bad anatomy, aggressive sales aesthetic, cold lighting, stock photo look, full body shot",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

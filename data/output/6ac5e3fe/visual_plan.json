@@ -1,0 +1,58 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Homme ou femme de 65-70 ans, souriant naturellement, tenant le Seese Pro d'une seule main sur une terrasse propre en automne. Posture droite et détendue, vêtements casual (pull, pantalon confortable). Feuilles dorées légèrement visibles au sol. Lumière dorée de fin de matinée. Regard légèrement vers l'objectif, expression de satisfaction tranquille — pas exagérée.",
+      "mood": "Chaleureux, authentique, autonome. Tons dorés et ambrés. Aucune connotation médicale ou de fragilité.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "product_shot",
+      "description": "Vue en légère plongée d'un espace de stockage ou entrepôt simplifié : plusieurs boîtes Seese Pro™ empilées proprement sur une palette ou une étagère métallique. Une étiquette ou badge numérique style '347 unités restantes' superposé en bas de l'image. Ambiance sobre, lumière d'entrepôt froide, composition épurée — l'urgence est visuelle, pas criarde.",
+      "mood": "Direct, factuel, léger sentiment d'urgence. Pas alarmiste.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "product_shot",
+      "description": "Mallette rigide ouverte posée sur un établi en bois propre dans un garage lumineux. À l'intérieur : le Seese Pro™ bien calé, la batterie 21V, les protège-oreilles, et le câble de charge. Légère lumière naturelle depuis une fenêtre latérale. Composition soignée de type flat lay 3D — chaque accessoire bien visible, aucun encombrement. Fond garage chaleureux (outils rangés derrière, pas de désordre).",
+      "mood": "Organisé, premium, fiable. Tons neutres chauds (bois, métal mat). Impression de qualité sans ostentation.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Collage carré de 4 photos (2x2) montrant des seniors de 63-71 ans utilisant le Seese Pro™ dans des contextes différents : (1) homme soufflant les feuilles sur une allée pavée, (2) femme nettoyant sa terrasse avec vista jardin, (3) homme séchant sa voiture après lavage dans une allée résidentielle, (4) femme dégageant légèrement la neige d'un seuil de porte. Tous sourient, posture détendue, aucun signe d'effort. Lumières naturelles variées mais cohérentes en tonalité chaude.",
+      "mood": "Actif, compétent, joyeux. Diversité de situations mais cohérence de style — aucune photo stock artificielle.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product_shot",
+      "description": "Seese Pro™ posé sur fond blanc épuré, légèrement incliné à 15° pour donner du dynamisme. Badge rouge '55% OFF' en haut à droite. À gauche, trois petites boîtes-cadeaux stylisées représentant les 3 cadeaux gratuits. En bas, icône camion avec 'Livraison gratuite'. Composition publicitaire claire, tout lisible d'un coup d'œil. Style e-commerce premium mais accessible.",
+      "mood": "Clair, promotionnel, rassurant. Blanc dominant avec accents rouges et dorés sobres.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Senior de 65+ ans (homme ou femme) debout sur une terrasse impeccablement propre, tenant le Seese Pro™ nonchalamment le long du corps d'une seule main. Regard direct caméra, sourire calme et confiant — l'expression de quelqu'un qui vient d'accomplir quelque chose sans effort. Lumière dorée d'heure dorée (fin d'après-midi). Terrasse nette, jardin résidentiel en arrière-plan légèrement flou. Posture fière, jamais assistée.",
+      "mood": "Confiant, accompli, indépendant. Lumière chaude cuivrée. Composition portrait avec ouverture large du décor résidentiel.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}

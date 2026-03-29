@@ -351,7 +351,9 @@ Rappel : cet advertorial doit raconter EXACTEMENT l'histoire décrite dans le br
                 "Rédige maintenant l'advertorial complet. "
                 "Utilise l'angle principal et les hooks fournis. "
                 "Chaque section doit avoir un visual_placeholder décrivant l'image souhaitée. "
-                "L'advertorial doit faire entre 800 et 1500 mots."
+                "L'advertorial doit faire MINIMUM 1200 mots et idéalement 1400-1800 mots. "
+                "C'est une EXIGENCE — même pour les templates courts (urgency-sale, listicle), "
+                "tu dois atteindre au moins 1200 mots en développant chaque section suffisamment."
             )
         if lang_name:
             parts.append(f"\n⚠️ RAPPEL : TOUT le contenu (headline, sections, CTA) DOIT être en {lang_name}.")
