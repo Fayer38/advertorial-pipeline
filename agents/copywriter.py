@@ -126,11 +126,23 @@ class CopywriterAgent(BaseAgent):
         ammo = brief.get("copy_ammunition", {})
         primary_angle = ammo.get("primary_angle", {})
 
+        # Pass additional brief for brief-aware reference selection
+        cfg = brief.get("_config", {})
+        additional_brief = cfg.get("brief", "")
+        config_angle = cfg.get("angle", "")
+        
+        # Combine angle from brief + config override
+        angle_query = primary_angle.get("angle_name", "")
+        if config_angle and config_angle != angle_query:
+            angle_query = f"{config_angle} {angle_query}"
+
         examples = self.reference_selector.get_reference_examples_for_prompt(
             product_category=summary.get("category", ""),
             product_name=summary.get("name", ""),
             problem_solved=avatar.get("main_problem", ""),
-            angle=primary_angle.get("angle_name", ""),
+            angle=angle_query,
+            target_audience=avatar.get("who", ""),
+            additional_brief=additional_brief,
             max_examples=3,
             max_chars_per_example=6000,
         )
