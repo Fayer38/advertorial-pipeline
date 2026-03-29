@@ -392,6 +392,32 @@ async def get_results(plid: str):
             results["html_file"] = str(f)
     return {"pipeline_id": plid, "status": pipelines[plid]["status"], "config": pipelines[plid]["config"], "results": results}
 
+@app.post("/pipeline/{plid}/retry")
+async def retry_pipeline(plid: str, bg: BackgroundTasks):
+    """Retry a failed pipeline from its last checkpoint."""
+    if plid not in pipelines: raise HTTPException(404, "Pipeline not found")
+    p = pipelines[plid]
+    if p["status"] not in ("failed",): raise HTTPException(400, "Only failed pipelines can be retried")
+    if p["product_id"] not in products: raise HTTPException(404, "Product not found")
+    # Reset status
+    p["status"] = "pending"; p["error"] = ""; p["completed_at"] = ""
+    _save_pipeline_state(plid)
+    _log_pipeline(plid, "info", f"RETRY triggered — resuming from checkpoint")
+    pipeline_events[plid] = asyncio.Queue()
+    # Build a fake request with the original config
+    cfg = p.get("config", {})
+    class _FakeReq:
+        product_id = p["product_id"]
+        angle = cfg.get("angle", "testimonial")
+        structure = cfg.get("structure", "pas")
+        persona = cfg.get("persona", "")
+        tone = cfg.get("tone", "conversational")
+        language = cfg.get("language", "en")
+        brief = cfg.get("brief", "")
+        template = cfg.get("template", "editorial")
+    bg.add_task(_run_pipeline_bg, plid, _FakeReq())
+    return {"pipeline_id": plid, "status": "retrying", "message": "Resuming from last checkpoint"}
+
 @app.put("/pipeline/{plid}/update")
 async def update_adv(plid: str, req: AdvUpdateReq):
     if plid not in pipelines: raise HTTPException(404)
@@ -1687,36 +1713,132 @@ async def _analyze_product_bg(pid, url):
         if pid in products: products[pid]["status"] = "error"
 
 async def _run_pipeline_bg(plid, req):
+    """Run pipeline with checkpoint resume — skips phases whose output already exists."""
     from main import AdvertorialPipeline
-    s = pipelines[plid]; q = pipeline_events[plid]; out = f"data/output/{plid}"
+    from agents.html_publisher import HTMLPublisherAgent
+    from agents.qa_checker import QACheckerAgent
+    from agents.copywriter import CopywriterAgent
+    from agents.visual_strategist import VisualStrategistAgent
+    from agents.image_prompter import ImagePrompterAgent
+    from agents.video_prompter import VideoPrompterAgent
+    import glob as _glob
+
+    s = pipelines[plid]; q = pipeline_events[plid]; out_dir = Path(f"data/output/{plid}")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out = str(out_dir)
+
     _log_pipeline(plid, "info", f"Pipeline started — product={req.product_id} template={req.template} angle={req.angle} lang={req.language}")
     try:
         s["status"] = "running"
-        await _emit(q, plid, "running", "Phase 1", "Starting", 0.0)
         product = products.get(req.product_id)
         if not product: raise ValueError(f"Product {req.product_id} not found")
-        pipeline = AdvertorialPipeline(output_dir=out)
-        _patch(pipeline, q, plid)
         run_config = {"angle":req.angle,"structure":req.structure,"persona":req.persona,"tone":req.tone,"language":req.language,"brief":req.brief,"template":req.template}
-        result = await pipeline.run(
+
+        # ── Helper: find existing checkpoint files ──
+        def _find(pattern): 
+            matches = list(out_dir.glob(pattern))
+            return matches[0] if matches else None
+
+        # ── PHASE 1-2: Brief ──
+        brief_file = _find("structured_brief*.json")
+        if brief_file:
+            structured_brief = json.loads(brief_file.read_text())
+            _log_pipeline(plid, "info", f"CHECKPOINT: Skipping Phase 1-2 (brief exists: {brief_file.name})")
+            await _emit(q, plid, "running", "Phase 2 — Structuring", "checkpoint", 0.3)
+        else:
+            await _emit(q, plid, "running", "Phase 1", "Starting", 0.0)
+            pipeline = AdvertorialPipeline(output_dir=out)
+            _patch(pipeline, q, plid)
+            # Run phases 1-2 only via the pipeline's internal flow
+            # We need to run the full pipeline but we'll add checkpoints for future
+            result = await pipeline.run(
+                product_url=product.get("url", ""),
+                product_data=product.get("data") if product.get("data") else None,
+                config=run_config,
+            )
+            # Full pipeline completed
+            s["status"] = "completed"; s["completed_at"] = datetime.utcnow().isoformat(); s["progress"] = 1.0
+            _thumbnail = _extract_thumb(plid, result)
+            s["results"] = {"headline": result.get("slug",""), "qa_score": 0, "html_file": result.get("html_file",""), "thumbnail": _thumbnail}
+            _log_pipeline(plid, "info", f"Pipeline completed — html={result.get('html_file','')} words={result.get('word_count',0)}")
+            await _emit(q, plid, "completed", "Done", "", 1.0)
+            return
+
+        # ── Inject config into brief ──
+        lang = run_config.get("language", "en")
+        lang_names = {"en": "English", "fr": "Français", "es": "Español", "de": "Deutsch"}
+        structured_brief["_config"] = {
+            "language": lang, "language_name": lang_names.get(lang, lang),
+            "angle": run_config.get("angle","testimonial"), "structure": run_config.get("structure","pas"),
+            "tone": run_config.get("tone","conversational"), "persona": run_config.get("persona",""),
+            "brief": run_config.get("brief",""), "template": run_config.get("template","editorial"),
+        }
+
+        # ── PHASE 3: Copywriting ──
+        draft_file = _find("advertorial_draft*.json")
+        if draft_file:
+            advertorial_draft = json.loads(draft_file.read_text())
+            _log_pipeline(plid, "info", f"CHECKPOINT: Skipping Phase 3 (draft exists: {draft_file.name})")
+            await _emit(q, plid, "running", "Phase 3 — Writing", "checkpoint", 0.5)
+        else:
+            await _emit(q, plid, "running", "Phase 3 — Writing", "copywriter", 0.5)
+            cw = CopywriterAgent(output_dir=out)
+            advertorial_draft = await cw.run(structured_brief=structured_brief)
+            _log_pipeline(plid, "info", f"Phase 3 completed — draft generated")
+
+        # ── PHASE 4: Visuals ──
+        img_file = _find("image_prompts.json")
+        vid_file = _find("video_prompts.json")
+        if img_file and vid_file:
+            image_prompts = json.loads(img_file.read_text())
+            video_prompts = json.loads(vid_file.read_text())
+            _log_pipeline(plid, "info", f"CHECKPOINT: Skipping Phase 4 (prompts exist)")
+            await _emit(q, plid, "running", "Phase 4 — Visuals", "checkpoint", 0.7)
+        else:
+            await _emit(q, plid, "running", "Phase 4 — Visuals", "visual_strategist", 0.6)
+            vs = VisualStrategistAgent(output_dir=out)
+            visual_plan = await vs.run(advertorial_draft=advertorial_draft, image_description=None, structured_brief=structured_brief)
+            await _emit(q, plid, "running", "Phase 4 — Visuals", "image_prompter", 0.65)
+            ip = ImagePrompterAgent(output_dir=out)
+            vp = VideoPrompterAgent(output_dir=out)
+            image_prompts, video_prompts = await asyncio.gather(
+                ip.run(visual_plan=visual_plan, image_description=None, platform="kie"),
+                vp.run(visual_plan=visual_plan, image_description=None, platform="kie"),
+            )
+            _log_pipeline(plid, "info", f"Phase 4 completed — image + video prompts generated")
+
+        # ── PHASE 5: QA ──
+        qa_file = _find("qa_report*.json")
+        if qa_file:
+            _log_pipeline(plid, "info", f"CHECKPOINT: Skipping Phase 5 (QA report exists)")
+            advertorial_final = advertorial_draft
+            await _emit(q, plid, "running", "Phase 5 — QA", "checkpoint", 0.85)
+        else:
+            await _emit(q, plid, "running", "Phase 5 — QA", "qa_checker", 0.85)
+            qa = QACheckerAgent(output_dir=out)
+            cw2 = CopywriterAgent(output_dir=out)
+            advertorial_final, qa_report = await qa.run_with_iteration(
+                advertorial_draft=advertorial_draft, structured_brief=structured_brief, copywriter_agent=cw2,
+            )
+            _log_pipeline(plid, "info", f"Phase 5 completed — QA done")
+
+        # ── PHASE 6: HTML Publishing ──
+        await _emit(q, plid, "running", "Phase 6 — Publishing", "html_publisher", 0.95)
+        pub = HTMLPublisherAgent(output_dir=out)
+        product_name = product.get("name", "")
+        result = await pub.run(
+            advertorial_draft=advertorial_final,
+            image_prompts=image_prompts if isinstance(image_prompts, dict) else None,
+            video_prompts=video_prompts if isinstance(video_prompts, dict) else None,
             product_url=product.get("url", ""),
-            product_data=product.get("data") if product.get("data") else None,
-            config=run_config,
+            product_name=product_name,
+            lang=lang,
+            template=run_config.get("template", "editorial"),
         )
+        _log_pipeline(plid, "info", f"Phase 6 completed — HTML published")
+
         s["status"] = "completed"; s["completed_at"] = datetime.utcnow().isoformat(); s["progress"] = 1.0
-        # Extract thumbnail from generated HTML
-        _thumbnail = ""
-        try:
-            _html_fname = result.get("html_file", "")
-            if _html_fname:
-                _html_path = Path(f"data/output/{plid}") / Path(_html_fname).name
-                if _html_path.exists():
-                    _html_content = _html_path.read_text()
-                    _m = re.search(r'<img[^>]+src=["\']([^"\']+)', _html_content)
-                    if _m:
-                        _thumbnail = _m.group(1)
-        except Exception:
-            pass
+        _thumbnail = _extract_thumb(plid, result)
         s["results"] = {"headline": result.get("slug",""), "qa_score": 0, "html_file": result.get("html_file",""), "thumbnail": _thumbnail}
         _log_pipeline(plid, "info", f"Pipeline completed — html={result.get('html_file','')} words={result.get('word_count',0)}")
         await _emit(q, plid, "completed", "Done", "", 1.0)
@@ -1725,6 +1847,18 @@ async def _run_pipeline_bg(plid, req):
         _log_pipeline(plid, "error", f"Pipeline FAILED — {str(e)[:500]}")
         logger.error(f"Pipeline {plid} failed: {e}", exc_info=True)
         await _emit(q, plid, "failed", "Error", str(e), s["progress"])
+
+def _extract_thumb(plid, result):
+    _thumbnail = ""
+    try:
+        _html_fname = result.get("html_file", "")
+        if _html_fname:
+            _html_path = Path(f"data/output/{plid}") / Path(_html_fname).name
+            if _html_path.exists():
+                _thumbnail = _extract_thumbnail(_html_path)
+    except Exception:
+        pass
+    return _thumbnail
 
 async def _run_agent_bg(plid, name, data):
     try:
