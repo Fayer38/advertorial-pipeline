@@ -413,8 +413,11 @@ async def save_html(plid: str, req: SaveHtmlReq):
     clean = re.sub(r'\s+data-img-idx="[^"]*"', '', clean)
     clean = re.sub(r'\s+data-media-idx="[^"]*"', '', clean)
     clean = re.sub(r'\s+contenteditable="[^"]*"', '', clean)
-    # Also strip the edit toolbar HTML
+    # Also strip the edit toolbar HTML and image overlays
     clean = re.sub(r'<div id="edit-toolbar".*?</div>', '', clean, flags=re.DOTALL)
+    clean = re.sub(r'<div class="img-overlay">.*?</div>', '', clean, flags=re.DOTALL)
+    # Unwrap .img-wrap divs (keep content)
+    clean = re.sub(r'<div class="img-wrap">(.*?)</div>', r'\1', clean, flags=re.DOTALL)
     # Ensure header logo is present
     clean = _inject_header_logo(clean)
     htmls[0].write_text(clean, encoding="utf-8")
@@ -433,11 +436,33 @@ EDIT_SCRIPT = """
     [data-editable] { transition: outline .15s; cursor: pointer; }
     [data-editable]:hover { outline: 1px dashed rgba(242,103,34,0.4) !important; outline-offset: 2px; }
     [data-editable][contenteditable="true"] { outline: 2px solid #f26722 !important; outline-offset: 3px; cursor: text; }
-    img[data-img-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
-    .placeholder[data-media-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
+    img[data-img-idx] { position: relative; }
     .placeholder[data-media-idx] { position: relative; }
     .placeholder[data-media-idx]:hover::after { content: '📷 Click to replace'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #f26722; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-style: normal; font-weight: 700; z-index: 9999; }
-    .sb-img[data-media-idx]:hover { outline: 2px dashed #f26722 !important; outline-offset: 3px; cursor: pointer; }
+
+    /* Image hover overlay */
+    .img-overlay {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,.65); display: flex; align-items: center; justify-content: center;
+      gap: 6px; z-index: 9998; opacity: 0; transition: opacity .15s; pointer-events: none;
+      border-radius: 4px; flex-wrap: wrap; padding: 8px;
+    }
+    .img-wrap:hover .img-overlay { opacity: 1; pointer-events: auto; }
+    .img-wrap { position: relative; display: inline-block; }
+    .img-overlay button {
+      background: #1a1a1a; border: 1px solid #444; color: #eee; border-radius: 6px;
+      padding: 5px 10px; font-size: 11px; cursor: pointer; font-weight: 600;
+      display: flex; align-items: center; gap: 4px; white-space: nowrap;
+      transition: all .15s; font-family: system-ui, sans-serif;
+    }
+    .img-overlay button:hover { background: #f26722; border-color: #f26722; color: #fff; }
+    .img-overlay button.active { background: #22c55e; border-color: #22c55e; color: #fff; }
+    .img-overlay button.inactive { background: #333; border-color: #555; color: #888; opacity: .7; }
+
+    /* Device visibility classes */
+    @media (min-width: 1025px) { .hide-desktop { display: none !important; } }
+    @media (min-width: 769px) and (max-width: 1024px) { .hide-tablet { display: none !important; } }
+    @media (max-width: 768px) { .hide-mobile { display: none !important; } }
 
     /* ── TOOLBAR ── */
     #edit-toolbar {
@@ -856,6 +881,7 @@ EDIT_SCRIPT = """
     document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
     var mi = 0;
     document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mi++); });
+    wrapImages();
   }
 
   // ── MARK ELEMENTS ──
@@ -864,6 +890,32 @@ EDIT_SCRIPT = """
   document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
   var mediaIdx = 0;
   document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mediaIdx++); });
+
+  // ── WRAP IMAGES WITH OVERLAY ──
+  function wrapImages() {
+    document.querySelectorAll('img[data-img-idx]').forEach(function(img) {
+      if (img.closest('.img-wrap') || img.closest('#adv-header-logo')) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'img-wrap';
+      img.parentNode.insertBefore(wrap, img);
+      wrap.appendChild(img);
+
+      var ov = document.createElement('div');
+      ov.className = 'img-overlay';
+
+      var hasDesktop = !img.classList.contains('hide-desktop');
+      var hasTablet = !img.classList.contains('hide-tablet');
+      var hasMobile = !img.classList.contains('hide-mobile');
+
+      ov.innerHTML =
+        '<button data-ov="replace" title="Replace image">🔄 Replace</button>' +
+        '<button data-ov="desktop" class="' + (hasDesktop ? 'active' : 'inactive') + '" title="Desktop">🖥 Desktop</button>' +
+        '<button data-ov="tablet" class="' + (hasTablet ? 'active' : 'inactive') + '" title="Tablet">📱 Tablet</button>' +
+        '<button data-ov="mobile" class="' + (hasMobile ? 'active' : 'inactive') + '" title="Mobile">📲 Mobile</button>';
+      wrap.appendChild(ov);
+    });
+  }
+  wrapImages();
 
   // ── EDIT LOGIC ──
   var activeEdit = null;
@@ -904,8 +956,45 @@ EDIT_SCRIPT = """
       updateToolbarState();
       return;
     }
+    // ── Image overlay button clicks ──
+    var ovBtn = e.target.closest('[data-ov]');
+    if (ovBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      var wrap = ovBtn.closest('.img-wrap');
+      var img = wrap ? wrap.querySelector('img[data-img-idx]') : null;
+      if (!img) return;
+      var action = ovBtn.getAttribute('data-ov');
+
+      if (action === 'replace') {
+        window.parent.postMessage({ type: 'edit-image', src: img.src, alt: img.alt || '', index: parseInt(img.getAttribute('data-img-idx')), kind: 'img' }, '*');
+        return;
+      }
+
+      // Toggle device visibility
+      var classMap = { desktop: 'hide-desktop', tablet: 'hide-tablet', mobile: 'hide-mobile' };
+      var cls = classMap[action];
+      if (!cls) return;
+
+      var isHidden = img.classList.contains(cls);
+      // Count how many devices are currently visible
+      var visCount = 3 - ['hide-desktop','hide-tablet','hide-mobile'].filter(function(c){ return img.classList.contains(c); }).length;
+
+      if (isHidden) {
+        // Show on this device
+        img.classList.remove(cls);
+        ovBtn.className = 'active';
+      } else if (visCount > 1) {
+        // Hide on this device (only if still visible on at least 1 other)
+        img.classList.add(cls);
+        ovBtn.className = 'inactive';
+      }
+      // else: can't hide — already only 1 device active
+      snapshotForUndo();
+      return;
+    }
     var img = e.target.closest('img[data-img-idx]');
-    if (img) {
+    if (img && !img.closest('.img-wrap')) {
       e.preventDefault();
       window.parent.postMessage({ type: 'edit-image', src: img.src, alt: img.alt || '', index: parseInt(img.getAttribute('data-img-idx')), kind: 'img' }, '*');
       return;
@@ -951,9 +1040,18 @@ EDIT_SCRIPT = """
       // Remove toolbar from DOM before capturing
       var tbEl = document.getElementById('edit-toolbar');
       if (tbEl) tbEl.remove();
+      // Unwrap images (remove .img-wrap + .img-overlay, keep img with classes)
+      document.querySelectorAll('.img-wrap').forEach(function(wrap) {
+        var ov = wrap.querySelector('.img-overlay');
+        if (ov) ov.remove();
+        var img = wrap.querySelector('img');
+        if (img) { wrap.parentNode.insertBefore(img, wrap); }
+        wrap.remove();
+      });
       window.parent.postMessage({ type: 'current-html', html: document.documentElement.outerHTML }, '*');
-      // Re-add toolbar
+      // Re-add toolbar + re-wrap images
       document.body.appendChild(tb);
+      reMarkElements();
     }
     if (e.data && e.data.type === 'update-image') {
       if (e.data.kind === 'placeholder') {
