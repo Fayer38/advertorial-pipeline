@@ -73,6 +73,7 @@ class PipelineStartReq(BaseModel):
     tone: str = "conversational"
     language: str = "en"
     brief: str = ""
+    template: str = "editorial"
 
 class AdvUpdateReq(BaseModel):
     headline: Optional[str] = None
@@ -263,7 +264,7 @@ async def start_pipeline(req: PipelineStartReq, bg: BackgroundTasks):
     if req.product_id not in products: raise HTTPException(404, "Product not found")
     product = products[req.product_id]
     plid = str(uuid.uuid4())[:8]
-    pipelines[plid] = {"id": plid, "status": "pending", "started_at": datetime.utcnow().isoformat(), "completed_at": "", "product_id": req.product_id, "product_url": product["url"], "product_name": product.get("name",""), "config": {"angle": req.angle, "structure": req.structure, "persona": req.persona, "tone": req.tone, "language": req.language, "brief": req.brief}, "current_phase": "", "current_agent": "", "progress": 0.0, "error": "", "results": {}}
+    pipelines[plid] = {"id": plid, "status": "pending", "started_at": datetime.utcnow().isoformat(), "completed_at": "", "product_id": req.product_id, "product_url": product["url"], "product_name": product.get("name",""), "config": {"angle": req.angle, "structure": req.structure, "persona": req.persona, "tone": req.tone, "language": req.language, "brief": req.brief, "template": req.template}, "current_phase": "", "current_agent": "", "progress": 0.0, "error": "", "results": {}}
     pipeline_events[plid] = asyncio.Queue()
     bg.add_task(_run_pipeline_bg, plid, req)
     return {"pipeline_id": plid, "status": "pending", "product": product.get("name","")}
@@ -1523,6 +1524,11 @@ async def editable_preview(plid: str):
     return HTMLResponse(content=html)
 
 # ── SYSTEM ──
+@app.get("/templates")
+async def list_templates():
+    from agents.templates import get_template_list
+    return {"templates": get_template_list()}
+
 @app.get("/health")
 async def health():
     return {"status": "ok", "version": "2.0.0", "products": len(products), "pipelines": len(pipelines), "ts": datetime.utcnow().isoformat()}
@@ -1577,7 +1583,7 @@ async def _run_pipeline_bg(plid, req):
         if not product: raise ValueError(f"Product {req.product_id} not found")
         pipeline = AdvertorialPipeline(output_dir=out)
         _patch(pipeline, q, plid)
-        run_config = {"angle":req.angle,"structure":req.structure,"persona":req.persona,"tone":req.tone,"language":req.language,"brief":req.brief}
+        run_config = {"angle":req.angle,"structure":req.structure,"persona":req.persona,"tone":req.tone,"language":req.language,"brief":req.brief,"template":req.template}
         result = await pipeline.run(
             product_url=product.get("url", ""),
             product_data=product.get("data") if product.get("data") else None,

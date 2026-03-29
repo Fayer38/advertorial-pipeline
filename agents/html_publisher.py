@@ -40,6 +40,7 @@ class HTMLPublisherAgent(BaseAgent):
         author_name: str = "",
         slug: str = "",
         lang: str = "en",
+        template: str = "editorial",
     ) -> dict:
         self.log_start()
 
@@ -66,7 +67,7 @@ class HTMLPublisherAgent(BaseAgent):
                 if url:
                     image_map[p.get("scene_index", -1)] = url
 
-        html = self._build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang=lang)
+        html = self._build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang=lang, template=template)
 
         output_path = self.output_dir / f"{slug}.html"
         with open(output_path, "w", encoding="utf-8") as f:
@@ -88,7 +89,7 @@ class HTMLPublisherAgent(BaseAgent):
             "word_count": advertorial_draft.get("meta", {}).get("word_count", 0),
         }
 
-    def _build_html(self, content, seo, image_map, product_url, product_name, product_image_url, author_name, lang="en"):
+    def _build_html(self, content, seo, image_map, product_url, product_name, product_image_url, author_name, lang="en", template="editorial"):
         today = datetime.utcnow().strftime("%B %d, %Y")
         headline = content.get("headline", "")
         subheadline = content.get("subheadline", "")
@@ -181,6 +182,15 @@ class HTMLPublisherAgent(BaseAgent):
         }
         tx = i18n.get(lang, i18n["en"])
 
+        # Dispatch to alternative templates
+        if template == "health-journal":
+            from agents.templates.health_journal import build_html
+            return build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang, tx)
+        elif template == "listicle":
+            from agents.templates.listicle import build_html
+            return build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang, tx)
+
+        # Default: editorial template
         offer_box = f'''<div class="offer-box">
       <h2>{tx["offer_title"]}</h2>
       <p><strong>{product_name}</strong><br>{tx["offer_desc"]}</p>
