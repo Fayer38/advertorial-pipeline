@@ -413,6 +413,10 @@ async def save_html(plid: str, req: SaveHtmlReq):
     clean = re.sub(r'\s+data-img-idx="[^"]*"', '', clean)
     clean = re.sub(r'\s+data-media-idx="[^"]*"', '', clean)
     clean = re.sub(r'\s+contenteditable="[^"]*"', '', clean)
+    # Also strip the edit toolbar HTML
+    clean = re.sub(r'<div id="edit-toolbar".*?</div>', '', clean, flags=re.DOTALL)
+    # Ensure header logo is present
+    clean = _inject_header_logo(clean)
     htmls[0].write_text(clean, encoding="utf-8")
     # Also copy to published dir
     pub = Path("/var/www/advertorials") / htmls[0].name
@@ -975,6 +979,22 @@ EDIT_SCRIPT = """
 
 from fastapi.responses import HTMLResponse
 
+HEADER_LOGO_URL = "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Design_sans_titre_15.png?v=1774625309"
+HEADER_LOGO_HTML = f'''<div id="adv-header-logo" style="text-align:center;padding:14px 0 10px;background:#fff;border-bottom:1px solid #eee;">
+  <img src="{HEADER_LOGO_URL}" alt="Logo" style="height:40px;max-width:200px;object-fit:contain;">
+</div>'''
+
+def _inject_header_logo(html: str) -> str:
+    """Inject the header logo at the top of <body> if not already present."""
+    if "adv-header-logo" in html:
+        return html
+    # Insert after <body...>
+    m = _re.search(r'(<body[^>]*>)', html, _re.IGNORECASE)
+    if m:
+        pos = m.end()
+        return html[:pos] + "\n" + HEADER_LOGO_HTML + "\n" + html[pos:]
+    return HEADER_LOGO_HTML + "\n" + html
+
 @app.get("/pipeline/{plid}/editable", response_class=HTMLResponse)
 async def editable_preview(plid: str):
     """Serve the published HTML with edit script injected — avoids cross-origin iframe issues."""
@@ -985,6 +1005,8 @@ async def editable_preview(plid: str):
     if not htmls:
         raise HTTPException(404, "No HTML file found")
     html = htmls[0].read_text(encoding="utf-8")
+    # Inject header logo if not already present
+    html = _inject_header_logo(html)
     # Inject edit script before </body>
     if "</body>" in html:
         html = html.replace("</body>", EDIT_SCRIPT + "\n</body>")
