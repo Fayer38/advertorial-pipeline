@@ -444,11 +444,13 @@ EDIT_SCRIPT = """
     .img-overlay {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,.65); display: flex; align-items: center; justify-content: center;
-      gap: 6px; z-index: 9998; opacity: 0; transition: opacity .15s; pointer-events: none;
+      gap: 6px; z-index: 9998; opacity: 0; transition: opacity .15s;
       border-radius: 4px; flex-wrap: wrap; padding: 8px;
+      pointer-events: none;
     }
     .img-wrap:hover .img-overlay { opacity: 1; pointer-events: auto; }
-    .img-wrap { position: relative; display: inline-block; }
+    .img-wrap { position: relative; display: inline-block; cursor: default; }
+    .img-wrap img { pointer-events: none; }
     .img-overlay button {
       background: #1a1a1a; border: 1px solid #444; color: #eee; border-radius: 6px;
       padding: 5px 10px; font-size: 11px; cursor: pointer; font-weight: 600;
@@ -993,8 +995,13 @@ EDIT_SCRIPT = """
       snapshotForUndo();
       return;
     }
+    // Click on wrapped image or its wrapper → do nothing (use overlay buttons)
+    if (e.target.closest('.img-wrap')) {
+      e.preventDefault();
+      return;
+    }
     var img = e.target.closest('img[data-img-idx]');
-    if (img && !img.closest('.img-wrap')) {
+    if (img) {
       e.preventDefault();
       window.parent.postMessage({ type: 'edit-image', src: img.src, alt: img.alt || '', index: parseInt(img.getAttribute('data-img-idx')), kind: 'img' }, '*');
       return;
