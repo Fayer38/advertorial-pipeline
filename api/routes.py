@@ -1318,6 +1318,57 @@ EDIT_SCRIPT = """
 
   // ── MESSAGES ──
   window.addEventListener('message', function(e) {
+    // ── ADD ELEMENT ──
+    if (e.data && e.data.type === 'add-element') {
+      var t = e.data.elementType;
+      var newEl = null;
+      if (t === 'image') {
+        newEl = document.createElement('div');
+        newEl.className = 'placeholder';
+        newEl.style.cssText = 'background:#f0f0f0;border-radius:8px;padding:40px 20px;text-align:center;color:#aaa;font-style:italic;margin:12px 0;cursor:pointer;';
+        newEl.textContent = '📷 Click to add image';
+      } else if (t === 'heading') {
+        newEl = document.createElement('h2');
+        newEl.style.cssText = 'font-size:24px;font-weight:800;margin:20px 0 10px;color:#111;';
+        newEl.textContent = 'New Heading';
+      } else if (t === 'text') {
+        newEl = document.createElement('p');
+        newEl.style.cssText = 'margin:10px 0;';
+        newEl.textContent = 'New paragraph text. Click to edit.';
+      } else if (t === 'bullets') {
+        newEl = document.createElement('ul');
+        newEl.style.cssText = 'margin:12px 0;padding-left:24px;';
+        newEl.innerHTML = '<li>First point</li><li>Second point</li><li>Third point</li>';
+      } else if (t === 'faq') {
+        newEl = document.createElement('div');
+        newEl.className = 'faq-block';
+        newEl.style.cssText = 'margin:16px 0;border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;';
+        newEl.innerHTML = '<div style="padding:14px 18px;background:#fafafa;font-weight:700;font-size:16px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\'">❓ Question goes here</div><div style="padding:14px 18px;font-size:15px;line-height:1.6;display:block;">Answer goes here. Click to edit.</div>';
+      } else if (t === 'video') {
+        newEl = document.createElement('div');
+        newEl.style.cssText = 'margin:12px 0;position:relative;padding-bottom:56.25%;background:#000;border-radius:8px;overflow:hidden;';
+        newEl.innerHTML = '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-direction:column;gap:8px;"><span style="font-size:40px;">▶</span><span>Paste video URL to replace</span></div>';
+      }
+      if (newEl) {
+        // Insert at end of article content
+        var content = document.querySelector('.article-content');
+        if (content) {
+          // Insert before the last CTA or at the end
+          var lastCta = content.querySelector('.sticky-footer, .offer-box, a.cta-bottom');
+          if (lastCta) {
+            content.insertBefore(newEl, lastCta);
+          } else {
+            content.appendChild(newEl);
+          }
+        } else {
+          document.body.appendChild(newEl);
+        }
+        snapshotForUndo();
+        reMarkElements();
+        newEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
     if (e.data && e.data.type === 'update-field') {
       var el = document.querySelector('[data-editable="' + e.data.field + '"]');
       if (el) el.innerHTML = e.data.value;
