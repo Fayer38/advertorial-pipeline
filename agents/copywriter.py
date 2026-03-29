@@ -299,7 +299,23 @@ class CopywriterAgent(BaseAgent):
             if cfg.get("persona"):
                 parts.append(f"**PERSONA CIBLE** : {cfg['persona']}")
             if cfg.get("brief"):
-                parts.append(f"**BRIEF ADDITIONNEL** : {cfg['brief']}")
+                parts.append(f"""
+# 🔴 BRIEF CRÉATIF — PRIORITÉ ABSOLUE
+
+Le brief ci-dessous est la directive créative principale donnée par le client. 
+Il PRIME sur toutes les autres instructions (angle, structure, exemples de référence).
+
+**Tu DOIS suivre ce brief à la lettre :**
+- Le CONCEPT, le STORYLINE et le MESSAGE doivent correspondre exactement à ce qui est décrit
+- N'invente PAS un angle différent — adapte ton écriture pour servir CE brief
+- Si le brief demande une histoire spécifique (ex: message du fondateur, liquidation, etc.), c'est LE cœur de l'advertorial
+- Les exemples de référence servent pour le STYLE d'écriture uniquement, PAS pour le contenu/angle — le contenu vient du brief
+
+**BRIEF DU CLIENT :**
+\"\"\"{cfg['brief']}\"\"\"
+
+Rappel : cet advertorial doit raconter EXACTEMENT l'histoire décrite dans le brief ci-dessus. Pas une variation. Pas une réinterprétation. LE brief.
+""")
 
         # ── COMPOSANTS HTML DU TEMPLATE ──
         template_id = cfg.get("template", "editorial")
