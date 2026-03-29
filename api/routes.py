@@ -464,6 +464,7 @@ EDIT_SCRIPT = """
     .block-controls button:hover { background: #f26722; color: #fff; border-color: #f26722; }
     .block-ctrl-drag { cursor: grab !important; }
     .block-ctrl-drag:active { cursor: grabbing !important; }
+    .block-ctrl-del:hover { background: #ef4444 !important; border-color: #ef4444 !important; }
 
     /* Drag state */
     .dragging { opacity: 0.4 !important; }
@@ -987,7 +988,8 @@ EDIT_SCRIPT = """
       ctrl.className = 'block-controls';
       ctrl.innerHTML =
         '<button class="block-ctrl-drag" title="Drag to reorder" draggable="false">⠿</button>' +
-        '<button class="block-ctrl-dup" title="Duplicate">⧉</button>';
+        '<button class="block-ctrl-dup" title="Duplicate">⧉</button>' +
+        '<button class="block-ctrl-del" title="Delete">🗑</button>';
       block.style.position = 'relative';
       block.insertBefore(ctrl, block.firstChild);
     });
@@ -1086,6 +1088,20 @@ EDIT_SCRIPT = """
     clone.querySelectorAll('.block-controls').forEach(function(c) { c.remove(); });
     clone.classList.remove('img-selected');
     block.parentNode.insertBefore(clone, block.nextSibling);
+    snapshotForUndo();
+    reMarkElements();
+  }, true);
+
+  // ── DELETE ──
+  document.addEventListener('click', function(e) {
+    var delBtn = e.target.closest('.block-ctrl-del');
+    if (!delBtn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var block = delBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx]');
+    if (!block) return;
+    block.remove();
+    closePanel();
     snapshotForUndo();
     reMarkElements();
   }, true);
