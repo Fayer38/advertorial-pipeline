@@ -356,7 +356,7 @@ class QACriterion(BaseModel):
 
 class QAReport(BaseModel):
     """Sortie de l'Agent 9 : Contrôle Qualité"""
-    overall_score: int = 0
+    overall_score: float = 0
     passed: bool = True
     criteria: dict[str, QACriterion] = {
         "hook_strength": QACriterion(),
