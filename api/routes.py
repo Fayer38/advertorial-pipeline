@@ -440,8 +440,8 @@ EDIT_SCRIPT = """
     [data-editable][contenteditable="true"] { outline: 2px solid #f26722 !important; outline-offset: 3px; cursor: text; }
 
     /* Block controls (drag + duplicate) */
-    [data-editable], .img-set, .placeholder[data-media-idx] { position: relative; }
-    [data-editable]::before, .img-set::before, .placeholder[data-media-idx]::before {
+    [data-editable], .img-set, .placeholder[data-media-idx], img[data-img-idx] { position: relative; }
+    [data-editable]::before, .img-set::before, .placeholder[data-media-idx]::before, img[data-img-idx]::before {
       content: ''; position: absolute; left: -42px; top: 0; width: 42px; height: 100%;
       pointer-events: auto;
     }
@@ -452,7 +452,8 @@ EDIT_SCRIPT = """
     }
     [data-editable]:hover > .block-controls,
     .img-set:hover > .block-controls,
-    .placeholder:hover > .block-controls { opacity: 1; }
+    .placeholder:hover > .block-controls,
+    img[data-img-idx]:hover > .block-controls { opacity: 1; }
     .block-controls button {
       width: 26px; height: 26px; border-radius: 6px; border: 1px solid #ddd;
       background: #fff; color: #666; font-size: 12px; cursor: pointer;
@@ -1219,6 +1220,8 @@ EDIT_SCRIPT = """
       updateToolbarState();
       return;
     }
+    // ── Block controls take priority ──
+    if (e.target.closest('.block-controls')) return;
     // ── Image click → open side panel ──
     var img = e.target.closest('img[data-img-idx]');
     if (img && !img.closest('#adv-header-logo') && !img.closest('#img-panel')) {
