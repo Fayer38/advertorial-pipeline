@@ -1,0 +1,46 @@
+{
+  "overall_score": 8.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le titre est excellent : âge précis, tension narrative claire, curiosity gap bien construit. Le sous-titre révèle cependant le produit trop tôt ('2-pound cordless blower'), ce qui réduit légèrement la curiosité avant même d'entrer dans l'article. Le premier paragraphe avec la corde de démarrage et le dos bloqué est immédiatement relatable pour la cible — très bon. Manque juste un dernier degré d'intensité pour passer à 9-10."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "La progression générale est solide (douleur → honte → recherche de solution → découverte → preuves → offre) et les bucket brigades sont présents. Deux frictions notables : 1) La phrase 'But ce n'est pas just me' mélange français et anglais dans un advertorial entièrement anglais — erreur de copier-coller à corriger immédiatement. 2) La transition entre la section [PROBLEM] et [SOLUTION] via la voisine Margaret fonctionne bien narrativement mais arrive un peu vite après l'inventaire des solutions ratées. Un court paragraphe de désespoir juste avant la rencontre avec Margaret renforcerait le moment 'eurêka'."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Les preuves présentes sont solides : statistiques de poids, tableau comparatif, performances chronométrées personnelles, deux témoignages nominatifs avec localisation et âge, specs techniques (30,000 RPM, 950g, 40 min de batterie), garantie à vie. Points faibles : 1) Le warning box cite les blessures par corde de démarrage comme 'leading cause' sans source citée — ajouter une référence ou reformuler en 'studies show' pour crédibiliser. 2) Deux témoignages seulement, tous deux 5 étoiles — ajouter un troisième profil légèrement différent (ex: homme plus jeune, 58 ans, usage professionnel) renforce la diversité sociale. 3) Aucune certification ou mention de test indépendant."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Le CTA est clair ('Claim Your 55% Discount — Try Seese Pro Risk-Free Today'), la garantie 30 jours est bien mise en avant, le prix barré et la réduction sont explicites. Problème principal : l'urgence est trop vague. 'These are part of the current promotion, not a permanent offer' ne crée pas de véritable pression temporelle — le lecteur peut remettre à demain. Suggestion concrète : ajouter une limite quantitative ou temporelle explicite, ex : 'This 55% discount and bonus kit are only available for the next [X] orders — once this batch ships, we can't guarantee this price.' Deuxièmement, les 3 bonus gifts 'valued at $110' ne sont jamais détaillés au-delà du carry case — nommer les 3 items augmenterait la valeur perçue de l'offre."
+    },
+    "emotional_arc": {
+      "score": 8,
+      "feedback": "L'arc émotionnel est l'un des points forts de cet advertorial. La honte silencieuse ('felt a little smaller inside') est précisément le bon levier émotionnel pour cette audience. Le retour au moment du garage floor dans le CTA final est une technique de bouclage narratif efficace. Légère faiblesse : le future pacing dans le CTA ('My porch is clean. My car is dry.') est présent mais trop factuel — il décrit des actions plutôt que des émotions. Suggestion : ajouter 2-3 phrases de future pacing émotionnel juste avant le CTA, ex : 'This fall, when your neighbor walks by and asks what you used — you'll be the one holding the coffee.'"
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Excellent travail sur la structure : paragraphes courts, phrases percutantes, usage pertinent du gras, tableau comparatif bien intégré, stat-boxes visuelles. 1249 mots — dans la fenêtre idéale. Un seul défaut sérieux : la phrase 'But ce n'est pas just me' est une faute de langue qui casse la fluidité et nuit à la crédibilité éditoriale. À corriger en 'But I'm not the only one.'"
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "L'advertorial suit fidèlement la structure hook → story → problem → solution → proof → offer → CTA. Le ton éditorial est globalement bien maintenu — Carol sonne comme un vrai personnage, pas un porte-voix marketing. Les éléments techniques (brushless motor, RPM, voltage) sont bien intégrés sans sonner comme une fiche produit. Légère friction dans la section [OFFER] : 'Every order right now also comes with 3 bonus gifts valued at $110' sonne plus publicitaire que le reste de l'article — reformuler en éditorial, ex : 'What I didn't expect was what came in the box alongside it — a rigid carry case, [item 2], and [item 3]. That alone would have cost me more than $100 separately.'"
+    }
+  },
+  "improvements": [
+    "Corriger immédiatement la phrase 'But ce n'est pas just me' → remplacer par 'But I'm not the only one.'",
+    "Retirer ou différer la mention du produit dans le sous-titre pour allonger le curiosity gap : remplacer 'The 2-pound cordless blower' par 'The $120 tool' ou 'A single purchase'",
+    "Ajouter un court paragraphe de désespoir total juste avant la rencontre avec Margaret pour amplifier le moment pivot de la solution",
+    "Ajouter une source ou reformuler l'allégation de blessure dans le warning box (ex: 'According to the American Academy of Orthopaedic Surgeons...' ou 'Studies show...')",
+    "Nommer explicitement les 3 bonus gifts dans la section offre pour augmenter la valeur perçue",
+    "Remplacer l'urgence vague 'current promotion' par une limite concrète (stock, date, nombre d'unités)",
+    "Ajouter 2-3 phrases de future pacing émotionnel juste avant le CTA button (ex: vision de soi maintenant autonome, aux yeux des voisins, de son fils)",
+    "Reformuler la section bonus gifts en langage éditorial plutôt que publicitaire (voir suggestion dans le feedback similarity_to_best)",
+    "Ajouter un troisième témoignage avec un profil légèrement différent des deux premiers pour diversifier la preuve sociale"
+  ],
+  "version": 1
+}

@@ -1,0 +1,44 @@
+{
+  "overall_score": 8.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 7,
+      "feedback": "Le headline 'At 67, I Still Take Care of My Home Myself' est honnête et ciblé, mais son format ('Here's What Changed Everything') est trop générique et usé. Le sous-titre est plus fort grâce aux chiffres concrets (2.1 lbs, 4 tools). L'ouverture narrative (deck, driveway, car, back) est efficace mais arrive trop tard — le vrai punch doit être dans le titre. Le brief proposait 'My back doesn't even remember it the next morning' comme angle — ce bénéfice aurait dû être dans le headline lui-même, pas enterré au paragraphe 1."
+    },
+    "story_flow": {
+      "score": 8,
+      "feedback": "La structure hook → douleur personnelle → problème universel → découverte chez le voisin → solution → preuves → offre → CTA est solide et bien exécutée. L'anecdote du voisin avec le café est un excellent dispositif narratif. La transition 'So you either keep suffering — or you quietly start accepting help' est une belle bucket brigade. Légère cassure de rythme dans la section [OFFER] qui sonne plus publicitaire que le reste de l'article."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Les preuves sont présentes mais insuffisamment diversifiées pour un sceptique : deux témoignages (bien choisis, bonne démographie), des stats dans les stat-boxes, et un tableau comparatif. Ce qui manque : (1) aucune source citée pour les 47 000 blessures — une source renforce la crédibilité, (2) aucun aggregate de reviews (ex : '4.8/5 sur 12 400 avis'), (3) aucune certification ou mention de tests indépendants pour les 200 MPH. Suggestion : ajoutez une ligne comme 'Independently tested at 200 MPH by [lab name]' et un troisième témoignage axé sur l'usage hivernal ou voiture."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Le CTA est clair ('Claim Your 55% Discount + 3 Free Accessories →'), la garantie et la livraison gratuite sont rappelées sous le bouton. Mais l'urgence est creuse : 'today' et 'right now' sans raison concrète (pas de stock limité, pas de deadline, pas de compteur). Un lecteur qui repart et revient demain verra la même offre — il le sait. Suggestion : ajoutez un élément d'urgence justifié, ex : 'Introductory pricing through [date]' ou 'Only 847 units left at this price — we sold 300 this week.'"
+    },
+    "emotional_arc": {
+      "score": 8,
+      "feedback": "L'arc douleur → honte → espoir → confiance → empowerment est bien construit. 'That thought hurt more than my back did' est la meilleure ligne de l'article — elle touche juste. Le témoignage de Barbara M. ('My daughter kept offering to hire a landscaper') est émotionnellement puissant car il reflète exactement le fear of dependence de l'avatar. Ce qui manque : un vrai paragraphe de future pacing. Le lecteur visualise l'outil en action mais pas sa propre vie transformée 4 semaines après l'achat. Suggestion : ajoutez un paragraphe juste avant l'[OFFER] du type 'Imagine your next Saturday morning: coffee in one hand, Seese Pro in the other. The deck done in 8 minutes. Your car dry and spotless. And not a single thought about your back.'"
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Paragraphes courts, phrases percutantes, bon usage du gras et des éléments visuels (tableau, stat-boxes, warning-box, testimonials). Le compte de mots (1 105) est optimal. Léger problème : la section [OFFER] contient un paragraphe de 4 lignes assez dense ('Think about what four separate tools would actually cost you…') qui pourrait être découpé ou transformé en liste pour aérer."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "L'advertorial suit fidèlement la structure éditoriale éprouvée et se lit comme un vrai témoignage, pas comme une pub. L'anecdote du voisin est un dispositif classique des meilleurs advertoriaux qui fonctionne ici. La section [OFFER] rompt légèrement avec le ton éditorial en listant les prix de façon trop directe. Les meilleurs advertoriaux font glisser le lecteur vers l'offre sans qu'il réalise qu'il est en train de lire une proposition commerciale — ici, la rupture est perceptible dès le titre de section 'What You Get Today'."
+    }
+  },
+  "improvements": [
+    "Réécrire le headline en intégrant le bénéfice clé dans le titre lui-même, ex : 'At 67, I Clear My Entire Yard in 8 Minutes — And My Back Doesn't Know I Did It'",
+    "Ajouter une source ou attribution aux statistiques des stat-boxes (notamment les 47 000 blessures) pour renforcer la crédibilité",
+    "Intégrer un aggregate de reviews client sous forme de ligne, ex : '★★★★★ Rated 4.8/5 by 12,400+ verified buyers'",
+    "Remplacer l'urgence vague 'today' par un élément concret et justifié (stock limité chiffré, deadline promotionnelle datée)",
+    "Ajouter un paragraphe de future pacing juste avant la section [OFFER] : faire visualiser au lecteur son prochain samedi matin avec le Seese Pro en main",
+    "Découper le paragraphe dense de comparaison de prix dans [OFFER] en liste courte à puces pour aérer",
+    "Renommer la section [OFFER] avec un titre plus éditorial, ex : 'Why More Than 12,000 Homeowners Made the Switch' plutôt que 'What You Get Today'"
+  ],
+  "version": 1
+}

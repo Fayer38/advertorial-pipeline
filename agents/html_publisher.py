@@ -69,6 +69,9 @@ class HTMLPublisherAgent(BaseAgent):
 
         html = self._build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang=lang, template=template)
 
+        # Inject branding elements (logo header, announcement bar, footer)
+        html = self._inject_branding(html, product_name, product_url)
+
         output_path = self.output_dir / f"{slug}.html"
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(html)
@@ -88,6 +91,43 @@ class HTMLPublisherAgent(BaseAgent):
             "url": f"/articles/{slug}" if publish_path else None,
             "word_count": advertorial_draft.get("meta", {}).get("word_count", 0),
         }
+
+    def _inject_branding(self, html: str, product_name: str = "", product_url: str = "") -> str:
+        """Inject logo header, announcement bar, and footer into any template HTML."""
+        LOGO_URL = "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Design_sans_titre_15.png?v=1774625309"
+        
+        # Announcement bar
+        announcement = f'''<div id="adv-announcement" style="background:#111;color:#fff;text-align:center;padding:10px 16px;font-size:13px;font-family:system-ui,sans-serif;">
+  🚚 <strong>FREE SHIPPING</strong> on all orders · 30-Day Money-Back Guarantee · ⭐ 4.9/5 (2,400+ reviews)
+</div>'''
+        
+        # Disclosure + Logo header
+        header = f'''<div id="adv-disclosure" style="text-align:center;padding:3px 0;background:#fafafa;border-bottom:1px solid #f0f0f0;font-size:9px;color:#c0c0c0;letter-spacing:0.03em;font-family:system-ui,sans-serif;">Advertorial</div>
+<div id="adv-header-logo" style="text-align:center;padding:14px 0 10px;background:#fff;border-bottom:1px solid #eee;">
+  <a href="{product_url}" style="text-decoration:none;"><img src="{LOGO_URL}" alt="{product_name}" style="height:52px;max-width:260px;object-fit:contain;"></a>
+</div>'''
+        
+        # Footer
+        footer = f'''<footer id="adv-footer" style="background:#f5f5f5;border-top:1px solid #e5e5e5;padding:30px 20px;text-align:center;margin-top:40px;">
+  <img src="{LOGO_URL}" alt="Logo" style="height:36px;max-width:180px;object-fit:contain;margin-bottom:12px;opacity:0.7;">
+  <p style="font-size:10px;color:#999;line-height:1.6;max-width:700px;margin:0 auto;">&copy; 2026 All rights reserved. All content, images, and materials on this website are protected by international copyright and intellectual property laws. Unauthorized reproduction, distribution, or modification of any materials is strictly prohibited.</p>
+</footer>'''
+        
+        # Inject announcement + header after <body>
+        if "adv-announcement" not in html:
+            body_match = re.search(r'(<body[^>]*>)', html, re.IGNORECASE)
+            if body_match:
+                pos = body_match.end()
+                html = html[:pos] + "\n" + announcement + "\n" + header + "\n" + html[pos:]
+        
+        # Inject footer before </body>
+        if "adv-footer" not in html:
+            if "</body>" in html:
+                html = html.replace("</body>", footer + "\n</body>")
+            else:
+                html += "\n" + footer
+        
+        return html
 
     def _build_html(self, content, seo, image_map, product_url, product_name, product_image_url, author_name, lang="en", template="editorial"):
         today = datetime.utcnow().strftime("%B %d, %Y")

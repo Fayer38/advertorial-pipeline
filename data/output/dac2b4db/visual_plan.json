@@ -1,0 +1,67 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Man in his early 60s, silver-haired, wearing a casual flannel shirt and khaki pants, standing at the end of a clean residential driveway holding the Seese Pro blower loosely in one hand at his side. Relaxed, genuine smile — not posed. Large oak trees in background with golden and amber autumn leaves. Warm early morning sunlight casting long soft shadows. Driveway visibly clean behind him.",
+      "mood": "Warm, proud, effortless — golden autumn morning, sense of quiet satisfaction",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Senior man in his early 60s standing in the half-open doorway of a garage, arms loosely crossed, looking down at a bulky old gas-powered leaf blower sitting on the concrete floor. Slightly reluctant, tired expression — not dramatic, just worn out. Dim garage interior light contrasting with soft daylight from outside. The old blower looks heavy and dated.",
+      "mood": "Subdued, relatable fatigue — the quiet resignation before a dreaded chore",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Senior man, mid-60s, standing on a leaf-covered driveway, pressing his right hand gently to his lower back, eyes slightly winced. Not theatrical — a natural, recognizable posture. Heavy gas blower resting on the ground beside him. Overcast morning light, leaves still scattered around. Slightly muted color palette to convey discomfort and frustration.",
+      "mood": "Honest, empathetic — the relatable ache that the avatar knows all too well",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "product shot",
+      "description": "Close-up of the Seese Pro blower held confidently in one hand — a senior man's hand, relaxed grip. In the background, slightly out of focus, autumn leaves visibly swirling off a driveway in warm morning light. The product is clearly visible in the foreground: compact, lightweight, modern design. No strain in the hand or arm holding it.",
+      "mood": "Revelation, lightness — the moment everything changes",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "lifestyle",
+      "description": "Split-panel image. Left panel: Senior man in his 60s using the Seese Pro one-handed on a leaf-covered driveway, relaxed upright posture, natural smile, golden autumn leaves flying in the air. Right panel: Same man, same relaxed posture, using the Seese Pro to dry a clean car on a sunny driveway. Both shots match in lighting and tone — warm, easy, unhurried.",
+      "mood": "Satisfaction, ease, quiet pride — doing it all himself without effort",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "product shot",
+      "description": "Flat lay of the complete Seese Pro kit laid out on a warm wooden surface — the blower centered in its open hard carrying case, battery inserted, charger cable neatly coiled beside it, accessories arranged around it. Warm natural side lighting. Clean, organized composition. No clutter. Feels like unboxing a premium tool.",
+      "mood": "Trustworthy, premium value — everything you need, clean and ready",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "lifestyle",
+      "description": "Senior man in his 60s facing camera directly, holding the Seese Pro in one hand relaxed at his side. Confident, warm smile. Clean driveway stretches behind him into the background. Soft, bright autumn morning light. A subtle price overlay in the lower corner: '$119.99' with '$249.99' crossed out in red. Neutral, uncluttered background treatment to not distract from the man and the product.",
+      "mood": "Confident, inviting, decisive — this is the moment to act, no hesitation",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}

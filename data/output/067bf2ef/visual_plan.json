@@ -1,0 +1,67 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Gros plan sur la main d'une femme de 60-65 ans tenant le Seese Pro d'une seule main, sans effort visible. La main est détendue, prise naturelle — pas crispée. En arrière-plan légèrement flou : une terrasse en béton propre, quelques feuilles mortes encore visibles sur le bord, lumière dorée du matin. La posture suggère la légèreté totale du produit. Pas de visage nécessaire — l'émotion passe par la main et la posture.",
+      "mood": "Chaleureux, rassurant, lumineux. Lumière naturelle dorée de début de matinée. Tons chauds, ambiance douce et résidentielle.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Femme de 65-70 ans, cheveux argentés, debout bien droite sur sa terrasse propre. Elle tient le Seese Pro naturellement à son côté, comme on tient un objet léger et familier. Elle regarde son allée ou sa cour avec une expression calme et fière — pas souriante de façon forcée, plutôt satisfaite. Tenue décontractée mais soignée (pull, jean). Maison résidentielle de banlieue en arrière-plan, entretenue. Lumière naturelle de milieu de matinée.",
+      "mood": "Fierté tranquille, autonomie, authenticité. Lumière naturelle franche. Tons neutres et chauds. Ambiance de vrai quartier résidentiel américain — pas de stock photo générique.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "before_after",
+      "description": "Image scindée verticalement en deux. Côté gauche : homme de 60-65 ans courbé en avant, visage tendu, tenant un gros souffleur à essence des deux mains, épaules rentrées sous l'effort. Lumière grise, légèrement oppressante. Côté droit : même type d'homme (même âge, même contexte de cour) debout droit, détendu, tenant le Seese Pro d'une seule main, léger sourire. Même décor de cour en arrière-plan — allée propre, feuilles soufflées. Le contraste posture / effort est l'élément clé.",
+      "mood": "Contraste fort entre contrainte et liberté. Gauche : tons légèrement désaturés, ambiance lourde. Droite : tons chauds et naturels, lumière agréable. Le regard se pose immédiatement sur la différence de posture.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "product_shot",
+      "description": "Paume ouverte, légèrement tournée vers le haut, tenant le Seese Pro posé dessus — comme pour en démontrer le poids plume. Main adulte (50-60 ans, pas de jeune mannequin). Le produit est nettement visible : corps compact noir, poignée pistolet ergonomique. Fond extérieur naturel légèrement flou — allée ou terrasse. Pas de tension dans la main, doigts détendus. Lumière naturelle de journée.",
+      "mood": "Léger, clair, factuel. L'image doit transmettre instinctivement 'ce n'est rien à porter'. Fond neutre mais ancré en extérieur résidentiel. Pas de mise en scène studio.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "lifestyle",
+      "description": "Quatre vignettes carrées disposées en grille 2x2. Vignette 1 : femme de 60+ soufflant des feuilles d'automne d'une terrasse, feuilles visiblement en mouvement. Vignette 2 : homme de 65+ séchant sa voiture après lavage avec le jet du Seese Pro, sourire discret. Vignette 3 : femme de 60+ effaçant le givre d'un pare-brise par un matin froid, haleine visible dans l'air froid. Vignette 4 : homme de 70+ dans un garage, soufflant la poussière d'un établi. Chaque vignette montre une posture détendue, aucun effort visible. Personnes réelles, pas des mannequins.",
+      "mood": "Pratique, polyvalent, confiant. Chaque vignette doit raconter une micro-histoire d'autonomie quotidienne. Lumière naturelle dans chaque scène, tons cohérents entre les 4 panneaux.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "product_shot",
+      "description": "Flat lay soigné sur une surface claire (bois clair ou béton léger). Le Seese Pro est centré, entouré de son étui de transport ouvert montrant l'intérieur rembourré, la batterie et le chargeur disposés proprement à côté. Une petite étiquette de prix ou un encart graphique simple indique '$119.99' avec '$249.99' barré d'un trait rouge. Légèreté et organisation visuelle — comme un unboxing haut de gamme. Fond neutre, lumière diffuse sans ombres dures.",
+      "mood": "Premium, ordonné, rassurant. Donne confiance dans le produit et sa valeur perçue. Tons clairs et neutres. Pas de surcharge visuelle — chaque élément a sa place.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "lifestyle",
+      "description": "Homme de 65-70 ans debout sur une allée fraîchement nettoyée devant une maison résidentielle bien entretenue. Il tient le Seese Pro décontracté à son côté, bras le long du corps. Il regarde directement l'objectif avec une expression calme, légèrement satisfaite — pas de grand sourire artificiel, juste la fierté tranquille de quelqu'un qui vient de terminer une tâche lui-même. Lumière de début de matinée, légèrement dorée. La maison et l'allée propre sont visibles derrière lui.",
+      "mood": "Dignité, autonomie, satisfaction tranquille. C'est l'image de clôture — elle doit donner envie d'être cette personne. Lumière chaude et naturelle. Ambiance de dimanche matin bien commencé.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    }
+  ]
+}

@@ -136,7 +136,7 @@ def _save_product(pid: str):
     # Save the full data blob, merging top-level fields back in
     save_data = dict(p.get("data", {}))
     # Also store top-level fields so they survive reloads
-    save_data["_top"] = {k: p[k] for k in ("name","url","category","price","compare_price","benefits","problem","audience","suggested_angle","suggested_structure","suggested_tone","suggested_persona") if k in p}
+    save_data["_top"] = {k: p[k] for k in ("name","url","category","price","compare_price","benefits","problem","audience","suggested_angle","suggested_structure","suggested_tone","suggested_persona","image_url") if k in p}
     fpath.write_text(json.dumps(save_data, indent=2, ensure_ascii=False))
     logger.info(f"Saved product: {pid}")
 
@@ -309,7 +309,7 @@ async def update_product(pid: str, req: dict = Body(...)):
     if pid not in products: raise HTTPException(404, "Product not found")
     p = products[pid]
     # Update top-level scalar/list fields
-    allowed_top = {"name","url","category","price","compare_price","benefits","problem","audience","suggested_angle","suggested_structure","suggested_tone","suggested_persona"}
+    allowed_top = {"name","url","category","price","compare_price","benefits","problem","audience","suggested_angle","suggested_structure","suggested_tone","suggested_persona","image_url"}
     for k, v in req.items():
         if k in allowed_top:
             p[k] = v
@@ -1826,12 +1826,24 @@ async def _run_pipeline_bg(plid, req):
         await _emit(q, plid, "running", "Phase 6 — Publishing", "html_publisher", 0.95)
         pub = HTMLPublisherAgent(output_dir=out)
         product_name = product.get("name", "")
+        # Get product image URL from data or fallback
+        _product_image = ""
+        _data = product.get("data") or {}
+        _images = _data.get("images", [])
+        for _img in _images:
+            if _img.get("url"):
+                _product_image = _img["url"]
+                break
+        if not _product_image:
+            # Try Shopify CDN fallback
+            _product_image = product.get("image_url", "")
         result = await pub.run(
             advertorial_draft=advertorial_final,
             image_prompts=image_prompts if isinstance(image_prompts, dict) else None,
             video_prompts=video_prompts if isinstance(video_prompts, dict) else None,
             product_url=product.get("url", ""),
             product_name=product_name,
+            product_image_url=_product_image,
             lang=lang,
             template=run_config.get("template", "editorial"),
         )

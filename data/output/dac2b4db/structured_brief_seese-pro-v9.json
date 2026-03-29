@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "created_at": "2026-03-29T15:04:35.385546",
+    "product_url": "https://seesepro.com/en-us/products/seese-pro-v9",
+    "confidence_score": 0.52
+  },
+  "product_summary": {
+    "name": "Seese Pro™ Ultra-Light, Ultra-Powerful Blower",
+    "one_liner": "Un souffleur sans fil de 950g qui déplace les feuilles, sèche les voitures et dégivre les vitres — d'une seule main, sans douleur, sans câbles, sans entretien.",
+    "category": "Outillage extérieur / entretien maison — souffleur sans fil portatif",
+    "price_point": "milieu de gamme (positionné 'premium accessible' grâce à la remise 55% : 119,99$ vs 249,99$)"
+  },
+  "avatar_profile": {
+    "who": "Propriétaire de 55 ans et plus — actif mais physiquement plus limité qu'avant, entretient seul sa maison, son allée, sa voiture. A des outils dans son garage depuis 20 ans. Veut continuer à tout gérer lui-même sans demander de l'aide à ses enfants.",
+    "main_problem": "Ses vieux outils sont trop lourds, trop encombrants et trop douloureux à utiliser. Après une séance de soufflage ou de ratissage, son dos et ses bras le font souffrir le lendemain. Il commence à repousser les tâches qu'il faisait sans y penser.",
+    "desired_outcome": "Continuer à entretenir sa propriété lui-même, sans aide, sans douleur, sans avoir l'impression que son corps le lâche — rester autonome et capable.",
+    "emotional_state_before": "Découragé, frustré par ses propres limitations physiques, un peu résigné — appréhende les corvées qui étaient autrefois banales. Honte d'éviter une tâche aussi simple que souffler des feuilles.",
+    "emotional_state_after": "Soulagé, fier de lui, regonflé à bloc — a fait son allée en 5 minutes et son dos ne dit rien. Retrouve la satisfaction d'avoir tout géré seul."
+  },
+  "copy_ammunition": {
+    "primary_angle": {
+      "angle_name": "L'outil qui vous redonne votre autonomie",
+      "why": "Pour un senior de 55+, la vraie douleur n'est pas 'nettoyer prend du temps' — c'est 'je ne peux plus faire ce que je faisais avant tout seul'. Le produit répond directement à ça : ultra-léger, une seule main, zéro douleur. L'angle autonomie/indépendance active la fierté et la peur de perdre le contrôle de son chez-soi bien plus fort que la performance technique. C'est l'angle le plus chargé émotionnellement pour cet avatar précis.",
+      "hook_template": "Vous ne devriez pas avoir besoin d'aide pour nettoyer votre propre allée."
+    },
+    "secondary_angles": [
+      {
+        "angle_name": "Remplacer 4 outils encombrants par un seul",
+        "hook_template": "J'ai donné mon vieux souffleur à gaz. Et mon dos ne s'en est jamais remis — dans le bon sens."
+      },
+      {
+        "angle_name": "La performance pro sans le poids pro",
+        "hook_template": "Plus léger qu'un paquet de sucre. Plus puissant que les souffleurs à 300$."
+      },
+      {
+        "angle_name": "L'outil 4 saisons qui s'utilise une fois sorti du placard",
+        "hook_template": "Feuilles en automne, neige en hiver, voiture en été — le même outil, toute l'année."
+      }
+    ],
+    "hooks": [
+      "Vous ne devriez pas avoir besoin d'aide pour nettoyer votre propre allée.",
+      "J'ai soufflé toute ma terrasse en 4 minutes. Mon dos n'a rien ressenti.",
+      "Mon vieux souffleur pesait 6 kilos. Celui-ci pèse 950 grammes. C'est tout ce qui a changé — et tout.",
+      "Arrêtez de repousser les corvées parce que votre corps n'en peut plus.",
+      "Plus léger qu'un paquet de sucre. 200 miles/h de puissance. Un seul bras suffit.",
+      "Le seul souffleur conçu pour être utilisé d'une seule main — par n'importe qui.",
+      "Sèche la voiture, souffle les feuilles, dégivre le pare-brise. Sans câble. Sans douleur. Sans aide.",
+      "Votre allée mérite mieux qu'un râteau. Et votre dos aussi."
+    ],
+    "key_benefits_ranked": [
+      "Usage une seule main, zéro douleur — même après une heure d'utilisation, votre dos et vos bras ne souffrent pas",
+      "950g / 2,1 lbs — plus léger qu'un paquet de sucre, vous l'oubliez dans la main",
+      "Remplace 4 outils d'un coup : souffleur de garage, dépoussiéreur, serpillière de voiture, dégivreur",
+      "40 minutes d'autonomie par charge — assez pour une vraie séance de nettoyage complète",
+      "Sans gaz, sans câble, sans entretien — sortez-le, appuyez, c'est parti",
+      "200+ MPH — rivalise avec les souffleurs professionnels à 300$+",
+      "Utilisable toute l'année : feuilles, neige légère, voiture, atelier",
+      "Garantie à vie (remplacement) — achat unique, tranquillité permanente"
+    ],
+    "proof_elements": [
+      "Comparaison directe produit : terrasse de 400 m² en moins de 5 minutes vs 25 minutes au balai",
+      "Séchage voiture en 3 minutes vs 15+ avec serviette — sans rayures, sans traces",
+      "Dégivrage pare-brise en moins de 2 minutes — sans grattoir",
+      "200+ MPH / 30 000 RPM — rivalise avec les souffleurs professionnels à 300$+",
+      "Moteur brushless (même technologie que les drones et Tesla) — durée de vie supérieure aux moteurs classiques",
+      "Prix barré : 249,99$ → 119,99$ — 55% de remise documentée (vérifiable sur la fiche)",
+      "Garantie remboursement 30 jours — garantie à vie (remplacement)",
+      "3 cadeaux offerts d'une valeur de 110$ (étui inclus valeur 25$)",
+      "Certifications : marque déposée, spécifications turbine propriétaires",
+      "DONNÉES MANQUANTES : aucun témoignage client, aucune note/avis, aucune étude clinique ou rapport indépendant fourni"
+    ],
+    "objection_handlers": [
+      {
+        "objection": "C'est trop petit pour être vraiment puissant",
+        "response": "200 MPH. 30 000 tours/minute. Les souffleurs professionnels à 300$ ne font pas mieux — et eux pèsent 3 fois plus lourd."
+      },
+      {
+        "objection": "J'ai déjà un souffleur dans mon garage",
+        "response": "Est-ce que le vôtre pèse 950 grammes et s'utilise d'une seule main sans forcer ? Si ce n'est pas le cas, votre dos connaît la différence."
+      },
+      {
+        "objection": "119$ c'est cher pour un souffleur",
+        "response": "Le prix normal est 249,99$. Aujourd'hui il est à 119,99$ — avec une garantie à vie. Rapporté à 5 ans d'utilisation, ça fait moins de 25$ par an."
+      },
+      {
+        "objection": "Je ne suis pas sûr de savoir l'utiliser",
+        "response": "Pas de gaz à mélanger, pas de câble à gérer, pas d'entretien. Vous branchez la batterie, vous appuyez sur le bouton. C'est tout."
+      },
+      {
+        "objection": "Je vais l'utiliser 3 fois par an, ce n'est pas rentable",
+        "response": "Feuilles en automne, neige en hiver, voiture en été, poussière dans l'atelier toute l'année. C'est 4 outils en un seul — celui qui remplace tout le reste."
+      },
+      {
+        "objection": "Et si ça ne marche pas pour moi ?",
+        "response": "Garantie remboursement complet dans les 30 jours, garantie à vie ensuite. Vous ne risquez rien."
+      }
+    ],
+    "urgency_elements": [
+      "Remise 55% active aujourd'hui : 249,99$ → 119,99$ (caractère temporaire de la promo à confirmer côté boutique)",
+      "3 cadeaux offerts d'une valeur totale de 110$ inclus dans la commande",
+      "Étui de rangement (valeur 25$) offert gratuitement",
+      "Livraison gratuite — commandes traitées sous 24-48h",
+      "DONNÉES MANQUANTES : aucune mention de stock limité, de date d'expiration de l'offre, ni de ruptures passées — à vérifier avant de créer une urgence de stock artificielle"
+    ],
+    "cta_options": [
+      "Essayez sans risque pendant 30 jours — remboursement garanti si ce n'est pas pour vous.",
+      "Commandez maintenant et recevez les 3 cadeaux offerts (valeur 110$) — livraison gratuite.",
+      "Profitez des 55% de remise aujourd'hui et retrouvez votre allée propre ce week-end."
+    ]
+  },
+  "visual_notes": {
+    "product_description": "DONNÉES MANQUANTES — aucune description image fournie (Agent 3 absent). Description inférée depuis la fiche produit uniquement : souffleur portatif sans fil de couleur indéterminée, design compact et ergonomique, prise en main une main, avec batterie lithium-ion amovible, poignée pistolet, buse orientable. Livré avec étui de rangement rigide. À compléter impérativement avec l'analyse visuelle réelle.",
+    "suggested_scenes": [
+      "Hero : senior homme ou femme tenant le Seese Pro d'une seule main, sourire détendu, allée propre en arrière-plan — lumière automne dorée",
+      "Section problème : même avatar regardant son vieux souffleur lourd posé au sol avec une expression de découragement, ou se tenant le dos après effort",
+      "Section solution : le Seese Pro en action sur une terrasse couverte de feuilles — feuilles qui s'envolent nettement, tenu d'une main comme un pistolet",
+      "Section polyvalence : split en 4 scènes — feuilles / pare-brise enneigé / séchage voiture / atelier poussiéreux",
+      "Section réassurance : gros plan du produit avec étui ouvert, batterie et chargeur visibles, sur fond bois ou béton propre",
+      "CTA : main senior tenant le produit de face, fond épuré, prix visible"
+    ],
+    "mood": "Chaleureux, lumineux, accessible — automne ou début de journée. Pas clinique, pas hyper-sportif. Montrer la légèreté et la simplicité, pas la performance agressive. Le héros visuel est l'avatar qui retrouve sa fierté et son autonomie, pas l'outil seul."
+  }
+}

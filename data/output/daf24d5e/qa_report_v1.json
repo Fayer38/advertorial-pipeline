@@ -1,0 +1,44 @@
+{
+  "overall_score": 8.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "L'accroche est solide : l'âge précis (68 ans), le chiffre concret (950g), l'interaction voisine et la tension narrative 'j'avais arrêté… puis' fonctionnent bien. Le sous-titre édulcore légèrement l'impact en passant du 'je' personnel au générique 'thousands of homeowners'. La dernière phrase du hook ('It had just moved 400 square feet of wet leaves in under 4 minutes') est excellente — spécifique et visuelle. Manque encore un élément de curiosité pure qui force à scroller : on comprend trop vite la résolution."
+    },
+    "story_flow": {
+      "score": 8,
+      "feedback": "Le flux narratif est bien maîtrisé. Les headers guident sans casser le rythme. La progression hook→story→problem→solution→proof→offer→cta est respectée. Légère faiblesse : la transition entre la section STORY et PROBLEM manque d'un pont émotionnel — le lecteur passe trop directement du constat personnel à la statistique CPSC sans vrai sas. Un bucket brigade du type 'And the numbers back this up' aurait fluidifié ce passage."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "La densité de preuves est correcte mais déséquilibrée : deux témoignages clients (Harold, Margaret), une statistique officielle CPSC, des données fabricant sur les temps de tâches, un tableau comparatif et une garantie lifetime. Ce qui manque : (1) aucune source indépendante ou certification tierce (test labo, classement magazine spécialisé, ou mention 'As seen in…'), (2) les données fabricant sur les durées (5 min vs 25 min) ne sont pas sourcées de façon crédible — 'according to manufacturer data' affaiblit la preuve. Suggestion : intégrer un verbatim d'un test indépendant ou une certification, et remplacer 'manufacturer data' par une preuve mesurable ('in our testing' ou une étude de cas chiffrée)."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Le CTA est clair, le bouton bien rédigé ('Claim Your 55% Discount + 3 Free Gifts'), les réassurances (30 jours, lifetime warranty, free shipping) sont présentes. Ce qui manque entièrement : un mécanisme d'urgence réel et crédible. 'Right now' dans la section offre est trop faible pour créer du FOMO. Suggestion : ajouter un élément de limitation (stock disponible, offre valable jusqu'à une date, les 3 cadeaux offerts uniquement pour les X premières commandes). Sans urgence, le lecteur reporte sa décision — et souvent ne revient pas."
+    },
+    "emotional_arc": {
+      "score": 8,
+      "feedback": "L'arc émotionnel est bien construit : douleur (corps qui garde le score), honte silencieuse (appeler son fils), espoir (la voisine ébahie), confiance (Harold qui 'got a little emotional'), validation médicale (kiné de Margaret). Le paragraphe sur 'cette fierté tranquille de gérer sa maison soi-même' est le point émotionnel le plus fort de l'article. Ce qui manque : un vrai passage de future pacing dédié — une scène vivante décrivant la vie du lecteur 30 jours après l'achat (un dimanche matin, terrasse propre, café en main, voisin qui commente)."
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Bonne lisibilité globale : paragraphes courts, usage du gras ciblé, tableau comparatif bien construit, stat boxes visuelles, 1266 mots dans la fourchette idéale. Légère densité dans la section SOLUTION (plusieurs paragraphes de suite sans rupture visuelle forte entre le motor pitch et le tableau). Le disclaimer HTML brut (SVG inline) dans le body peut alourdir certains rendus. Rien de rédhibitoire."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "L'article respecte bien la structure éditoriale et évite les marqueurs 'pub' les plus évidents pendant 80% du texte. La section OFFER bascule légèrement vers un ton promotionnel ('the math is straightforward', liste de prix comparatifs) qui rappelle une fiche produit. La toute dernière phrase du CTA ('Your driveway won't clean itself. But with the right tool in your hand, it'll feel like it does.') est excellente — ton éditorial parfait. À reproduire dans la section offre pour compenser."
+    }
+  },
+  "improvements": [
+    "Ajouter une micro-tension au hook en retardant la révélation : supprimer 'something that looked like a small hairdryer' et laisser la voisine se demander plus longtemps — augmenter le suspense avant de nommer le produit",
+    "Insérer un bucket brigade entre les sections STORY et PROBLEM : une phrase-pont du type 'And there are numbers behind that feeling — uncomfortable ones.'",
+    "Remplacer 'according to manufacturer data' par une source plus crédible ou reformuler en test concret : 'We timed it ourselves: a 400 sq ft patio took 4 minutes and 38 seconds.'",
+    "Ajouter un élément de preuve indépendant : mention presse, certification, ou quote d'un professionnel (ex : ergothérapeute, coach en autonomie pour seniors) pour briser le circuit 'marque qui se vante'",
+    "Créer un paragraphe de future pacing dédié après les témoignages : scène sensorielle précise (dimanche matin, 7h, terrasse propre en 6 minutes, café encore chaud) pour faire visualiser la vie après l'achat",
+    "Ajouter un mécanisme d'urgence crédible dans la section OFFER : limiter les 3 cadeaux aux X premières commandes ou introduire une date d'expiration pour le prix promotionnel",
+    "Adoucir le ton promotionnel de la section OFFER en reformulant 'the math is straightforward' — intégrer le calcul dans un raisonnement éditorial plutôt qu'un argument de vente direct"
+  ],
+  "version": 1
+}

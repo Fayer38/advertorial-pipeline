@@ -1,0 +1,107 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "silver-haired woman in her late 60s, natural relaxed posture, holding a small sleek compact cordless leaf blower loosely at her side in one hand like a TV remote, wide genuine smile directed slightly off-camera, clean residential concrete driveway, dry amber autumn leaves suspended mid-air in motion blur, warm golden morning sidelight casting soft shadows, no strain no effort visible, other hand hanging free, amber rust leaf tones against soft grey concrete, photorealistic, hyperdetailed, 8k, cinematic lighting, professional photography --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, forced smile, young person, gym clothes, gloves, safety gear, dramatic action pose",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "dignified older homeowner late 60s, casually well-dressed, standing at edge of residential patio, arms loosely crossed or hands in pockets, calm reflective expression gazing out at yard, not sad — quiet ownership, suburban backyard, mature trees with leaves just beginning to fall, soft diffused overcast morning light, sage green lawn, grey concrete, natural weathered wood fence, muted warm tones, photorealistic, cinematic lighting, professional photography, depth of field --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, mutated hands, bad anatomy, stock photo, sad expression, defeated posture, dramatic gesture, cluttered background",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "older adult 65 years old, both hands gripping a large bulky heavy gas-powered leaf blower, body leaning forward, shoulders visibly tense and raised, expression of mild effort and frustration, residential driveway covered in dense autumn leaves, overcast flat grey sky, muted desaturated color grading, cooler tones, slightly dull greens, grey concrete, blower looks oversized and cumbersome relative to person, photorealistic, documentary photography style --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, mutated hands, bad anatomy, warm tones, golden light, smiling, relaxed posture, small blower, young person",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "close-medium shot of relaxed older adult forearm and hand, natural mature skin, holding a small sleek compact lightweight cordless leaf blower loosely at waist height, blower visibly small relative to hand — compactness is the hero visual, shot from slight low angle looking up, soft blue sky and green lawn as blurred background, bright natural daylight, sharp focus on product, blower design: minimal modern lightweight matte casing, photorealistic product photography, professional commercial --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, white knuckles, tight grip, large blower, cluttered background, indoor setting, dramatic lighting, full body visible",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "active older man late 60s early 70s, upright relaxed posture, one hand operating a small compact cordless leaf blower aimed at hood of a freshly washed dark navy or charcoal car, water droplets arcing dramatically off the hood in a wide satisfying spray catching warm backlit afternoon light, man looks pleased and quietly competent, warm golden afternoon backlight creating subtle halo on water droplets, residential driveway, clean white garage door background, cinematic but believable, photorealistic, 8k --ar 16:9 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, mutated hands, bad anatomy, straining posture, dirty car, cluttered background, overexposed droplets, flat lighting",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "styled testimonial review card graphic design, clean warm off-white background, five gold star icons centered at top, bold readable serif font pull quote 'Done in 6 minutes. One hand. Standing perfectly straight.' centered in middle, small text below 'Harold S., 71 — Charlotte, NC', small circular cropped portrait photo of a naturally smiling older man wearing casual clothing, candid authentic not stock-photo look, minimal elegant layout, warm gold and cream palette, editorial design, no clutter --ar 4:5 --v 6.1 --q 2",
+      "negative_prompt": "ugly, deformed, blurry, distorted, low quality, watermark, busy layout, multiple fonts, stock photo face, plastic smile, complex background, dark tones, neon colors, extra text elements",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "overhead flat lay directly above, small sleek compact cordless leaf blower centered inside its open carrying case, neatly arranged surrounding accessories: spare battery pack, USB-C charging cable, two different nozzle attachments, all on clean light natural wood surface, perfectly symmetrical organised layout, soft warm directional shadow from one side, bright airy clean lighting, premium product photography, editorial style, sharp focus throughout --ar 1:1 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, cluttered accessories, dark background, dramatic shadows, dust, scratches, disorganised layout",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "three-quarter body shot older homeowner early 60s man or woman, standing fully upright and relaxed on a completely clean swept residential concrete patio, holding small sleek compact cordless leaf blower loosely at side in one hand, looking directly into camera with calm genuine satisfied smile — not commercial, just real satisfaction, rich warm golden hour amber light casting long soft shadows, mature trees and tidy residential exterior visible background, clean surfaces no leaf debris, quiet accomplishment, photorealistic, 8k, cinematic lighting --ar 4:5 --v 6.1 --style raw --q 2",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, mutated hands, bad anatomy, commercial grin, young person, cluttered patio, flat lighting, overexposed sky, leaves on ground",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}
