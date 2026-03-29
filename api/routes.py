@@ -443,13 +443,13 @@ EDIT_SCRIPT = """
     /* Image hover overlay */
     .img-overlay {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,.65); display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center;
       gap: 6px; z-index: 9998; opacity: 0; transition: opacity .15s;
       border-radius: 4px; flex-wrap: wrap; padding: 8px;
       pointer-events: none;
     }
     .img-wrap:hover .img-overlay { opacity: 1; pointer-events: auto; }
-    .img-wrap { position: relative; display: inline-block; cursor: default; }
+    .img-wrap { position: relative; display: inline-block; cursor: default; width: 100%; }
     .img-wrap img { pointer-events: none; }
     .img-overlay button {
       background: #1a1a1a; border: 1px solid #444; color: #eee; border-radius: 6px;
@@ -458,13 +458,29 @@ EDIT_SCRIPT = """
       transition: all .15s; font-family: system-ui, sans-serif;
     }
     .img-overlay button:hover { background: #f26722; border-color: #f26722; color: #fff; }
-    .img-overlay button.active { background: #22c55e; border-color: #22c55e; color: #fff; }
-    .img-overlay button.inactive { background: #333; border-color: #555; color: #888; opacity: .7; }
+    .img-overlay button.has-custom { background: #22c55e; border-color: #22c55e; color: #fff; }
 
-    /* Device visibility classes */
-    @media (min-width: 1025px) { .hide-desktop { display: none !important; } }
-    @media (min-width: 769px) and (max-width: 1024px) { .hide-tablet { display: none !important; } }
-    @media (max-width: 768px) { .hide-mobile { display: none !important; } }
+    /* Responsive image sets — per-device images */
+    .img-set { position: relative; width: 100%; }
+    .img-set .for-desktop, .img-set .for-tablet, .img-set .for-mobile { width: 100%; border-radius: 8px; }
+    .img-set .for-tablet, .img-set .for-mobile { display: none; }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .img-set .for-desktop { display: none !important; }
+      .img-set .for-tablet { display: block !important; }
+    }
+    @media (max-width: 768px) {
+      .img-set .for-desktop { display: none !important; }
+      .img-set .for-mobile { display: block !important; }
+    }
+    /* When no tablet/mobile specific: fallback to desktop */
+    .img-set:not(.has-tablet) .for-desktop { display: block !important; }
+    .img-set:not(.has-mobile) .for-desktop { display: block !important; }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .img-set.has-tablet .for-desktop { display: none !important; }
+    }
+    @media (max-width: 768px) {
+      .img-set.has-mobile .for-desktop { display: none !important; }
+    }
 
     /* ── TOOLBAR ── */
     #edit-toolbar {
@@ -897,23 +913,33 @@ EDIT_SCRIPT = """
   function wrapImages() {
     document.querySelectorAll('img[data-img-idx]').forEach(function(img) {
       if (img.closest('.img-wrap') || img.closest('#adv-header-logo')) return;
+      // Check if already in an img-set
+      var existingSet = img.closest('.img-set');
+
       var wrap = document.createElement('div');
       wrap.className = 'img-wrap';
-      img.parentNode.insertBefore(wrap, img);
-      wrap.appendChild(img);
+
+      if (existingSet) {
+        // Already a responsive set — wrap the whole set
+        existingSet.parentNode.insertBefore(wrap, existingSet);
+        wrap.appendChild(existingSet);
+      } else {
+        img.parentNode.insertBefore(wrap, img);
+        wrap.appendChild(img);
+      }
+
+      var setEl = wrap.querySelector('.img-set');
+      var hasTabletImg = setEl && setEl.classList.contains('has-tablet');
+      var hasMobileImg = setEl && setEl.classList.contains('has-mobile');
 
       var ov = document.createElement('div');
       ov.className = 'img-overlay';
-
-      var hasDesktop = !img.classList.contains('hide-desktop');
-      var hasTablet = !img.classList.contains('hide-tablet');
-      var hasMobile = !img.classList.contains('hide-mobile');
-
+      var idx = img.getAttribute('data-img-idx');
       ov.innerHTML =
-        '<button data-ov="replace" title="Replace image">🔄 Replace</button>' +
-        '<button data-ov="desktop" class="' + (hasDesktop ? 'active' : 'inactive') + '" title="Desktop">🖥 Desktop</button>' +
-        '<button data-ov="tablet" class="' + (hasTablet ? 'active' : 'inactive') + '" title="Tablet">📱 Tablet</button>' +
-        '<button data-ov="mobile" class="' + (hasMobile ? 'active' : 'inactive') + '" title="Mobile">📲 Mobile</button>';
+        '<button data-ov="replace" data-idx="' + idx + '" title="Replace on all devices">🔄 All</button>' +
+        '<button data-ov="desktop" data-idx="' + idx + '" title="Set desktop image">🖥</button>' +
+        '<button data-ov="tablet" data-idx="' + idx + '" class="' + (hasTabletImg ? 'has-custom' : '') + '" title="Set tablet image">📱' + (hasTabletImg ? ' ✓' : '') + '</button>' +
+        '<button data-ov="mobile" data-idx="' + idx + '" class="' + (hasMobileImg ? 'has-custom' : '') + '" title="Set mobile image">📲' + (hasMobileImg ? ' ✓' : '') + '</button>';
       wrap.appendChild(ov);
     });
   }
@@ -967,32 +993,15 @@ EDIT_SCRIPT = """
       var img = wrap ? wrap.querySelector('img[data-img-idx]') : null;
       if (!img) return;
       var action = ovBtn.getAttribute('data-ov');
+      var idx = parseInt(ovBtn.getAttribute('data-idx') || img.getAttribute('data-img-idx'));
 
       if (action === 'replace') {
-        window.parent.postMessage({ type: 'edit-image', src: img.src, alt: img.alt || '', index: parseInt(img.getAttribute('data-img-idx')), kind: 'img' }, '*');
-        return;
+        // Replace all — opens media picker, result replaces main image
+        window.parent.postMessage({ type: 'edit-image', src: img.src, index: idx, kind: 'img', device: 'all' }, '*');
+      } else {
+        // Device-specific — opens media picker with device context
+        window.parent.postMessage({ type: 'edit-image', src: img.src, index: idx, kind: 'img', device: action }, '*');
       }
-
-      // Toggle device visibility
-      var classMap = { desktop: 'hide-desktop', tablet: 'hide-tablet', mobile: 'hide-mobile' };
-      var cls = classMap[action];
-      if (!cls) return;
-
-      var isHidden = img.classList.contains(cls);
-      // Count how many devices are currently visible
-      var visCount = 3 - ['hide-desktop','hide-tablet','hide-mobile'].filter(function(c){ return img.classList.contains(c); }).length;
-
-      if (isHidden) {
-        // Show on this device
-        img.classList.remove(cls);
-        ovBtn.className = 'active';
-      } else if (visCount > 1) {
-        // Hide on this device (only if still visible on at least 1 other)
-        img.classList.add(cls);
-        ovBtn.className = 'inactive';
-      }
-      // else: can't hide — already only 1 device active
-      snapshotForUndo();
       return;
     }
     // Click on wrapped image or its wrapper → do nothing (use overlay buttons)
@@ -1047,12 +1056,17 @@ EDIT_SCRIPT = """
       // Remove toolbar from DOM before capturing
       var tbEl = document.getElementById('edit-toolbar');
       if (tbEl) tbEl.remove();
-      // Unwrap images (remove .img-wrap + .img-overlay, keep img with classes)
+      // Unwrap images: remove .img-wrap + .img-overlay, keep .img-set and standalone imgs
       document.querySelectorAll('.img-wrap').forEach(function(wrap) {
         var ov = wrap.querySelector('.img-overlay');
         if (ov) ov.remove();
-        var img = wrap.querySelector('img');
-        if (img) { wrap.parentNode.insertBefore(img, wrap); }
+        var setEl = wrap.querySelector('.img-set');
+        if (setEl) {
+          wrap.parentNode.insertBefore(setEl, wrap);
+        } else {
+          var img = wrap.querySelector('img');
+          if (img) wrap.parentNode.insertBefore(img, wrap);
+        }
         wrap.remove();
       });
       window.parent.postMessage({ type: 'current-html', html: document.documentElement.outerHTML }, '*');
@@ -1073,8 +1087,48 @@ EDIT_SCRIPT = """
           ph.replaceWith(img);
         }
       } else {
+        var device = e.data.device || 'all';
         var imgs = document.querySelectorAll('img[data-img-idx]');
-        if (imgs[e.data.index]) imgs[e.data.index].src = e.data.value;
+        var targetImg = imgs[e.data.index];
+        if (!targetImg) return;
+
+        if (device === 'all' || device === 'desktop') {
+          // Replace/set the main (desktop) image
+          targetImg.src = e.data.value;
+        }
+        if (device === 'tablet' || device === 'mobile') {
+          // Find or create responsive set
+          var wrap = targetImg.closest('.img-wrap');
+          var setEl = targetImg.closest('.img-set');
+          if (!setEl) {
+            // Convert single img to img-set
+            setEl = document.createElement('div');
+            setEl.className = 'img-set';
+            targetImg.classList.add('for-desktop');
+            targetImg.parentNode.insertBefore(setEl, targetImg);
+            setEl.appendChild(targetImg);
+          }
+          var cls = 'for-' + device;
+          var existing = setEl.querySelector('.' + cls);
+          if (existing) {
+            existing.src = e.data.value;
+          } else {
+            var devImg = document.createElement('img');
+            devImg.src = e.data.value;
+            devImg.className = cls;
+            devImg.style.cssText = 'width:100%;border-radius:8px;';
+            setEl.appendChild(devImg);
+          }
+          setEl.classList.add('has-' + device);
+          // Rebuild overlay to show ✓
+          if (wrap) {
+            var ov = wrap.querySelector('.img-overlay');
+            if (ov) ov.remove();
+          }
+          // Re-wrap
+          reMarkElements();
+        }
+        snapshotForUndo();
       }
     }
   });
