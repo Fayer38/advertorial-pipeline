@@ -1311,6 +1311,7 @@ EDIT_SCRIPT = """
           img.style.cssText = 'width:100%;border-radius:8px;margin:8px 0';
           img.setAttribute('data-img-idx', document.querySelectorAll('img').length);
           ph.replaceWith(img);
+          reMarkElements();
         }
       } else {
         var device = e.data.device || 'all';
