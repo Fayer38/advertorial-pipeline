@@ -416,7 +416,10 @@ async def save_html(plid: str, req: SaveHtmlReq):
     # Strip editor artifacts
     clean = re.sub(r'<div id="edit-toolbar".*?</div>', '', clean, flags=re.DOTALL)
     clean = re.sub(r'<div id="img-panel".*?</div>\s*</div>', '', clean, flags=re.DOTALL)
+    clean = re.sub(r'<div class="block-controls">.*?</div>', '', clean, flags=re.DOTALL)
+    clean = re.sub(r'<div class="drop-indicator">.*?</div>', '', clean, flags=re.DOTALL)
     clean = re.sub(r'\s+class="img-selected"', '', clean)
+    clean = re.sub(r'\s+class="dragging"', '', clean)
     # Ensure header logo is present
     clean = _inject_header_logo(clean)
     htmls[0].write_text(clean, encoding="utf-8")
@@ -432,9 +435,37 @@ EDIT_SCRIPT = """
   // ── STYLES ──
   var style = document.createElement('style');
   style.textContent = `
-    [data-editable] { transition: outline .15s; cursor: pointer; }
+    [data-editable] { transition: outline .15s; cursor: pointer; position: relative; }
     [data-editable]:hover { outline: 1px dashed rgba(242,103,34,0.4) !important; outline-offset: 2px; }
     [data-editable][contenteditable="true"] { outline: 2px solid #f26722 !important; outline-offset: 3px; cursor: text; }
+
+    /* Block controls (drag + duplicate) */
+    .block-controls {
+      position: absolute; left: -38px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 3px;
+      opacity: 0; transition: opacity .15s; z-index: 9990; pointer-events: none;
+    }
+    [data-editable]:hover > .block-controls,
+    .img-set:hover > .block-controls,
+    .placeholder:hover > .block-controls { opacity: 1; pointer-events: auto; }
+    .block-controls button {
+      width: 26px; height: 26px; border-radius: 6px; border: 1px solid #ddd;
+      background: #fff; color: #666; font-size: 12px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,.12); transition: all .15s;
+      padding: 0; line-height: 1;
+    }
+    .block-controls button:hover { background: #f26722; color: #fff; border-color: #f26722; }
+    .block-ctrl-drag { cursor: grab !important; }
+    .block-ctrl-drag:active { cursor: grabbing !important; }
+
+    /* Drag state */
+    .dragging { opacity: 0.4 !important; }
+    .drop-indicator {
+      height: 3px; background: #f26722; border-radius: 2px; margin: 2px 0;
+      box-shadow: 0 0 8px rgba(242,103,34,0.5);
+      pointer-events: none;
+    }
     img[data-img-idx] { position: relative; }
     .placeholder[data-media-idx] { position: relative; }
     .placeholder[data-media-idx]:hover::after { content: '📷 Click to replace'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #f26722; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-style: normal; font-weight: 700; z-index: 9999; }
@@ -922,19 +953,136 @@ EDIT_SCRIPT = """
   };
 
   function reMarkElements() {
-    document.querySelectorAll('h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a').forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
+    document.querySelectorAll(BLOCK_SELECTOR).forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
     document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
     var mi = 0;
     document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mi++); });
-    wrapImages();
+    addBlockControls();
   }
 
   // ── MARK ELEMENTS ──
-  var editable = document.querySelectorAll('h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a');
+  var BLOCK_SELECTOR = 'h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a';
+  var editable = document.querySelectorAll(BLOCK_SELECTOR);
   editable.forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
   document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
   var mediaIdx = 0;
   document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mediaIdx++); });
+
+  // ── BLOCK CONTROLS (drag + duplicate) ──
+  function addBlockControls() {
+    // Remove old controls
+    document.querySelectorAll('.block-controls').forEach(function(c) { c.remove(); });
+    // Get all draggable blocks: editable text, images, img-sets, placeholders
+    var blocks = document.querySelectorAll('[data-editable], img[data-img-idx]:not(#adv-header-logo img), .img-set, .placeholder[data-media-idx]');
+    blocks.forEach(function(block) {
+      if (block.closest('#adv-header-logo') || block.closest('#img-panel') || block.closest('#edit-toolbar')) return;
+      if (block.querySelector('.block-controls')) return;
+      var ctrl = document.createElement('div');
+      ctrl.className = 'block-controls';
+      ctrl.innerHTML =
+        '<button class="block-ctrl-drag" title="Drag to reorder" draggable="false">⠿</button>' +
+        '<button class="block-ctrl-dup" title="Duplicate">⧉</button>';
+      block.style.position = 'relative';
+      block.insertBefore(ctrl, block.firstChild);
+    });
+  }
+  addBlockControls();
+
+  // ── DRAG & DROP ──
+  var dragEl = null;
+  var dropIndicator = document.createElement('div');
+  dropIndicator.className = 'drop-indicator';
+  var dragTimeout = null;
+
+  function getBlockParent(el) {
+    // Get the nearest draggable block
+    return el.closest('[data-editable], .img-set, .placeholder[data-media-idx], img[data-img-idx]');
+  }
+
+  function getAllBlocks() {
+    return Array.from(document.querySelectorAll('.article-content > *, .page-wrapper > .article-content > *')).filter(function(el) {
+      return !el.matches('#adv-header-logo, #img-panel, #edit-toolbar, style, script, .drop-indicator');
+    });
+  }
+
+  // Long press to start drag (300ms hold)
+  document.addEventListener('mousedown', function(e) {
+    var dragBtn = e.target.closest('.block-ctrl-drag');
+    if (!dragBtn) return;
+    e.preventDefault();
+    var block = dragBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx]');
+    if (!block) return;
+    dragTimeout = setTimeout(function() { startDrag(block, e); }, 150);
+  });
+  document.addEventListener('mouseup', function() {
+    if (dragTimeout) { clearTimeout(dragTimeout); dragTimeout = null; }
+    if (dragEl) finishDrag();
+  });
+
+  function startDrag(el, e) {
+    dragEl = el;
+    dragEl.classList.add('dragging');
+    document.addEventListener('mousemove', onDragMove);
+  }
+
+  function onDragMove(e) {
+    if (!dragEl) return;
+    // Find closest block to insert before/after
+    dropIndicator.remove();
+    var allBlocks = getAllBlocks();
+    var closest = null;
+    var closestDist = Infinity;
+    var insertBefore = true;
+
+    allBlocks.forEach(function(b) {
+      if (b === dragEl) return;
+      var rect = b.getBoundingClientRect();
+      var midY = rect.top + rect.height / 2;
+      var dist = Math.abs(e.clientY - midY);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = b;
+        insertBefore = e.clientY < midY;
+      }
+    });
+
+    if (closest) {
+      if (insertBefore) {
+        closest.parentNode.insertBefore(dropIndicator, closest);
+      } else {
+        closest.parentNode.insertBefore(dropIndicator, closest.nextSibling);
+      }
+    }
+  }
+
+  function finishDrag() {
+    document.removeEventListener('mousemove', onDragMove);
+    if (dragEl && dropIndicator.parentNode) {
+      dropIndicator.parentNode.insertBefore(dragEl, dropIndicator);
+      dragEl.classList.remove('dragging');
+      snapshotForUndo();
+    }
+    dropIndicator.remove();
+    dragEl = null;
+    reMarkElements();
+  }
+
+  // ── DUPLICATE ──
+  document.addEventListener('click', function(e) {
+    var dupBtn = e.target.closest('.block-ctrl-dup');
+    if (!dupBtn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var block = dupBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx]');
+    if (!block) return;
+    var clone = block.cloneNode(true);
+    // Remove controls from clone (will be re-added)
+    clone.querySelectorAll('.block-controls').forEach(function(c) { c.remove(); });
+    clone.classList.remove('img-selected');
+    block.parentNode.insertBefore(clone, block.nextSibling);
+    snapshotForUndo();
+    reMarkElements();
+  }, true);
 
   // ── IMAGE SIDE PANEL ──
   var panel = document.createElement('div');
@@ -1116,10 +1264,13 @@ EDIT_SCRIPT = """
       // Remove toolbar from DOM before capturing
       var tbEl = document.getElementById('edit-toolbar');
       if (tbEl) tbEl.remove();
-      // Remove panel and cleanup
+      // Remove editor artifacts before capturing
       var panelEl = document.getElementById('img-panel');
       if (panelEl) panelEl.remove();
       document.querySelectorAll('.img-selected').forEach(function(el) { el.classList.remove('img-selected'); });
+      document.querySelectorAll('.block-controls').forEach(function(c) { c.remove(); });
+      document.querySelectorAll('.drop-indicator').forEach(function(c) { c.remove(); });
+      document.querySelectorAll('.dragging').forEach(function(c) { c.classList.remove('dragging'); });
       window.parent.postMessage({ type: 'current-html', html: document.documentElement.outerHTML }, '*');
       // Re-add toolbar + re-wrap images
       document.body.appendChild(tb);
