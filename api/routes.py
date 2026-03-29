@@ -206,6 +206,34 @@ async def _load_existing_pipelines():
         except Exception as e:
             logger.error(f"Failed to load pipeline {plid}: {e}")
 
+# ── RESOLVE product_id for disk-loaded pipelines ──
+@app.on_event("startup")
+async def _resolve_pipeline_products():
+    """Match pipelines to products by name when product_id is missing."""
+    for plid, pl in pipelines.items():
+        if pl["product_id"]:
+            continue
+        pname = pl.get("product_name", "").lower()
+        if not pname:
+            continue
+        for pid, prod in products.items():
+            prod_name = prod.get("name", "").lower()
+            if prod_name == pname or prod_name in pname or pname in prod_name:
+                pl["product_id"] = pid
+                logger.info(f"Resolved pipeline {plid} → product {pid} (by name match)")
+                break
+        # Keyword fallback
+        if not pl["product_id"]:
+            for pid, prod in products.items():
+                pn = prod.get("name","").lower()
+                for kw in ["washer","blower","pressure"]:
+                    if kw in pname and kw in pn:
+                        pl["product_id"] = pid
+                        logger.info(f"Resolved pipeline {plid} → product {pid} (by keyword '{kw}')")
+                        break
+                if pl["product_id"]:
+                    break
+
 # ── PRODUCTS ──
 @app.post("/products/analyze")
 async def analyze_product(req: ProductAnalyzeReq, bg: BackgroundTasks):
