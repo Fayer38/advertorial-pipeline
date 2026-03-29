@@ -1,4 +1,5 @@
-"""Personal Story template — magazine editorial, dark hero, pull quotes, airy white layout."""
+"""Personal Story template — magazine editorial layout, pull quotes, hero image,
+before/after visual structure, images distributed throughout, clean modern wide layout."""
 from datetime import datetime
 
 
@@ -7,12 +8,17 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
     headline = content.get("headline", "")
     subheadline = content.get("subheadline", "")
 
+    sections = content.get("sections", [])
+
     body_parts = []
     offer_section = None
     cta_section = None
-    section_count = 0
+    body_section_count = 0
 
-    for i, sec in enumerate(content.get("sections", [])):
+    # Pull quotes — extracted from body sections periodically
+    PULL_QUOTE_INTERVAL = 3  # inject after every Nth body section
+
+    for i, sec in enumerate(sections):
         s_type = sec.get("type", "")
         if s_type == "offer":
             offer_section = sec
@@ -27,37 +33,83 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
         img_url = image_map.get(i, "")
         parts = []
 
-        # Insert pull quote divider every 3rd section (use heading as pull quote)
-        if section_count > 0 and section_count % 3 == 0 and heading:
-            parts.append(f'<div class="pull-quote"><p class="pq-text">&#8220;{heading}&#8221;</p></div>')
-
         if heading:
-            parts.append(f'<h2 class="story-h2">{heading}</h2>')
-        if body_html:
-            parts.append(f'<div class="story-prose">{body_html}</div>')
+            parts.append(f'<h2 class="section-h2">{heading}</h2>')
 
-        # Image after text, full-width
+        if body_html:
+            parts.append(body_html)
+
+        # Image AFTER body — editorial image placement
         if img_url:
-            caption = placeholder.get("description", "") or ""
-            parts.append(f'''<figure class="story-fig">
-  <img src="{img_url}" alt="{heading}">
-  {"<figcaption>" + caption + "</figcaption>" if caption else ""}
-</figure>''')
-        elif placeholder.get("description"):
-            p_type = placeholder.get("type", "image").upper()
-            desc = placeholder["description"]
-            if p_type == "VIDEO":
-                parts.append(f'<div class="placeholder video-ph"><div class="tbadge">VIDEO</div><div class="play-icon">&#9654;</div><p>{desc}</p></div>')
+            caption = placeholder.get("description", heading) or heading
+            if i == 0:
+                # First image: large hero-style within content
+                parts.append(
+                    f'<div class="content-hero-img">'
+                    f'<img src="{img_url}" alt="{heading}" loading="lazy">'
+                    f'{"<p class=\\'img-caption\\'>" + caption + "</p>" if caption else ""}'
+                    f'</div>'
+                )
             else:
-                parts.append(f'<div class="placeholder"><div class="tbadge">{p_type}</div><br>{desc}</div>')
+                # Subsequent images: full-width editorial
+                parts.append(
+                    f'<figure class="editorial-figure">'
+                    f'<img src="{img_url}" alt="{heading}" loading="lazy">'
+                    f'{"<figcaption>" + caption + "</figcaption>" if caption else ""}'
+                    f'</figure>'
+                )
+        elif placeholder.get("description"):
+            p_type = placeholder.get("type", "photo").upper()
+            parts.append(
+                f'<div class="placeholder">'
+                f'<div class="tbadge">{p_type}</div>'
+                f'<div class="ph-desc">{placeholder["description"]}</div>'
+                f'</div>'
+            )
 
         if parts:
             body_parts.append("\n".join(parts))
 
-        section_count += 1
+        body_section_count += 1
+
+        # Inject pull quote after every PULL_QUOTE_INTERVAL sections
+        if body_section_count % PULL_QUOTE_INTERVAL == 0 and heading:
+            body_parts.append(
+                f'<div class="pull-quote">'
+                f'<span class="pq-mark">&ldquo;</span>'
+                f'<p class="pq-text">{heading}</p>'
+                f'<span class="pq-author">— {author_name}</span>'
+                f'</div>'
+            )
 
     article_body = "\n\n".join(body_parts)
     cta_body = cta_section.get("body_html", "") if cta_section else ""
+
+    # Hero image from section 0
+    hero_img_url = image_map.get(0, "")
+    if hero_img_url:
+        hero_img_html = f'<div class="hero-image-full"><img src="{hero_img_url}" alt="{headline}" loading="eager"></div>'
+    else:
+        first_ph = sections[0].get("visual_placeholder", {}) if sections else {{}}
+        hero_img_html = (
+            f'<div class="placeholder hero-ph">'
+            f'<div class="tbadge">HERO</div>'
+            f'<div class="ph-desc">{first_ph.get("description","Hero image")}</div>'
+            f'</div>'
+        )
+
+    # Product image in offer
+    if product_image_url:
+        offer_img_html = f'<img src="{product_image_url}" alt="{product_name}" class="offer-product-img">'
+    else:
+        offer_img_html = (
+            f'<div class="placeholder" style="margin:14px 0;">'
+            f'<div class="tbadge">{tx.get("bundle_badge","PRODUCT")}</div>'
+            f'<div class="ph-desc">{tx.get("bundle_desc","Product image")}</div>'
+            f'</div>'
+        )
+
+    author_initial = author_name[0].upper() if author_name else "A"
 
     return f'''<!DOCTYPE html>
 <html lang="{lang}">
@@ -69,140 +121,192 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{{margin:0;padding:0;box-sizing:border-box}}
-body{{font-family:'Inter',sans-serif;background:#ffffff;color:#111;font-size:18px;line-height:1.8;padding-bottom:68px}}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{font-family:'DM Sans',sans-serif;color:#111;background:#fff;font-size:18px;line-height:1.78;padding-bottom:64px}}
 
-/* DARK HERO BANNER */
-.hero-banner{{background:linear-gradient(160deg,#0a0a0f 0%,#1a1a2a 60%,#0d0d12 100%);color:#fff;padding:72px 24px 60px;text-align:center;position:relative;overflow:hidden}}
-.hero-banner::after{{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,#fff,transparent)}}
-.hero-tag{{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 16px;border-radius:20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;font-family:'Inter',sans-serif;color:rgba(255,255,255,.8)}}
-h1{{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.12;max-width:740px;margin:0 auto 16px;color:#fff}}
-.hero-sub{{font-size:18px;color:rgba(255,255,255,.65);max-width:600px;margin:0 auto 22px;line-height:1.55}}
-.hero-meta{{font-size:12px;color:rgba(255,255,255,.38);letter-spacing:.5px}}
+/* ── MAGAZINE TOP BAR ── */
+.mag-topbar{{background:#111;color:#fff;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;letter-spacing:.8px;text-transform:uppercase}}
+.mag-name{{font-family:'DM Serif Display',serif;font-size:16px;letter-spacing:1px;text-transform:uppercase;color:#fff}}
+.mag-section-tag{{color:#aaa;font-weight:500}}
+.mag-date{{color:#666}}
 
-/* STORY CONTENT */
-.story-wrap{{max-width:680px;margin:0 auto;padding:48px 24px 40px}}
+/* ── HERO ── */
+.article-hero{{background:#0a0a0a;color:#fff;padding:52px 24px 44px}}
+.hero-tag{{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px}}
+h1{{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.1;margin-bottom:14px;color:#fff;max-width:760px}}
+.hero-sub{{font-size:18px;color:rgba(255,255,255,.65);max-width:640px;line-height:1.5;margin-bottom:22px}}
+.hero-byline{{display:flex;align-items:center;gap:12px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1)}}
+.hero-avatar{{width:38px;height:38px;border-radius:50%;background:#444;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;font-family:'DM Serif Display',serif;flex-shrink:0}}
+.hero-byline-text .author-name{{font-size:14px;font-weight:600;color:#fff}}
+.hero-byline-text .author-meta{{font-size:12px;color:#888}}
 
-/* INTRO NAME LINE */
-.intro-line{{font-family:'DM Serif Display',serif;font-size:22px;color:#111;margin-bottom:28px;font-style:italic;border-left:3px solid #111;padding-left:18px}}
+/* ── HERO IMAGE ── */
+.hero-image-full{{max-height:520px;overflow:hidden}}
+.hero-image-full img{{width:100%;display:block;object-fit:cover;max-height:520px}}
+.hero-ph{{border-radius:0;height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f0f0f0;border:none}}
 
-/* SECTION HEADINGS */
-.story-h2{{font-family:'DM Serif Display',serif;font-size:28px;line-height:1.25;color:#111;margin:40px 0 16px}}
+/* ── MAIN LAYOUT ── */
+.article-layout{{max-width:1060px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 260px;gap:56px;align-items:start}}
+.article-body-col{{padding:44px 0}}
+.article-aside{{padding:44px 0}}
 
-/* BODY PROSE */
-.story-prose p{{font-size:18px;line-height:1.82;margin-bottom:18px;color:#333}}
-.story-prose strong{{color:#111}}
-.story-prose em{{color:#555}}
-.story-prose blockquote{{border-left:none;margin:24px 0;padding:0;font-family:'DM Serif Display',serif;font-size:22px;color:#111;font-style:italic;text-align:center}}
-.story-prose ul,.story-prose ol{{padding-left:28px;margin-bottom:16px}}
-.story-prose li{{margin-bottom:7px;line-height:1.7}}
+/* ── BODY TYPOGRAPHY ── */
+.section-h2{{font-family:'DM Serif Display',serif;font-size:28px;line-height:1.22;margin:40px 0 16px;color:#111}}
+p{{margin-bottom:16px;color:#2a2a2a;font-size:18px;line-height:1.78}}
+strong{{color:#111;font-weight:700}}
+ul,ol{{padding-left:24px;margin-bottom:16px}}
+li{{margin-bottom:8px;font-size:17px;line-height:1.7;color:#2a2a2a}}
+blockquote{{border-left:4px solid #111;margin:24px 0;padding:16px 22px;background:#f7f7f7;font-family:'DM Serif Display',serif;font-size:20px;line-height:1.5;color:#333;font-style:italic;border-radius:0 4px 4px 0}}
 
-/* PULL QUOTE */
-.pull-quote{{padding:36px 0;margin:8px 0 16px;border-top:2px solid #111;border-bottom:2px solid #111;text-align:center}}
-.pq-text{{font-family:'DM Serif Display',serif;font-size:26px;line-height:1.35;color:#111;font-style:italic;max-width:560px;margin:0 auto}}
+/* ── PULL QUOTE ── */
+.pull-quote{{border-top:3px solid #111;border-bottom:3px solid #111;padding:28px 0;margin:36px 0;text-align:center}}
+.pq-mark{{font-family:'DM Serif Display',serif;font-size:80px;line-height:.6;color:#ddd;display:block;margin-bottom:8px}}
+.pq-text{{font-family:'DM Serif Display',serif;font-style:italic;font-size:26px;line-height:1.35;color:#111;max-width:540px;margin:0 auto 12px}}
+.pq-author{{font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1.5px;font-weight:500}}
 
-/* FIGURES */
-.story-fig{{margin:32px -24px}}
-.story-fig img{{width:100%;display:block}}
-.story-fig figcaption{{font-size:12px;color:#888;font-style:italic;padding:8px 24px 4px;line-height:1.4}}
-.video-ph{{background:#0a0a0f;color:#666;padding:60px 20px;text-align:center;border-radius:4px;margin:28px 0}}
-.play-icon{{font-size:48px;color:#fff;opacity:.6;display:block;margin:0 0 12px}}
-.video-ph p{{font-size:13px;color:#555}}
-.placeholder{{background:#f5f5f5;padding:36px 20px;text-align:center;color:#999;border:1px dashed #ddd;border-radius:6px;margin:24px 0;font-size:14px;font-style:italic}}
-.tbadge{{display:inline-block;background:#111;color:#fff;font-size:10px;padding:3px 10px;margin-bottom:8px;font-style:normal;text-transform:uppercase;letter-spacing:.8px;font-weight:700;border-radius:10px}}
+/* ── IMAGES ── */
+.content-hero-img{{margin:24px -24px}}
+.content-hero-img img{{width:100%;display:block}}
+.content-hero-img .img-caption{{padding:8px 24px;font-size:13px;color:#888;font-style:italic;background:#fafafa;border-bottom:1px solid #eee}}
+.editorial-figure{{margin:28px -24px}}
+.editorial-figure img{{width:100%;display:block}}
+.editorial-figure figcaption{{padding:8px 24px;font-size:13px;color:#888;font-style:italic;border-bottom:1px solid #f0f0f0}}
 
-/* STAT ROW */
-.stat-row{{display:flex;gap:14px;margin:24px 0;flex-wrap:wrap}}
-.stat-box{{flex:1;min-width:130px;background:#f5f5f5;border-radius:10px;padding:18px;text-align:center}}
-.stat-box .stat-num{{font-family:'DM Serif Display',serif;font-size:30px;color:#111;display:block;margin-bottom:4px}}
-.stat-box .stat-label{{font-size:13px;color:#777}}
+/* ── PLACEHOLDER ── */
+.placeholder{{background:#f5f5f5;border:1px dashed #ddd;border-radius:4px;padding:36px 20px;text-align:center;margin:18px 0}}
+.tbadge{{display:inline-block;background:#111;color:#fff;font-size:10px;padding:3px 10px;border-radius:10px;margin-bottom:8px;font-style:normal;text-transform:uppercase;letter-spacing:.8px;font-weight:700;font-family:sans-serif}}
+.ph-desc{{color:#aaa;font-size:13px;font-style:italic;margin-top:4px}}
 
-/* COMPARISON */
+/* ── STATS / ELEMENTS ── */
+.stat-row{{display:flex;gap:14px;margin:22px 0;flex-wrap:wrap}}
+.stat-box{{flex:1;min-width:130px;background:#f5f5f5;border-radius:8px;padding:16px;text-align:center}}
+.stat-box .stat-num{{font-family:'DM Serif Display',serif;font-size:30px;color:#111;display:block;line-height:1}}
+.stat-box .stat-label{{font-size:13px;color:#777;margin-top:6px}}
 .comparison-table{{width:100%;border-collapse:collapse;margin:20px 0;font-size:16px}}
-.comparison-table th{{background:#111;color:#fff;padding:12px 14px;text-align:left;font-size:13px;font-weight:600}}
-.comparison-table td{{padding:11px 14px;border-bottom:1px solid #eee}}
+.comparison-table th{{background:#111;color:#fff;padding:11px 14px;text-align:left;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}}
+.comparison-table tr:nth-child(even) td{{background:#fafafa}}
+.comparison-table td{{padding:11px 14px;border-bottom:1px solid #eee;color:#2a2a2a}}
 .comparison-table .good{{color:#16a34a;font-weight:700}}
 .comparison-table .bad{{color:#dc2626;font-weight:700}}
+.testimonial{{background:#f7f7f7;border-radius:10px;padding:20px 24px;margin:20px 0}}
+.testimonial .quote{{font-family:'DM Serif Display',serif;font-size:18px;line-height:1.65;color:#222;font-style:italic;margin-bottom:8px}}
+.testimonial .attribution{{font-size:13px;color:#888;font-weight:600;font-family:sans-serif}}
+.warning-box{{background:#fef3c7;border:1px solid #fbbf24;border-radius:8px;padding:14px 18px;margin:14px 0;font-size:16px;display:flex;gap:10px;color:#78350f}}
+.step{{margin-bottom:14px;display:flex;gap:12px;align-items:flex-start}}
+.step-num{{width:28px;height:28px;background:#111;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;margin-top:2px;font-family:sans-serif}}
+.step .step-title{{font-weight:700;font-size:16px;margin-bottom:3px;color:#111}}
+.step p{{font-size:16px;margin-bottom:0;color:#2a2a2a}}
+.tip{{background:#f7f7f7;border-left:3px solid #111;padding:12px 16px;margin:14px 0;font-size:16px;border-radius:0 6px 6px 0;color:#2a2a2a}}
 
-/* TESTIMONIAL */
-.testimonial{{background:#f9f9f9;border-radius:12px;padding:22px 26px;margin:20px 0}}
-.testimonial .quote{{font-size:17px;line-height:1.7;color:#333;font-style:italic;margin-bottom:8px}}
-.testimonial .attribution{{font-size:13px;color:#888;font-weight:600}}
-.warning-box{{background:#fef3c7;border:1px solid #fbbf24;border-radius:8px;padding:14px 18px;margin:14px 0;font-size:16px;display:flex;gap:10px}}
-.step{{margin-bottom:12px;display:flex;gap:10px;align-items:flex-start}}
-.step .step-title{{font-weight:700;font-size:16px;margin-bottom:2px;color:#111}}
-.step p{{font-size:16px;margin-bottom:0}}
-.tip{{background:#f9f9f9;border-left:3px solid #111;padding:12px 16px;margin:12px 0;font-size:16px;border-radius:0 6px 6px 0;display:flex;gap:8px}}
-.accent{{color:#111;font-weight:600}}
+/* ── ASIDE ── */
+.aside-card{{background:#f7f7f7;border-radius:6px;padding:22px;margin-bottom:20px}}
+.aside-card h3{{font-family:'DM Serif Display',serif;font-size:17px;color:#111;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #111}}
+.aside-card p{{font-size:14px;color:#555;line-height:1.6;margin-bottom:12px}}
+.aside-cta{{display:block;background:#111;color:#fff;text-decoration:none;text-align:center;padding:12px;border-radius:4px;font-weight:700;font-size:14px;margin-top:4px}}
 
-/* SECTION DIVIDER */
-.section-divider{{text-align:center;margin:36px 0;color:#ccc;letter-spacing:8px;font-size:18px}}
-
-/* OFFER BOX — narrative style */
-.offer-story{{background:#f5f5f5;border-radius:14px;padding:36px;margin:40px 0}}
-.offer-story .offer-intro{{font-family:'DM Serif Display',serif;font-size:22px;color:#111;font-style:italic;margin-bottom:18px;line-height:1.35}}
-.offer-story h2{{font-family:'DM Serif Display',serif;font-size:26px;color:#111;margin-bottom:12px}}
-.offer-story p{{font-size:17px;color:#333;margin-bottom:12px}}
-.offer-story strong{{color:#111}}
-.cta-story{{display:block;width:100%;padding:18px 24px;background:#111;color:#fff;text-align:center;font-size:18px;font-weight:700;text-decoration:none;border-radius:10px;margin:20px 0 12px;transition:background .2s}}
-.cta-story:hover{{background:#333}}
-.offer-badges{{font-size:13px;color:#777}}
+/* ── OFFER BOX ── */
+.offer-section-heading{{font-family:'DM Serif Display',serif;font-size:22px;color:#111;margin:44px 0 6px;padding-top:32px;border-top:2px solid #111}}
+.offer-narrative{{font-size:17px;color:#555;font-style:italic;margin-bottom:20px}}
+.offer-box{{background:#111;color:#fff;border-radius:10px;padding:32px;margin:0 0 28px}}
+.offer-box h2{{font-family:'DM Serif Display',serif;color:#fff;margin:0 0 8px;font-size:24px}}
+.offer-box p{{color:rgba(255,255,255,.8);margin-bottom:16px}}
+.offer-box strong{{color:#fff}}
+.offer-product-img{{width:100%;border-radius:8px;margin:12px 0 20px;display:block}}
+.offer-cta{{display:block;width:100%;padding:18px;background:#fff;color:#111;text-align:center;font-size:18px;font-weight:700;border-radius:6px;text-decoration:none;margin:16px 0 10px;transition:background .2s}}
+.offer-cta:hover{{background:#f0f0f0}}
+.offer-badges{{font-size:13px;color:rgba(255,255,255,.5)}}
 .offer-badges div{{margin-bottom:4px;display:flex;align-items:center;gap:6px}}
+.cta-body-html{{color:rgba(255,255,255,.75);font-size:15px;line-height:1.6;margin:10px 0}}
 
-/* STICKY FOOTER */
-.sticky-footer{{position:fixed;bottom:0;left:0;right:0;background:#111;padding:13px 20px;text-align:center;z-index:300}}
-.sticky-footer a{{color:#fff;text-decoration:none;font-weight:700;font-size:16px}}
+/* ── STICKY FOOTER ── */
+.sticky-footer{{position:fixed;bottom:0;left:0;right:0;background:#111;padding:13px 20px;text-align:center;z-index:100}}
+.sticky-footer a{{color:#fff;text-decoration:none;font-weight:700;font-size:15px;font-family:'DM Sans',sans-serif}}
 
-/* RESPONSIVE */
-@media(max-width:700px){{
-  .hero-banner{{padding:48px 18px 44px}}
-  h1{{font-size:30px}}
-  .story-wrap{{padding:32px 18px 32px}}
-  .story-h2{{font-size:24px}}
-  .pull-quote{{padding:24px 0}}
-  .pq-text{{font-size:21px}}
-  .story-fig{{margin:24px -18px}}
-  .story-fig figcaption{{padding:6px 18px 4px}}
-  .offer-story{{padding:24px 18px}}
+/* ── RESPONSIVE ── */
+@media(max-width:860px){{
+.article-layout{{grid-template-columns:1fr;gap:0;padding:0 16px}}
+.article-aside{{display:none}}
+.article-body-col{{padding:28px 0}}
+.content-hero-img,.editorial-figure{{margin:18px -16px}}
+.content-hero-img .img-caption,.editorial-figure figcaption{{padding:8px 16px}}
+h1{{font-size:32px}}
+.section-h2{{font-size:23px}}
+.pull-quote .pq-text{{font-size:22px}}
+.pq-mark{{font-size:60px}}
 }}
 </style>
 </head>
 <body>
 
-<div class="hero-banner">
-  <div class="hero-tag">Personal Story</div>
-  <h1>{headline}</h1>
-  {"<p class='hero-sub'>" + subheadline + "</p>" if subheadline else ""}
-  <div class="hero-meta">By {author_name} &nbsp;&middot;&nbsp; {today}</div>
+<!-- MAGAZINE TOP BAR -->
+<div class="mag-topbar">
+  <span class="mag-name">Personal Stories</span>
+  <span class="mag-section-tag">Real People · Real Results</span>
+  <span class="mag-date">{today}</span>
 </div>
 
-<div class="story-wrap">
-  <p class="intro-line">My name is {author_name}, and this is my story.</p>
-
-  {article_body}
-
-  <div class="section-divider">&#9670; &nbsp; &#9670; &nbsp; &#9670;</div>
-
-  <div class="offer-story">
-    <p class="offer-intro">&#8220;After everything I went through, I finally found something that actually worked.&#8221;</p>
-    <h2>{tx["offer_title"]}</h2>
-    <p>{tx["offer_desc"]}</p>
-    {'<img src="' + product_image_url + '" alt="' + product_name + '" style="width:100%;border-radius:10px;margin:12px 0 18px;">' if product_image_url else '<div class="placeholder"><div class="tbadge">' + tx.get("bundle_badge","PRODUCT") + '</div><br>' + tx.get("bundle_desc","Product image") + '</div>'}
-    {cta_body}
-    <a href="{product_url}" class="cta-story">{tx["cta"]}</a>
-    <div class="offer-badges">
-      <div>&#10003; {tx["badge1"]}</div>
-      <div>&#10003; {tx["badge2"]}</div>
-      <div>&#10003; {tx.get("badge3","")}</div>
+<!-- ARTICLE HERO -->
+<div class="article-hero">
+  <div class="hero-tag">✦ Personal Story</div>
+  <h1>{headline}</h1>
+  {"<p class='hero-sub'>" + subheadline + "</p>" if subheadline else ""}
+  <div class="hero-byline">
+    <div class="hero-avatar">{author_initial}</div>
+    <div class="hero-byline-text">
+      <div class="author-name">{author_name}</div>
+      <div class="author-meta">{today} · Personal Account</div>
     </div>
   </div>
 </div>
 
-<div class="sticky-footer">
-  <a href="{product_url}">{tx["cta_footer"]}</a>
-</div>
+<!-- HERO IMAGE -->
+{hero_img_html}
 
+<!-- MAIN LAYOUT -->
+<div class="article-layout">
+  <div class="article-body-col">
+
+    {article_body}
+
+    <!-- OFFER SECTION -->
+    <div class="offer-section-heading">{tx.get("offer_title","Here's Exactly What I Ordered")}</div>
+    <p class="offer-narrative">After everything I'd been through, I finally decided to try it for myself. Here's what I found and what I recommend:</p>
+
+    <div class="offer-box">
+      <h2>{product_name}</h2>
+      {offer_img_html}
+      <p>{tx.get("offer_desc","")}</p>
+      <div class="cta-body-html">{cta_body}</div>
+      <a href="{product_url}" class="offer-cta">{tx.get("cta","I Want This →")}</a>
+      <div class="offer-badges">
+        <div>✓ {tx.get("badge1","")}</div>
+        <div>✓ {tx.get("badge2","")}</div>
+        {"<div>✓ " + tx.get("badge3","") + "</div>" if tx.get("badge3") else ""}
+      </div>
+    </div>
+
+  </div><!-- /article-body-col -->
+
+  <!-- SIDEBAR -->
+  <div class="article-aside">
+    <div class="aside-card">
+      <h3>My Top Pick</h3>
+      <p>After months of searching, this is the one product that actually changed things for me.</p>
+      <a href="{product_url}" class="aside-cta">{tx.get("cta_footer","See It Here")}</a>
+    </div>
+    <div class="aside-card" style="background:#111;color:#fff;">
+      <h3 style="color:#fff;border-bottom-color:#fff">Don't Wait</h3>
+      <p style="color:rgba(255,255,255,.7)">What worked for me might work for you too. Here's what to try first.</p>
+      <a href="{product_url}" style="background:#fff;color:#111;display:block;text-decoration:none;text-align:center;padding:12px;border-radius:4px;font-weight:700;font-size:14px;margin-top:4px">{tx.get("cta_footer","Learn More")}</a>
+    </div>
+  </div>
+
+</div><!-- /article-layout -->
+
+<div class="sticky-footer">
+  <a href="{product_url}">{tx.get("cta_footer","Read My Story & Get Yours →")}</a>
+</div>
 </body>
 </html>'''
