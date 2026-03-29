@@ -413,11 +413,10 @@ async def save_html(plid: str, req: SaveHtmlReq):
     clean = re.sub(r'\s+data-img-idx="[^"]*"', '', clean)
     clean = re.sub(r'\s+data-media-idx="[^"]*"', '', clean)
     clean = re.sub(r'\s+contenteditable="[^"]*"', '', clean)
-    # Also strip the edit toolbar HTML and image overlays
+    # Strip editor artifacts
     clean = re.sub(r'<div id="edit-toolbar".*?</div>', '', clean, flags=re.DOTALL)
-    clean = re.sub(r'<div class="img-overlay">.*?</div>', '', clean, flags=re.DOTALL)
-    # Unwrap .img-wrap divs (keep content)
-    clean = re.sub(r'<div class="img-wrap">(.*?)</div>', r'\1', clean, flags=re.DOTALL)
+    clean = re.sub(r'<div id="img-panel".*?</div>\s*</div>', '', clean, flags=re.DOTALL)
+    clean = re.sub(r'\s+class="img-selected"', '', clean)
     # Ensure header logo is present
     clean = _inject_header_logo(clean)
     htmls[0].write_text(clean, encoding="utf-8")
@@ -440,46 +439,74 @@ EDIT_SCRIPT = """
     .placeholder[data-media-idx] { position: relative; }
     .placeholder[data-media-idx]:hover::after { content: '📷 Click to replace'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #f26722; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-style: normal; font-weight: 700; z-index: 9999; }
 
-    /* Image hover overlay */
-    .img-overlay {
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center;
-      gap: 6px; z-index: 9998; opacity: 0; transition: opacity .15s;
-      border-radius: 4px; flex-wrap: wrap; padding: 8px;
-      pointer-events: none;
-    }
-    .img-wrap:hover .img-overlay { opacity: 1; pointer-events: auto; }
-    .img-wrap { position: relative; display: inline-block; cursor: default; width: 100%; }
-    .img-wrap img { pointer-events: none; }
-    .img-overlay button {
-      background: #1a1a1a; border: 1px solid #444; color: #eee; border-radius: 6px;
-      padding: 5px 10px; font-size: 11px; cursor: pointer; font-weight: 600;
-      display: flex; align-items: center; gap: 4px; white-space: nowrap;
-      transition: all .15s; font-family: system-ui, sans-serif;
-    }
-    .img-overlay button:hover { background: #f26722; border-color: #f26722; color: #fff; }
-    .img-overlay button.has-custom { background: #22c55e; border-color: #22c55e; color: #fff; }
+    /* Image click highlight */
+    img[data-img-idx] { cursor: pointer; transition: outline .15s; }
+    img[data-img-idx]:hover { outline: 2px dashed rgba(242,103,34,0.4); outline-offset: 3px; }
+    img[data-img-idx].img-selected { outline: 2px solid #f26722 !important; outline-offset: 3px; }
 
-    /* Responsive image sets — per-device images */
+    /* Side panel for image device settings */
+    #img-panel {
+      position: fixed; top: 0; right: -320px; width: 310px; height: 100vh;
+      background: #111114; border-left: 1px solid #2a2a30; z-index: 99990;
+      transition: right .25s ease; overflow-y: auto;
+      font-family: system-ui, -apple-system, sans-serif;
+      box-shadow: -8px 0 30px rgba(0,0,0,.5);
+    }
+    #img-panel.open { right: 0; }
+    #img-panel .panel-header {
+      padding: 16px 18px; border-bottom: 1px solid #1f1f23;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    #img-panel .panel-title { font-size: 14px; font-weight: 700; color: #f0f0f0; }
+    #img-panel .panel-close {
+      background: none; border: none; color: #8b8b92; font-size: 18px;
+      cursor: pointer; padding: 4px 8px; border-radius: 6px; line-height: 1;
+    }
+    #img-panel .panel-close:hover { background: #1f1f23; color: #f0f0f0; }
+    #img-panel .device-slot {
+      padding: 14px 18px; border-bottom: 1px solid #1f1f23;
+      cursor: pointer; transition: background .15s;
+    }
+    #img-panel .device-slot:hover { background: rgba(242,103,34,0.05); }
+    #img-panel .device-label {
+      font-size: 12px; font-weight: 700; color: #f0f0f0;
+      display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+    }
+    #img-panel .device-label .badge {
+      font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 600;
+    }
+    #img-panel .badge-default { background: rgba(139,139,146,0.15); color: #8b8b92; }
+    #img-panel .badge-custom { background: rgba(34,197,94,0.15); color: #22c55e; }
+    #img-panel .device-thumb {
+      width: 100%; height: 80px; border-radius: 8px; overflow: hidden;
+      border: 1px solid #1f1f23; display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    #img-panel .device-thumb img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    #img-panel .device-thumb .placeholder-msg {
+      color: #55555e; font-size: 11px; font-style: italic;
+    }
+    #img-panel .device-thumb .remove-btn {
+      position: absolute; top: 4px; right: 4px;
+      background: rgba(0,0,0,.7); color: #ef4444; border: 1px solid rgba(239,68,68,.3);
+      border-radius: 50%; width: 22px; height: 22px; font-size: 11px;
+      cursor: pointer; display: none; align-items: center; justify-content: center; line-height: 1;
+    }
+    #img-panel .device-slot:hover .remove-btn.visible { display: flex; }
+
+    /* Responsive image sets */
     .img-set { position: relative; width: 100%; }
     .img-set .for-desktop, .img-set .for-tablet, .img-set .for-mobile { width: 100%; border-radius: 8px; }
     .img-set .for-tablet, .img-set .for-mobile { display: none; }
     @media (min-width: 769px) and (max-width: 1024px) {
-      .img-set .for-desktop { display: none !important; }
-      .img-set .for-tablet { display: block !important; }
-    }
-    @media (max-width: 768px) {
-      .img-set .for-desktop { display: none !important; }
-      .img-set .for-mobile { display: block !important; }
-    }
-    /* When no tablet/mobile specific: fallback to desktop */
-    .img-set:not(.has-tablet) .for-desktop { display: block !important; }
-    .img-set:not(.has-mobile) .for-desktop { display: block !important; }
-    @media (min-width: 769px) and (max-width: 1024px) {
       .img-set.has-tablet .for-desktop { display: none !important; }
+      .img-set.has-tablet .for-tablet { display: block !important; }
     }
     @media (max-width: 768px) {
       .img-set.has-mobile .for-desktop { display: none !important; }
+      .img-set.has-mobile .for-mobile { display: block !important; }
     }
 
     /* ── TOOLBAR ── */
@@ -909,41 +936,96 @@ EDIT_SCRIPT = """
   var mediaIdx = 0;
   document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mediaIdx++); });
 
-  // ── WRAP IMAGES WITH OVERLAY ──
-  function wrapImages() {
-    document.querySelectorAll('img[data-img-idx]').forEach(function(img) {
-      if (img.closest('.img-wrap') || img.closest('#adv-header-logo')) return;
-      // Check if already in an img-set
-      var existingSet = img.closest('.img-set');
+  // ── IMAGE SIDE PANEL ──
+  var panel = document.createElement('div');
+  panel.id = 'img-panel';
+  panel.innerHTML = '<div class="panel-header"><span class="panel-title">Image Settings</span><button class="panel-close" id="panel-close-btn">✕</button></div><div id="panel-slots"></div>';
+  document.body.appendChild(panel);
 
-      var wrap = document.createElement('div');
-      wrap.className = 'img-wrap';
+  var currentImgIdx = null;
+  document.getElementById('panel-close-btn').addEventListener('click', function() { closePanel(); });
 
-      if (existingSet) {
-        // Already a responsive set — wrap the whole set
-        existingSet.parentNode.insertBefore(wrap, existingSet);
-        wrap.appendChild(existingSet);
-      } else {
-        img.parentNode.insertBefore(wrap, img);
-        wrap.appendChild(img);
-      }
-
-      var setEl = wrap.querySelector('.img-set');
-      var hasTabletImg = setEl && setEl.classList.contains('has-tablet');
-      var hasMobileImg = setEl && setEl.classList.contains('has-mobile');
-
-      var ov = document.createElement('div');
-      ov.className = 'img-overlay';
-      var idx = img.getAttribute('data-img-idx');
-      ov.innerHTML =
-        '<button data-ov="replace" data-idx="' + idx + '" title="Replace on all devices">🔄 All</button>' +
-        '<button data-ov="desktop" data-idx="' + idx + '" title="Set desktop image">🖥</button>' +
-        '<button data-ov="tablet" data-idx="' + idx + '" class="' + (hasTabletImg ? 'has-custom' : '') + '" title="Set tablet image">📱' + (hasTabletImg ? ' ✓' : '') + '</button>' +
-        '<button data-ov="mobile" data-idx="' + idx + '" class="' + (hasMobileImg ? 'has-custom' : '') + '" title="Set mobile image">📲' + (hasMobileImg ? ' ✓' : '') + '</button>';
-      wrap.appendChild(ov);
-    });
+  function closePanel() {
+    panel.classList.remove('open');
+    document.querySelectorAll('.img-selected').forEach(function(el) { el.classList.remove('img-selected'); });
+    currentImgIdx = null;
   }
-  wrapImages();
+
+  function openPanel(imgIdx) {
+    currentImgIdx = imgIdx;
+    var imgs = document.querySelectorAll('img[data-img-idx]');
+    var mainImg = imgs[imgIdx];
+    if (!mainImg) return;
+
+    // Highlight selected image
+    document.querySelectorAll('.img-selected').forEach(function(el) { el.classList.remove('img-selected'); });
+    mainImg.classList.add('img-selected');
+
+    // Find img-set if it exists
+    var setEl = mainImg.closest('.img-set');
+    var desktopSrc = mainImg.src;
+    var tabletSrc = setEl ? (setEl.querySelector('.for-tablet') || {}).src || '' : '';
+    var mobileSrc = setEl ? (setEl.querySelector('.for-mobile') || {}).src || '' : '';
+
+    var slots = document.getElementById('panel-slots');
+    slots.innerHTML = '';
+
+    var devices = [
+      { key: 'desktop', icon: '🖥', label: 'Desktop', src: desktopSrc, required: true },
+      { key: 'tablet', icon: '📱', label: 'Tablet', src: tabletSrc, required: false },
+      { key: 'mobile', icon: '📲', label: 'Mobile', src: mobileSrc, required: false },
+    ];
+
+    devices.forEach(function(d) {
+      var slot = document.createElement('div');
+      slot.className = 'device-slot';
+      slot.setAttribute('data-device', d.key);
+
+      var hasCustom = d.key !== 'desktop' && d.src;
+      var displaySrc = d.src || desktopSrc;
+      var badgeClass = d.key === 'desktop' ? 'badge-custom' : (hasCustom ? 'badge-custom' : 'badge-default');
+      var badgeText = d.key === 'desktop' ? 'main' : (hasCustom ? 'custom' : 'using desktop');
+
+      slot.innerHTML =
+        '<div class="device-label">' + d.icon + ' ' + d.label +
+        ' <span class="badge ' + badgeClass + '">' + badgeText + '</span></div>' +
+        '<div class="device-thumb">' +
+        '<img src="' + displaySrc + '">' +
+        ((!d.required && hasCustom) ? '<button class="remove-btn visible" data-remove="' + d.key + '" title="Remove custom image">✕</button>' : '') +
+        '</div>';
+
+      slot.addEventListener('click', function(ev) {
+        if (ev.target.closest('[data-remove]')) return; // handled separately
+        window.parent.postMessage({ type: 'edit-image', src: displaySrc, index: imgIdx, kind: 'img', device: d.key }, '*');
+      });
+
+      slots.appendChild(slot);
+    });
+
+    // Remove custom image handlers
+    slots.querySelectorAll('[data-remove]').forEach(function(btn) {
+      btn.addEventListener('click', function(ev) {
+        ev.stopPropagation();
+        var device = btn.getAttribute('data-remove');
+        removeDeviceImage(imgIdx, device);
+      });
+    });
+
+    panel.classList.add('open');
+  }
+
+  function removeDeviceImage(imgIdx, device) {
+    var imgs = document.querySelectorAll('img[data-img-idx]');
+    var mainImg = imgs[imgIdx];
+    if (!mainImg) return;
+    var setEl = mainImg.closest('.img-set');
+    if (!setEl) return;
+    var devImg = setEl.querySelector('.for-' + device);
+    if (devImg) { devImg.remove(); }
+    setEl.classList.remove('has-' + device);
+    snapshotForUndo();
+    openPanel(imgIdx); // refresh panel
+  }
 
   // ── EDIT LOGIC ──
   var activeEdit = null;
@@ -984,37 +1066,15 @@ EDIT_SCRIPT = """
       updateToolbarState();
       return;
     }
-    // ── Image overlay button clicks ──
-    var ovBtn = e.target.closest('[data-ov]');
-    if (ovBtn) {
-      e.preventDefault();
-      e.stopPropagation();
-      var wrap = ovBtn.closest('.img-wrap');
-      var img = wrap ? wrap.querySelector('img[data-img-idx]') : null;
-      if (!img) return;
-      var action = ovBtn.getAttribute('data-ov');
-      var idx = parseInt(ovBtn.getAttribute('data-idx') || img.getAttribute('data-img-idx'));
-
-      if (action === 'replace') {
-        // Replace all — opens media picker, result replaces main image
-        window.parent.postMessage({ type: 'edit-image', src: img.src, index: idx, kind: 'img', device: 'all' }, '*');
-      } else {
-        // Device-specific — opens media picker with device context
-        window.parent.postMessage({ type: 'edit-image', src: img.src, index: idx, kind: 'img', device: action }, '*');
-      }
-      return;
-    }
-    // Click on wrapped image or its wrapper → do nothing (use overlay buttons)
-    if (e.target.closest('.img-wrap')) {
-      e.preventDefault();
-      return;
-    }
+    // ── Image click → open side panel ──
     var img = e.target.closest('img[data-img-idx]');
-    if (img) {
+    if (img && !img.closest('#adv-header-logo') && !img.closest('#img-panel')) {
       e.preventDefault();
-      window.parent.postMessage({ type: 'edit-image', src: img.src, alt: img.alt || '', index: parseInt(img.getAttribute('data-img-idx')), kind: 'img' }, '*');
+      openPanel(parseInt(img.getAttribute('data-img-idx')));
       return;
     }
+    // Click on panel → don't close
+    if (e.target.closest('#img-panel')) return;
     var media = e.target.closest('[data-media-idx]');
     if (media) {
       e.preventDefault();
@@ -1056,19 +1116,10 @@ EDIT_SCRIPT = """
       // Remove toolbar from DOM before capturing
       var tbEl = document.getElementById('edit-toolbar');
       if (tbEl) tbEl.remove();
-      // Unwrap images: remove .img-wrap + .img-overlay, keep .img-set and standalone imgs
-      document.querySelectorAll('.img-wrap').forEach(function(wrap) {
-        var ov = wrap.querySelector('.img-overlay');
-        if (ov) ov.remove();
-        var setEl = wrap.querySelector('.img-set');
-        if (setEl) {
-          wrap.parentNode.insertBefore(setEl, wrap);
-        } else {
-          var img = wrap.querySelector('img');
-          if (img) wrap.parentNode.insertBefore(img, wrap);
-        }
-        wrap.remove();
-      });
+      // Remove panel and cleanup
+      var panelEl = document.getElementById('img-panel');
+      if (panelEl) panelEl.remove();
+      document.querySelectorAll('.img-selected').forEach(function(el) { el.classList.remove('img-selected'); });
       window.parent.postMessage({ type: 'current-html', html: document.documentElement.outerHTML }, '*');
       // Re-add toolbar + re-wrap images
       document.body.appendChild(tb);
@@ -1129,6 +1180,8 @@ EDIT_SCRIPT = """
           reMarkElements();
         }
         snapshotForUndo();
+        // Refresh panel if open
+        if (currentImgIdx !== null) openPanel(currentImgIdx);
       }
     }
   });
