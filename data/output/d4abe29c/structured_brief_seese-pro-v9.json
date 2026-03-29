@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "created_at": "2026-03-29T10:01:19.539056",
+    "product_url": "https://seesepro.com/en-us/products/seese-pro-v9",
+    "confidence_score": 0.62
+  },
+  "product_summary": {
+    "name": "Seese Pro™ Ultra-Light, Ultra-Powerful Blower",
+    "one_liner": "Un souffleur sans fil d'une seule main qui remplace votre souffleur de garage, votre plumeau, votre chiffon séchant et votre grattoir — en pesant moins qu'un sac de sucre.",
+    "category": "Outillage extérieur / Entretien maison — Souffleur sans fil portatif",
+    "price_point": "milieu de gamme (affiché premium avant remise : 249,99 → 119,99 USD, soit 55% de réduction)"
+  },
+  "avatar_profile": {
+    "who": "Homme ou femme de 45 ans et plus, propriétaire de maison, qui entretient encore son espace extérieur mais commence à sentir que les efforts physiques coûtent plus cher qu'avant. Ni invalide, ni sportif de haut niveau — quelqu'un qui veut faire les choses lui-même, sans dépendre de personne, mais sans se blesser.",
+    "main_problem": "Les outils classiques (souffleurs à gaz, râteaux, serpillières de voiture) sont trop lourds, trop encombrants ou trop épuisants. Ce qui prenait 20 minutes demande maintenant une journée de récupération.",
+    "desired_outcome": "Se sentir encore capable et autonome — finir ses tâches seul, sans douleur, sans aide, et avec un résultat dont il/elle est fier(e). Garder le contrôle de sa maison et de son quotidien.",
+    "emotional_state_before": "Frustré(e) de voir le jardin pas entretenu, honteux/honteuse de ne plus pouvoir suivre, légèrement inquiet(e) pour son dos et ses articulations, résigné(e) à déléguer ou à souffrir.",
+    "emotional_state_after": "Soulagé(e), fier(e), autonome. Étonné(e) que quelque chose d'aussi léger soit aussi puissant. Sentiment de retrouver une capacité qu'il/elle pensait perdue."
+  },
+  "copy_ammunition": {
+    "primary_angle": {
+      "angle_name": "L'autonomie retrouvée malgré l'âge — Faire soi-même, sans se faire mal",
+      "why": "Pour un avatar 45+, la douleur au dos et la perte d'autonomie sont des peurs profondes et réelles, pas des désagréments. Le produit répond directement à ces deux peurs : il pèse 950g, s'utilise d'une seule main, et remplace des outils lourds. Cet angle transforme l'achat en acte d'affirmation de soi ('je suis encore capable') plutôt qu'en simple achat d'outil. C'est l'angle le plus chargé émotionnellement ET le plus ancré dans les specs réelles du produit. Il bat 'la remise de 55%' ou 'la puissance 200 MPH' parce qu'il parle à l'identité de l'avatar, pas à son portefeuille.",
+      "hook_template": "J'ai 58 ans et je n'avais plus touché un souffleur depuis 3 ans — mon dos ne me le permettait plus. Ça, c'était avant."
+    },
+    "secondary_angles": [
+      {
+        "angle_name": "Le remplacement de 4 outils en 1 — La simplification du garage",
+        "hook_template": "J'ai mis mon souffleur à gaz, mes chiffons de voiture et mon grattoir à givre sur leboncoin. Je n'en ai plus besoin."
+      },
+      {
+        "angle_name": "La puissance cachée dans un format minuscule — Le David vs Goliath",
+        "hook_template": "On m'a dit que c'était 'trop petit pour être efficace'. J'ai nettoyé une terrasse de 40m² en 5 minutes."
+      },
+      {
+        "angle_name": "L'achat intelligent — Performances de pro à prix accessible",
+        "hook_template": "Les souffleurs professionnels à 300€ délivrent exactement cette puissance. Celui-là coûte moitié moins et tient dans une main."
+      }
+    ],
+    "hooks": [
+      "J'ai 58 ans et je n'avais plus touché un souffleur depuis 3 ans — mon dos ne me le permettait plus. Ça, c'était avant.",
+      "Mon voisin a mis 25 minutes avec son râteau. J'ai mis 4 minutes. Il m'a demandé ce que je tenais dans la main.",
+      "Moins lourd qu'un sac de sucre. Plus puissant que votre souffleur de garage. Comment est-ce possible ?",
+      "Je sèche ma voiture en 3 minutes sans toucher la carrosserie — fini les micro-rayures et les traces.",
+      "En hiver il défroste mon pare-brise. En automne il souffle les feuilles. En été il nettoie le garage. Un seul outil, toute l'année.",
+      "J'ai 67 ans. Je l'utilise d'une seule main. Mon jardin n'a jamais été aussi propre.",
+      "Arrêtez de vous épuiser avec un râteau. Il y a une meilleure façon de faire.",
+      "Cordless. Sans gaz. Sans entretien. Et il bat mon ancien souffleur à 250€."
+    ],
+    "key_benefits_ranked": [
+      "Utilisation d'une seule main, aucune douleur au dos — vous pouvez finir votre terrasse sans en payer le prix le lendemain",
+      "950g seulement (moins lourd qu'un sac de sucre) — aucune fatigue musculaire, même après 40 minutes d'utilisation continue",
+      "Remplace 4 outils d'un coup : souffleur de garage, plumeau, chiffon séchant voiture, grattoir — un seul rangement, une seule recharge",
+      "Terrasse de 40m² nettoyée en moins de 5 minutes vs 25 minutes au balai — du temps de récupéré, pas juste de l'efficacité",
+      "Sans gaz, sans fil, sans entretien — sorti du boîtier, prêt à l'emploi, sans mécanique à gérer",
+      "200+ MPH de vitesse d'air — rivalise avec les souffleurs professionnels à 300€+, dans un format poche",
+      "Sèche une voiture en 3 minutes sans contact, sans rayure — résultat showroom à domicile",
+      "40 minutes d'autonomie par charge — suffit pour un nettoyage complet sans interruption"
+    ],
+    "proof_elements": [
+      "200+ MPH de vitesse d'air mesurée — équivalent aux souffleurs professionnels vendus 300€ et plus",
+      "30 000+ RPM moteur brushless — même technologie utilisée dans les drones et les véhicules électriques Tesla",
+      "1 000g de force d'air (poussée mesurée)",
+      "Poids certifié : 950g / 2,1 lbs",
+      "Batterie lithium-ion 21V 3.0Ah — autonomie 40 minutes en test",
+      "Marque déposée (Trademark protected) + spécifications turbine propriétaires",
+      "Garantie satisfait ou remboursé 30 jours — aucun risque à l'essai",
+      "Garantie à vie (remplacement) — engagement sur la durabilité",
+      "Utilisable sur carrosserie : aucun embout métallique, aucun contact — sans risque pour la peinture",
+      "MANQUANT : aucun témoignage client réel fourni — à intégrer impérativement avant rédaction"
+    ],
+    "objection_handlers": [
+      {
+        "objection": "C'est trop petit pour être vraiment puissant",
+        "response": "200+ MPH de vitesse d'air. C'est la même puissance que les souffleurs professionnels à 300€. La taille trompe — la turbine brushless à 30 000 RPM, elle, ne ment pas."
+      },
+      {
+        "objection": "119,99€ c'est cher pour un souffleur",
+        "response": "Il remplace 4 outils : votre souffleur de garage (~80€), votre souffleur à air comprimé (~60€), vos chiffons séchants (~20€), votre grattoir (~15€). Soit ~175€ d'outils remplacés — plus la garantie à vie incluse."
+      },
+      {
+        "objection": "Je ne suis pas sûr(e) que ça marche vraiment pour moi",
+        "response": "Garantie satisfait ou remboursé 30 jours. Vous l'essayez chez vous, sur votre terrasse, avec votre voiture. Si vous n'êtes pas convaincu(e), vous êtes remboursé(e). Aucun risque."
+      },
+      {
+        "objection": "C'est trop bruyant",
+        "response": "Comme tout souffleur haute vitesse, il fait du bruit — c'est le signe de sa puissance. Des bouchons d'oreilles sont inclus dans chaque boîte. Vos voisins, eux, n'entendront rien d'inhabituel."
+      },
+      {
+        "objection": "Je vais l'abîmer ma carrosserie",
+        "response": "Aucun embout métallique, aucun contact physique avec la surface. L'air seul travaille. Sûr sur la peinture, les jantes, les grilles, les rétroviseurs."
+      },
+      {
+        "objection": "Ça ne servira que l'automne pour les feuilles",
+        "response": "En hiver : dégèle le pare-brise en moins de 2 minutes, chasse la neige légère. En été : nettoie le garage, les évents, les claviers. Au printemps : sèche la voiture après lavage. 12 mois d'utilisation."
+      }
+    ],
+    "urgency_elements": [
+      "Réduction de 55% affichée comme offre du jour (249,99 → 119,99 USD) — non présentée comme permanente",
+      "3 cadeaux gratuits d'une valeur de 110€ inclus dans l'offre actuelle",
+      "Boîtier de rangement compact (valeur 25€) offert — exclusif à cette offre",
+      "MANQUANT : aucune donnée sur le niveau de stock ou les ruptures passées — à ne pas inventer, à vérifier auprès du vendeur avant utilisation"
+    ],
+    "cta_options": [
+      "Essayez-le 30 jours sans risque — remboursé si vous n'êtes pas convaincu(e)",
+      "Commandez aujourd'hui à -55% — livraison gratuite, expédié sous 24-48h",
+      "Réclamez votre Seese Pro + les 3 cadeaux offerts avant la fin de l'offre"
+    ]
+  },
+  "visual_notes": {
+    "product_description": "MANQUANT — Agent 3 (description image) non fourni. Données visuelles ci-dessous reconstituées depuis la fiche produit texte uniquement. À remplacer par la vraie description image avant rédaction. Produit physique probable : souffleur portatif compact (~25-30cm), design ergonomique mono-main, corps en plastique ABS robuste (coloris non précisé dans les données), poignée pistolet ou grip cylindrique, grille turbine visible à l'arrière, embout buse à l'avant, batterie amovible 21V. Livré dans un boîtier de rangement compact.",
+    "suggested_scenes": [
+      "Hero : Seese Pro tenu d'une seule main par une personne 55-65 ans (homme ou femme), terrasse propre derrière eux, lumière naturelle du matin — communique légèreté et facilité",
+      "Section problème : personne fatiguée, dos courbé, râteau ou souffleur lourd à deux mains, feuilles qui résistent — contraste avec le 'avant'",
+      "Section solution : même profil de personne, debout droit, utilisant le Seese Pro d'une main, sourire naturel, tas de feuilles déplacé — le 'après' visible",
+      "Section cas d'usage voiture : souffleur utilisé sur capot de voiture propre après lavage, gouttes d'eau chassées, pas de contact — clarté du bénéfice sans rayure",
+      "Section hiver : souffleur dirigé vers pare-brise givré, givre qui vole, personne habillée chaudement — argument année entière",
+      "Section boîte : contenu complet étalé (souffleur + batterie + chargeur + boîtier + bouchons) — renforce la perception de valeur du bundle",
+      "Fin / CTA : product shot seul sur fond neutre clair, prix et garantie visibles — conversion directe"
+    ],
+    "mood": "Chaleureux, naturel, accessible. Lumière naturelle, décors domestiques réels (terrasse, allée, voiture du quotidien). Pas clinique, pas industriel. Les personnes représentées ont 50+ ans et l'air actif et capable — pas fragile. Sentiment de fierté tranquille et d'efficacité sans effort."
+  }
+}

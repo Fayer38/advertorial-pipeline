@@ -153,6 +153,15 @@ def _save_pipeline_state(plid: str):
     state_file = state_dir / "_pipeline_state.json"
     state_file.write_text(json.dumps(p, default=str, ensure_ascii=False))
 
+def _log_pipeline(plid: str, level: str, message: str):
+    """Append a log entry to the pipeline's log file."""
+    log_dir = Path(f"data/output/{plid}")
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_file = log_dir / "_pipeline.log"
+    ts = datetime.utcnow().strftime("%H:%M:%S")
+    with open(log_file, "a") as f:
+        f.write(f"[{ts}] [{level.upper()}] {message}\n")
+
 # ── LOAD EXISTING PIPELINES ON STARTUP ──
 @app.on_event("startup")
 async def _load_existing_pipelines():
@@ -336,6 +345,23 @@ async def start_pipeline(req: PipelineStartReq, bg: BackgroundTasks):
 async def get_status(plid: str):
     if plid not in pipelines: raise HTTPException(404)
     return pipelines[plid]
+
+@app.get("/pipeline/{plid}/logs")
+async def get_pipeline_logs(plid: str):
+    """Return the log file contents for a pipeline."""
+    log_file = Path(f"data/output/{plid}/_pipeline.log")
+    state_file = Path(f"data/output/{plid}/_pipeline_state.json")
+    logs = ""
+    state = {}
+    if log_file.exists():
+        logs = log_file.read_text()
+    if state_file.exists():
+        try: state = json.loads(state_file.read_text())
+        except: pass
+    # Also include files in the output dir
+    out_dir = Path(f"data/output/{plid}")
+    files = [f.name for f in out_dir.iterdir() if f.is_file() and not f.name.startswith("_")] if out_dir.exists() else []
+    return {"pipeline_id": plid, "logs": logs, "state": state, "files": files}
 
 @app.get("/pipeline/{plid}/stream")
 async def stream_events(plid: str):
@@ -1663,6 +1689,7 @@ async def _analyze_product_bg(pid, url):
 async def _run_pipeline_bg(plid, req):
     from main import AdvertorialPipeline
     s = pipelines[plid]; q = pipeline_events[plid]; out = f"data/output/{plid}"
+    _log_pipeline(plid, "info", f"Pipeline started — product={req.product_id} template={req.template} angle={req.angle} lang={req.language}")
     try:
         s["status"] = "running"
         await _emit(q, plid, "running", "Phase 1", "Starting", 0.0)
@@ -1691,9 +1718,11 @@ async def _run_pipeline_bg(plid, req):
         except Exception:
             pass
         s["results"] = {"headline": result.get("slug",""), "qa_score": 0, "html_file": result.get("html_file",""), "thumbnail": _thumbnail}
+        _log_pipeline(plid, "info", f"Pipeline completed — html={result.get('html_file','')} words={result.get('word_count',0)}")
         await _emit(q, plid, "completed", "Done", "", 1.0)
     except Exception as e:
         s["status"] = "failed"; s["error"] = str(e); s["completed_at"] = datetime.utcnow().isoformat()
+        _log_pipeline(plid, "error", f"Pipeline FAILED — {str(e)[:500]}")
         logger.error(f"Pipeline {plid} failed: {e}", exc_info=True)
         await _emit(q, plid, "failed", "Error", str(e), s["progress"])
 
@@ -1736,6 +1765,7 @@ async def _emit(q, plid, status, phase, agent, progress):
     if plid in pipelines:
         pipelines[plid]["status"]=status; pipelines[plid]["current_phase"]=phase; pipelines[plid]["current_agent"]=agent; pipelines[plid]["progress"]=progress
         _save_pipeline_state(plid)
+    _log_pipeline(plid, "info" if status != "failed" else "error", f"{phase} | {agent} | {status} | {progress*100:.0f}%")
     ev = {"type":"progress","pipeline_id":plid,"status":status,"current_phase":phase,"current_agent":agent,"progress":progress,"timestamp":datetime.utcnow().isoformat()}
     try: await q.put(ev)
     except: pass
