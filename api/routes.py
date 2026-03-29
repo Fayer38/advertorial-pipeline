@@ -1353,7 +1353,7 @@ from fastapi.responses import HTMLResponse
 HEADER_LOGO_URL = "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Design_sans_titre_15.png?v=1774625309"
 HEADER_LOGO_HTML = f'''<div id="adv-disclosure" style="text-align:center;padding:3px 0;background:#fafafa;border-bottom:1px solid #f0f0f0;font-size:9px;color:#c0c0c0;letter-spacing:0.03em;font-family:system-ui,sans-serif;">This is an advertorial</div>
 <div id="adv-header-logo" style="text-align:center;padding:14px 0 10px;background:#fff;border-bottom:1px solid #eee;">
-  <img src="{HEADER_LOGO_URL}" alt="Logo" style="height:40px;max-width:200px;object-fit:contain;">
+  <img src="{HEADER_LOGO_URL}" alt="Logo" style="height:52px;max-width:260px;object-fit:contain;">
 </div>'''
 
 def _inject_header_logo(html: str) -> str:
