@@ -1,0 +1,82 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "Woman in her late 60s with silver hair and natural look, standing on a wooden deck scattered with autumn leaves, holding a compact cordless leaf blower effortlessly in one hand with arm slightly extended, relaxed shoulders, soft genuine smile looking slightly off-camera with quiet satisfaction, clean deck visible behind her, golden hour backlight, warm amber and orange tones, blurred golden foliage bokeh background, cinematic natural lighting, photorealistic, candid authentic mood, shallow depth of field, 8k, professional photography, hyperdetailed skin texture, not model-perfect real face",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, tense posture, stiff, stock photo, artificial smile, young woman, plastic look, overexposed",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "Product comparison photo, sleek compact cordless leaf blower placed directly next to a standard 1kg white sugar bag on a clean light wood kitchen counter, both objects at exact same scale shot from slightly above, warm natural side window light casting soft shadows, minimal styling, neutral background, no distractions, the blower appears modern and lightweight, honest domestic setting, commercial product photography, sharp focus, depth of field, photorealistic, 8k resolution, professional studio feel without artificial look",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, signature, cluttered background, colorful props, artificial lighting, harsh shadows, overexposed, people, hands",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "Premium flat lay product bundle, overhead shot, compact cordless leaf blower centered on warm white background, neatly arranged surrounding accessories with generous spacing: lithium battery pack, wall charger, open black carrying case showing interior padding, small pouch with foam ear plugs, gift card, soft even diffused studio lighting with zero harsh shadows, clean organized composition, high-end product catalog style, premium unboxing feel, commercial photography, hyperdetailed, 8k, sharp focus throughout",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, signature, cluttered, overlapping items, harsh shadows, dark background, cheap look, angled shot",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "Warm authentic photo collage grid layout three panels, candid real-life portraits of seniors using a compact cordless leaf blower outdoors: panel one — man in his early 70s in casual clothes smiling naturally while clearing a leaf-covered driveway with one relaxed hand on blower, panel two — woman in her late 50s effortlessly drying the side of her car with blower in one hand slight smile, panel three — older couple on clean autumn patio one holding the blower both looking at cleared space with quiet satisfaction, all panels natural outdoor golden warm tones, real lived-in faces not model-perfect, candid not posed, photorealistic, 8k",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, bad anatomy, stock photo look, overly posed, artificial smiles, young people, dark tones, cold lighting",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "Premium product catalog photo, compact cordless leaf blower resting inside its open black padded carrying case, battery and charger and accessories neatly arranged around it on a clean white surface, shot from slightly above at 3/4 angle, soft even studio lighting, high-end commercial product photography, price tag overlay in lower right corner showing dollar amount in bold clean sans-serif font with strikethrough original price in red above, premium feel not discount-flyer aesthetic, hyperdetailed, 8k, sharp focus, professional",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, signature, cluttered, dark background, harsh shadows, cheap look, promotional flyer style, people, hands",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "Tight intimate close-up of a senior hand, slightly weathered and relaxed, clearly not young, gripping a compact cordless leaf blower with one natural easy hold, thumb resting lightly on trigger button, warm golden backlight, bokeh background of soft-focus autumn leaves swirling up from a stone patio surface, warm golden hour tones, no face in frame, the hand tells the entire story — effortless grip, capable and free, cinematic shallow depth of field, photorealistic, hyperdetailed skin texture, natural aging, 8k, professional photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra fingers, mutated hands, bad anatomy, young hand, smooth skin, tense grip, face visible, stock photo, artificial lighting, cold tones",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

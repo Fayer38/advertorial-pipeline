@@ -1,3 +1,11 @@
 [22:32:14] [INFO] Pipeline started — product=seese-pro-v9 template=news-report angle=testimonial lang=en
 [22:32:14] [INFO] Phase 1 | Starting | running | 0%
 [22:32:14] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
+[22:33:49] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[22:35:27] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[22:36:19] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[22:36:19] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[22:37:09] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[22:37:52] [INFO] Pipeline completed — html=data/output/c328d799/millions-of-americans-over-60-are-quietly-ditching-their-gas.html words=1705
+[22:37:52] [INFO] Done |  | completed | 100%
+[22:37:52] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)

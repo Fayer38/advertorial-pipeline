@@ -1,0 +1,44 @@
+{
+  "overall_score": 5.7,
+  "passed": false,
+  "criteria": {
+    "hook_strength": {
+      "score": 6,
+      "feedback": "Le hook s'ouvre sur un badge 'CLINICAL ALERT' et une citation d'étude — crédible, mais froid et distancé. Il parle AU lecteur en tant que statistique, pas en tant que personne. Les hooks prévus dans le brief ('À 60 ans, mon dos m'avait dit d'arrêter...') sont infiniment plus puissants parce qu'ils créent une identification immédiate. Le hook actuel convient à un public médical, pas à un propriétaire de 65 ans qui veut juste nettoyer son allée sans avoir mal. Le titre est aussi trop long et trop clinique pour arrêter le scroll."
+    },
+    "story_flow": {
+      "score": 6,
+      "feedback": "La structure logique est présente (problème → revue des solutions → solution → preuves → recommandation → offre) mais le registre académique crée une distance constante qui nuit au flow. Aucun bucket brigade émotionnel ('Et voilà ce qui se passe ensuite...', 'Mais attendez.', 'Ce n'est pas tout.'). Les transitions sont des connecteurs logiques de mémoire de master, pas des appâts narratifs. Le lecteur de 60 ans n'est pas accroché page après page — il est instruit. La rupture entre la section clinique et les case studies est abrupte : il manque un pont humain du type 'Voilà ce que ça donne dans la vraie vie.'"
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Point fort de cet advertorial. Les citations d'études sont précises (volume, issue, année, n=), le tableau comparatif est bien construit, les deux case studies sont détaillés avec des données objectives (NPRS, DASH, durées). Légère fragilité : toutes les preuves quantitatives semblent issues d'une seule étude interne (312 utilisateurs) — ajouter une preuve externe indépendante et un ou deux témoignages courts non-cliniques renforcerait la crédibilité perçue par le lecteur non-médical."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Le CTA est clair, le prix est affiché, la garantie est mentionnée, les bonus sont listés avec valeur. Il manque une vraie urgence : 'subject to availability' en italique est trop faible et enterré. Suggestion concrète : ajouter au-dessus du bouton une ligne de type 'Cette offre à $119.99 inclut les 3 accessoires d'une valeur de $110 — disponible uniquement via cette page, tant que le stock est suffisant.' Le bouton lui-même pourrait être plus actionnable : remplacer 'Order the Seese Pro™' par 'Essayer le Seese Pro™ sans risque — 30 jours pour décider.'"
+    },
+    "emotional_arc": {
+      "score": 5,
+      "feedback": "C'est le déficit le plus critique de cet advertorial. La douleur émotionnelle de la cible — la honte de ne plus pouvoir gérer seul, la peur de devenir une charge, la tristesse de voir son autonomie s'éroder — n'est quasiment jamais adressée directement au lecteur. Elle apparaît brièvement dans les case studies (Robert M. dit 'I honestly thought that part of my life was over') mais ce n'est pas le narrateur qui l'exprime, c'est un patient cité en annexe. Le future pacing est totalement absent : aucun paragraphe ne fait visualiser au lecteur sa vie 30 jours après — sa terrasse propre en 5 minutes un dimanche matin, sa fille qui arrête de s'inquiéter, ce sentiment d'être encore 'dans la course'. Suggestion : ajouter après les case studies un paragraphe du type : 'Imaginez le dimanche prochain. Vous prenez le Seese Pro™, vous sortez, et 8 minutes plus tard votre allée est impeccable. Pas de dos en feu. Pas d'appel à votre fils. Juste vous, chez vous, qui faites ce que vous avez toujours fait.'"
+    },
+    "readability": {
+      "score": 4,
+      "feedback": "Problème majeur. L'advertorial fait 2 336 mots — 55% au-dessus du plafond recommandé de 1 500 mots. Le vocabulaire est celui d'une revue médicale : 'lumbar paraspinal muscles', 'isometric contraction', 'ISO 2631-1', 'facet joint irritation', 'cervical spondylosis', 'NPRS', 'DASH questionnaire'. Un propriétaire de 65 ans ne lit pas ça — il décroche au troisième paragraphe. Les phrases sont longues (certaines dépassent 60 mots), les paragraphes font souvent 6-8 lignes. Les stat-boxes et le tableau comparatif sont de bons éléments de format mais ils ne compensent pas la densité du corps de texte. Action requise : (1) réduire à 1 200-1 400 mots, (2) supprimer tout le jargon médical ou le remplacer par du langage courant ('pression sur les vertèbres lombaires' → 'le bas du dos qui tire'), (3) couper toutes les phrases de plus de 25 mots en deux."
+    },
+    "similarity_to_best": {
+      "score": 5,
+      "feedback": "La structure existe (hook → problème → solutions alternatives → solution → preuves → offre → CTA) mais l'exécution s'éloigne radicalement des meilleurs advertoriaux. Le texte ressemble à un white paper médical, pas à un article éditorial qui convertit. Les top advertoriaux parlent à la première personne ou adoptent un ton de journaliste curieux — pas de clinicien qui rédige un rapport. La voix narrative n'est pas incarnée : on ne sait pas qui parle avant la section 'recommandation clinique'. Les meilleurs advertoriaux créent une connivence dès les premières lignes. Ici, le lecteur se sent observé comme un sujet d'étude, pas compris comme un être humain. La section offre est trop transactionnelle et trop peu narrative. Reformuler la structure pour qu'elle commence par une histoire (un des hooks du brief), utilise la voix du spécialiste de manière plus anecdotique, et intègre les preuves comme des découvertes narratives plutôt que comme des annexes cliniques."
+    }
+  },
+  "improvements": [
+    "Remplacer le hook clinique par l'un des hooks émotionnels du brief ('À 60 ans, mon dos m'avait dit d'arrêter...') — le badge 'CLINICAL ALERT' peut rester mais sous le hook, pas à la place",
+    "Réduire l'article à 1 200-1 400 mots en supprimant les développements ultra-techniques (notamment la section biomécanique détaillée et les détails méthodologiques des études)",
+    "Supprimer tout le jargon médical et le remplacer par du langage courant et imagé compréhensible par un non-médecin de 65 ans",
+    "Ajouter un paragraphe de future pacing après les case studies : faire visualiser concrètement la vie du lecteur 30 jours après l'achat (un dimanche matin, la terrasse propre, aucune douleur, l'autonomie préservée)",
+    "Ajouter des bucket brigades entre les sections pour maintenir le rythme de lecture ('Mais voilà le problème...', 'Ce que la plupart des gens ne savent pas...', 'Et c'est là que tout change.')",
+    "Incarner la voix narrative dès le début : nommer ou décrire le 'clinicien' qui s'exprime, ou adopter une voix de journaliste-éditorial à la première personne pour créer une connivence immédiate",
+    "Renforcer l'urgence dans le CTA : ajouter une ligne de disponibilité limitée au-dessus du bouton et reformuler le bouton pour qu'il soit orienté bénéfice ('Essayer sans risque 30 jours' plutôt que 'Order')"
+  ],
+  "version": 1
+}

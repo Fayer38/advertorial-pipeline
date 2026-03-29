@@ -1,0 +1,76 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Femme de 62-65 ans, cheveux gris naturels, sourire détendu et authentique, tenant d'une seule main un petit souffleur compact (950g) à hauteur de hanche. Elle se tient sur une terrasse en bois avec des feuilles d'automne dispersées autour d'elle — quelques-unes encore au sol, la majorité déjà soufflées. Tenue décontractée de week-end (pull léger, jeans). Lumière naturelle de fin de matinée, légère dorure automnale. Posture relâchée, pas d'effort visible.",
+      "mood": "Chaleureux, autonome, satisfait — ambiance dimanche matin maîtrisé. Couleurs chaudes (oranges, ocres des feuilles, bois gris de la terrasse).",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "before_after",
+      "description": "Split horizontal. Côté gauche : coin de garage encombré avec un vieux souffleur à essence posé au sol, jerricane rouge à côté, câbles emmêlés, poussière visible, éclairage froid de garage. Côté droit : même angle de vue, même espace, mais propre et rangé — le Seese Pro dans sa housse compacte noire posée bien à plat sur une étagère, rien d'autre. Lumière légèrement plus chaude à droite pour renforcer le contraste positif.",
+      "mood": "Contraste fort ordre/désordre. Côté gauche : frustration, lourdeur. Côté droit : légèreté, contrôle, sérénité domestique.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "testimonial",
+      "description": "Femme d'environ 52-55 ans, allure professionnelle sans être froide — col médical ou tenue neutre sobre, cheveux attachés, regard direct et bienveillant vers la caméra. Arrière-plan légèrement flou évoquant un cabinet ou bureau lumineux (mur blanc cassé, plante verte, lumière naturelle latérale). Cadrage mi-buste, léger espace négatif à droite pour laisser place à une citation superposée en post-production.",
+      "mood": "Crédible, expert, chaleureux — ni trop clinique ni trop commercial. Lumière naturelle douce, ambiance confiance.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "product_shot",
+      "description": "Flat lay sur fond blanc pur légèrement texturé. Le Seese Pro est positionné à gauche, à côté d'un paquet de sucre de 1kg standard (marque générique, étiquette neutre ou masquée). Une flèche graphique sobre indique le poids respectif. Éclairage studio neutre et net, ombres douces. En dessous, trois petits objets familiers alignés pour illustrer le poids combiné : un smartphone, une petite bouteille d'eau (33cl), une télécommande — avec la mention '= poids du Seese Pro' en overlay épuré.",
+      "mood": "Factuel, clair, légèrement éditorial — registre magazine consommateur sérieux, pas publicité générique. Minimaliste.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "testimonial",
+      "description": "Triptyque horizontal de trois portraits lifestyle authentiques. Panneau 1 : femme de 68 ans, cheveux blancs courts, tenue de jardin casual, utilisant le Seese Pro sur une terrasse avec feuilles d'automne — regard vers ses pieds, sourire naturel. Panneau 2 : homme de 71 ans, carrure solide mais détendue, allée de maison avec graviers, tenant le souffleur d'une main — expression sceptique transformée en approbation. Panneau 3 : femme de 64 ans, debout dans un garage propre, souffleur dans une main, autre main sur la hanche — posture fière. Modèles seniors réels, pas de beauté lisse artificielle.",
+      "mood": "Authenticité avant tout — vraie vie, vrais gens, vraies maisons américaines de banlieue. Lumière naturelle selon contexte de chaque scène.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "lifestyle",
+      "description": "Homme de 63-67 ans, tenue décontractée de week-end (polo, pantalon kaki), tenant le Seese Pro d'une seule main à hauteur de taille, dirigé vers la carrosserie d'une voiture propre garée dans une allée de maison pavillonnaire. Posture totalement relâchée, légère inclinaison naturelle. Lumière dorée de fin d'après-midi (golden hour), ombres douces projetées. En arrière-plan flou : haie verte, façade de maison classique américaine.",
+      "mood": "Chaleureux, nonchalant, satisfait — sentiment que la tâche est facile et agréable, pas laborieuse. Teintes chaudes automnales.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 7,
+      "scene_type": "product_shot",
+      "description": "Flat lay soigné sur surface lin naturel légèrement texturé (beige clair). La housse de transport est ouverte au centre, révélant le Seese Pro parfaitement positionné à l'intérieur. À gauche, le chargeur rapide posé à plat. À droite, une petite protection auditive compacte. Cadrage aérien propre, éclairage naturel latéral doux créant une légère ombre directionnelle. Esthétique unboxing premium sans excès — sobre et rassurant.",
+      "mood": "Premium accessible — esthétique magazine lifestyle maison, pas tech. Tonalités chaudes neutres (lin, gris clair, noir mat du produit).",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    },
+    {
+      "section_index": 8,
+      "scene_type": "product_shot",
+      "description": "Le Seese Pro centré sur fond blanc pur, légèrement surélevé sur une surface blanche mate (cube ou socle discret). La housse ouverte est posée à plat juste derrière, légèrement décalée. Éclairage studio propre, ombres très douces. Vue légèrement plongeante (15°). Cadrage généreux avec espace blanc autour pour permettre la superposition du prix et du CTA en post-production. Le produit occupe environ 60% du cadre.",
+      "mood": "Confiant, net, conversion — épuré sans être froid. Doit inspirer confiance et désir d'achat immédiat. Registre e-commerce premium.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    }
+  ]
+}

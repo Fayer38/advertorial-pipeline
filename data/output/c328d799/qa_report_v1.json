@@ -1,0 +1,43 @@
+{
+  "overall_score": 8.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le hook est solide : il utilise une personne réelle (63 ans, Ohio), des chiffres précis (400 sq ft, 5 minutes, une main), et crée une tension avec 'l'industrie ne veut pas que vous sachiez'. Mais la formule 'BREAKING' est éculée et sent le clickbait. La dernière phrase du hook ('l'industrie ne veut pas que vous sachiez') est un trope surutilisé qui réduit la crédibilité. Le hook parle à la troisième personne — Margaret — au lieu de s'adresser directement au lecteur en 'vous', ce qui crée une distance émotionnelle."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "La progression hook → investigation → expert → chiffres → industrie → témoignages → test → offre → CTA est logique et bien exécutée. Les bucket brigades sont présents ('Here's something that should make you uncomfortable', 'Let's put those numbers in context'). Point faible : la transition entre la section 'investigation' (liste de findings) et le témoignage expert est abrupte. La section 'findings' avec ses 5 bullet points crée un effet catalogue qui casse le rythme narratif. Le lecteur lit une liste, pas une histoire."
+    },
+    "proof_density": {
+      "score": 8,
+      "feedback": "Preuves bien dosées et variées : statistique CPSC (400 000 urgences/an), avis d'une kinésithérapeute, 3 témoignages nominatifs avec ville et âge, test éditorial sur 4 semaines avec chronométrage précis. Point faible : la kinésithérapeute n'est pas nommée ('a physical therapist who works primarily with adults over 55') — l'anonymat réduit la crédibilité. Les témoignages sont convaincants mais Carol (59 ans) est en dessous de la cible 60+. Aucune certification produit ni source externe citée pour les specs techniques (200 MPH, brushless)."
+    },
+    "cta_clarity": {
+      "score": 8,
+      "feedback": "Le CTA est clair, unique et bien ancré : prix précis ($119.99), réduction chiffrée (55%), lien unique, garantie 30 jours rappelée. La formule 'You have 30 days to prove us wrong' est efficace. Manque : l'urgence est suggérée ('not guaranteed to last', 'while promotional pricing lasts') mais jamais quantifiée — pas de stock limité, pas de date d'expiration, pas de compteur. L'urgence vague est moins efficace qu'une urgence factuelle."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'arc douleur → espoir → confiance → action est présent mais exécuté de façon trop clinique. La douleur est décrite factuellement (statistiques, avis médical) plutôt que viscéralement — le lecteur comprend le problème mais ne le ressent pas. Le future pacing est absent : nulle part l'article ne fait visualiser au lecteur sa vie après — le dimanche matin à nettoyer sa terrasse en 4 minutes, le café encore chaud, les voisins qui regardent. La section témoignages est la plus émotionnelle ('It takes three minutes. I'm not exaggerating') mais elle arrive tard et reste trop courte."
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Phrases majoritairement courtes, paragraphes aérés, bonne utilisation du gras pour les termes clés. Les bullet points sont bien utilisés. Point faible : l'article fait 1705 mots, légèrement au-dessus de la fenêtre optimale 800-1500 mots. La section 'findings' (5 bullets numérotés) et la section offre (liste comparative de prix) créent des blocs denses qui ralentissent la lecture. Le tableau de stats (950g, 200 MPH, etc.) en HTML inline est un bon break visuel mais son rendu dépend du contexte de diffusion."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "La structure suit fidèlement le template éprouvé. Le ton est majoritairement éditorial — 'notre équipe a testé', 'notre investigation', 'voici ce que nous avons trouvé'. La section 'What the Outdoor Tool Industry Doesn't Want You to Know' est bien maîtrisée : elle crée un antagoniste (l'industrie) sans tomber dans le complotisme. Légère surutilisation des formules ('the numbers don't lie', 'speak out') qui signalent le format advertorial à un lecteur averti. La section offre avec la décomposition prix/valeur est un peu trop agressive commercialement pour le ton éditorial maintenu jusque-là."
+    }
+  },
+  "improvements": [
+    "Remplacer 'BREAKING' par une accroche directe en 'vous' : transformer 'A 63-year-old retired teacher just told us...' en 'You've been putting it off for two years. The gas blower is still in the garage. And deep down, you know you're not going to touch it again.' — adresser le lecteur directement dès la première phrase.",
+    "Nommer la kinésithérapeute ou ajouter ses initiales et sa ville pour renforcer la crédibilité : 'Dr. S.M., physical therapist, Denver CO' suffit à transformer une source anonyme en source crédible.",
+    "Ajouter un paragraphe de future pacing après la section témoignages : décrire concrètement le dimanche matin type du lecteur après l'achat — le café chaud, les 5 minutes de terrasse, pas de mal de dos le lundi. Faire visualiser la vie après, pas seulement la vie avant.",
+    "Remplacer la liste des 5 'Findings' numérotés par un récit fluide : les statistiques sont bonnes mais leur présentation en liste brise la narration. Les intégrer dans 2-3 paragraphes narratifs pour maintenir le rythme de lecture.",
+    "Ajouter une urgence factuelle au CTA : remplacer 'not guaranteed to last' par un élément concret — 'Only 847 units remain at this price' ou 'This offer expires [date]' — une urgence chiffrée convertit mieux qu'une urgence vague.",
+    "Adoucir la section offre pour la garder dans le ton éditorial : la décomposition '$390 to $650 in tools replaced for $119.99' est efficace mais le 'less than $2 a month' sonne trop comme un script de téléshopping — le reformuler comme une conclusion naturelle du test éditorial plutôt que comme un argument de vente."
+  ],
+  "version": 1
+}

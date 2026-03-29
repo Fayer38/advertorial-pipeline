@@ -17,6 +17,7 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
 
     # Pull quotes — extracted from body sections periodically
     PULL_QUOTE_INTERVAL = 3  # inject after every Nth body section
+    content_idx = 0
 
     for i, sec in enumerate(sections):
         s_type = sec.get("type", "")
@@ -32,14 +33,16 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
         placeholder = sec.get("visual_placeholder", {})
         img_url = image_map.get(i, "")
         parts = []
+        is_first = (s_type == 'hook' or content_idx == 0)
+        content_idx += 1
 
         if heading:
             parts.append(f'<h2 class="section-h2">{heading}</h2>')
 
-        if body_html:
+        if not is_first and body_html:
             parts.append(body_html)
 
-        # Image AFTER body — editorial image placement
+        # Image — before body for first section, after for others
         if img_url:
             caption = placeholder.get("description", heading) or heading
             if i == 0:
@@ -66,6 +69,10 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
                 f'<div class="ph-desc">{placeholder["description"]}</div>'
                 f'</div>'
             )
+
+        # For first section: body comes after media
+        if is_first and body_html:
+            parts.append(body_html)
 
         if parts:
             body_parts.append("\n".join(parts))

@@ -1,0 +1,108 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "candid lifestyle photography, woman 63 years old, natural gray hair, relaxed authentic smile, holding a small compact black leaf blower 950g in one hand at hip height, effortless posture, casual weekend outfit light knit sweater and jeans, standing on weathered wooden deck, scattered autumn leaves on deck boards, majority of leaves already cleared, late morning natural light, warm golden autumn hue, soft directional shadows, shallow depth of field, background slightly blurred, photorealistic, hyperdetailed, cinematic natural lighting, authentic candid moment, 8k, professional photography, warm autumn color palette oranges ochres and grey wood",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo look, posed stiff, artificial smile, young woman, beauty retouching, overexposed",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "split screen comparison photograph, horizontal diptych, left side cluttered garage corner cold harsh fluorescent lighting, old heavy gas-powered leaf blower sitting on dirty concrete floor, red plastic jerry can beside it, tangled power cables, visible dust and grime, dark shadows, feeling of frustration and clutter, right side exact same garage angle completely clean and organized, compact black leaf blower case neatly closed and lying flat on clean shelf, nothing else, warmer softer light on right side, feeling of order and calm, photorealistic, hyperdetailed, interior photography, professional composition, high contrast between chaos and order, 8k",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, signature, person, human, cartoon, illustration",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "professional portrait photography, woman 53 years old, professional yet warm appearance, neat tied-back hair, sober neutral top slightly medical-adjacent, direct confident and benevolent gaze into camera, genuine trustworthy expression, mid-bust framing, slight negative space on right side of frame, background softly blurred suggesting bright office or consultation room, off-white warm wall, green houseplant, soft lateral natural window light, no harsh shadows, shallow depth of field, photorealistic, hyperdetailed, editorial portrait, 8k, professional photography, expert credibility aesthetic, warm neutral tones",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, clinical cold look, overly commercial, stock photo, heavy makeup, artificial beauty, young woman",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "product flat lay photography, pure white slightly textured studio background, compact black leaf blower positioned on left side, standard 1kg white sugar bag generic label beside it for size comparison, clean neutral studio lighting soft even shadows, three small everyday objects aligned in a row at bottom: modern smartphone, small 33cl water bottle, TV remote control, editorial product photography style, top-down overhead view, precise object placement, minimalist consumer magazine aesthetic, hyperdetailed, 8k, professional product photography, clean crisp whites",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, signature, person, human, colorful busy background, shadows too harsh, perspective distortion",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "horizontal triptych lifestyle portrait photography, three panels side by side, panel one woman 68 years old short white hair casual garden clothes using compact black leaf blower on wooden deck with autumn leaves looking down naturally smiling, panel two man 71 years old solid build relaxed standing in suburban house gravel driveway holding compact leaf blower with one hand expression of satisfied approval, panel three woman 64 years old standing in clean organized garage holding compact leaf blower in one hand other hand on hip proud posture, all real-looking seniors not beauty-retouched, authentic faces, natural lighting per scene context, photorealistic, hyperdetailed, authentic candid documentary style, 8k, genuine suburban American homes",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo look, artificial beauty, smooth airbrushed skin, young people, overly staged",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "lifestyle photography golden hour, man 65 years old, casual weekend outfit polo shirt and khaki pants, holding compact black leaf blower with one hand at waist height, aimed relaxedly at clean car parked in suburban driveway, completely effortless natural posture slight natural lean, soft warm golden late afternoon light, long soft shadows, bokeh background blurred green hedge and classic American suburban house facade, shallow depth of field, photorealistic, hyperdetailed, 8k, cinematic golden hour lighting, warm autumnal tones, authentic candid lifestyle moment",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, overly posed, stiff expression, overexposed highlights",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "premium flat lay product photography, overhead aerial view, natural linen textured surface light beige, open black compact leaf blower carrying case centered with compact black leaf blower 950g perfectly nestled inside, fast charger laid flat on left side, compact ear protection laid flat on right side, soft directional natural lateral light creating gentle directional shadows, warm neutral tones linen beige light grey matte black, unboxing aesthetic, hyperdetailed, 8k, professional lifestyle magazine product photography, premium accessible aesthetic, clean minimal composition",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, signature, person, human, cold clinical look, harsh shadows, colorful distractions, cluttered background",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 8,
+      "platform": "midjourney",
+      "prompt": "e-commerce studio product photography, compact black leaf blower 950g centered on pure white matte surface slightly elevated on low white platform, open black carrying case laid flat just behind slightly offset, very soft studio lighting minimal shadows, slightly overhead angle 15 degrees, generous white space around product, product occupies 60 percent of frame, crisp sharp focus on product, hyperdetailed, 8k, professional product photography, premium e-commerce aesthetic, confidence inspiring, clean conversion-focused composition, matte black product against pure white background",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, signature, person, human, colorful background, harsh shadows, perspective distortion, prop clutter",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

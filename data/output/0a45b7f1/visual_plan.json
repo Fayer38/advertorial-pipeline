@@ -1,0 +1,85 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Man aged 65-68, slightly fatigued expression, holding a large gas-powered leaf blower with both hands extended at waist height. His left hand is pressed against his lower back in a subtle gesture of discomfort. He stands on a suburban driveway covered in fallen leaves. Autumn light, overcast. The frame is styled as a clinical publication header: clean white banner overlay at top with mock journal title and volume number in serif font. The image feels documentary, not staged — candid and relatable.",
+      "mood": "Clinical, documentary, quietly alarming — not dramatic, but sobering. The discomfort is real, not exaggerated.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "infographie",
+      "description": "Clean medical illustration on white background showing a side-view silhouette of the human lumbar spine. Two panels side by side: left panel shows a figure holding a heavy blower extended at waist height with red stress indicators and labeled arrows at L4-L5 showing compressive load multiplication (3x lever-arm factor). Right panel shows the same figure standing upright in neutral posture with green indicators and minimal load markers. Labeled spinal segments (L3, L4, L5, S1) in a clinical sans-serif typeface. No decorative elements — strictly functional, educational aesthetic similar to a physical therapy handout.",
+      "mood": "Clinical, educational, authoritative. White and neutral grey palette with red/green accent colors for contrast indicators.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Split-screen comparison image. Left half: a woman in her early 60s, slightly hunched forward, gripping a large conventional cordless blower with two hands, jaw tight, eyes showing mild strain. She is on a leaf-covered patio. Right half: the same woman standing fully upright, relaxed shoulders, one hand casually holding a compact single-handed blower at her side, looking at the cleared patio with a calm and satisfied expression. Both halves share the same outdoor setting and natural afternoon light. The contrast in posture is the key visual message — not suffering vs. joy, but strain vs. ease.",
+      "mood": "Grounded, honest, comparative. Warm natural light. Realistic domestic setting — not a stock photo aesthetic.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "A man aged 62-65, upright neutral posture, holding the Seese Pro™ comfortably in one hand at his side — not extended, not strained. He stands on a clean stone patio in warm late-afternoon light. Dried leaves are visibly scattering mid-air from the blower nozzle. A conventional full-size blower rests on the ground in the background, slightly out of focus, providing immediate scale reference. The Seese Pro™ is clearly visible in his hand — compact, modern, clearly much smaller. His expression is calm and confident, not performatively happy. Real home exterior visible in the background.",
+      "mood": "Warm, empowering, understated. Golden afternoon light. The ease of use communicates itself through posture alone.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "infographie",
+      "description": "Clean clinical infographic on white background presenting four key performance data points in a structured grid layout: (1) 94% satisfaction rate — shown as a donut chart with a human silhouette icon; (2) 5 min vs. 25 min surface clearing time — shown as a horizontal bar comparison; (3) 3 min vs. 15 min vehicle drying — another bar comparison with a car icon; (4) 40 min battery runtime — shown as a battery icon with fill indicator. Data sources cited in small footnote text. Typography is clean, medical-publication style. Accent color: a single muted teal or navy blue. No decorative gradients or promotional language — purely data-forward.",
+      "mood": "Clinical, credible, data-driven. White background, restrained color palette, publication-grade typography.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "testimonial",
+      "description": "Two portrait-style photographs presented side by side in a clean clinical layout. Left portrait: Robert, apparent age 67, standing relaxed on a clean residential patio, holding the Seese Pro™ loosely at his side. Slight smile, direct gaze — dignified and capable, not patronizing. Right portrait: Margaret, apparent age 71, standing beside her car in a driveway, Seese Pro™ in hand, upright posture. Both individuals are dressed in casual everyday clothing — not activewear, not formal. Natural window or outdoor light. A discreet name and age label appears below each portrait in a clean sans-serif font, case-study style. Both are presented as fully autonomous competent adults.",
+      "mood": "Warm, dignified, authentic. These are real people living real lives — not models performing happiness. Natural light, residential settings.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "lifestyle",
+      "description": "A physician or rehabilitation specialist, male or female, aged 50-58, seated at a consultation desk in a clean medical office with soft natural light from a window to one side. He or she is reviewing a printed patient file, looking up toward the camera with a warm, composed expression — credible and approachable, not cold or overly authoritative. The desk has minimal clinical elements: a stethoscope, a pen, printed documents. No exaggerated white coat staging. The Seese Pro™ is not in frame — this image is entirely about establishing human medical authority and warmth.",
+      "mood": "Authoritative yet warm, professional without being intimidating. Natural light, clean but lived-in office environment.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 7,
+      "scene_type": "product shot",
+      "description": "Editorial flat lay on a clean white surface (or light natural wood). The Seese Pro™ is positioned centrally and slightly angled. Surrounding it: the compact carry case open beside it, the extended nozzle attachment placed alongside, and the vehicle drying kit partially unpacked. To the right of the blower, a standard 1 kg bag of sugar (or flour) placed deliberately to provide immediate weight reference — a visual anchor for the '950g' claim. The composition is uncluttered and deliberate. Lighting is even, diffused, shadow-light — editorial style. No price stickers, no promotional overlays. The product speaks for itself.",
+      "mood": "Clean, editorial, understated premium. White or warm neutral surface. Confidence through simplicity — not a retail promotion aesthetic.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 8,
+      "scene_type": "lifestyle",
+      "description": "A woman aged 63-67, standing on a clean leaf-free stone patio in warm late afternoon light, holding the Seese Pro™ casually in one hand at her side. She is not looking at the camera — her gaze is directed toward the patio and the tidy garden behind her, with a quiet, satisfied expression. Her posture is fully upright and relaxed. The background shows a well-maintained home exterior: clean walls, trimmed hedges, clear pathways. The scene reads as the quiet satisfaction of a job done well — not triumphant, not staged. The light is golden and domestic.",
+      "mood": "Quietly triumphant, warm, autonomous. This is the emotional payoff of the entire advertorial — independence reclaimed, effort reduced, dignity intact.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    }
+  ]
+}

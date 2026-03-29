@@ -1,0 +1,43 @@
+{
+  "overall_score": 7.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le hook est solide : ouverture personnelle avec un âge précis (67 ans), une douleur physique concrète (dos), et une perte d'autonomie émotionnellement chargée. La scène avec la voisine Carol est naturelle et crédible. Le seul défaut : l'urgence ('I genuinely wouldn't wait') est introduite dès la fin du hook, avant que la confiance soit pleinement installée. Cela peut sentir la manipulation prématurément. Déplacez cette mention d'urgence après la section preuve sociale."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "La progression narrative hook → histoire → offre → preuve → CTA est globalement bien tenue. Cependant, la transition entre la section personnelle (Carol) et le titre 'Why Is a $250 Blower Selling for $119.99?' est abrupte — on bascule brusquement du registre éditorial au registre promotionnel. Ajoutez une phrase-pont du type : 'But before I tell you what's in the box, let me answer the first question that crossed my mind too.' La section bundle (liste à puces) casse aussi le rythme narratif établi — enveloppez-la d'un paragraphe contextualisant la découverte."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "4 témoignages nominatifs avec âges et villes : bien. Les chiffres (12 847 unités, 4.9★, 77% d'inventaire) créent de la crédibilité sociale. La preuve technique (brushless motor, 30 000 RPM, référence drones/véhicules électriques) est efficace. Ce qui manque : aucune preuve indépendante (test comparatif, certification, article éditorial externe) et les chiffres d'inventaire et de ventes ne sont pas sourcés, ce qui les rend facilement contestables par un lecteur sceptique. Suggestion : ajoutez une phrase du type 'As reviewed in [publication]' ou intégrez une certification (ex. CE, UL) pour ancrer la crédibilité technique."
+    },
+    "cta_clarity": {
+      "score": 8,
+      "feedback": "CTA précis, chiffré ($119.99), avec bouton rouge bien visible et texte d'action clair. L'urgence est répétée cohéremment tout au long du texte (77%, inventaire limité, retour à $249.99). La garantie 30 jours et la lifetime warranty sont rappelées sous le bouton. Ce qui manque : une raison d'agir AUJOURD'HUI précisément — pas juste 'pendant la flash sale' mais un déclencheur temporel ancré (ex. 'Sale ends Sunday at midnight' ou 'Only 47 units left at this price'). Un chiffre exact de stock restant serait plus convaincant que le pourcentage abstrait."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'arc douleur (perte d'autonomie, honte, dos) → espoir (scène Carol) → confiance (témoignages, technique) → action est bien structuré. La douleur d'ouverture est particulièrement forte. Le future pacing en fin d'article ('You deserve a yard that's clean, a car that's dry') est présent mais trop bref et générique. Développez ce passage : faites visualiser une matinée spécifique — le lecteur debout à 8h, café en main, terrasse impeccable en 5 minutes, voisins qui demandent s'il a engagé quelqu'un — avant de revenir au prix. Ce paragraphe manquant est la dernière poussée émotionnelle avant le CTA."
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Paragraphes courts, usage du gras bien dosé, témoignages bien encadrés visuellement, liste à puces lisible. Les 1465 mots sont dans la fourchette haute mais justifiés par la densité d'information. Seul point à améliorer : la section 'The Flash Sale Breakdown' est la plus dense en termes de texte argumentatif consécutif — aérez-la avec un sous-titre intermédiaire ou une ligne de séparation visuelle."
+    },
+    "similarity_to_best": {
+      "score": 7,
+      "feedback": "La structure hook → story → problem → solution → proof → offer → CTA est respectée. Le ton est majoritairement éditorial dans les deux premières sections, ce qui est bien. Mais à partir de 'The Flash Sale Breakdown', l'article bascule trop franchement dans le mode publicitaire : accumulation de rayés prix, FREE en rouge, total bundle value — visible comme une pub e-commerce. Les meilleurs advertoriaux maintiennent le ton journalistique jusqu'au CTA en intégrant l'offre comme une 'découverte' plutôt qu'une 'vente'. Reformulez l'intro de la section offre pour qu'elle sonne comme un conseil d'un ami : 'Here's what I'd tell anyone who asks me about it today — and it starts with the price.'"
+    }
+  },
+  "improvements": [
+    "Déplacer la mention d'urgence ('I genuinely wouldn't wait') après la section preuve sociale, pas dans le hook — trop tôt pour forcer l'action avant la confiance",
+    "Ajouter une phrase-pont entre la fin du hook narratif et le titre 'Why Is a $250 Blower Selling for $119.99?' pour éviter la rupture éditoriale/promotionnel",
+    "Intégrer une preuve externe indépendante : certification produit, test comparatif, ou mention dans une publication de niche jardinage/outdoor",
+    "Remplacer le pourcentage d'inventaire abstrait (77%) par un chiffre de stock exact (ex. '47 units remaining at $119.99') pour une urgence plus tangible",
+    "Ajouter un paragraphe de future pacing développé avant le CTA : scène matinale précise avec le lecteur, sa terrasse propre, ses voisins impressionnés — 4 à 6 lignes minimum",
+    "Reformuler l'ouverture de la section offre pour maintenir le ton éditorial jusqu'au bout, en évitant l'accumulation visuelle de barres de prix et de FREE en rouge"
+  ],
+  "version": 1
+}

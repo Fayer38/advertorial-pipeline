@@ -11,6 +11,7 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
     offer_section = None
     cta_section = None
 
+    content_idx = 0
     for i, sec in enumerate(content.get("sections", [])):
         s_type = sec.get("type", "")
         if s_type == "offer":
@@ -26,25 +27,41 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
         img_url = image_map.get(i, "")
         parts = []
 
+        is_first = (s_type == "hook" or content_idx == 0)
+        content_idx += 1
+
         if heading:
             parts.append(f'<h2 class="sec-head">{heading}</h2>')
-        if body_html:
-            parts.append(f'<div class="art-body">{body_html}</div>')
 
-        # Image AFTER body text — editorial placement
+        # First section: media right after title, then body
+        # Other sections: body first, then media
+        media_html = None
         if img_url:
             caption = placeholder.get("description", "") or heading
-            parts.append(f'''<figure class="art-figure">
+            media_html = f'''<figure class="art-figure">
   <img src="{img_url}" alt="{heading}" loading="lazy">
   {"<figcaption>" + caption + "</figcaption>" if caption else ""}
-</figure>''')
+</figure>'''
         elif placeholder.get("description"):
             p_type = placeholder.get("type", "image").upper()
             desc = placeholder["description"]
             if p_type == "VIDEO":
-                parts.append(f'<div class="placeholder video-ph"><div class="tbadge">VIDEO</div><div class="play-icon">&#9654;</div><p>{desc}</p></div>')
+                media_html = f'<div class="placeholder video-ph"><div class="tbadge">VIDEO</div><div class="play-icon">&#9654;</div><p>{desc}</p></div>'
             else:
-                parts.append(f'<div class="placeholder"><div class="tbadge">{p_type}</div><span style="display:block;margin-top:6px;color:#999;font-size:13px;font-style:italic">{desc}</span></div>')
+                media_html = f'<div class="placeholder"><div class="tbadge">{p_type}</div><span style="display:block;margin-top:6px;color:#999;font-size:13px;font-style:italic">{desc}</span></div>'
+
+        # First section: heading → media → body
+        # Other sections: heading → body → media
+        if is_first:
+            if media_html:
+                parts.append(media_html)
+            if body_html:
+                parts.append(f'<div class="art-body">{body_html}</div>')
+        else:
+            if body_html:
+                parts.append(f'<div class="art-body">{body_html}</div>')
+            if media_html:
+                parts.append(media_html)
 
         if parts:
             body_parts.append("\n".join(parts))

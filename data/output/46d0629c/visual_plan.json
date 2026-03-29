@@ -1,0 +1,58 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Homme d'environ 60-62 ans, visage authentique et légèrement fatigué mais bienveillant, assis à un bureau d'atelier encombré de notes manuscrites, croquis techniques et pièces mécaniques. Il tient un stylo et regarde directement l'objectif avec une expression calme et honnête. Lumière naturelle chaude venant d'une fenêtre latérale. Pas de mise en scène publicitaire — l'espace est vécu, les mains légèrement calleuses, une tasse de café à côté.",
+      "mood": "Authentique, chaleureux, humble — le fondateur réel, pas le pitch man",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Homme de 68-70 ans sur une allée couverte de feuilles mortes en automne, tenant un souffleur à essence volumineux des deux mains. Posture légèrement voûtée, épaules tendues, visage concentré et marqué par l'effort. La machine semble disproportionnée par rapport à sa silhouette. Ciel couvert, lumière grise d'octobre. Pas de dramatisation excessive — juste la réalité physique visible d'une tâche qui coûte trop cher au corps.",
+      "mood": "Réaliste, empathique, légèrement tendu — le 'avant' sans caricature",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Personne de 65-70 ans (homme ou femme) debout sur une allée résidentielle propre et ordinaire, tenant le Seese Pro d'une seule main, bras légèrement tendu, posture complètement droite et détendue. Légère ébauche de sourire naturel, pas forcé. Lumière dorée de début de matinée. L'autre main est libre, dans la poche ou au repos. Le contraste avec la scène précédente doit être immédiatement lisible : même type de personne, même contexte, mais effort zéro visible.",
+      "mood": "Soulagement, légèreté, dignité retrouvée — le 'après' sans sur-jeu",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Homme d'une soixantaine d'années dans un garage modeste et fonctionnel — établi en bois, quelques outils accrochés au mur, lumière d'ampoule chaude. Il tient le Seese Pro dans une main, regarde directement la caméra. Expression ouverte, directe, pas vendeuse. Tenue casual (flanelle, jeans). L'environnement dit 'bricoleur sérieux', pas 'showroom'. Une légère poussière sur l'établi, une boîte à outils ouverte en arrière-plan.",
+      "mood": "Crédibilité, sincérité, proximité — 'un ami qui vous montre ce qu'il a fabriqué'",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product shot",
+      "description": "Le Seese Pro ouvert dans son mallette rigide noire sur une surface de bois clair (établi propre ou table). La batterie, le chargeur, les accessoires et le souffleur sont disposés avec soin dans leurs emplacements moulés. Éclairage studio naturel sans ombres dures. Vue légèrement en plongée (flat lay à 30°). Chaque élément est identifiable. Pas de fond blanc artificiel — la surface bois donne un ancrage réel. Une main (masculine, 60+) peut effleurer le bord du coffret pour donner l'échelle.",
+      "mood": "Sérieux, complet, rassurant — 'tout est là, bien pensé, prêt à l'emploi'",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Personne de 60-70 ans (de préférence homme, peut être une femme) debout sur une allée ou terrasse résidentielle fraîchement dégagée, le Seese Pro tenu sans effort au bout du bras, côté corps. Le regard se porte vers la propriété nettoyée, pas vers la caméra. Expression de satisfaction calme, intérieure — pas un sourire publicitaire. Lumière rasante du matin en automne (orangée, douce). Les feuilles sont repoussées sur les côtés de l'allée. L'image doit ressentir comme une fin de chapitre, un moment privé de fierté.",
+      "mood": "Fierté tranquille, autonomie, accomplissement — l'émotion juste avant de rentrer boire son café",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    }
+  ]
+}

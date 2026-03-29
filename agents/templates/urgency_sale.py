@@ -20,6 +20,7 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
     cta_section = None
     body_section_count = 0
     mid_cta_inserted = False
+    content_idx = 0
 
     for i, sec in enumerate(sections):
         s_type = sec.get("type", "")
@@ -35,11 +36,13 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
         placeholder = sec.get("visual_placeholder", {})
         img_url = image_map.get(i, "")
         parts = []
+        is_first = (s_type == 'hook' or content_idx == 0)
+        content_idx += 1
 
         if heading:
             parts.append(f'<h2 class="art-h2">{heading}</h2>')
 
-        if body_html:
+        if not is_first and body_html:
             parts.append(body_html)
 
         # Image AFTER body — editorial placement
@@ -57,6 +60,9 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
                 f'<span class="ph-desc">{placeholder["description"]}</span>'
                 f'</div>'
             )
+
+        if is_first and body_html:
+            parts.append(body_html)
 
         if parts:
             body_parts.append("\n".join(parts))

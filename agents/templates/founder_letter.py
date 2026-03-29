@@ -18,6 +18,7 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
     cta_section = None
     gallery_imgs = []  # collect up to 3 images for gallery before offer
 
+    content_idx = 0
     for i, sec in enumerate(sections):
         s_type = sec.get("type", "")
         if s_type == "offer":
@@ -37,16 +38,17 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
         if img_url and i > 0 and len(gallery_imgs) < 3:
             gallery_imgs.append((img_url, heading or placeholder.get("description", "")))
 
+        is_first = (s_type == "hook" or content_idx == 0)
+        content_idx += 1
+
         if heading:
             parts.append(f'<h2 class="letter-h2">{heading}</h2>')
 
-        if body_html:
-            parts.append(body_html)
-
-        # Image AFTER body text — personal/in-context feel
+        # Build media HTML
+        media_html = None
         if img_url and i > 0:
             caption = placeholder.get("description", heading) or heading
-            parts.append(
+            media_html = (
                 f'<figure class="letter-figure">'
                 f'<img src="{img_url}" alt="{heading}" loading="lazy">'
                 f'{"<figcaption>" + caption + "</figcaption>" if caption else ""}'
@@ -54,12 +56,23 @@ def build_html(content, seo, image_map, product_url, product_name, product_image
             )
         elif placeholder.get("description") and i > 0:
             p_type = placeholder.get("type", "photo").upper()
-            parts.append(
+            media_html = (
                 f'<div class="placeholder">'
                 f'<div class="tbadge">{p_type}</div>'
                 f'<div class="ph-desc">{placeholder["description"]}</div>'
                 f'</div>'
             )
+
+        # First section: media after heading, before body
+        if is_first and media_html:
+            parts.append(media_html)
+
+        if body_html:
+            parts.append(body_html)
+
+        # Other sections: media after body
+        if not is_first and media_html:
+            parts.append(media_html)
 
         if parts:
             body_parts.append("\n".join(parts))
@@ -239,9 +252,6 @@ h1{{font-size:26px}}
 <body>
 <div class="page-bg">
 
-  <!-- HERO IMAGE (full width, no container) -->
-  {hero_block}
-
   <div class="letter-wrap">
     <div class="letter-card">
 
@@ -254,6 +264,9 @@ h1{{font-size:26px}}
       <!-- HEADLINE -->
       <h1>{headline}</h1>
       {"<p class='letter-deck'>" + subheadline + "</p>" if subheadline else ""}
+
+      <!-- HERO IMAGE (right after title) -->
+      {hero_block}
 
       <!-- DEAR FRIEND OPENING -->
       <p class="dear-friend">Dear Friend,</p>
