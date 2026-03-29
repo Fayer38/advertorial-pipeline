@@ -1567,6 +1567,27 @@ async def list_templates():
     from agents.templates import get_template_list
     return {"templates": get_template_list()}
 
+@app.get("/templates/{tid}/preview")
+async def preview_template(tid: str):
+    """Return a full HTML preview of a template with sample content."""
+    from agents.html_publisher import HTMLPublisherAgent
+    pub = HTMLPublisherAgent(output_dir="data/output")
+    sample_content = {
+        "headline": "Last October, He Yanked His Starter Cord. The Crack He Heard Wasn't the Engine.",
+        "subheadline": "",
+        "sections": [
+            {"type": "body", "heading": "The Injury Nobody Warns You About", "body_html": "<p>Orthopedic surgeons across America see the same pattern every autumn. Men and women in their late 50s, 60s, and 70s walk into emergency rooms with the same complaint: sudden, severe lower back pain triggered by pulling a gas blower's starter cord.</p><p>The problem isn't obvious until you understand the mechanics. A gas blower weighs between 18 and 26 pounds. To start it, you yank a cord with 20 to 25 pounds of force.</p>", "visual_placeholder": {"type": "HERO IMAGE", "description": "A 62-year-old man in pain, holding his lower back after yard work"}},
+            {"type": "body", "heading": "Why the Problem Has Never Been Solved Until Now", "body_html": "<p>The leaf blower industry has known about this problem for decades. But they've ignored it because solving it cuts into profit margins.</p><p>Gas blower manufacturers make money from replacement parts: spark plugs, air filters, fuel line repairs, seasonal maintenance.</p>", "visual_placeholder": {"type": "INFOGRAPHIC", "description": "Age-based injury breakdown showing 55+ demographic"}},
+            {"type": "body", "heading": "2.1 Pounds. Button Start. 20 Minutes.", "body_html": "<p><strong>It weighs 2.1 pounds.</strong> That's lighter than a bag of flour. You can operate it with one hand.</p><p><strong>Button start.</strong> No yanking. No pulling. No risk of back injury from a starter cord.</p><p><strong>120 mph air velocity.</strong> Faster than commercial-grade gas blowers costing $600.</p>", "visual_placeholder": {"type": "PRODUCT HERO", "description": "The Seese Pro cordless leaf blower displayed against white background"}},
+            {"type": "offer"},
+            {"type": "cta", "body_html": "<p>Join 2,400+ Americans who've already discovered that yard work can be safe again.</p>"},
+        ],
+    }
+    sample_seo = {"meta_title": "Sample Advertorial Preview", "meta_description": "Preview of template layout and styling."}
+    html = pub._build_html(sample_content, sample_seo, {}, "https://seesepro.com/", "Seese Pro™ Cordless Blower", "", "Editorial Team", "en", tid)
+    from fastapi.responses import HTMLResponse
+    return HTMLResponse(content=html)
+
 @app.get("/health")
 async def health():
     return {"status": "ok", "version": "2.0.0", "products": len(products), "pipelines": len(pipelines), "ts": datetime.utcnow().isoformat()}
