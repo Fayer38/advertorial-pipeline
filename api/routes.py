@@ -1354,10 +1354,15 @@ HEADER_LOGO_HTML = f'''<div id="adv-disclosure" style="text-align:center;padding
 </div>'''
 
 def _inject_header_logo(html: str) -> str:
-    """Inject the header logo at the top of <body> if not already present."""
-    if "adv-header-logo" in html:
+    """Inject the disclosure bar + header logo at the top of <body>."""
+    # If both already present, skip
+    if "adv-header-logo" in html and "adv-disclosure" in html:
         return html
-    # Insert after <body...>
+    # If logo exists but no disclosure, inject disclosure before logo
+    if "adv-header-logo" in html and "adv-disclosure" not in html:
+        disclosure = '<div id="adv-disclosure" style="text-align:center;padding:3px 0;background:#fafafa;border-bottom:1px solid #f0f0f0;font-size:9px;color:#c0c0c0;letter-spacing:0.03em;font-family:system-ui,sans-serif;">This is an advertorial</div>'
+        return html.replace('<div id="adv-header-logo"', disclosure + '\n<div id="adv-header-logo"')
+    # Neither present — inject both after <body>
     m = _re.search(r'(<body[^>]*>)', html, _re.IGNORECASE)
     if m:
         pos = m.end()
