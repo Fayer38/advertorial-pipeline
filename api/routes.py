@@ -519,6 +519,10 @@ EDIT_SCRIPT = """
     <div class="tb-sep"></div>
     <button data-cmd="removeFormat" title="Clear Formatting" style="font-size:11px;text-decoration:line-through;opacity:.7">T</button>
     <button data-action="link" title="Link">🔗</button>
+    <div class="tb-sep"></div>
+    <button data-action="titleCase" title="Title Case" style="font-size:10px;font-weight:700">Aa</button>
+    <button data-action="uppercase" title="UPPERCASE" style="font-size:10px;font-weight:700">AA</button>
+    <button data-action="lowercase" title="lowercase" style="font-size:10px;font-weight:700">aa</button>
   `;
   document.body.appendChild(tb);
 
@@ -630,6 +634,23 @@ EDIT_SCRIPT = """
       saveSel();
       return;
     }
+    // ── TEXT CASE TRANSFORMS ──
+    var caseAction = e.target.closest('[data-action="titleCase"],[data-action="uppercase"],[data-action="lowercase"]');
+    if (caseAction) {
+      restoreSel();
+      var sel = window.getSelection();
+      if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+        var text = sel.toString();
+        var act = caseAction.getAttribute('data-action');
+        var result = text;
+        if (act === 'uppercase') result = text.toUpperCase();
+        else if (act === 'lowercase') result = text.toLowerCase();
+        else if (act === 'titleCase') result = text.replace(/\\S+/g, function(w) { return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); });
+        document.execCommand('insertText', false, result);
+      }
+      return;
+    }
+
     var linkBtn = e.target.closest('[data-action="link"]');
     if (linkBtn) {
       restoreSel();
