@@ -1011,7 +1011,8 @@ EDIT_SCRIPT = """
   }
 
   // ── MARK ELEMENTS ──
-  var BLOCK_SELECTOR = 'h1, h2, h3, p, li, .step p, .step-title, .tip, .sb-title, .offer-box h2, .offer-box p, a.cta-bottom, a.sb-cta, .cta-badges div, .sb-badges div, .byline, .sticky-footer a';
+  // Universal block selector — works across all templates (editorial, health-journal, listicle)
+  var BLOCK_SELECTOR = 'h1, h2, h3, p, li, blockquote, .step p, .step-title, .step-card div, .step-pill, .tip, .tip-box, .sb-title, .offer-box h2, .offer-box p, .offer-card h3, .offer-card p, .cta-section h3, .cta-section p, a.cta-bottom, a.cta-btn, a.sb-cta, .cta-badges div, .sb-badges div, .badges span, .byline, .sticky-footer a, .testimonial .quote, .testimonial .attribution, .warning-box, .stat-box .stat-num, .stat-box .stat-label, .comparison-table td, .comparison-table th, .card-body h2, .card-body p, .hero h1, .hero .byline, .top-bar, .pullquote, .highlight';
   var editable = document.querySelectorAll(BLOCK_SELECTOR);
   editable.forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
   document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
@@ -1065,7 +1066,8 @@ EDIT_SCRIPT = """
   }
 
   function getAllBlocks() {
-    return Array.from(document.querySelectorAll('.article-content > *, .page-wrapper > .article-content > *')).filter(function(el) {
+    // Universal content container — works for editorial (.article-content), health-journal (.wrapper), listicle (.container)
+    return Array.from(document.querySelectorAll('.article-content > *, .wrapper > *, .container > *, .page-wrapper > .article-content > *')).filter(function(el) {
       return !el.matches('#adv-header-logo, #img-panel, #edit-toolbar, style, script, .drop-indicator');
     });
   }
@@ -1390,10 +1392,11 @@ EDIT_SCRIPT = """
       }
       if (newEl) {
         // Insert at end of article content
-        var content = document.querySelector('.article-content');
+        // Universal content container
+        var content = document.querySelector('.article-content') || document.querySelector('.wrapper') || document.querySelector('.container');
         if (content) {
           // Insert before the last CTA or at the end
-          var lastCta = content.querySelector('.sticky-footer, .offer-box, a.cta-bottom');
+          var lastCta = content.querySelector('.sticky-footer, .offer-box, .offer-card, .cta-section, a.cta-bottom, a.cta-btn');
           if (lastCta) {
             content.insertBefore(newEl, lastCta);
           } else {
