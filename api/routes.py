@@ -440,14 +440,19 @@ EDIT_SCRIPT = """
     [data-editable][contenteditable="true"] { outline: 2px solid #f26722 !important; outline-offset: 3px; cursor: text; }
 
     /* Block controls (drag + duplicate) */
+    [data-editable], .img-set, .placeholder[data-media-idx] { position: relative; }
+    [data-editable]::before, .img-set::before, .placeholder[data-media-idx]::before {
+      content: ''; position: absolute; left: -42px; top: 0; width: 42px; height: 100%;
+      pointer-events: auto;
+    }
     .block-controls {
-      position: absolute; left: -38px; top: 50%; transform: translateY(-50%);
+      position: absolute; left: -36px; top: 50%; transform: translateY(-50%);
       display: flex; flex-direction: column; gap: 3px;
-      opacity: 0; transition: opacity .15s; z-index: 9990; pointer-events: none;
+      opacity: 0; transition: opacity .15s; z-index: 9990;
     }
     [data-editable]:hover > .block-controls,
     .img-set:hover > .block-controls,
-    .placeholder:hover > .block-controls { opacity: 1; pointer-events: auto; }
+    .placeholder:hover > .block-controls { opacity: 1; }
     .block-controls button {
       width: 26px; height: 26px; border-radius: 6px; border: 1px solid #ddd;
       background: #fff; color: #666; font-size: 12px; cursor: pointer;
