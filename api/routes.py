@@ -482,8 +482,9 @@ EDIT_SCRIPT = """
 
     /* Image click highlight */
     img[data-img-idx] { cursor: pointer; transition: outline .15s; }
-    img[data-img-idx]:hover { outline: 2px dashed rgba(242,103,34,0.4); outline-offset: 3px; }
+    img[data-img-idx]:hover, .img-block-wrap:hover img[data-img-idx] { outline: 2px dashed rgba(242,103,34,0.4); outline-offset: 3px; }
     img[data-img-idx].img-selected { outline: 2px solid #f26722 !important; outline-offset: 3px; }
+    .img-block-wrap { overflow: visible; }
 
     /* Side panel for image device settings */
     #img-panel {
