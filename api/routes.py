@@ -1421,14 +1421,24 @@ EDIT_SCRIPT = """
 from fastapi.responses import HTMLResponse
 
 HEADER_LOGO_URL = "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Design_sans_titre_15.png?v=1774625309"
+FOOTER_HTML = f'''<footer id="adv-footer" style="background:#f5f5f5;border-top:1px solid #e5e5e5;padding:30px 20px;text-align:center;margin-top:40px;">
+  <img src="{HEADER_LOGO_URL}" alt="Logo" style="height:36px;max-width:180px;object-fit:contain;margin-bottom:12px;opacity:0.7;">
+  <p style="font-size:10px;color:#999;line-height:1.6;max-width:700px;margin:0 auto;">&copy; 2026 All rights reserved. All content, images, and materials on this website are protected by international copyright and intellectual property laws. Unauthorized reproduction, distribution, or modification of any materials is strictly prohibited. By accessing and using this website, you agree to abide by all applicable terms, conditions, and policies. The company reserves the right to update or modify its content, policies, and terms at any time without prior notice.</p>
+</footer>'''
 HEADER_LOGO_HTML = f'''<div id="adv-disclosure" style="text-align:center;padding:3px 0;background:#fafafa;border-bottom:1px solid #f0f0f0;font-size:9px;color:#c0c0c0;letter-spacing:0.03em;font-family:system-ui,sans-serif;">This is an advertorial</div>
 <div id="adv-header-logo" style="text-align:center;padding:14px 0 10px;background:#fff;border-bottom:1px solid #eee;">
   <img src="{HEADER_LOGO_URL}" alt="Logo" style="height:52px;max-width:260px;object-fit:contain;">
 </div>'''
 
 def _inject_header_logo(html: str) -> str:
-    """Inject the disclosure bar + header logo at the top of <body>."""
-    # If both already present, skip
+    """Inject the disclosure bar + header logo at top, footer at bottom."""
+    # Inject footer if missing
+    if "adv-footer" not in html:
+        if "</body>" in html:
+            html = html.replace("</body>", FOOTER_HTML + "\n</body>")
+        else:
+            html += "\n" + FOOTER_HTML
+    # If both header elements already present, return
     if "adv-header-logo" in html and "adv-disclosure" in html:
         return html
     # If logo exists but no disclosure, inject disclosure before logo
