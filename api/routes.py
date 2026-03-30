@@ -551,7 +551,7 @@ async def import_html(req: ImportHtmlReq):
     headline = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else slug
 
     # Resolve product info
-    product = _products.get(req.product_id, {})
+    product = products.get(req.product_id, {})
     product_name = product.get("name", req.product_id)
     product_url = product.get("url", "")
     now = datetime.utcnow().isoformat()
