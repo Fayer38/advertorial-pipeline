@@ -1728,6 +1728,9 @@ async def editable_preview(plid: str):
     if not htmls:
         raise HTTPException(404, "No HTML file found")
     html = htmls[0].read_text(encoding="utf-8")
+    # Prevent horizontal scroll on mobile
+    if 'overflow-x' not in html[:3000]:
+        html = html.replace('</style>', '\nhtml,body{overflow-x:hidden;max-width:100vw}\nimg{max-width:100%;height:auto}\ntable{max-width:100%;display:block;overflow-x:auto}\n.stat-row{overflow-x:auto}\n</style>', 1)
     # Inject avatars on testimonials if not already present
     if 'randomuser.me/api/portraits' not in html:
         html = _inject_avatars(html)

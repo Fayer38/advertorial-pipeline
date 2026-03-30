@@ -120,7 +120,10 @@ class HTMLPublisherAgent(BaseAgent):
         return html
 
     def _inject_branding(self, html: str, product_name: str = "", product_url: str = "") -> str:
-        """Inject logo header, announcement bar, and footer into any template HTML."""
+        """Inject logo header, footer, and mobile overflow fix into any template HTML."""
+        # Prevent horizontal scroll on mobile
+        if 'overflow-x' not in html[:3000]:
+            html = html.replace('</style>', '\nhtml,body{overflow-x:hidden;max-width:100vw}\nimg{max-width:100%;height:auto}\ntable{max-width:100%;display:block;overflow-x:auto}\n.stat-row{overflow-x:auto}\n</style>', 1)
         LOGO_URL = "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Design_sans_titre_15.png?v=1774625309"
         
         # Standard header: Disclaimer + Logo ONLY (no announcement bar)
