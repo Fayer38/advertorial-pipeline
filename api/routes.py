@@ -615,8 +615,10 @@ async def save_html(plid: str, req: SaveHtmlReq):
     clean = re.sub(r'\s+class="dragging"', '', clean)
     # Unwrap img-block-wrap divs
     clean = re.sub(r'<div class="img-block-wrap"[^>]*>(.*?)</div>', r'\1', clean, flags=re.DOTALL)
-    # Ensure header logo is present
-    clean = _inject_header_logo(clean)
+    # Ensure header logo is present — skip for imported HTML
+    is_import = pipelines.get(plid, {}).get("config", {}).get("source") == "html-import"
+    if not is_import:
+        clean = _inject_header_logo(clean)
     htmls[0].write_text(clean, encoding="utf-8")
     # Also copy to published dir
     pub = Path("/var/www/advertorials") / htmls[0].name
@@ -1709,8 +1711,10 @@ async def editable_preview(plid: str):
     if not htmls:
         raise HTTPException(404, "No HTML file found")
     html = htmls[0].read_text(encoding="utf-8")
-    # Inject header logo if not already present
-    html = _inject_header_logo(html)
+    # Inject header logo if not already present — skip for imported HTML that has its own header
+    is_import = pipelines.get(plid, {}).get("config", {}).get("source") == "html-import"
+    if not is_import:
+        html = _inject_header_logo(html)
     # Inject edit script before </body>
     if "</body>" in html:
         html = html.replace("</body>", EDIT_SCRIPT + "\n</body>")
