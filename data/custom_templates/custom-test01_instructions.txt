@@ -1,0 +1,64 @@
+## STRUCTURE — Template Importé (Custom)
+
+### Ce template a été analysé automatiquement depuis un HTML de référence.
+
+### Structure observée : 8 sections
+
+### Exemples de headings du template de référence :
+1. "The Injury Nobody Warns You About"
+2. "Why the Problem Has Never Been Solved Until Now"
+3. "What Albert Built in His Garage"
+4. "2.1 Pounds. Button Start. 20 Minutes."
+5. "I Was Skeptical. Then I Tried It."
+6. "The Math Nobody Shows You"
+7. "This Is Still Your Property"
+8. "Special Offer: 30-Day Risk-Free Trial"
+
+Adapte les headings à ton produit mais GARDE LE MÊME STYLE et la même progression narrative.
+
+### Composants à utiliser :
+- **1x stat-row** (chiffres clés dans des cards)
+```html
+<div class="stat-row">
+  <div class="stat-box"><span class="stat-num">CHIFFRE</span><div class="stat-label">Label</div></div>
+</div>
+```
+- **1x comparison-table**
+```html
+<table class="comparison-table">
+  <thead><tr><th>Feature</th><th>Old Way</th><th>Our Product</th></tr></thead>
+  <tbody><tr><td>Feature</td><td class="bad">Bad ✗</td><td class="good">Good ✓</td></tr></tbody>
+</table>
+```
+- **3x testimonial**
+```html
+<div class="testimonial">
+  <div class="quote">"Citation spécifique et émotionnelle."</div>
+  <div class="attribution">Prénom Nom, Âge, Ville ★★★★★</div>
+</div>
+```
+- **1x warning-box**
+```html
+<div class="warning-box">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#f26722" stroke-width="2"/><line x1="12" y1="9" x2="12" y2="13" stroke="#f26722" stroke-width="2"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="#f26722" stroke-width="2"/></svg>
+  <div><strong>Warning:</strong> Description.</div>
+</div>
+```
+
+### Médias : 16 emplacements visuels
+- Chaque section DOIT avoir un `visual_placeholder` descriptif
+- Types : "photo", "lifestyle", "product", "infographic", "before_after"
+- Décris l'image souhaitée de manière précise et concrète
+
+### Style d'écriture :
+- **Paragraphes** : MOYENS (3-5 phrases)
+- **Nombre de sections** : exactement 8 sections de contenu (+ offer + cta)
+- **Longueur cible** : 2190-2690 mots
+- **Layout** : Avec sidebar
+- **Offer box** : Oui — inclure une section type 'offer'
+
+### RÈGLES D'UTILISATION :
+- Tu DOIS reproduire la STRUCTURE et le RYTHME du template de référence
+- Le nombre de sections (8) est FIXE — ne pas en ajouter ni en retirer
+- Les composants (stat-row, testimonials, etc.) doivent être placés aux MÊMES positions relatives
+- Les headings doivent suivre la même PROGRESSION NARRATIVE (problème → découverte → solution → preuve → offre)

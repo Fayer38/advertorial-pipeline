@@ -312,5 +312,144 @@ Chaque section = 1 card numérotée. Les headings SONT les titres de la liste.
 
 def get_template_instructions(template_id: str) -> str:
     """Return the structural instructions for a given template."""
-    tmpl = TEMPLATE_COMPONENTS.get(template_id, TEMPLATE_COMPONENTS["editorial"])
-    return tmpl["components"]
+    # Built-in template
+    if template_id in TEMPLATE_COMPONENTS:
+        return TEMPLATE_COMPONENTS[template_id]["components"]
+
+    # Custom imported template — analyze HTML and generate instructions
+    if template_id.startswith("custom-"):
+        return _analyze_custom_template(template_id)
+
+    # Fallback to editorial
+    return TEMPLATE_COMPONENTS["editorial"]["components"]
+
+
+def _analyze_custom_template(template_id: str) -> str:
+    """Analyze a custom HTML template and generate copywriter instructions."""
+    import re, json
+    from pathlib import Path
+
+    # Check for cached analysis
+    cache_path = Path(f"data/custom_templates/{template_id}_instructions.txt")
+    if cache_path.exists():
+        return cache_path.read_text(encoding="utf-8")
+
+    html_path = Path(f"data/custom_templates/{template_id}.html")
+    if not html_path.exists():
+        return TEMPLATE_COMPONENTS["editorial"]["components"]
+
+    html = html_path.read_text(encoding="utf-8")
+
+    # ── ANALYZE STRUCTURE ──
+    # Remove CSS/scripts for content analysis
+    content = re.sub(r'<style[^>]*>.*?</style>', '', html, flags=re.S | re.I)
+    content = re.sub(r'<script[^>]*>.*?</script>', '', content, flags=re.S | re.I)
+
+    # Count elements
+    h2s = re.findall(r'<h2[^>]*>(.*?)</h2>', content, re.S | re.I)
+    section_headings = [re.sub(r'<[^>]+>', '', h).strip()[:60] for h in h2s]
+    num_sections = len(h2s)
+
+    testimonials = len(re.findall(r'class="testimonial"', content))
+    stat_rows = len(re.findall(r'class="stat-row"', content))
+    comparison_tables = len(re.findall(r'class="comparison-table"', content))
+    warning_boxes = len(re.findall(r'class="warning-box"', content))
+    blockquotes = len(re.findall(r'<blockquote', content, re.I))
+    images = len(re.findall(r'<img', content, re.I))
+    placeholders = len(re.findall(r'class="placeholder"', content))
+    has_sidebar = 'sidebar' in content.lower()
+    has_offer = bool(re.search(r'class="[^"]*offer[^"]*"', content, re.I))
+
+    # Word count
+    text_only = re.sub(r'<[^>]+>', ' ', content)
+    word_count = len(text_only.split())
+
+    # Detect paragraph style (short vs long)
+    paragraphs = re.findall(r'<p[^>]*>(.*?)</p>', content, re.S | re.I)
+    avg_para_words = sum(len(re.sub(r'<[^>]+>', '', p).split()) for p in paragraphs) / max(len(paragraphs), 1)
+    para_style = "LONGS (6-10 phrases)" if avg_para_words > 60 else "MOYENS (3-5 phrases)" if avg_para_words > 30 else "COURTS (1-3 phrases)"
+
+    # ── GENERATE INSTRUCTIONS ──
+    instructions = f"""## STRUCTURE — Template Importé (Custom)
+
+### Ce template a été analysé automatiquement depuis un HTML de référence.
+
+### Structure observée : {num_sections} sections
+"""
+    # List section headings as examples
+    if section_headings:
+        instructions += "\n### Exemples de headings du template de référence :\n"
+        for i, h in enumerate(section_headings, 1):
+            instructions += f'{i}. "{h}"\n'
+        instructions += "\nAdapte les headings à ton produit mais GARDE LE MÊME STYLE et la même progression narrative.\n"
+
+    # Components
+    instructions += f"""
+### Composants à utiliser :
+"""
+    if stat_rows > 0:
+        instructions += f"""- **{stat_rows}x stat-row** (chiffres clés dans des cards)
+```html
+<div class="stat-row">
+  <div class="stat-box"><span class="stat-num">CHIFFRE</span><div class="stat-label">Label</div></div>
+</div>
+```
+"""
+    if comparison_tables > 0:
+        instructions += f"""- **{comparison_tables}x comparison-table**
+```html
+<table class="comparison-table">
+  <thead><tr><th>Feature</th><th>Old Way</th><th>Our Product</th></tr></thead>
+  <tbody><tr><td>Feature</td><td class="bad">Bad ✗</td><td class="good">Good ✓</td></tr></tbody>
+</table>
+```
+"""
+    if testimonials > 0:
+        instructions += f"""- **{testimonials}x testimonial**
+```html
+<div class="testimonial">
+  <div class="quote">"Citation spécifique et émotionnelle."</div>
+  <div class="attribution">Prénom Nom, Âge, Ville ★★★★★</div>
+</div>
+```
+"""
+    if warning_boxes > 0:
+        instructions += f"""- **{warning_boxes}x warning-box**
+```html
+<div class="warning-box">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#f26722" stroke-width="2"/><line x1="12" y1="9" x2="12" y2="13" stroke="#f26722" stroke-width="2"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="#f26722" stroke-width="2"/></svg>
+  <div><strong>Warning:</strong> Description.</div>
+</div>
+```
+"""
+    if blockquotes > 0:
+        instructions += f"- **{blockquotes}x blockquote** (citations en style éditorial)\n"
+
+    if not any([stat_rows, comparison_tables, testimonials, warning_boxes, blockquotes]):
+        instructions += "- **Prose pure** — pas de composants visuels complexes, juste du texte narratif\n"
+
+    # Media
+    total_media = images + placeholders
+    instructions += f"""
+### Médias : {total_media} emplacements visuels
+- Chaque section DOIT avoir un `visual_placeholder` descriptif
+- Types : "photo", "lifestyle", "product", "infographic", "before_after"
+- Décris l'image souhaitée de manière précise et concrète
+
+### Style d'écriture :
+- **Paragraphes** : {para_style}
+- **Nombre de sections** : exactement {num_sections} sections de contenu (+ offer + cta)
+- **Longueur cible** : {max(word_count, 1200)}-{word_count + 500} mots
+- **Layout** : {"Avec sidebar" if has_sidebar else "Pleine largeur, sans sidebar"}
+- **Offer box** : {"Oui — inclure une section type 'offer'" if has_offer else "Non"}
+
+### RÈGLES D'UTILISATION :
+- Tu DOIS reproduire la STRUCTURE et le RYTHME du template de référence
+- Le nombre de sections ({num_sections}) est FIXE — ne pas en ajouter ni en retirer
+- Les composants (stat-row, testimonials, etc.) doivent être placés aux MÊMES positions relatives
+- Les headings doivent suivre la même PROGRESSION NARRATIVE (problème → découverte → solution → preuve → offre)
+"""
+
+    # Cache the instructions
+    cache_path.write_text(instructions, encoding="utf-8")
+    return instructions

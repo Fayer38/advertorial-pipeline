@@ -260,11 +260,11 @@ class HTMLPublisherAgent(BaseAgent):
             mod = importlib.import_module(_template_modules[template])
             return mod.build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang, tx)
 
-        # Custom imported template — use the stored HTML as-is (structure preserved)
+        # Custom imported template — use editorial renderer with custom structural guidance
+        # The copywriter already received custom instructions via get_template_instructions()
+        # so the content structure matches the imported template's pattern
         if template.startswith("custom-"):
-            custom_path = Path(f"data/custom_templates/{template}.html")
-            if custom_path.exists():
-                return custom_path.read_text(encoding="utf-8")
+            pass  # fall through to editorial renderer below
 
         # Default: editorial template (v2 — enhanced with stat-row, comparison table, testimonials, warning boxes, SVG icons)
         SVG_CHECK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f26722" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#f26722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
