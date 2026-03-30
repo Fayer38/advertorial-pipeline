@@ -69,6 +69,8 @@ class HTMLPublisherAgent(BaseAgent):
 
         html = self._build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang=lang, template=template)
 
+        # Inject testimonial avatars
+        html = self._inject_avatars(html)
         # Inject branding elements (logo header, announcement bar, footer)
         html = self._inject_branding(html, product_name, product_url)
 
@@ -91,6 +93,31 @@ class HTMLPublisherAgent(BaseAgent):
             "url": f"/articles/{slug}" if publish_path else None,
             "word_count": advertorial_draft.get("meta", {}).get("word_count", 0),
         }
+
+    def _inject_avatars(self, html: str) -> str:
+        """Inject realistic avatar images into testimonial attribution divs."""
+        import hashlib
+
+        male_names = ["Robert","James","David","Michael","John","William","Richard","Thomas","Charles","Joseph",
+                       "George","Edward","Albert","Frank","Harold","Walter","Raymond","Lawrence","Eugene","Ralph",
+                       "Carl","Arthur","Fred","Henry","Ernest","Roy","Louis","Donald","Kenneth","Paul","Jerry",
+                       "Dennis","Gerald","Bruce","Roger","Wayne","Dale","Gary","Larry","Terry","Bobby","Jim","Bob"]
+        female_names = ["Margaret","Patricia","Linda","Barbara","Elizabeth","Jennifer","Maria","Susan","Dorothy",
+                         "Lisa","Nancy","Karen","Betty","Helen","Sandra","Ashley","Kimberly","Emily","Donna",
+                         "Michelle","Carol","Amanda","Melissa","Deborah","Stephanie","Rebecca","Sharon","Laura",
+                         "Cynthia","Kathleen","Amy","Angela","Shirley","Anna","Brenda","Pamela","Janet","Mary","Sarah"]
+
+        def add_avatar(m):
+            attribution = m.group(1)
+            seed = hashlib.md5(attribution.encode()).hexdigest()[:8]
+            gender = "men" if any(n in attribution for n in male_names) else "women"
+            num = int(seed, 16) % 99
+            avatar_url = f"https://randomuser.me/api/portraits/{gender}/{num}.jpg"
+            avatar_html = f'<img src="{avatar_url}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:10px">'
+            return f'<div class="attribution" style="display:flex;align-items:center">{avatar_html}<span>{attribution}</span></div>'
+
+        html = re.sub(r'<div class="attribution">(.*?)</div>', add_avatar, html, flags=re.DOTALL)
+        return html
 
     def _inject_branding(self, html: str, product_name: str = "", product_url: str = "") -> str:
         """Inject logo header, announcement bar, and footer into any template HTML."""

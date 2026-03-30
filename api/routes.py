@@ -1679,6 +1679,23 @@ HEADER_LOGO_HTML = f'''<div id="adv-disclosure" style="text-align:center;padding
   <img src="{HEADER_LOGO_URL}" alt="Logo" style="height:52px;max-width:260px;object-fit:contain;">
 </div>'''
 
+def _inject_avatars(html: str) -> str:
+    """Inject avatar images into testimonial .attribution divs."""
+    import hashlib
+    male_names = ["Robert","James","David","Michael","John","William","Richard","Thomas","Charles","Joseph","George","Edward","Albert","Frank","Harold","Walter","Raymond","Lawrence","Eugene","Ralph","Carl","Arthur","Fred","Henry","Ernest","Roy","Louis","Donald","Kenneth","Paul","Jerry","Dennis","Gerald","Bruce","Roger","Wayne","Dale","Gary","Larry","Terry","Bobby","Jim","Bob"]
+    female_names = ["Margaret","Patricia","Linda","Barbara","Elizabeth","Jennifer","Maria","Susan","Dorothy","Lisa","Nancy","Karen","Betty","Helen","Sandra","Ashley","Kimberly","Emily","Donna","Michelle","Carol","Amanda","Melissa","Deborah","Stephanie","Rebecca","Sharon","Laura","Cynthia","Kathleen","Amy","Angela","Shirley","Anna","Brenda","Pamela","Janet","Mary","Sarah"]
+    def _add_avatar(m):
+        attribution = m.group(1)
+        if 'randomuser.me' in attribution:
+            return m.group(0)  # already has avatar
+        seed = hashlib.md5(attribution.encode()).hexdigest()[:8]
+        gender = "men" if any(n in attribution for n in male_names) else "women"
+        num = int(seed, 16) % 99
+        avatar_url = f"https://randomuser.me/api/portraits/{gender}/{num}.jpg"
+        avatar_html = f'<img src="{avatar_url}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:10px">'
+        return f'<div class="attribution" style="display:flex;align-items:center">{avatar_html}<span>{attribution}</span></div>'
+    return _re.sub(r'<div class="attribution">(.*?)</div>', _add_avatar, html, flags=_re.DOTALL)
+
 def _inject_header_logo(html: str) -> str:
     """Inject the disclosure bar + header logo at top, footer at bottom."""
     # Inject footer if missing
@@ -1711,6 +1728,9 @@ async def editable_preview(plid: str):
     if not htmls:
         raise HTTPException(404, "No HTML file found")
     html = htmls[0].read_text(encoding="utf-8")
+    # Inject avatars on testimonials if not already present
+    if 'randomuser.me/api/portraits' not in html:
+        html = _inject_avatars(html)
     # Inject header logo if not already present — skip for imported HTML that has its own header
     is_import = pipelines.get(plid, {}).get("config", {}).get("source") == "html-import"
     if not is_import:
