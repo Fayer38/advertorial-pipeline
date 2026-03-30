@@ -509,6 +509,55 @@ async def update_meta(plid: str, req: UpdateMetaReq):
         (pub_dir / old_name).write_text(html, encoding="utf-8")
         return {"updated": True, "slug": old_name.replace(".html",""), "url": f"https://dailybloginfo.com/a/{old_name}"}
 
+# ── IMPORT HTML ──
+class ImportHtmlReq(BaseModel):
+    html: str
+    slug: str = ""
+    product_id: str = "seese-pro-v9"
+
+@app.post("/pipeline/import-html")
+async def import_html(req: ImportHtmlReq):
+    """Import an external HTML file as a new pipeline entry for editing."""
+    import uuid, re
+    plid = uuid.uuid4().hex[:8]
+    out = Path(f"data/output/{plid}")
+    out.mkdir(parents=True, exist_ok=True)
+
+    # Clean the HTML — strip editor wrappers if present
+    html = req.html
+    # Remove Lovable/extension wrappers
+    html = re.sub(r'<div class="[^"]*ExtensionWindow[^"]*"[^>]*>.*?(<div class="page-wrapper")', r'\1', html, flags=re.DOTALL)
+
+    # Generate slug from title or provided slug
+    slug = req.slug
+    if not slug:
+        title_match = re.search(r'<title>(.*?)</title>', html, re.I)
+        if title_match:
+            slug = re.sub(r'[^a-z0-9]+', '-', title_match.group(1).lower()).strip('-')[:60]
+        else:
+            slug = f"imported-{plid}"
+
+    # Save HTML file
+    html_path = out / f"{slug}.html"
+    html_path.write_text(html, encoding="utf-8")
+
+    # Also publish
+    pub_path = Path("/var/www/advertorials") / f"{slug}.html"
+    pub_path.write_text(html, encoding="utf-8")
+
+    # Create pipeline state
+    state = {
+        "status": "completed",
+        "progress": 1.0,
+        "started_at": datetime.utcnow().isoformat(),
+        "completed_at": datetime.utcnow().isoformat(),
+        "product_id": req.product_id,
+        "config": {"template": "imported", "source": "html-import"},
+    }
+    (out / "_pipeline_state.json").write_text(json.dumps(state, indent=2))
+
+    return {"pipeline_id": plid, "slug": slug, "html_file": str(html_path), "published": str(pub_path)}
+
 # ── SAVE EDITED HTML ──
 class SaveHtmlReq(BaseModel):
     html: str
