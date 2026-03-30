@@ -260,6 +260,12 @@ class HTMLPublisherAgent(BaseAgent):
             mod = importlib.import_module(_template_modules[template])
             return mod.build_html(content, seo, image_map, product_url, product_name, product_image_url, author_name, lang, tx)
 
+        # Custom imported template — use the stored HTML as-is (structure preserved)
+        if template.startswith("custom-"):
+            custom_path = Path(f"data/custom_templates/{template}.html")
+            if custom_path.exists():
+                return custom_path.read_text(encoding="utf-8")
+
         # Default: editorial template (v2 — enhanced with stat-row, comparison table, testimonials, warning boxes, SVG icons)
         SVG_CHECK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f26722" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#f26722" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         SVG_CHECK_GREEN = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#2eaa4f" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#2eaa4f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'

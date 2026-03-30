@@ -1746,11 +1746,66 @@ async def editable_preview(plid: str):
 @app.get("/templates")
 async def list_templates():
     from agents.templates import get_template_list
-    return {"templates": get_template_list()}
+    templates = get_template_list()
+    # Add custom imported templates
+    tpl_dir = Path("data/custom_templates")
+    if tpl_dir.exists():
+        for meta_file in sorted(tpl_dir.glob("*.json")):
+            try:
+                meta = json.loads(meta_file.read_text())
+                templates.append(meta)
+            except: pass
+    return {"templates": templates}
+
+# ── CUSTOM TEMPLATES ──
+class ImportTemplateReq(BaseModel):
+    html: str
+    name: str = ""
+    description: str = ""
+
+@app.post("/templates/import")
+async def import_template(req: ImportTemplateReq):
+    """Import an HTML file as a reusable custom template."""
+    import uuid
+    tid = "custom-" + uuid.uuid4().hex[:6]
+    tpl_dir = Path("data/custom_templates")
+    tpl_dir.mkdir(parents=True, exist_ok=True)
+
+    # Extract name from title if not provided
+    name = req.name
+    if not name:
+        m = _re.search(r'<title>(.*?)</title>', req.html, _re.I)
+        name = m.group(1).strip() if m else tid
+
+    # Save HTML + metadata
+    (tpl_dir / f"{tid}.html").write_text(req.html, encoding="utf-8")
+    meta = {"id": tid, "name": name, "description": req.description or "Imported template", "icon": "📄", "best_for": "Custom imported template", "source": "import"}
+    (tpl_dir / f"{tid}.json").write_text(json.dumps(meta, indent=2))
+
+    return {"template_id": tid, "name": name}
+
+@app.delete("/templates/{tid}")
+async def delete_template(tid: str):
+    """Delete a custom template."""
+    if not tid.startswith("custom-"):
+        raise HTTPException(400, "Cannot delete built-in templates")
+    tpl_dir = Path("data/custom_templates")
+    html_path = tpl_dir / f"{tid}.html"
+    meta_path = tpl_dir / f"{tid}.json"
+    if html_path.exists(): html_path.unlink()
+    if meta_path.exists(): meta_path.unlink()
+    return {"deleted": tid}
 
 @app.get("/templates/{tid}/preview")
 async def preview_template(tid: str):
     """Return a full HTML preview of a template with sample content."""
+    # Custom template: serve raw HTML
+    if tid.startswith("custom-"):
+        tpl_path = Path(f"data/custom_templates/{tid}.html")
+        if not tpl_path.exists():
+            raise HTTPException(404, "Template not found")
+        return HTMLResponse(content=tpl_path.read_text(encoding="utf-8"))
+
     from agents.html_publisher import HTMLPublisherAgent
     pub = HTMLPublisherAgent(output_dir="data/output")
     sample_content = {
