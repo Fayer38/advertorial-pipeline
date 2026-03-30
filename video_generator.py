@@ -80,30 +80,40 @@ MODELS = {
 # ============================================================
 
 VIDEO_SCENES = {
-    "product_demo": {
-        "label": "Product Demo",
+    "leaf_blowing": {
+        "label": "Leaf Blowing",
+        "source_image_types": ["lifestyle", "hero", "environment"],
+        "prompts": [
+            "The person points the blower at a pile of dry autumn leaves on the patio. They press the button and a powerful stream of air scatters the leaves in all directions. Leaves fly and tumble across the ground naturally. The person sweeps the blower in a steady left-to-right motion. Hair and loose clothing move from the airflow. Bright natural daylight.",
+            "Steady medium shot. The person walks slowly along a garden path covered in fallen leaves, blowing them off to the side with the device. Leaves swirl and dance in the air before settling on the grass. Trees sway gently in the background. Smooth natural walking motion.",
+            "Close shot of dry colorful autumn leaves on a wooden deck. Suddenly a powerful gust from the device enters frame from the right, blasting the leaves off the deck in a satisfying sweep. The wood surface is revealed clean underneath. Quick, powerful, satisfying motion.",
+        ],
+    },
+    "grass_blowing": {
+        "label": "Grass Clippings Cleanup",
+        "source_image_types": ["lifestyle", "environment"],
+        "prompts": [
+            "The person stands on a driveway edge where fresh grass clippings are scattered from mowing. They aim the blower and the green clippings fly off the concrete back onto the lawn in a clean sweep. Natural body posture, casual one-handed operation. Bright midday sun.",
+            "After mowing, the person uses the blower to clean up grass clippings from the sidewalk and porch steps. Green debris flies off the steps one by one as they move upward. Effortless one-handed movement. Slight wind in nearby bushes.",
+            "Top-down angle: fresh grass clippings on a grey driveway. The blower's airstream enters frame and pushes the green debris in a clean line across the surface. Fast, powerful, satisfying cleanup. No person visible, just the device and the result.",
+        ],
+    },
+    "lightweight_demo": {
+        "label": "Lightweight & Easy Demo",
+        "source_image_types": ["lifestyle", "hero", "closeup"],
+        "prompts": [
+            "A senior woman picks up the small blower from a table with one hand, effortlessly. She lifts it up and down a few times to show how light it is, smiling at the camera. Her arm shows zero strain. She then casually points it and blows a few leaves. Natural, relaxed body language. Warm afternoon light.",
+            "The person holds the blower in one hand while holding a cup of coffee in the other. They casually activate the blower one-handed and clear a few leaves from the porch, then take a sip of coffee. Relaxed, everyday morning routine feel. Gentle natural movement.",
+            "Close-up of a hand picking up the blower from a shelf. The hand lifts it easily, rotates it, shows it from different angles. The device looks small and lightweight in the hand. Smooth rotation, studio-quality product motion. Clean background.",
+        ],
+    },
+    "car_drying": {
+        "label": "Car Drying",
         "source_image_types": ["lifestyle", "hero"],
         "prompts": [
-            "The person activates the device and begins using it. Leaves and debris blow away powerfully from the surface. Natural wind movement, device vibrates slightly with power. Smooth camera, realistic motion.",
-            "The person sweeps the device across the area in a steady horizontal motion. Debris clears in real-time, revealing clean surface underneath. Natural body movement, slight hair movement from wind.",
-            "Close-up of the device in action — air stream visible blowing dust and small debris. The nozzle area glows with power. Subtle hand movements, steady grip. Photorealistic motion.",
-        ],
-    },
-    "before_after": {
-        "label": "Before/After Transition",
-        "source_image_types": ["before_after", "environment"],
-        "prompts": [
-            "Slow transition from dirty to clean. Leaves and debris gradually disappear from left to right, revealing a pristine surface. Smooth wipe effect, natural lighting shift from cool to warm tones.",
-            "Time-lapse style cleanup. The messy area rapidly becomes clean as if swept by an invisible force. Fast but smooth motion, satisfying transformation.",
-        ],
-    },
-    "lifestyle": {
-        "label": "Lifestyle Scene",
-        "source_image_types": ["lifestyle", "testimonial"],
-        "prompts": [
-            "The person smiles and looks around their clean yard with satisfaction. Gentle breeze moves their hair and nearby tree leaves. Birds in background. Relaxed, peaceful atmosphere. Slow natural movement.",
-            "The person walks through their clean patio, touches a surface approvingly, and looks content. Natural walking motion, casual body language. Warm golden hour light shifts subtly.",
-            "The person casually demonstrates the lightweight device, lifting it with one hand effortlessly. Shows it to camera with a confident smile. Natural gesture, product clearly visible throughout.",
+            "The person stands next to a freshly washed wet car in a driveway. They aim the blower at the car's roof and water droplets blast off the surface in sheets, leaving a dry streak-free finish. The person moves the blower along the car body steadily. Water spray catches the sunlight. Bright daylight.",
+            "Close-up of a wet car hood with water beading on the paint. The blower's airstream enters frame and pushes water droplets across the surface in a satisfying wave, revealing the dry glossy paint underneath. Slow motion feel, water droplets glinting in sunlight.",
+            "The person crouches to dry the car's wheel wells and rims with the blower. Water sprays out from the tight spaces. They move around the car with ease, one-handed operation. The car transforms from wet to dry as they work. Natural motion, outdoor setting.",
         ],
     },
 }
@@ -256,38 +266,37 @@ class VideoLibraryGenerator:
                 images_by_type[t] = []
             images_by_type[t].append(m)
 
-        # Build video tasks
+        # Build video tasks — all prompts × all models
         tasks = []
         for scene_type in scene_types:
             scene = VIDEO_SCENES.get(scene_type)
             if not scene:
                 continue
 
-            # Find best source image
-            source_image = None
+            # Find source images (pick different ones for variety)
+            source_images = []
             for img_type in scene["source_image_types"]:
                 candidates = images_by_type.get(img_type, [])
-                if candidates:
-                    # Prefer 16:9 for videos
-                    wide = [c for c in candidates if c["aspect_ratio"] == "16:9"]
-                    source_image = wide[0] if wide else candidates[0]
-                    break
+                wide = [c for c in candidates if c["aspect_ratio"] == "16:9"]
+                source_images.extend(wide if wide else candidates)
 
-            if not source_image:
+            if not source_images:
                 logger.warning(f"No source image for {scene_type}, skipping")
                 continue
 
-            # One video per model, using first prompt
-            prompt = scene["prompts"][0]
-            for model_name in models:
-                tasks.append({
-                    "scene_type": scene_type,
-                    "scene_label": scene["label"],
-                    "model": model_name,
-                    "model_label": MODELS[model_name]["label"],
-                    "source_image": source_image,
-                    "prompt": prompt,
-                })
+            # Each prompt variant × each model
+            for prompt_idx, prompt in enumerate(scene["prompts"]):
+                source_image = source_images[prompt_idx % len(source_images)]
+                for model_name in models:
+                    tasks.append({
+                        "scene_type": scene_type,
+                        "scene_label": scene["label"],
+                        "model": model_name,
+                        "model_label": MODELS[model_name]["label"],
+                        "source_image": source_image,
+                        "prompt": prompt,
+                        "variant": prompt_idx + 1,
+                    })
 
         total = len(tasks)
         logger.info(f"Generating {total} videos for {product_id} ({len(models)} models × {len(scene_types)} scenes)")
@@ -316,7 +325,7 @@ class VideoLibraryGenerator:
                 continue
 
             # Download video
-            filename = f"video-{task['scene_type']}-{task['model']}-5s.mp4"
+            filename = f"video-{task['scene_type']}-v{task.get('variant',1)}-{task['model']}-5s.mp4"
             local_dir = self.output_dir / product_id / "videos"
             local_dir.mkdir(parents=True, exist_ok=True)
 
