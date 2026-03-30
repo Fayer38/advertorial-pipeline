@@ -545,18 +545,45 @@ async def import_html(req: ImportHtmlReq):
     pub_path = Path("/var/www/advertorials") / f"{slug}.html"
     pub_path.write_text(html, encoding="utf-8")
 
-    # Create pipeline state
+    # Extract headline from HTML
+    title_match = re.search(r'<h1[^>]*>(.*?)</h1>', html, re.I | re.S)
+    headline = re.sub(r'<[^>]+>', '', title_match.group(1)).strip() if title_match else slug
+
+    # Resolve product info
+    product = _products.get(req.product_id, {})
+    product_name = product.get("name", req.product_id)
+    product_url = product.get("url", "")
+    now = datetime.utcnow().isoformat()
+
+    # Create pipeline state on disk
     state = {
         "status": "completed",
         "progress": 1.0,
-        "started_at": datetime.utcnow().isoformat(),
-        "completed_at": datetime.utcnow().isoformat(),
+        "started_at": now,
+        "completed_at": now,
         "product_id": req.product_id,
         "config": {"template": "imported", "source": "html-import"},
     }
     (out / "_pipeline_state.json").write_text(json.dumps(state, indent=2))
 
-    return {"pipeline_id": plid, "slug": slug, "html_file": str(html_path), "published": str(pub_path)}
+    # Register in memory so it appears in history immediately
+    pipelines[plid] = {
+        "id": plid,
+        "status": "completed",
+        "started_at": now,
+        "completed_at": now,
+        "product_id": req.product_id,
+        "product_url": product_url,
+        "product_name": product_name,
+        "config": {"template": "imported", "source": "html-import"},
+        "current_phase": "imported",
+        "current_agent": "",
+        "progress": 1.0,
+        "error": "",
+        "results": {"headline": headline, "html_file": f"{slug}.html", "qa_score": 0, "thumbnail": ""},
+    }
+
+    return {"pipeline_id": plid, "slug": slug, "headline": headline, "html_file": str(html_path), "published": str(pub_path)}
 
 # ── SAVE EDITED HTML ──
 class SaveHtmlReq(BaseModel):

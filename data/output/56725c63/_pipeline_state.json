@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "progress": 1.0,
+  "started_at": "2026-03-30T09:50:27.663611",
+  "completed_at": "2026-03-30T09:50:27.663624",
+  "product_id": "seese-pro-v9",
+  "config": {
+    "template": "imported",
+    "source": "html-import"
+  }
+}
