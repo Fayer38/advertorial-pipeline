@@ -1,3 +1,13 @@
 [22:53:40] [INFO] Pipeline started — product=seese-pro-v9 template=medical-authority angle=testimonial lang=en
 [22:53:40] [INFO] Phase 1 | Starting | running | 0%
 [22:53:40] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
+[22:55:08] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[23:03:17] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[23:04:08] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[23:04:08] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[23:04:56] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[23:06:08] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[23:08:34] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[23:09:53] [INFO] Pipeline completed — html=data/output/3ae3037f/at-60-i-stopped-blowing-my-leaves-not-because-i-wanted-to.html words=1385
+[23:09:53] [INFO] Done |  | completed | 100%
+[23:09:53] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)

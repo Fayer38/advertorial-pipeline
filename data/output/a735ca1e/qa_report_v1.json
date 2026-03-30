@@ -1,0 +1,44 @@
+{
+  "overall_score": 7.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Très fort : l'ouverture à la première personne avec l'âge précis (62 ans), la métaphore du 'terrain perdu', et la scène du voisin avec son café créent une identification immédiate. La phrase 'my back had other ideas' est exactement le langage de la cible. Légère réserve : le pivot vers l'urgence commerciale ('that sale is back') à la fin du hook arrive un peu tôt et casse le momentum narratif — le lecteur est encore dans l'histoire, pas encore prêt à entendre parler d'un prix."
+    },
+    "story_flow": {
+      "score": 7,
+      "feedback": "La progression hook → pourquoi le prix → ce que vous obtenez → témoignages → offre → CTA est logique et bien structurée. Les bucket brigades sont présents ('Let's be straight with you', 'Here's the bottom line', 'Numbers don't lie'). Deux faiblesses : 1) La transition entre la section hook et 'Why Is It Only $119.99?' est abrupte — on passe d'une histoire personnelle à une justification commerciale sans pont émotionnel. Ajoutez 1-2 phrases du type : 'But before I tell you where to find yours, let me address the first question I asked myself...' 2) La section témoignages vers la section offre répète des informations déjà dites (bonus, garantie), ce qui ralentit le rythme en fin de parcours."
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Les preuves sont présentes mais manquent de diversité et de crédibilité externe. Points forts : 4 témoignages avec noms, âges, villes et cas d'usage différenciés — c'est bien. Les stats (12 847 unités, 4,9★) appuient le social proof. Lacunes : 1) Tous les avis sont 5 étoiles sans nuance — cela sonne peu authentique aux yeux d'un lecteur sceptique ; intégrez un avis 4 étoiles avec une légère réserve résolue (ex : 'Battery life took some getting used to, but worth every penny'). 2) Aucune validation externe : pas de mention de certification moteur, de test indépendant, ni de couverture presse. Même une courte ligne du type 'Featured in [publication]' renforcerait la crédibilité. 3) La promesse '200 MPH' n'est jamais comparée à un benchmark connu (ex : 'more airspeed than most $300 gas blowers')."
+    },
+    "cta_clarity": {
+      "score": 8,
+      "feedback": "CTA clair, unique, avec bouton d'action bien formulé ('Claim My Seese Pro™ — $119.99 (55% Off) →') et tous les éléments de réassurance en dessous (livraison, garantie, bonus). L'urgence est présente et justifiée via le compteur de stock. Légère marge de progression : l'urgence est purement quantitative (23% restant) mais pas temporelle — ajouter une dimension temps ('Sale ends when stock runs out — units are being claimed every few minutes') amplifierait la pression sans paraître artificiel."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "La phase douleur est excellente : 'losing ground, one postponed chore at a time' et 'quiet, creeping resignation' sont des formulations émotionnellement précises qui parlent directement à la cible. L'empathie du CTA ('Not because you're lazy. Not because you don't care about your home.') est un bon moment. Lacune principale : le future pacing est réduit à une seule phrase finale ('Five minutes from now, your yard could already be done') alors qu'il mériterait un paragraphe dédié. Suggestion concrète — ajoutez avant le CTA un paragraphe du type : 'Imagine this Saturday morning: you walk out, blower in one hand, coffee in the other. Fifteen minutes later, the driveway is clear, the porch is spotless, and you're back inside — no aching shoulder, no gas smell, no battle. Just done. The way it used to feel before your tools started fighting back.' Ce paragraphe transformerait le score émotionnel de 7 à 9."
+    },
+    "readability": {
+      "score": 8,
+      "feedback": "Très lisible : paragraphes courts, usage du gras ciblé sur les informations clés, liste bien formatée pour la section offre, vocabulaire accessible. La longueur (1290 mots) est dans la cible. Légère réserve : les sections BODY avec les explications de prix et les récapitulatifs répétitifs (les bonus sont listés 3 fois au total) alourdissent légèrement la lecture en milieu d'article."
+    },
+    "similarity_to_best": {
+      "score": 7,
+      "feedback": "Structure éprouvée bien respectée et ton globalement éditorial dans les 2/3 premiers tiers. La section OFFER bascule trop nettement dans un registre publicitaire classique — la répétition des prix barrés, la liste récapitulative, le 'Here's the bottom line' sonnent comme une page de vente Amazon plutôt qu'un article éditorial. Pour corriger : reformulez la section offre en maintenant la voix narrative de l'auteur (ex : 'When I checked out, here's what I saw in my cart...' plutôt qu'une liste récapitulative en bullet points). La section stats avec les boîtes chiffrées (12,847 / 77% / 4.9★) est un bon élément visuel mais son formatage HTML très structuré rompt le flow éditorial."
+    }
+  },
+  "improvements": [
+    "Adoucir le pivot commercial en fin de hook : retarder d'un paragraphe la mention du prix/solde pour laisser l'histoire respirer avant d'entrer en mode offre",
+    "Ajouter un paragraphe-pont entre le hook et la section 'Why $119.99?' pour maintenir le lecteur dans le registre émotionnel avant de passer au rationnel",
+    "Intégrer au moins un avis 4 étoiles avec une légère réserve résolue pour rendre les témoignages plus crédibles",
+    "Ajouter une validation externe (certification moteur, test comparatif chiffré vs souffleur à gaz standard, ou mention presse) dans la section preuves",
+    "Écrire un paragraphe de future pacing complet avant le CTA : décrire concrètement la vie du lecteur un samedi matin 30 jours après l'achat (terrasse nettoyée, dos sans douleur, café encore chaud)",
+    "Reformuler la section OFFER en voix narrative (maintenir le 'je' ou le 'vous' storytelling) plutôt qu'en liste récapitulative de page de vente",
+    "Réduire les redondances sur les bonus (listés 3 fois) — conserver la liste détaillée une seule fois et remplacer les autres occurrences par une référence courte"
+  ],
+  "version": 1
+}

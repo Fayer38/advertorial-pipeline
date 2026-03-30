@@ -1,0 +1,76 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Homme de 62 ans, silhouette droite et assurée, debout dans son allée en fin d'après-midi. Il tient le Seese Pro d'une seule main, bras légèrement tendu, sans effort visible. Derrière lui, une terrasse propre et dégagée. Lumière dorée rasante de fin de journée. Expression calme, satisfaite — pas un sourire de pub, un regard de quelqu'un qui vient de finir un travail bien fait. Cadrage éditorial, légèrement en contre-plongée pour renforcer la dignité de la posture.",
+      "mood": "Chaleureux, digne, compétent. Lumière dorée d'automne. Aucune connotation médicale — seulement l'autonomie retrouvée.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "infographie",
+      "description": "Diagramme biomécanique en deux colonnes sur fond blanc cassé. Colonne gauche : silhouette humaine de profil tenant un outil lourd (4–5 kg), avec des flèches rouges indiquant les zones de compression lombaire L3–L5 et la tension sur le rotator cuff. Colonne droite : même silhouette, posture détendue, tenant un outil ultra-léger d'une main, flèches vertes montrant une colonne neutre et zéro tension sur l'épaule. Style illustration médicale propre, typographie sans-serif clinique. Tons neutres avec accents rouges/verts.",
+      "mood": "Éditorial, clinique mais accessible. Style magazine de santé haut de gamme, pas froid ni hospitalier.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "before_after",
+      "description": "Image en deux panneaux côte à côte, séparés par une fine ligne verticale. Panneau gauche (tons gris-froids) : homme d'environ 65 ans, dos légèrement voûté, épaules tendues, poussant un souffleur à gaz encombrant sur une allée couverte de feuilles. Tension visible dans la nuque et le dos bas. Panneau droit (tons chauds, lumière naturelle) : même type d'homme, posture verticale et détendue, tenant le Seese Pro d'une seule main avec un geste fluide. Même décor résidentiel pour renforcer le contraste.",
+      "mood": "Contraste intentionnel : fatigue et tension à gauche / légèreté et maîtrise à droite. Pas dramatique, factuel et lisible.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "product_shot",
+      "description": "Le Seese Pro tenu à hauteur de taille par une main masculine (60 ans, main non parfaite, veines légèrement visibles — une vraie main). Arrière-plan : façade résidentielle bien entretenue, légèrement floutée. Mise au point sur la prise en main et le boîtier moteur brushless. Lumière naturelle latérale pour révéler les détails de texture du produit. Pas de flash, pas de fond studio. Cadrage rapproché mettant en valeur la légèreté perçue — une main, aucun effort.",
+      "mood": "Editorial, authentique. Mise en valeur de l'ergonomie sans être un catalogue. Sobre, haut de gamme.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "infographie",
+      "description": "Photographie de type laboratoire produit sur fond gris clair neutre. À gauche : un souffleur à gaz traditionnel posé sur une balance de cuisine affichant 5,2 lbs. À droite : le Seese Pro posé sur une balance identique affichant 2,1 lbs. Composition symétrique, éclairage uniforme sans ombres dures. Optionnel : étiquettes textuelles minimalistes sous chaque produit ('Conventional blower' / 'Seese Pro'). Style photo de test produit indépendant, pas commercial.",
+      "mood": "Factuel, objectif, crédible. Ambiance test consommateur ou rapport éditorial tech.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "testimonial",
+      "description": "Diptyque lifestyle en milieu résidentiel réel. Image 1 : homme de 67–68 ans, posture droite et détendue, debout près d'une allée dégagée en automne, feuilles floues en arrière-plan, tenant le Seese Pro d'une main. Regard direct, expression tranquille et satisfaite. Image 2 : femme de 61–63 ans, séchant sa voiture avec le Seese Pro, une seule main, geste naturel, sourire discret. Les deux images : lumière naturelle, extérieur résidentiel ordinaire (pas de villa, pas de jardin parfait).",
+      "mood": "Chaleureux, réaliste, humain. Personnes réelles actives — pas des modèles, pas des clichés 'seniors heureux'. Dignité et normalité.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "lifestyle",
+      "description": "Portrait éditorial d'un médecin ou spécialiste en rééducation (homme ou femme, 52–58 ans, tenue professionnelle sobre). Assis à un bureau propre dans un cabinet lumineux — pas un bloc opératoire. Le Seese Pro est posé sur le bureau à côté de quelques documents médicaux ou d'un modèle anatomique. Expression sérieuse et bienveillante, regard légèrement vers l'objectif. Lumière naturelle depuis une fenêtre latérale. Atmosphère de consultation, pas de studio photo.",
+      "mood": "Autorité médicale accessible, chaleureux mais crédible. Pas clinique ni froid — confiance professionnelle.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "optional"
+    },
+    {
+      "section_index": 7,
+      "scene_type": "product_shot",
+      "description": "Flat lay propre sur surface gris clair légèrement texturée (béton poli ou ardoise). Composition ouverte en éventail : le Seese Pro en centre légèrement décalé, batterie à gauche, chargeur en bas à droite, étui de transport ouvert en arrière-plan. Éclairage diffus uniforme, aucune ombre dure. Tous les accessoires bien visibles et identifiables. Small graphic overlay discret en coin supérieur droit : badge rouge '55% OFF / $119.99'. Pas de fond fantaisie, composition épurée style DTC premium.",
+      "mood": "Net, professionnel, rassurant. Qualité perçue élevée. Packaging premium sans être luxe inaccessible.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    }
+  ]
+}

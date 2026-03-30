@@ -1,0 +1,76 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Homme au début de la quarantaine, allure honnête et décontractée (pas coiffé pour une pub), debout dans un entrepôt de taille modeste. Derrière lui, des étagères métalliques chargées de cartons Seese Pro empilés. Il regarde directement la caméra avec une expression calme et directe — pas de sourire commercial. Lumière naturelle entrant par une fenêtre industrielle haut perchée, mêlée à un éclairage chaud d'entrepôt. Tenue simple : chemise à carreaux, jean. Ambiance authentique, pas scénarisée.",
+      "mood": "Honnête, chaleureux, ancré — l'opposé d'une image marketing. Lumière ambrée, tons bois et métal.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Allée de maison en Nouvelle-Angleterre, fin d'après-midi d'automne. Épais tapis de feuilles d'érable rouge et orange couvrant l'allée, le patio arrière et le chemin d'entrée. Maison modeste mais bien entretenue visible en arrière-plan. Aucun personnage — la scène est silencieuse, immobile, légèrement mélancolique. Lumière dorée rasante de fin de journée projetant de longues ombres douces sur les feuilles. Sentiment de quelque chose laissé à l'abandon malgré soi.",
+      "mood": "Calme mélancolique, nostalgie douce, lumière automnale chaude — or, roux, brun.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "product_shot",
+      "description": "Vieux souffleur à essence posé sur le sol en béton d'un garage sombre, légèrement poussiéreux. Toiles d'araignée discrètes visibles sur la poignée. En arrière-plan flou, une grande fenêtre de garage laisse entrer une lumière vive et ensoleillée — le jardin et l'extérieur bien éclairés visible derrière le vitrage, contrastant avec l'obscurité de l'intérieur. L'objet semble lourd, délaissé, dépassé. Pas de mise en scène forcée.",
+      "mood": "Contraste sombre/lumière, abandon, pesanteur — tons gris béton, brun rouille, lumière blanche en contre-jour.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Femme d'environ 68 ans, expression légèrement frustrée mais pas caricaturale — une frustration reconnaissable, réelle. Elle se tient sur son porche arrière, regardant vers le bas un câble prolongateur orange emmêlé autour du pied d'un pot de fleur et d'une bordure de jardin. Un souffleur électrique filaire est posé à ses pieds. Elle n'est pas ridicule — elle est simplement confrontée à une contrainte absurde. Tenue ordinaire : pantalon décontracté, pull. Lumière naturelle de mi-journée. Scène entièrement crédible.",
+      "mood": "Relatable, légèrement frustrant, humain — lumière naturelle neutre, tons verts de jardin et orange du câble.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "optional"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "lifestyle",
+      "description": "Homme d'environ 72 ans, posture droite et détendue, tenant le Seese Pro d'une seule main avec une prise naturelle et sans effort visible — comme on tient une bouteille d'eau. Il sourit légèrement, pas un sourire de catalogue. Derrière lui, une allée propre d'automne avec quelques feuilles jonchant les bords. Lumière matinale dorée. Son expression dit : 'je gère' sans le crier. Visage mature naturel, non retouché. Tenue simple : manteau léger, pantalon kaki.",
+      "mood": "Confiant, calme, digne — lumière matinale ambrée, tons chauds automne, aucune emphase technologique.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "testimonial",
+      "description": "Composition en triptyque horizontal (trois photos côte à côte séparées par un mince filet blanc) : à gauche, un homme de 70 ans soufflant des feuilles sur son allée avec le Seese Pro, léger et souriant ; au centre, une femme de 68 ans séchant sa voiture dans son garage, l'air satisfait ; à droite, un homme de 65 ans nettoyant un garage, le blower en main. Chaque photo est naturelle, non posée. Palette de couleurs cohérente : tons chauds, lumière naturelle. Même rendu photo dans les trois images.",
+      "mood": "Chaleureux, authentique, collectif — tons ambre et bois, lumière naturelle dans les trois cases.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "product_shot",
+      "description": "Seese Pro posé dans son étui de transport compact ouvert, sur une surface neutre (bois clair ou béton poli blanc). La batterie et le chargeur sont soigneusement disposés à côté, bien rangés. Trois badges graphiques simples flottent au-dessus ou à côté du produit : '55% OFF', 'Livraison Gratuite', 'Garantie à Vie'. Style épuré, typographie nette. Lumière légèrement latérale pour révéler le volume et le fini du produit. Aucun encombrement autour.",
+      "mood": "Clair, épuré, rassurant — fond neutre clair, lumière propre et directionnelle, badges discrets mais lisibles.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 7,
+      "scene_type": "product_shot",
+      "description": "Seese Pro seul, sur fond blanc pur, éclairage latéral doux et chaud donnant du relief au boîtier. Aucun accessoire, aucun décor. En bas à droite, un badge sobre : 'Satisfait ou remboursé 30 jours'. Image finale qui inspire confiance par sa simplicité. Le produit est centré, la photo respire. Le design de l'appareil est clairement visible : légèreté, compacité, prise en main intuitive.",
+      "mood": "Simple, confiant, définitif — fond blanc, lumière latérale chaude, aucune distraction.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    }
+  ]
+}

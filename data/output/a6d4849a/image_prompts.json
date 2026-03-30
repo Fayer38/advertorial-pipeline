@@ -1,0 +1,108 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "65-year-old woman with natural grey hair, light blue jeans, neutral cotton top, standing on clean brick terrace, holding compact cordless anthracite leaf blower loosely at her side with one relaxed hand, expression of quiet satisfied surprise, warm golden late afternoon backlight, blurred fallen autumn leaves on lawn in soft background, authentic candid unstaged pose, photorealistic, hyperdetailed, 8k, cinematic lighting, professional photography, shallow depth of field, amber and ochre color palette",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo look, artificial forced pose, plastic skin, overexposed, overly staged, young person, smiling too broadly",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "vertical split-screen diptych side by side comparison, left panel: 60-65-year-old man gripping heavy gas-powered leaf blower with both hands, body leaning forward under strain, tense jaw expression, dark clothing, cluttered grey overcast messy garden background, desaturated cold tones, harsh unflattering flat light, right panel: same age man holding lightweight compact cordless anthracite leaf blower effortlessly in one raised hand, upright relaxed posture, slight natural smile, warm clear natural daylight, clean bright background, warm luminous tones, no text no labels, photorealistic, hyperdetailed, cinematic composition, professional photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, text overlay, arrows, captions, labels, borders between panels",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "vertical split-screen diptych before and after, left panel: brick and concrete terrace completely covered in wet dark compacted autumn leaves, heavy somber overcast grey light, dull saturated cold tones, neglected heavy atmosphere, right panel: exact same terrace completely clean and spotless identical angle identical framing, compact cordless anthracite leaf blower resting casually on metal garden chair armrest lower right corner, warm golden late afternoon sunlight washing over clean stone slabs, photorealistic, hyperdetailed, professional photography, authentic realistic documentary style, no text",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, text overlay, arrows, labels, captions, people, overly stylized, CGI look",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "horizontal triptych three equal square lifestyle photography panels, consistent warm golden natural light across all panels, first panel: couple aged 60-65 sitting together on clean terrace facing each other calm mutual smile holding coffee or water glass relaxed post-task peaceful atmosphere, second panel: 65-year-old man standing in cleared leaf-free garden arms slightly open wide open posture expression of quiet deep satisfaction, third panel: 60-year-old woman holding compact cordless anthracite leaf blower standing beside clean parked car in residential driveway natural casual gesture of putting tool away after use not posing, all panels candid authentic documentary warmth, photorealistic professional photography, coherent amber palette",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, forced smiles, advertising look, borders between panels",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "professional woman in her early fifties, warm approachable expert demeanor, tasteful neutral blazer or soft jacket, no medical symbols no white coat, sitting at clean light natural wood desk or table, direct confident eye contact with camera, subtle genuine smile of expertise, soft natural lateral window light, blurred neutral light wall background with soft out-of-focus green plant, warm beige off-white tones, Rembrandt lighting slight, photorealistic, hyperdetailed, portrait photography, 50mm lens shallow depth of field, trustworthy advisor aesthetic",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stethoscope, hospital, clinical, white coat, stock photo, artificial expression, heavy makeup",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "editorial flat lay product photograph, compact cordless anthracite electric leaf blower placed open inside its soft transport case, battery inserted in device, rapid charger and two accessories arranged organically around the open case in a natural non-symmetrical layout on light natural visible wood grain surface, slightly elevated 30 degree overhead angle, directional soft diffuse light from left casting gentle shadows, blurred autumn leaves on exterior surface very far background, premium artisanal aesthetic, hyperdetailed, professional product photography, warm tones anthracite grey contrast with light wood",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, overexposed, white seamless background, harsh flash, symmetrical arrangement, CGI render look, plastic reflections",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "premium overhead flat lay photography strict 90 degree top-down bird's eye view, large open transport case occupying two thirds of frame, compact cordless anthracite leaf blower in its dedicated molded compartment, battery in its slot, rapid charger in its slot, three accessories each in their individual dedicated recesses, everything organized like a complete professional kit ready to ship, warm light natural wood surface or natural beige linen textile background, soft diffuse studio lighting with delicate drop shadows adding volume and depth, premium accessible quality aesthetic, warm neutral tones wood beige soft grey anthracite, photorealistic hyperdetailed professional product photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, harsh shadows, overexposed highlights, perspective distortion, angled shot, CGI render, white seamless background, cluttered background",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 8,
+      "platform": "midjourney",
+      "prompt": "65-year-old person standing confidently in front of clean well-maintained individual house facade, cleared stone driveway, lush well-kept green garden softly blurred in background, casually holding compact cordless anthracite leaf blower in one hand at side, other hand resting in pocket or on hip, straight natural upright posture, genuine relaxed smile of quiet pride, golden hour raking sunlight from side, long soft warm shadows stretching across driveway, deep amber tones warm light, emotional warmth domestic independence effortlessness, photorealistic, hyperdetailed, 8k, cinematic lighting, professional photography",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, forced smile, stock photo, artificial pose, overexposed sky, lens flare excess, young person",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

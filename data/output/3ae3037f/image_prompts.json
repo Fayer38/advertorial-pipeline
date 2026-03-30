@@ -1,0 +1,108 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "confident 62-year-old man standing in residential driveway, holding compact cordless leaf blower single-handed at arm's length effortlessly, clean patio behind him, straight dignified posture, calm satisfied expression — not a smile, the look of someone who just finished a job well done, warm golden hour autumn sunlight raking across scene, slight low-angle editorial framing emphasizing posture and dignity, photorealistic, hyperdetailed, cinematic lighting, professional editorial photography, 8k, shallow depth of field, clean suburban background softly blurred",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo feel, forced smile, advertising pose, medical context, elderly frailty, hunched posture, compression artifacts",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "clean biomedical infographic illustration, two-column layout on off-white background, left column: human silhouette profile holding heavy gas-powered tool 5kg, red arrows indicating L3-L5 lumbar compression zones and rotator cuff tension, right column: same silhouette relaxed posture holding ultra-light compact tool single-handed, green arrows showing neutral spine alignment and zero shoulder tension, medical illustration style, precise anatomical line art, clinical sans-serif typography, neutral tones with red and green accents, editorial health magazine aesthetic, flat design with subtle depth, hyperdetailed technical illustration",
+      "negative_prompt": "ugly, deformed, blurry, low quality, watermark, logo, cluttered, busy background, photographic elements, 3D render artifacts, cold hospital aesthetic, cartoonish, inconsistent style, text errors",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "split-panel before-after photograph, thin vertical dividing line center, left panel cool grey desaturated tones: 65-year-old man slightly hunched posture tense shoulders pushing bulky heavy gas leaf blower on leaf-covered driveway, visible neck and lower back strain, right panel warm natural golden light: same type of man upright relaxed posture holding compact ultra-light cordless blower single-handed with fluid effortless gesture, same residential driveway setting, intentional visual contrast fatigue vs. lightness, photorealistic, hyperdetailed, editorial photography, professional, 8k",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text overlay, logo, extra limbs, bad anatomy, dramatic exaggeration, theatrical suffering, stock photo clichés, inconsistent lighting between panels, compression artifacts",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "close-up editorial photograph, masculine hand age 60 slightly imperfect visible veins holding compact brushless cordless leaf blower at waist height single grip, sharp focus on hand grip and motor housing texture, well-maintained residential facade softly blurred background, natural lateral daylight revealing product surface texture and material quality, no flash no studio, ergonomic grip clearly visible, perceived lightness conveyed through relaxed one-hand hold, photorealistic, hyperdetailed, 8k, professional editorial product photography, authentic not commercial",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, perfect young hands, studio backdrop, artificial lighting, flash reflection, extra fingers, bad anatomy, catalog aesthetic, overly polished",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "product laboratory comparison photograph, neutral light grey background, symmetric composition, left side: traditional bulky gas-powered leaf blower resting on kitchen scale displaying 5.2 lbs, right side: compact ultra-light cordless handheld blower resting on identical kitchen scale displaying 2.1 lbs, uniform diffused lighting no hard shadows, clean minimal text labels below each product 'Conventional Blower' and 'Seese Pro' in small sans-serif font, independent consumer test editorial style, photorealistic, hyperdetailed, sharp focus across entire frame, flat even lighting, professional product photography, 8k",
+      "negative_prompt": "ugly, deformed, blurry, distorted, low quality, watermark, extra logos, cluttered background, dramatic shadows, advertising feel, inconsistent scale sizes, mismatched lighting, grainy, text errors",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "lifestyle diptych two square panels side by side, panel one: 67-year-old man upright relaxed posture standing on cleared autumn residential driveway, blurred leaves in background, holding compact cordless blower single-handed, direct calm satisfied gaze, panel two: 61-year-old woman drying her car with compact cordless blower single-handed, natural fluid gesture, subtle genuine smile, both images warm natural outdoor daylight, ordinary residential setting not luxury estate, real people not models, authentic human dignity, photorealistic, hyperdetailed, editorial lifestyle photography, 8k, warm color grading",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, extra limbs, bad anatomy, stock photo seniors, exaggerated happiness, luxury mansion, perfect manicured garden, advertising poses, staged feeling, compression artifacts",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "editorial portrait, rehabilitation specialist or physician age 52-58 seated at clean organized consultation desk, professional understated attire, compact cordless handheld blower placed on desk beside medical documents and anatomical model, serious yet warm approachable expression, slight eye contact with lens, natural window light from camera left, bright airy consultation office atmosphere not operating room, professional authority with human warmth, photorealistic, hyperdetailed, 8k, cinematic natural lighting, professional editorial photography, shallow depth of field",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, text, logo, extra limbs, bad anatomy, cold hospital aesthetic, operating room, surgical scrubs, overly clinical environment, stock photo doctor, forced smile, staged feel, compression artifacts",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "premium DTC product flat lay, light grey lightly textured polished concrete surface, open fan composition: compact cordless brushless handheld blower slightly off-center as hero product, detachable battery unit placed left, compact charger lower right, open branded transport case background, uniform soft diffused overhead lighting no hard shadows, all accessories clearly identifiable and well-spaced, small discrete red badge graphic upper right corner '55% OFF $119.99', clean minimal premium aesthetic, photorealistic, hyperdetailed, 8k, professional ecommerce product photography, sharp focus throughout",
+      "negative_prompt": "ugly, deformed, blurry, distorted, grainy, low quality, watermark, extra logos, cluttered composition, dramatic shadows, lifestyle props, plants, fabrics, luxury surface, wood grain, inconsistent lighting, missing accessories, compressed image artifacts",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

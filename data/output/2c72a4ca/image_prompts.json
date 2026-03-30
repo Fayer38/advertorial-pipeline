@@ -1,0 +1,108 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "honest man early forties, unkempt natural hair, casual plaid flannel shirt, jeans, standing in modest warehouse, calm direct gaze into camera, no commercial smile, metal industrial shelving behind him stacked with cardboard boxes labeled Seese Pro, warm amber warehouse lighting mixed with natural light from high industrial window, authentic documentary atmosphere, not staged, candid portrait, photorealistic, professional photography, depth of field, cinematic lighting, 8k",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, overly polished, fake smile, studio backdrop, artificial pose",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "New England residential driveway late autumn afternoon, thick carpet of vivid red and orange maple leaves blanketing driveway and back patio and entrance path, modest well-maintained clapboard house softly visible in background, no people, silent still landscape, slightly melancholic mood, golden raking sunlight casting long soft shadows across fallen leaves, warm amber golden hour light, or gold rust brown color palette, nostalgic autumn atmosphere, photorealistic landscape photography, cinematic composition, 8k",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, people, person, car, modern elements, oversaturated, artificial",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "old gasoline leaf blower resting on dusty concrete garage floor, slightly dusty surface, discrete cobwebs hanging on handle, dark moody garage interior, large garage window in background soft bokeh letting in intense bright sunlight, sunny green garden and exterior clearly visible through glass in contre-jour, strong contrast between dark shadowy interior and brilliant backlit exterior, heavy obsolete abandoned equipment, concrete grey and rust brown tones, photorealistic product photography, cinematic lighting, 8k",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, person, forced staging, cluttered background, neon colors",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "68-year-old woman, mild genuine frustration expression not caricatural, casual pants and knit sweater, standing on wooden back porch, looking down at tangled bright orange extension cord wrapped around terracotta flower pot and garden border edging, corded electric leaf blower sitting at her feet, garden greenery visible around porch, soft midday natural light, authentic candid moment, relatable real scene, photorealistic documentary photography, shallow depth of field, 8k",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, extra limbs, extra fingers, mutated hands, bad anatomy, exaggerated expression, stock photo, fake pose, artificial smile, ridiculous",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "72-year-old man, upright relaxed posture, holding compact lightweight cordless leaf blower casually in one hand effortlessly like holding a water bottle, subtle natural gentle smile not a catalog smile, light autumn jacket and khaki trousers, clean residential driveway background with scattered autumn leaves along the edges, warm golden morning light, mature unretouched natural face, quiet confidence and dignity, photorealistic portrait photography, shallow depth of field, cinematic amber tones, 8k",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo, overly commercial, fake exaggerated smile, retouched skin, technology emphasis",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "triptych horizontal layout three photographs side by side separated by thin white dividing lines, left panel 70-year-old man blowing autumn leaves on residential driveway holding compact cordless blower smiling naturally, center panel 68-year-old woman drying her car inside a garage with compact cordless blower looking satisfied, right panel 65-year-old man cleaning a garage floor with blower in hand relaxed expression, all three photos candid and natural not posed, consistent warm amber color palette across all three panels, consistent natural light rendering, coherent photographic style, photorealistic, 8k",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, logo, extra limbs, extra fingers, mutated hands, bad anatomy, inconsistent lighting, mismatched color grading, stock photo feel, forced poses",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 6,
+      "platform": "midjourney",
+      "prompt": "compact cordless leaf blower Seese Pro placed inside open compact carrying case, light natural wood surface, removable lithium battery and wall charger neatly arranged beside the open case, three clean minimal floating graphic badges reading 55% OFF and Free Shipping and Lifetime Warranty in crisp modern sans-serif typography, soft lateral directional studio lighting revealing product volume and surface finish, pure neutral background, editorial product photography, no clutter, clean and minimal composition, photorealistic, 8k",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, extra objects, cluttered background, harsh shadows, dark vignette, artificial colors, person",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 7,
+      "platform": "midjourney",
+      "prompt": "compact lightweight cordless leaf blower Seese Pro centered on pure white seamless background, soft warm lateral studio lighting giving three-dimensional relief to housing, no accessories no decor, generous negative space around product, single minimal badge bottom right corner reading Satisfied or Refunded 30 Days in clean typography, product design clearly visible lightweight compact form intuitive ergonomic grip, confidence-inspiring simplicity, professional commercial product photography, photorealistic, sharp focus, 8k",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, cluttered, extra objects, colored background, harsh shadows, lens flare, person, drop shadow artifacts",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

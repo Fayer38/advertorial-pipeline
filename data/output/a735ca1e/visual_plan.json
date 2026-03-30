@@ -1,0 +1,58 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Homme de 62-65 ans, physique ordinaire et sympathique, vêtements décontractés (flanelle, jean), tenant un souffleur compact d'une main et une tasse de café de l'autre. Il se tient debout sur une allée de jardin propre avec quelques feuilles mortes encore au sol près de lui. Expression détendue, sourire naturel — pas posé. Lumière dorée de matin d'automne. Arrière-plan : maison de banlieue avec arbres colorés, jardin légèrement en ordre.",
+      "mood": "Chaleureux, authentique, domestique — comme une photo prise par un voisin, pas par un photographe de studio",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "product_shot",
+      "description": "Souffleur Seese Pro sur fond blanc cassé légèrement texturé (pas de fond studio pur blanc). Le produit est posé à plat, légèrement de biais pour montrer le volume. Badge '55% OFF' en rouge discret dans le coin supérieur droit. En dessous : '$249.99' barré en gris clair, '$119.99' en rouge vif, typographie propre. Lumière douce et diffuse. Aucun autre élément — composition épurée.",
+      "mood": "Premium, fiable, direct — communique la valeur sans clinquant",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "product_shot",
+      "description": "Flat lay sur surface blanche ou gris très clair : souffleur Seese Pro au centre, batterie supplémentaire à gauche, sacoche de transport ouverte en haut (intérieur visible et rembourré), bouchons d'oreilles dans leur emballage, carte cadeau $15 légèrement décalée. Chaque élément séparé, bien espacé, avec une petite étiquette manuscrite stylisée indiquant le prix barré. Lumière naturelle venant du côté, légères ombres portées douces. Style photo de 'vrai client soigneux', pas catalogue.",
+      "mood": "Organisé, généreux, honnête — donne envie de déballer le colis",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Grille 2x2 de quatre scènes lifestyle distinctes, montage photo : (1) homme 60-65 ans soufflant des feuilles sur une allée pavée, légère concentration sur le visage, posture décontractée ; (2) femme 65-70 ans séchant le bas d'une portière de voiture avec le souffleur, air amusé ; (3) plan rapproché mains d'un senior dirigeant le flux d'air sur un pare-brise givré, lumière hivernale froide ; (4) vue d'un garage bien rangé avec le souffleur posé proprement sur l'étagère dans sa sacoche ouverte. Toutes les photos : lumière naturelle, teintes chaudes et automnales cohérentes.",
+      "mood": "Réaliste, quotidien, satisfait — aucune mise en scène artificielle, ambiance de vraies familles",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product_shot",
+      "description": "Souffleur Seese Pro posé dans sa sacoche de transport ouverte, installée sur l'étagère d'un garage propre et bien tenu. La sacoche est légèrement ouverte, révèlant le souffleur bien calé dans sa mousse intérieure. En arrière-plan flou : rangements de garage ordonnés, outils bien accrochés. Lumière ambiante chaude (ampoule incandescente + lumière de porte ouverte). Composition stable, symétrique, rassurante.",
+      "mood": "Ordre retrouvé, fiabilité, sentiment de maison bien tenue — comme une photo dans un magazine 'organisation maison'",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Femme de 66-70 ans, cheveux naturels gris/blancs, vêtements simples mais soignés, tenant le souffleur Seese Pro d'une seule main sans effort visible — bras semi-tendu, posture droite et détendue. Elle se tient sur un chemin de jardin parfaitement dégagé, entouré de feuilles mortes colorées (rouge, orangé, doré) sur les côtés. Expression : sourire calme, regard vers l'horizon ou légèrement vers la caméra — sentiment de fierté douce. Lumière naturelle d'après-midi d'automne, légèrement chaude. Profondeur de champ : arrière-plan de jardin flou, doux.",
+      "mood": "Victoire tranquille, autonomie, chaleur — 'Je l'ai fait moi-même et ça m'a pris 5 minutes'",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Man in his late 60s standing on a leaf-covered suburban patio, shoulders slightly slumped, holding a phone to his ear with a tired, quietly resigned expression. He's dressed in casual weekend clothes — flannel shirt, khakis. Natural fall afternoon light, warm golden tones. The patio is ordinary and well-kept, wet oak leaves covering the ground. No drama — just a real, relatable moment of quiet defeat.",
+      "mood": "Authentique, mélancolique mais relatable, chaleureux et doux — jamais dramatique",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "lifestyle",
+      "description": "Senior man bent forward over a large, heavy-looking old gas blower in a dim garage, mid-struggle with the pull cord. Posture is visibly strained — hunched shoulders, effort in the face. Tools and rakes hang on the wall behind him, suggesting years of upkeep. The blower looks bulky, worn, and imposing. Garage lighting is dim and unglamorous. Expression is frustrated and physically worn, not angry.",
+      "mood": "Effort physique visible, frustration contenue, nostalgie — lumière froide et terne contrastant avec les scènes extérieures",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Two neighbors — a woman in her early 70s and a man in his late 60s — standing on a clean suburban driveway in warm afternoon autumn light. The woman holds the Seese Pro blower in one relaxed, unhurried hand, demonstrating it naturally. Body language is warm and candid, like a genuine conversation between neighbors. The blower is clearly visible — small, white, lightweight-looking. Fallen leaves are visible at the edges of the driveway. Both people look real: natural grey hair, no staging.",
+      "mood": "Chaleureux, spontané, communauté de proximité — lumière dorée d'après-midi d'automne",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "lifestyle",
+      "description": "Senior man (late 60s) standing on a completely clean patio, laughing genuinely — not posed, mid-laugh. He holds the Seese Pro in one relaxed hand at his side. Neatly piled leaves are visible at the far edge of the yard, evidence of finished work. Warm autumn morning light, slightly golden. His posture is straight and effortless. The contrast with the earlier garage scene should feel physically striking — this man is at ease.",
+      "mood": "Joie authentique et spontanée, soulagement physique, fierté discrète — lumière matinale dorée",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "lifestyle",
+      "description": "Man in his late 60s standing upright in a well-maintained backyard on a clear autumn afternoon, the Seese Pro held loosely at his side in one hand. Clean patio behind him, tidy garden, ordinary but cared-for residential home visible. His posture communicates quiet contentment — no triumphant pose, just a man relaxed in his own space. He's looking slightly off-camera as if surveying his finished yard. Natural afternoon light.",
+      "mood": "Sérénité tranquille, autonomie retrouvée, satisfaction ordinaire — ni triomphe ni publicité, juste la vie",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "product shot",
+      "description": "The Seese Pro blower resting open in its compact carrying case on a clean, neutral light surface (off-white or warm grey). Battery and rapid charger arranged neatly beside the case, ear protection plugs visible in their corner slot. The layout is organized and reassuring — everything present, nothing missing. In the lower corner, a simple price graphic: '$119.99' in bold, '$249.99' crossed out clearly above it. No visual clutter, clean negative space, natural soft lighting with no harsh shadows.",
+      "mood": "Rassurant, propre, premium sans ostentation — lumière douce et neutre, très peu de bruit visuel",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "product shot",
+      "description": "Close-up of the Seese Pro held in one slightly weathered, mature hand — neither young nor fragile, just a real adult hand. The grip is completely effortless, fingers relaxed around the handle. Background is softly blurred outdoor environment: green lawn, warm golden afternoon light creating a gentle bokeh. The blower's white casing is clearly visible. No staging, no strain, no branding clutter — just the natural feel of a lightweight tool that fits perfectly in one hand.",
+      "mood": "Doux, intime, confiant — lumière dorée naturelle, bokeh chaud, aucune tension dans la main",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}

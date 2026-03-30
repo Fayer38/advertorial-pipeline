@@ -1,6 +1,0 @@
-[21:24:56] [INFO] Pipeline started — product=seese-pro-v9 template=personal-story angle=testimonial lang=en
-[21:24:56] [INFO] Phase 1 | Starting | running | 0%
-[21:24:56] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
-[21:26:43] [INFO] Phase 3 — Writing | copywriter | running | 50%
-[21:28:14] [ERROR] Pipeline FAILED — Réponse non-JSON: Expecting ',' delimiter: line 27 column 710 (char 4132)
-[21:28:14] [ERROR] Error | Réponse non-JSON: Expecting ',' delimiter: line 27 column 710 (char 4132) | failed | 50%

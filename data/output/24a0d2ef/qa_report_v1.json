@@ -1,0 +1,43 @@
+{
+  "overall_score": 8.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le hook est solide : l'ouverture 'I seriously considered selling my home of 22 years' est spécifique, émotionnellement chargée, et cible parfaitement l'avatar. La sub-headline 'gave me back the one thing I refused to lose' crée une curiosité efficace. Légère faiblesse : le premier paragraphe est long avant d'atteindre l'impact maximal — le lecteur doit patienter 4-5 lignes pour la tension narrative. Suggéré : compresser le contexte introductif et placer la 'porch scene' dès la 2e phrase plutôt qu'à la 3e."
+    },
+    "story_flow": {
+      "score": 8,
+      "feedback": "Progression narrative excellente : crise → ingénieur en mode solution → prototype → témoignages → offre. Les bucket brigades sont bien exécutées ('That Saturday on the porch, I made a decision. Not the decision to sell the house — the other one.'). Légère rupture entre la fin de la section engineering (Carol / beau-fils) et l'entrée dans les témoignages clients — le saut temporel 'six months after we launched' est abrupt. Ajouter une phrase de transition du type : 'What I didn't expect was the letters.'"
+    },
+    "proof_density": {
+      "score": 7,
+      "feedback": "Les preuves techniques sont solides (950g, 200 MPH, 30 000 RPM, comparaison Tesla motors) et les deux témoignages (Margaret 71 ans, Bill 67 ans avec double opération de la coiffe) sont spécifiques et crédibles. Faiblesses : seulement deux témoignages, aucune preuve externe (avis clients agrégés, presse, certification), aucune donnée médicale sur les blessures liées aux outils lourds alors que le brief mentionne '3 médecins sur 4 recommandent d'arrêter les outils lourds' — cette preuve d'autorité médicale est absente de l'article. Suggéré : insérer après la section engineering une ligne du type 'Dr. [nom], orthopedic specialist at [hôpital], told me something I've thought about since: ...' pour valider le problème de poids/dos avant de présenter la solution."
+    },
+    "cta_clarity": {
+      "score": 8,
+      "feedback": "CTA clair avec tous les éléments : prix (119,99$ vs 249,99$, -55%), livraison gratuite, garantie à vie, remboursement 30 jours, bundle accessories. La justification de l'offre ('final production run', 'I'm 64 years old') est crédible et originale — ça évite l'urgence artificielle. Faiblesse : l'urgence reste floue. 'Stock is limited' sans chiffre ne crée pas de tension réelle. Suggéré : remplacer par 'Of the 847 units in this production run, 412 have shipped in the past three weeks' — un chiffre concret rend l'urgence tangible et vérifiable, donc plus crédible."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'arc douleur → résolution est bien exécuté. Le passage 'I was shrinking. Task by task, hour by hour' est puissant. Le sourire du voisin Gary est un détail de storytelling excellent — il incarne la capitulation que l'avatar refuse. Le moment 'I was better than okay' est la résolution émotionnelle parfaite. Faiblesse critique : le future pacing est quasi absent. L'article se termine sur la logique (garanties, prix) plutôt que sur une vision de la vie après. Une seule phrase ('keep doing what you've always done, for another season or another ten years') n'est pas suffisante. Suggéré : ajouter avant le CTA final un paragraphe de 3-4 lignes : 'Imagine this coming Saturday. You walk outside with the Seese Pro in one hand. Thirty minutes later, the driveway is clear, the patio is clean, the truck is dry — and you're back inside making coffee. No ice pack. No ibuprofen. No three-day recovery. Just Saturday, the way it's supposed to be.'"
+    },
+    "readability": {
+      "score": 7,
+      "feedback": "Ton conversationnel excellent, phrases calibrées dans les sections narrative et témoignages. Deux problèmes majeurs : (1) 1834 mots dépasse la limite recommandée de 1500 — la section offre est particulièrement dense et pourrait être réduite de 20% sans perte. (2) La section [OFFER] est un bloc de texte continu sur deux longs paragraphes alors que c'est l'endroit où le scan visuel est le plus critique. Suggéré : restructurer la liste des éléments inclus en bullets courts ('✓ Seese Pro Ultra-Light Blower — 950g, 200 MPH / ✓ Compact carrying case ($25 value) / ...') pour permettre la lecture en diagonale avant le CTA."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "Structure éprouvée parfaitement respectée. Le format lettre ('Dear friend') est un classique de l'advertorial direct-response qui fonctionne bien avec cet avatar. Le ton éditorial est maintenu avec discipline — notamment dans la justification de l'offre où David explique pourquoi il vend moins cher, ce qui évite le registre promotionnel habituel. Légère dérive publicitaire dans le value stacking ('The total value of what you're receiving today is over $360') qui sonne plus landing page que lettre personnelle. Suggéré : reformuler en 'If you bought the blower, the case, and the accessories separately at normal retail, you'd pay over $360. You won't. Not today.' — même information, ton plus naturel."
+    }
+  },
+  "improvements": [
+    "Ajouter un paragraphe de future pacing avant le CTA final : décrire concrètement le samedi matin du lecteur 30 jours après (aucune douleur, travail terminé en 30 min, café tranquille) pour déclencher la visualisation émotionnelle",
+    "Intégrer une preuve d'autorité médicale sur les blessures liées aux outils lourds — le brief mentionne '3 médecins sur 4 recommandent d'arrêter les outils lourds', cette statistique est absente et renforcerait considérablement la légitimité du problème",
+    "Remplacer 'Stock is limited' par un chiffre précis de stock restant (ex: '214 units remaining from this production run') pour rendre l'urgence crédible plutôt que générique",
+    "Restructurer la section offre en bullet points courts pour chaque élément inclus, afin de faciliter le scan visuel au moment de la décision d'achat",
+    "Réduire le texte d'environ 300 mots (objectif : 1500 mots max) en compressant principalement la section [OFFER] — le value stacking actuel est répétitif",
+    "Reformuler le value stacking ('total value over $360') dans un ton plus conversationnel pour maintenir la voix de lettre personnelle jusqu'à la fin"
+  ],
+  "version": 1
+}

@@ -1,0 +1,82 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "candid photograph of a tanned man in his sixties, wearing a simple t-shirt and work trousers, sitting on wooden porch steps in late afternoon, gazing pensively toward a large garden covered in autumn leaves, distant unfocused expression, quiet fatigue, dignified melancholy, large gas-powered leaf blower resting on the grass beside him barely used, warm golden raking light, long afternoon shadows, autumn atmosphere, cinematic documentary photography, photorealistic, 8k, natural authentic moment, no artifice, memory-like quality, honest portraiture",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, stock photo look, posed, fake smile, studio lighting, advertising aesthetic, oversaturated",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "close-up still life photograph, old worn gas leaf blower resting on grey concrete garage floor, dusty and aged, beside it orange ear protection muffs, folded lumbar support belt, small ibuprofen bottle, cold interior fluorescent lighting, realistic unglamorous composition, heavy feeling, worn textures, authentic garage environment, documentary product photography, sharp focus, depth of field, photorealistic, 8k, no staging, raw authenticity",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, glamorous, studio lighting, white background, clean, new-looking, advertising, oversaturated, bright colors",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "candid photograph of a man in his sixties in a tidy home workshop, holding a compact handheld leaf blower in one hand at chest height, examining it with calm focused satisfaction, not looking at camera, warm tungsten workshop lighting, wooden workbench behind him with hand tools mechanical parts and technical drawings, intimate craftsman atmosphere, personal ingenuity, quiet pride, photorealistic, cinematic warm tones, 8k, authentic documentary style, depth of field",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, two hands holding, stock photo, fake smile, cold lighting, sterile environment, advertising look",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "candid portrait photograph of a woman around 70 years old, natural grey hair, wearing a simple light sweater and casual trousers, standing in a clean residential driveway, holding a compact handheld leaf blower in one hand arm slightly extended, relaxed posture not demonstrating, subtle satisfied smile looking slightly off-camera, autumn leaves neatly swept to the sides of the path behind her, soft golden morning light, classic residential house and tidy garden in background, warm tones, photorealistic, 8k, dignified autonomy, authentic documentary portrait",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, frail, helpless, performative, forced smile, stock photo, advertising aesthetic, oversaturated, artificial lighting",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "flat lay product photography on natural light oak wood surface, compact cordless leaf blower in semi-open carrying case at center occupying 60 percent of frame, case interior neatly organized, surrounding items carefully arranged: battery pack, compact charger, accessories, discreet ear protection muffs, soft diffused natural light from the left, no artificial background, warm wood tones, clean minimal composition, high perceived value packaging, photorealistic, hyperdetailed, 8k, professional product photography, shallow depth of field, inviting warm aesthetic",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, white studio background, cold lighting, cluttered, messy, artificial, oversaturated, dark shadows",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "lifestyle photograph half-body portrait of a man in his sixties standing in his clean open autumn garden, holding a compact handheld leaf blower relaxed in one hand arm at his side, looking directly into camera, calm confident expression no forced smile, cleared lawn behind him neat edges few distant leaves, golden hour warm backlight creating subtle halo rim light, cinematic lifestyle photography, photorealistic, 8k, serene self-assured atmosphere, authentic documentary portrait, warm amber tones, sharp focus on subject",
+      "negative_prompt": "ugly, deformed, noisy, blurry, distorted, grainy, low quality, watermark, text, logo, signature, extra limbs, extra fingers, mutated hands, bad anatomy, forced smile, stock photo, staged, advertising look, cold lighting, overexposed, flat light",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

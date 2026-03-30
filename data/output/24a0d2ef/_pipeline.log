@@ -1,3 +1,11 @@
 [22:53:38] [INFO] Pipeline started — product=seese-pro-v9 template=founder-letter angle=testimonial lang=en
 [22:53:38] [INFO] Phase 1 | Starting | running | 0%
 [22:53:38] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
+[22:55:15] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[22:57:56] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[22:58:37] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[22:58:37] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[22:59:04] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[23:00:44] [INFO] Pipeline completed — html=data/output/24a0d2ef/i-almost-sold-my-house-because-i-couldn-t-keep-up-with-the-y.html words=1834
+[23:00:44] [INFO] Done |  | completed | 100%
+[23:00:44] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)

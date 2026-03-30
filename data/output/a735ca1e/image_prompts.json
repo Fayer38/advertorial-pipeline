@@ -1,0 +1,82 @@
+{
+  "prompts": [
+    {
+      "scene_index": 0,
+      "platform": "midjourney",
+      "prompt": "ordinary man in his early 60s, friendly face, slightly weathered skin, wearing flannel shirt and jeans, holding a compact cordless leaf blower in one hand and a ceramic coffee mug in the other, standing on a clean suburban garden path, a few fallen autumn leaves scattered near his feet, relaxed natural smile, not posed, casual candid feel, golden morning autumn light, warm soft shadows, suburban house in background with colorful red and orange trees, slightly tidy garden, neighborhood feel, photorealistic, candid photography, 35mm lens, natural color grading, authentic lifestyle, not stock photo",
+      "negative_prompt": "ugly, deformed, blurry, noisy, grainy, distorted, watermark, text, logo, signature, studio lighting, fake smile, perfect teeth, stock photo look, extra limbs, bad anatomy, mutated hands, extra fingers, low quality, overexposed",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 1,
+      "platform": "midjourney",
+      "prompt": "product photography, compact cordless leaf blower placed flat on slightly off-white textured matte surface, angled three-quarter view to show volume and depth, soft diffused studio lighting, subtle shadows, small red badge '55% OFF' top right corner, clean sans-serif typography below product, '$249.99' crossed out in light gray, '$119.99' in bold red, minimalist e-commerce composition, premium product shot, no other elements, neutral warm white background, photorealistic, high detail, sharp focus, professional commercial photography",
+      "negative_prompt": "pure white background, harsh shadows, reflections, cluttered, props, people, grainy, blurry, distorted, watermark, logo, low quality, overexposed, colorful background, dark background",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 2,
+      "platform": "midjourney",
+      "prompt": "flat lay product photography on clean light gray surface, cordless leaf blower centered, spare battery pack on the left, open padded carrying case at the top revealing foam interior, ear protection plugs in packaging, small $15 gift card slightly offset, each item well spaced, small handwritten-style price tags with crossed-out prices, soft natural daylight from the side, gentle soft shadows under each product, authentic 'real customer unboxing' aesthetic, not a catalog, warm natural tones, top-down view, sharp focus, photorealistic",
+      "negative_prompt": "studio look, harsh lighting, dark shadows, cluttered, overlapping objects, blurry, grainy, watermark, text overlay, logo, distorted, low quality, dark background, pure white background",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 3,
+      "platform": "midjourney",
+      "prompt": "photo collage grid 2x2, four authentic lifestyle photos, consistent warm autumn color palette, [top left] man aged 60-65 blowing leaves on a paved garden path, relaxed focused expression, casual posture, natural light; [top right] woman aged 65-70 drying the lower panel of a car door using a cordless leaf blower, amused expression, parking lot or driveway setting; [bottom left] close-up of senior hands directing compact leaf blower airflow at a frosted windshield, cold winter morning light, breath visible; [bottom right] clean organized garage interior, leaf blower resting in open padded case on a wooden shelf, tidy tools in background. All photos: natural light, warm autumn tones, no artificial staging, real family atmosphere, photorealistic, candid documentary style",
+      "negative_prompt": "studio lighting, stock photo feel, fake smiles, perfect models, uniform background, blurry, grainy, noisy, watermark, text, logo, extra limbs, bad anatomy, distorted faces, low quality, oversaturated",
+      "parameters": {
+        "ar": "1:1",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 4,
+      "platform": "midjourney",
+      "prompt": "product lifestyle photography, compact cordless leaf blower nestled inside open padded carrying case, case placed on a wooden garage shelf, blower snugly fitted in custom foam interior visible, case slightly open, background: clean organized garage, tools neatly hung on pegboard, storage bins, softly out of focus, warm ambient lighting from incandescent bulb and open garage door light, stable symmetric composition, reassuring domestic feel, warm color temperature, photorealistic, shallow depth of field, home organization magazine aesthetic",
+      "negative_prompt": "messy garage, cluttered, harsh lighting, cold light, blurry product, watermark, text, logo, overexposed, dark shadows, distorted, grainy, low quality",
+      "parameters": {
+        "ar": "16:9",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    },
+    {
+      "scene_index": 5,
+      "platform": "midjourney",
+      "prompt": "woman in her late 60s, natural gray-white hair, simple neat casual clothes, standing tall and relaxed on a perfectly cleared garden path, holding a compact cordless leaf blower effortlessly in one hand, arm semi-extended, confident upright posture, colorful fallen leaves piled on both sides of the path in red orange and golden tones, calm gentle smile, glancing slightly toward camera or off to the horizon, quiet pride and self-sufficiency, warm natural afternoon autumn light, golden hour softness, bokeh background of garden trees softly blurred, shallow depth of field, photorealistic, candid portrait, authentic, 50mm lens",
+      "negative_prompt": "ugly, deformed, blurry, grainy, noisy, watermark, text, logo, extra limbs, bad anatomy, mutated hands, extra fingers, stock photo feel, fake expression, heavy makeup, young appearance, low quality, distorted, overexposed, dark shadows",
+      "parameters": {
+        "ar": "4:5",
+        "v": "6.1",
+        "style": "raw",
+        "quality": 2
+      },
+      "generated_image_url": null
+    }
+  ]
+}

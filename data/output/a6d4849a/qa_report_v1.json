@@ -1,0 +1,44 @@
+{
+  "overall_score": 8.0,
+  "passed": true,
+  "criteria": {
+    "hook_strength": {
+      "score": 8,
+      "feedback": "Le hook d'ouverture est solide — trois phrases courtes, un rythme parfait, et une douleur immédiatement reconnaissable. L'histoire de Barbara avec la légende 'I actually cried a little' est un choix fort. Les '47 homeowners' donnent une crédibilité investigative réelle. Ce qui empêche le 9 : le titre/headline est bon mais reste dans le registre fonctionnel. Il pourrait être plus émotionnellement chargé. Suggestion de reformulation : 'The Tool That Made My Husband Cry — And Why 47 Seniors Over 60 Said the Same Thing About 950 Grams' — plus personnel, plus inattendu, plus fort comme pattern interrupt."
+    },
+    "story_flow": {
+      "score": 8,
+      "feedback": "Le cadre 'investigation éditoriale' crée un fil narratif cohérent qui tient l'article ensemble. Les bucket brigades fonctionnent bien : 'Here is the part of this story that gave our editorial team pause' est un excellent pivot. La structure findings → expert → specs → industrie → témoignages → test équipe est logique et bien rythmée. Point faible : la transition entre la section specs (chiffres techniques) et la section industrie est légèrement abrupte — ajouter une phrase-pont du type 'Ces chiffres soulèvent une question que notre équipe n'a pas pu ignorer.' La section du test sur 30 jours (semaines 3-4) est la plus dense et mériterait un resserrement."
+    },
+    "proof_density": {
+      "score": 8,
+      "feedback": "Excellente variété de preuves : expert qualifié (ergothérapeute, 22 ans d'expérience), 5 findings avec données comparatives, tests chronométrés avec résultats précis (5 min vs 25 min), 3 témoignages nommés avec ville et âge, test editorial sur 30 jours avec 3 testeurs aux profils différents. La comparaison 1,200 CFM vs 400-500 CFM est particulièrement efficace car elle retourne l'attente du lecteur. Lacune identifiée : aucune certification tierce, aucun agrégat de notes (ex: '4.8/5 sur 2,300 avis vérifiés') et aucune étude clinique externe citée. Un élément de social proof chiffré à grande échelle renforcerait le tout."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Prix affiché clairement ($119.99 vs $249.99), inclusions listées de façon concrète, garantie et essai sans risque bien expliqués. Le détail 'single message to customer service' pour le retour est excellent — il lève une friction réelle. Ce qui manque : l'urgence est formulaïque. 'Tied to current inventory levels and the active promotional window' ne crée pas de tension réelle — le lecteur l'a déjà lu mille fois. Suggestion : remplacer par une scarcité spécifique et crédible, par exemple 'As of this morning, 847 units remain at the promotional price. Based on the rate of orders we've observed this week, we expect the $119.99 price to expire before the end of the month.' Ancré dans le concret, beaucoup plus convaincant."
+    },
+    "emotional_arc": {
+      "score": 7,
+      "feedback": "L'arc douleur → découverte → preuve → soulagement est bien construit. Les témoignages sont les points émotionnels les plus forts de l'article — 'That might not sound like much. It was everything.' est une ligne qui touche juste. Le profil du testeur de 71 ans qui 'quietly stopped doing several yard tasks' résonne profondément. Ce qui est absent : le future pacing. L'article ne fait jamais vraiment visualiser au lecteur sa vie après l'achat. Le verdict éditorial effleure le sujet mais ne peint pas le tableau. Suggestion : ajouter un paragraphe dédié après le verdict — 'Picture a Saturday morning four weeks from now. You walk out before anyone else is awake. The patio is clear in under five minutes. The car is dry before the coffee is cold. You didn't call anyone. You didn't ask for help. You just did it.' — ce type de paragraphe crée le désir concret qui déclenche l'achat."
+    },
+    "readability": {
+      "score": 7,
+      "feedback": "1,972 mots dépasse le plafond recommandé de 1,500. Le formatage est généralement solide — bons titres de section, usage efficace du gras et de l'italique, citations bien présentées. Deux zones à resserrer : (1) la section specs avec 6 bullets contenant chacune plusieurs phrases — certaines pourraient être condensées à une ligne percutante ; (2) la couverture des semaines 3-4 du test lit comme un rapport interne plutôt qu'un editorial — elle pourrait être réduite de moitié sans perte de valeur. Objectif : ramener l'article à 1,400-1,500 mots pour améliorer la densité et réduire le décrochage."
+    },
+    "similarity_to_best": {
+      "score": 8,
+      "feedback": "Le cadre investigatif est sophistiqué et bien tenu sur l'ensemble de l'article. 'What the Power Equipment Industry Would Rather You Not Calculate' est une section standout — elle utilise la technique du 'common enemy' de façon élégante et sans excès. La voix éditoriale est crédible et bien maintenue jusqu'à la section offre, où le ton glisse vers le promotionnel ('To put the value plainly'). Cette rupture est perceptible. Suggestion : reformuler le début de la section offre pour rester dans le registre éditorial — 'Our editorial team reviewed the purchase terms before publishing this piece. Here is what the current offer includes.' — même contenu, ton plus cohérent."
+    }
+  },
+  "improvements": [
+    "Ajouter un paragraphe de future pacing dédié après le verdict éditorial : décrire en 4-5 phrases courtes et sensorielles la vie du lecteur 4 semaines après réception — lever tôt, terrasse faite avant le café, voiture séchée, pas d'appel passé au fils.",
+    "Remplacer l'urgence générique sur les stocks par une scarcité spécifique et datée : nombre d'unités restantes au prix promotionnel ou date d'expiration précise de l'offre à 55%.",
+    "Resserrer l'article de ~500 mots pour atteindre 1,400-1,500 : couper les bullets specs les plus verbeux et condenser les semaines 3-4 du test éditorial.",
+    "Ajouter un élément de social proof à grande échelle dans la section preuves : agrégat de notes vérifiées (ex: '4.8/5 sur 2,300+ avis') ou certification tierce pour renforcer la crédibilité institutionnelle.",
+    "Reformuler l'introduction de la section offre pour maintenir la voix éditoriale établie — remplacer 'To put the value plainly' par une transition qui reste dans le registre journalistique.",
+    "Ajouter une phrase-pont entre la section specs et la section industrie pour fluidifier la transition : 'Ces chiffres ont soulevé une question que notre équipe éditorial n'a pas pu ignorer.' ou équivalent.",
+    "Envisager de renforcer le titre avec une métrique de résultat spécifique — par exemple : '...the 950g Device Getting Seniors Back Outdoors in Under 5 Minutes' — pour augmenter le pattern interrupt et la spécificité de l'accroche."
+  ],
+  "version": 1
+}

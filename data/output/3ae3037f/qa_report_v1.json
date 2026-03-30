@@ -1,0 +1,45 @@
+{
+  "overall_score": 5.0,
+  "passed": false,
+  "criteria": {
+    "hook_strength": {
+      "score": 4,
+      "feedback": "Le hook est un titre académique froid qui ne parle pas à l'avatar. 'Why Millions of Active Adults Over 55 Are Developing Preventable Musculoskeletal Injuries' ressemble à un article de revue médicale, pas à une accroche qui arrête le scroll. L'avatar (bricoleur de 60 ans, fier de son autonomie) ne se reconnaît pas là-dedans. Le brief proposait des hooks émotionnels bien supérieurs — 'À 60 ans, j'ai arrêté de souffler mes feuilles. Pas parce que je voulais. Parce que mon dos ne voulait plus.' — qui n'ont pas été utilisés. Suggestion : ouvrir avec une scène concrète et intime ('Last October, I stood in my driveway holding my blower. My back said no. I went inside and left the leaves.') puis enchaîner avec la statistique choc en deuxième paragraphe, pas en titre."
+    },
+    "story_flow": {
+      "score": 5,
+      "feedback": "La structure logique (problème → solution → preuves → offre) est respectée, mais il n'y a aucune narrative. Le lecteur suit un plan de cours, pas une histoire. Les transitions entre sections sont mécaniques : les titres de section ([STORY], [PROBLEM], [SOLUTION]) fonctionnent comme des séparateurs de chapitre académique, pas comme des bucket brigades qui donnent envie de continuer. À aucun moment le lecteur ne se dit 'je dois savoir ce qui suit.' Suggestion : supprimer les titres de section visibles et les remplacer par des phrases-pivots émotionnelles ('But here's what nobody was telling these homeowners...', 'That's when one physical therapist started paying attention...')."
+    },
+    "proof_density": {
+      "score": 8,
+      "feedback": "Point fort de l'advertorial. Les preuves sont variées et abondantes : deux études citées avec détails méthodologiques, statistiques précises (94%, 1.4/10 vs 5.8/10 sur VAS), deux cas cliniques nominatifs, tableau comparatif, référence NIOSH, chiffres de performance technique. La diversité des types de preuves (scientifique, clinique, comparative, terrain) est solide. Léger bémol : les études citées ('Journal of Applied Ergonomics and Rehabilitation, n=43') semblent peu connues et risquent d'être perçues comme fabriquées — envisager d'ancrer les preuves dans des publications plus reconnaissables si possible."
+    },
+    "cta_clarity": {
+      "score": 7,
+      "feedback": "Le CTA est fonctionnel : prix clair ($119.99), discount visible (55%), garantie à vie mentionnée, retour 30 jours sans conditions, livraison gratuite. L'urgence est présente ('current order volume is high') mais elle arrive comme une note de bas de page après le lien — elle devrait précéder l'appel à l'action. La phrase d'accroche avant le CTA ('The tools currently in your garage were designed for a body that was 20 years younger') est la meilleure ligne émotionnelle de tout l'article. Suggestion : placer l'urgence AVANT le bouton, pas après, et ajouter une quantité spécifique ('fewer than 200 units remain at this price') pour la rendre tangible."
+    },
+    "emotional_arc": {
+      "score": 3,
+      "feedback": "Échec majeur. L'article est rédigé comme un rapport de médecine du travail. L'avatar — un homme ou une femme de 60 ans qui a géré sa propriété avec fierté pendant des décennies et commence à sentir que son corps ne suit plus — n'est jamais interpellé émotionnellement. Les mots 'lumbar erector spinae', 'thoracolumbar fascia', 'eccentric load', 'ISO 5349-1' créent une distance clinique qui tue l'empathie. Les témoignages de Robert M. et Linda K. sont rédigés comme des comptes-rendus de consultation médicale ('Patient presents with...'), ce qui neutralise toute charge émotionnelle. Il n'y a aucun future pacing — l'article ne fait jamais visualiser au lecteur la scène du dimanche matin où il sort souffler ses feuilles sans douleur, sans aide, sans compromis. Suggestions : (1) Réécrire les témoignages en première personne directe et émotionnelle. (2) Ajouter un paragraphe de future pacing : 'Imagine next October. You walk out to the patio, blower in hand. Five minutes later, it's done. No ice pack. No favor to ask. Just coffee.' (3) Intégrer la douleur de l'avatar plus tôt — pas comme une statistique, comme une vérité personnelle partagée."
+    },
+    "readability": {
+      "score": 4,
+      "feedback": "Le texte est inaccessible pour l'avatar cible. Le jargon médical omniprésent (L3–L5 vertebrae, medial epicondyle, intervertebral disc hydration, posterior chain, bilateral rotator cuff tendinopathy, eccentric load) exige une formation médicale que le bricoleur de 60 ans n'a pas. Les paragraphes sont longs et denses, souvent 5 à 8 lignes sans respiration. L'article fait 2191 mots, soit 46% au-dessus du plafond recommandé de 1500 mots. Suggestions : (1) Supprimer ou traduire tout le jargon médical ('lumbar erector spinae' → 'the muscles supporting your lower back'). (2) Découper les paragraphes longs en unités de 2-3 lignes maximum. (3) Réduire à 1300-1400 mots en éliminant les développements techniques redondants sur la biomécanique."
+    },
+    "similarity_to_best": {
+      "score": 4,
+      "feedback": "La structure de fond (problème → solution → preuves → offre → CTA) est présente, mais le ton est fondamentalement celui d'un article scientifique, pas d'un advertorial éditorial. Un bon advertorial se déguise en article de fond — celui-ci se déguise en revue clinique. La voix narrative est absente : on ne sait pas qui parle avant la section 'Clinical Recommendation' qui mentionne '25 years of practice' — une révélation trop tardive. Les meilleurs advertoriaux établissent dès le début une voix de confiance incarnée (un praticien, un utilisateur, un journaliste santé) et maintiennent un ton humain tout au long. Suggestion : établir une voix narrative dès le hook, maintenir cette voix à la première personne dans les sections clés, et réserver le registre technique pour les encarts de preuves seulement."
+    }
+  },
+  "improvements": [
+    "Remplacer le titre académique par l'un des hooks émotionnels du brief ('At 60, I stopped blowing my leaves. Not because I wanted to. Because my back wouldn't let me.') — c'est la différence entre un article que quelqu'un lit et un article que quelqu'un ressent",
+    "Réécrire les témoignages de Robert M. et Linda K. en première personne directe et émotionnelle — supprimer le format 'Patient presents with' et laisser parler la personne, pas le dossier médical",
+    "Éliminer 90% du jargon clinique (L3-L5, thoracolumbar fascia, ISO 5349-1, eccentric load) et le remplacer par des formulations que l'avatar utilise lui-même ('lower back', 'shoulder muscles', 'vibration that travels up your arms')",
+    "Ajouter un paragraphe de future pacing après la section solution : décrire une scène concrète de la vie du lecteur 30 jours après l'achat — le dimanche matin, la voiture propre, le chemin déblayé, le café qui refroidit pas",
+    "Réduire l'article à 1300 mots maximum en supprimant les développements bioméchaniques redondants qui n'ajoutent pas à la conviction de l'avatar cible",
+    "Ajouter des bucket brigades entre chaque section pour éviter les ruptures de rythme ('But there's a catch most homeowners don't find out until it's too late...', 'Here's where it gets interesting...')",
+    "Établir la voix narrative (praticien, journaliste santé ou utilisateur) dès le premier paragraphe — ne pas attendre la section 'Clinical Recommendation' pour révéler qui parle et pourquoi on devrait lui faire confiance",
+    "Déplacer la phrase de l'urgence ('fewer than X units remain at this price') au-dessus du bouton CTA, pas en italique après le lien"
+  ],
+  "version": 1
+}

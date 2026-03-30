@@ -1,0 +1,58 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Un homme d'une soixantaine d'années, bronzé, vêtu d'un t-shirt simple et d'un pantalon de travail, assis sur les marches d'une terrasse en bois en fin d'après-midi. Il regarde vers son jardin couvert de feuilles mortes, sans le regarder vraiment — regard perdu, pensif. Un gros souffleur à essence posé sur l'herbe à côté de lui, à peine utilisé. Lumière de fin d'après-midi, dorée et légèrement rasante. Le jardin est vaste mais pas menaçant. L'expression est honnête : fatigue tranquille, pas désespoir.",
+      "mood": "Humain, authentique, mélancolique mais digne. Lumières chaudes d'automne. Aucun artifice — cette scène doit ressembler à un souvenir, pas à une publicité.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "product_shot",
+      "description": "Gros plan d'un vieux souffleur à essence posé sur le béton d'un garage, poussiéreux et usé. À côté : une paire de protège-oreilles orange, une ceinture lombaire de soutien pliée, et un petit flacon d'ibuprofène. Éclairage intérieur légèrement froid, réaliste. Pas de mise en scène glamour — on veut ressentir le poids, l'ancienneté, les contraintes. Le sol en béton grisé renforce l'authenticité.",
+      "mood": "Sobre, réaliste, légèrement lourd. L'image doit dire 'ça a fonctionné — mais ça a un coût'. Pas de jugement, juste la vérité d'un outil devenu trop encombrant.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "lifestyle",
+      "description": "Un homme d'une soixantaine d'années dans un atelier maison bien rangé, tenant dans UNE seule main un souffleur compact (le Seese Pro) à hauteur de poitrine, l'examinant avec une concentration calme et satisfaite. Il ne regarde pas la caméra — il regarde le produit. Derrière lui : un établi en bois avec des outils, des pièces mécaniques, des schémas. Éclairage chaud d'atelier, ampoules tungstène. La scène respire l'ingéniosité personnelle et la fierté discrète.",
+      "mood": "Inventif, intime, chaleureux. Artisanat honnête. L'ambiance doit évoquer un homme qui résout ses propres problèmes — pas un entrepreneur qui pitche, mais un ingénieur qui construit pour lui-même.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "testimonial",
+      "description": "Une femme d'environ 70 ans, cheveux gris naturels, vêtue simplement (pull léger, pantalon de ville), debout dans son allée propre, tenant le Seese Pro d'une seule main, bras légèrement tendu — décontractée, pas en démonstration. Derrière elle, des feuilles mortes soigneusement repoussées sur les côtés du chemin. Elle regarde légèrement hors-cadre avec un sourire discret de satisfaction. Lumière matinale douce, légèrement dorée. Le décor : une maison résidentielle classique, jardin soigné.",
+      "mood": "Chaleureux, digne, autonome. Cette femme n'est pas fragile — elle est capable. La fierté est subtile, pas performative. L'image doit dire : 'j'ai fait ça moi-même, et j'en suis fière.'",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 4,
+      "scene_type": "product_shot",
+      "description": "Flat lay épuré sur une surface en bois clair (chêne naturel). Au centre : le Seese Pro dans son étui de transport semi-ouvert, révélant l'intérieur organisé. Autour, disposés avec soin : la batterie, le chargeur compact, les accessoires, une paire de protège-oreilles discrets. Lumière naturelle diffuse venant de la gauche. Aucun fond artificiel — juste le bois, les produits, la lumière. L'étui occupe 60% du cadre pour valoriser l'impression de valeur perçue.",
+      "mood": "Propre, soigné, rassurant. L'image communique le soin apporté à la conception et à l'emballage. Pas de froideur studio — le bois apporte de la chaleur. On doit avoir envie de recevoir ce colis.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Un homme d'une soixantaine d'années debout dans son jardin propre et dégagé, en fin d'après-midi d'automne. Il tient le Seese Pro relâché dans une main, bras le long du corps — pas en train de l'utiliser, juste debout dans son espace. Il regarde directement vers l'objectif, calme, confiant, sans sourire forcé. Derrière lui : pelouse dégagée, bordures nettes, quelques feuilles au loin. Lumière golden hour, légèrement contre-jour pour créer un léger halo. Le cadrage est mi-corps.",
+      "mood": "Serein, confiant, maîtrisé. L'homme n'a rien à prouver — son jardin parle pour lui. Golden hour chaude, esthétique lifestyle propre. C'est l'image finale : la promesse tenue. 'J'ai encore tout sous contrôle.'",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "hero"
+    }
+  ]
+}

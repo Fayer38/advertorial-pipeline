@@ -1,0 +1,76 @@
+{
+  "scenes": [
+    {
+      "section_index": 0,
+      "scene_type": "lifestyle",
+      "description": "Femme de 65 ans environ, cheveux gris naturels, tenue décontractée (jean clair, haut en coton neutre), debout sur une terrasse en brique propre avec de la lumière dorée de fin d'après-midi. Elle tient le Seese Pro d'une seule main, bras détendu le long du corps. Son expression est de satisfaction tranquille, presque surprise elle-même. En arrière-plan flou, quelques feuilles mortes visibles sur la pelouse — contraste discret avec la terrasse nette devant elle. Pas de pose forcée, attitude authentique.",
+      "mood": "Chaleureux, lumineux, fierté domestique discrète. Tons ambre et ocre de fin d'après-midi. Aucune artificialité.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 1,
+      "scene_type": "before_after",
+      "description": "Split vertical en deux panneaux égaux. Panneau gauche : homme de 60-65 ans tenant un souffleur à essence de deux mains, corps légèrement penché en avant sous l'effort, expression tendue, vêtements sombres, fond de jardin gris et encombré. Panneau droit : même profil d'âge tenant le Seese Pro d'une seule main levée, dos droit, posture totalement décontractée, léger sourire, lumière naturelle claire. Pas de texte inséré dans l'image — la comparaison parle d'elle-même.",
+      "mood": "Contraste net entre effort/fatigue et légèreté/contrôle. Côté gauche : tons froids, légèrement désaturés. Côté droit : tons chauds, lumineux.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    },
+    {
+      "section_index": 3,
+      "scene_type": "before_after",
+      "description": "Split vertical : panneau gauche montre une terrasse en béton ou brique couverte de feuilles d'automne mouillées, sombres, compactes — lumière terne, aspect lourd. Panneau droit : même terrasse, identique à la prise de vue, complètement propre. Le Seese Pro est posé négligemment sur l'accoudoir d'une chaise en métal en bas à droite du cadre — présence discrète mais intentionnelle. Lumière de fin d'après-midi réchauffant les dalles propres.",
+      "mood": "Transformation concrète, résultat évident. Satisfaction visuelle immédiate. Réaliste, pas stylisé à l'excès.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 5,
+      "scene_type": "lifestyle",
+      "description": "Triptyque horizontal de trois images lifestyle carrées côte à côte. Image 1 : couple de 60-65 ans assis sur une terrasse propre, se regardant avec un sourire calme — café ou verre d'eau en main, ambiance après-tâche paisible. Image 2 : homme de 65 ans debout dans un jardin dégagé de feuilles, bras légèrement écartés, posture ouverte, expression de satisfaction tranquille. Image 3 : femme de 60 ans tenant le Seese Pro à la main, debout à côté d'une voiture propre dans une allée — elle ne pose pas, elle range l'outil après usage.",
+      "mood": "Chaleureux, candide, domestique. Lumière naturelle dorée sur les trois images — cohérence de palette. Ambiance réelle, pas publicitaire.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 2,
+      "scene_type": "testimonial",
+      "description": "Femme d'une cinquantaine d'années, air professionnel mais accessible — tenue sobre (veste neutre, pas de blouse blanche), assise à un bureau ou une table en bois clair. Expression posée, regard direct vers l'objectif, léger sourire de confiance. Arrière-plan neutre : mur clair avec peut-être une plante verte floue. Aucun symbole médical ou clinique. Éclairage naturel latéral doux. Elle ressemble à une conseillère que l'on aurait envie d'écouter.",
+      "mood": "Crédibilité chaleureuse. Expertise sans distance. Tons beige, blanc cassé, vert doux. Lumière Rembrandt légère.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 6,
+      "scene_type": "product_shot",
+      "description": "Flat-lay éditorial. Le Seese Pro est posé ouvert dans son étui de transport sur une surface en bois clair à grain visible. La batterie est insérée, le chargeur rapide et les accessoires sont disposés autour de manière organisée mais naturelle — pas parfaitement symétrique. En arrière-plan très flou : quelques feuilles d'automne sur une surface extérieure. L'ensemble donne une impression de produit sérieux, compact, bien pensé. Vue légèrement plongeante (environ 30° au-dessus).",
+      "mood": "Artisanal, soigné, honnête. Tons bois clair, gris anthracite du produit, lumière directionnelle douce venant de gauche. Aucun effet surexposé.",
+      "format": "image",
+      "aspect_ratio": "4:5",
+      "priority": "supporting"
+    },
+    {
+      "section_index": 7,
+      "scene_type": "product_shot",
+      "description": "Flat-lay premium de l'offre complète. L'étui de transport est ouvert et occupe les deux tiers du cadre — chaque élément dans son emplacement dédié : le Seese Pro, la batterie, le chargeur, les trois accessoires. Vue strictement plongeante (90°) sur une surface en bois chaud ou lin beige. Lumière diffuse douce, légères ombres portées pour donner du volume. L'image donne l'impression d'un kit complet, cohérent, prêt à l'emploi dès réception.",
+      "mood": "Premium accessible. Qualité perçue élevée sans être froide ou technique. Tons neutres chauds — bois, beige, gris doux. Contraste doux.",
+      "format": "image",
+      "aspect_ratio": "1:1",
+      "priority": "hero"
+    },
+    {
+      "section_index": 8,
+      "scene_type": "lifestyle",
+      "description": "Homme ou femme de 65 ans, debout devant la façade d'une maison individuelle propre — allée dégagée, jardin visible en arrière-plan bien entretenu. Il/elle tient le Seese Pro décontracté dans une main, l'autre main dans la poche ou sur la hanche. Posture droite, sourire naturel — pas forcé. Lumière heure dorée rasante, longues ombres douces sur l'allée. L'image résume tout : indépendance, maison bien tenue, effort zéro.",
+      "mood": "Lumière heure dorée, chaleur émotionnelle, fierté discrète. C'est l'image de quelqu'un qui n'a demandé d'aide à personne. Tons ambre profond, vert jardin en arrière-plan.",
+      "format": "image",
+      "aspect_ratio": "16:9",
+      "priority": "hero"
+    }
+  ]
+}

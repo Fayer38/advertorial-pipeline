@@ -1,3 +1,11 @@
 [22:53:41] [INFO] Pipeline started — product=seese-pro-v9 template=urgency-sale angle=testimonial lang=en
 [22:53:41] [INFO] Phase 1 | Starting | running | 0%
 [22:53:41] [INFO] Phase 2 — Structuring | info_organizer | running | 30%
+[22:55:11] [INFO] Phase 3 — Writing | copywriter | running | 50%
+[22:57:37] [INFO] Phase 4 — Visuals | visual_strategist | running | 60%
+[22:58:11] [INFO] Phase 4 — Visuals | image_prompter | running | 65%
+[22:58:11] [INFO] Phase 4 — Visuals | video_prompter | running | 70%
+[22:58:51] [INFO] Phase 5 — QA | qa_checker | running | 85%
+[23:00:06] [INFO] Pipeline completed — html=data/output/a735ca1e/i-stopped-fighting-my-own-yard-then-a-55-flash-sale-changed.html words=1290
+[23:00:06] [INFO] Done |  | completed | 100%
+[23:00:06] [INFO] Phase 6 — Publishing | html_publisher | running | 95% (skipped — already completed)
