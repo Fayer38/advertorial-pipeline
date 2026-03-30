@@ -453,9 +453,10 @@ async def run_agent(plid: str, req: AgentRunReq, bg: BackgroundTasks):
 async def history():
     h = []
     for plid, s in pipelines.items():
-        hf = s["results"].get("html_file","")
+        results = s.get("results", {})
+        hf = results.get("html_file","")
         pub_url = f"https://dailybloginfo.com/a/{hf}" if hf else ""
-        h.append({"id": plid, "product_id": s["product_id"], "product_name": s.get("product_name",""), "product_url": s["product_url"], "status": s["status"], "started_at": s["started_at"], "completed_at": s.get("completed_at",""), "headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "thumbnail": s["results"].get("thumbnail",""), "config": s["config"], "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent",""), "published_url": pub_url, "results": {"headline": s["results"].get("headline",""), "qa_score": s["results"].get("qa_score",0), "thumbnail": s["results"].get("thumbnail",""), "html_file": hf}})
+        h.append({"id": plid, "product_id": s.get("product_id",""), "product_name": s.get("product_name",""), "product_url": s.get("product_url",""), "status": s.get("status",""), "started_at": s.get("started_at",""), "completed_at": s.get("completed_at",""), "headline": results.get("headline",""), "qa_score": results.get("qa_score",0), "thumbnail": results.get("thumbnail",""), "config": s.get("config",{}), "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent",""), "published_url": pub_url, "results": {"headline": results.get("headline",""), "qa_score": results.get("qa_score",0), "thumbnail": results.get("thumbnail",""), "html_file": hf}})
     h.sort(key=lambda x: x["started_at"], reverse=True)
     return {"pipelines": h}
 
