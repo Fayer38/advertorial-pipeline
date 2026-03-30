@@ -1461,7 +1461,7 @@ EDIT_SCRIPT = """
         newEl = document.createElement('div');
         newEl.className = 'faq-block';
         newEl.style.cssText = 'margin:16px 0;border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;';
-        newEl.innerHTML = '<div style="padding:14px 18px;background:#fafafa;font-weight:700;font-size:16px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\'">❓ Question goes here</div><div style="padding:14px 18px;font-size:15px;line-height:1.6;display:block;">Answer goes here. Click to edit.</div>';
+        newEl.innerHTML = '<div style="padding:14px 18px;background:#fafafa;font-weight:700;font-size:16px;cursor:pointer;" onclick="var d=this.nextElementSibling;d.style.display=d.style.display==\\x27none\\x27?\\x27block\\x27:\\x27none\\x27">❓ Question goes here</div><div style="padding:14px 18px;font-size:15px;line-height:1.6;display:block;">Answer goes here. Click to edit.</div>';
       } else if (t === 'video') {
         newEl = document.createElement('div');
         newEl.style.cssText = 'margin:12px 0;position:relative;padding-bottom:56.25%;background:#000;border-radius:8px;overflow:hidden;';
