@@ -1,0 +1,296 @@
+{
+  "frustration": {
+    "label": "Frustration & Pain",
+    "media_type": "image",
+    "product_visible": false,
+    "scenes": [
+      {
+        "id": "frust-back-pain",
+        "description": "Senior man (60+) grimacing, hand pressing lower back, red glow on lumbar area. Standing in driveway next to a heavy heavy gas-powered tool on the ground. Exhausted, defeated expression. Suburban setting, natural daylight.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      },
+      {
+        "id": "frust-pull-cord",
+        "description": "Senior man yanking the pull-start cord of a large heavy gas-powered tool, body jerking forward with effort. Face showing strain and dread. The power tool sits heavy on the ground. Autumn leaves everywhere. Documentary photography style.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "frust-exhaustion",
+        "description": "Tired senior sitting slumped on porch steps, sweat-stained shirt, elbows on knees. A large heavy gas-powered tool lies on its side nearby. Yard half-cleaned — leaves still covering the far side. Late afternoon, defeated atmosphere.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      },
+      {
+        "id": "frust-heavy-struggle",
+        "description": "Senior woman struggling to hold a large heavy heavy backpack power tool with both arms. Hunched posture, strained face, trembling arms. The power tool is clearly too big for her. Autumn backyard. Empathetic documentary style.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "frust-dreading-yard",
+        "description": "Senior standing at their back door, looking out at an enormous yard covered in fallen autumn leaves. Their expression is one of pure dread and overwhelm. heavy gas-powered tool visible leaning against the wall. Morning light.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      }
+    ]
+  },
+  "before_after": {
+    "label": "Before / After",
+    "media_type": "image",
+    "product_visible": false,
+    "scenes": [
+      {
+        "id": "ba-patio",
+        "description": "A single wide 16:9 photograph divided exactly in half by a thin vertical white line in the center. IMPORTANT: both halves must show the SAME patio from the SAME camera angle and distance. LEFT HALF: the backyard patio is buried under thick autumn leaves, furniture barely visible, cold muted grey-blue color grading, overcast sky. RIGHT HALF: the exact same patio is perfectly clean, warm golden afternoon sunlight, stone tiles gleaming, a woman sits comfortably on a patio chair holding a coffee cup, relaxed and smiling. Both halves must have identical perspective, same fence, same trees, same furniture layout. The only difference is cleanliness and mood. Wide establishing shot, both subjects fully visible with space around them.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "ba-driveway",
+        "description": "A single wide 16:9 photograph divided exactly in half by a thin vertical white line in the center. IMPORTANT: both halves must show the SAME driveway from the SAME angle. LEFT HALF: suburban driveway covered in mud, wet leaves, and grass clippings. Grey overcast mood, puddles on concrete. RIGHT HALF: the exact same driveway spotlessly clean, dry concrete, car parked neatly, bright sunny day with blue sky. Same house, same angle, same elements — only cleanliness differs. Wide shot showing the full driveway in both halves.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "ba-person-pain-vs-happy",
+        "description": "A single wide 16:9 photograph divided exactly in half by a thin vertical white line in the center. LEFT HALF: a senior man (60+) hunched forward with visible back pain, one hand pressing his lower back, a heavy heavy gas-powered tool lying at his feet. Grey muted tones, frustrated exhausted expression. Messy yard behind him. RIGHT HALF: the SAME man standing tall and upright, smiling confidently, holding a small modern the lightweight cordless device effortlessly with one hand. Bright warm tones, perfectly clean yard behind him. Full body visible in both halves, shot from the same distance. Transformation from misery to confidence.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      }
+    ]
+  },
+  "lifestyle_no_product": {
+    "label": "Lifestyle (no product)",
+    "media_type": "image",
+    "product_visible": false,
+    "scenes": [
+      {
+        "id": "life-sunday-porch",
+        "description": "Senior couple sitting on a clean porch on Sunday morning, drinking coffee, looking out at their pristine yard. Relaxed, content, peaceful. Golden morning light filtering through trees. The feeling of a weekend reclaimed.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      },
+      {
+        "id": "life-grandkids-yard",
+        "description": "Grandchildren playing in a perfectly clean backyard while grandfather watches from the deck, relaxed and smiling. The yard is immaculate. Warm autumn afternoon light. Family happiness, time well spent.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "life-neighbor-struggling",
+        "description": "View from a clean porch: in the background, a neighbor is visibly struggling with a heavy gas-powered tool, sweating. In the foreground, a coffee cup and a clean deck. The contrast tells the story. Suburban setting.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      }
+    ]
+  },
+  "lifestyle_product": {
+    "label": "Lifestyle (with product)",
+    "media_type": "image",
+    "product_visible": true,
+    "scenes": [
+      {
+        "id": "prod-hero-yard",
+        "description": "Senior homeowner (55+) proudly holding the device from the reference image in their suburban front yard. Device clearly visible and centered. Hero banner composition. Warm natural lighting. Confident, satisfied expression.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      },
+      {
+        "id": "prod-one-hand",
+        "description": "Senior woman effortlessly holding the device from the reference image with ONE hand while holding coffee in the other. Demonstrating lightweight design. Bright daylight, autumn leaves on ground. Casual, everyday feel.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      },
+      {
+        "id": "prod-closeup",
+        "description": "Extreme close-up beauty shot of the device from the reference image on a clean surface. Showing build quality, button mechanism, ergonomic grip, lightweight construction. Macro product photography, shallow depth of field.",
+        "aspect_ratios": [
+          "16:9",
+          "1:1"
+        ]
+      },
+      {
+        "id": "prod-bundle",
+        "description": "Complete product bundle laid out on clean surface: device, battery, charger, carry case, accessories. Premium unboxing photography. Clean, organized, gift-worthy presentation.",
+        "aspect_ratios": [
+          "16:9",
+          "1:1"
+        ]
+      }
+    ]
+  },
+  "infographics": {
+    "label": "Infographics & Studies",
+    "media_type": "image",
+    "product_visible": false,
+    "scenes": [
+      {
+        "id": "info-back-injuries",
+        "description": "Clean infographic chart showing: '47,000 back injuries annually from gas-powered leaf power tools' with horizontal bar graph. Demographic breakdown: 73% in adults 55+, 27% under 55. Primary cause highlighted: pull-cord starter mechanism with illustration of a person pulling a cord on a power tool (NOT a lawnmower). Medical blue and orange color scheme. Professional healthcare infographic style. White background, clean modern typography. Source citation at bottom.",
+        "aspect_ratios": [
+          "4:3",
+          "16:9"
+        ]
+      },
+      {
+        "id": "info-weight-comparison",
+        "description": "Visual weight comparison infographic of LEAF power tools ONLY: traditional heavy gas-powered tool (25 lbs) vs corded electric power tool (12 lbs) vs the device from the reference image the lightweight cordless device (2.1 lbs). Three power tool silhouettes with weight bars underneath. The the device from the reference image bar is dramatically smaller. Title: 'Weight Comparison: Leaf power tools'. Clean infographic style, brand orange accent #F26722 for the device from the reference image.",
+        "aspect_ratios": [
+          "4:3",
+          "16:9"
+        ]
+      },
+      {
+        "id": "info-satisfaction-curve",
+        "description": "Professional customer satisfaction graph with upward trend line. Title: 'Customer Satisfaction Over Time'. 4.9/5 stars rating badge. 2,410+ verified reviews callout. Clean line chart with data points, green trend line going up. Modern dashboard aesthetic. White background, subtle grid lines. Small product silhouette in corner.",
+        "aspect_ratios": [
+          "4:3"
+        ]
+      },
+      {
+        "id": "info-clinical-study",
+        "description": "Professional research report layout: 'Independent Ergonomic Performance Study 2026' header with institution logo placeholder. Bar chart comparing 4 leaf power tools on: cleaning time (minutes), user strain level (1-10), noise level (dB), weight (lbs). the device from the reference image wins every category with green highlight bars. Academic report style with footnotes and methodology note. Clean, credible, data-driven.",
+        "aspect_ratios": [
+          "4:3"
+        ]
+      }
+    ]
+  },
+  "storytelling": {
+    "label": "Storytelling & Credibility",
+    "media_type": "image",
+    "product_visible": true,
+    "scenes": [
+      {
+        "id": "story-workshop",
+        "description": "An engineer (60s) sketching blueprints of the device from the reference image in a workshop. Technical drawings of the EXACT device pinned to a cork board on the wall — showing nozzle cross-section, motor housing, battery compartment. Multiple prototype iterations of the device visible on the workbench. Warm workshop lighting, creative genius atmosphere. Documentary photography.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      },
+      {
+        "id": "story-lab",
+        "description": "Modern R&D laboratory with engineers in white coats testing the device from the reference image with measurement equipment. The device is on a test rig with sensors attached. Wind speed measurement display visible. Clean high-tech facility. Professional, trust-building imagery.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "story-production",
+        "description": "Clean assembly line in a modern factory: the device from the reference image being assembled with precision at multiple stations. Workers with gloves carefully fitting components. Quality control station with a finished device being inspected. Bright industrial lighting. Conveys premium manufacturing quality.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "story-founder",
+        "description": "Portrait of a distinguished engineer/founder (60s) in smart casual clothing, holding the device from the reference image confidently. Behind him, a whiteboard covered in technical diagrams of the device's motor and airflow system. Trustworthy expression, warm office/lab setting. The device in his hand matches the reference exactly.",
+        "aspect_ratios": [
+          "4:3",
+          "1:1"
+        ]
+      }
+    ]
+  },
+  "urgency": {
+    "label": "Liquidation & Urgency",
+    "media_type": "image",
+    "product_visible": false,
+    "scenes": [
+      {
+        "id": "urg-store-queue-outside",
+        "description": "Long queue of 50+ people stretching around the block outside a modern retail store. Signs in the window advertising a major sale. People looking eager, some on phones. Urban/suburban setting. Morning light, the store is about to open.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "urg-store-queue-inside",
+        "description": "Inside a busy retail store: crowded aisles, people reaching for products on shelves that are nearly empty. Shopping baskets full. Excited, urgent atmosphere. Retail photography style. Bright fluorescent store lighting.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      },
+      {
+        "id": "urg-sold-out-shelf",
+        "description": "Close-up of a retail shelf that is almost completely empty. One or two product boxes remain. A 'NEARLY SOLD OUT' tag hangs from the shelf. Other shoppers visible in background reaching for the last units. Urgency and scarcity.",
+        "aspect_ratios": [
+          "16:9",
+          "4:3"
+        ]
+      },
+      {
+        "id": "urg-warehouse-truck",
+        "description": "Delivery truck being loaded with boxes at a warehouse dock. Workers moving pallets of product boxes. The warehouse shelves behind them are depleted. 'Last shipment' feeling. Industrial setting, daytime.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      }
+    ]
+  },
+  "video_medical": {
+    "label": "Medical Animation (Video)",
+    "media_type": "video",
+    "product_visible": false,
+    "scenes": [
+      {
+        "id": "vid-spine-compression",
+        "description": "Medical visualization: translucent human torso showing spine. L4-L5 region highlighted in pulsing red. Pain signals traveling up the spine as yellow-orange nerve pathways. Disc compression animation. Clinical, informative, not gory. Dark background, cool blue skeleton with warm red pain zone.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "vid-back-pain-moment",
+        "description": "A senior man yanks a pull cord and freezes — his hand shoots to his lower back in sharp pain. He grimaces, slowly straightens up. A subtle red glow pulses on his lower back. He looks down at the heavy power tool with frustration and defeat. Steady camera, natural daylight. Slow, painful, realistic.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      }
+    ]
+  },
+  "video_magic": {
+    "label": "Magical Before/After (Video)",
+    "media_type": "video",
+    "product_visible": false,
+    "scenes": [
+      {
+        "id": "vid-leaves-spiral",
+        "description": "A patio completely covered in autumn leaves. A powerful invisible force sweeps from left to right — leaves lift and swirl in a mesmerizing spiral, revealing clean stone tiles underneath. Morning sunlight catches the swirling leaves creating golden sparkles. 5 seconds, wide shot, camera still.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      },
+      {
+        "id": "vid-frustration-exhaustion",
+        "description": "Tired senior sitting on porch steps, breathing heavily. He looks at his half-cleaned yard and shakes his head. Tries to stand, winces, sits back down pressing his back. A few leaves drift past mockingly. Steady medium shot, warm late afternoon light. Empathetic, relatable frustration.",
+        "aspect_ratios": [
+          "16:9"
+        ]
+      }
+    ]
+  }
+}
