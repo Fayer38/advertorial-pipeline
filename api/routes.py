@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException, BackgroundTasks, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
+import httpx
 
 import re as _re
 
@@ -51,6 +52,16 @@ def _extract_thumbnail(html_path: Path, product_id: str = "") -> str:
     return ""
 app = FastAPI(title="Advertorial Pipeline API", version="2.0.0")
 
+# LLM helper — unified proxy client
+from utils.llm_proxy import llm_call as _llm_call_raw
+
+async def _llm_call(messages: list, max_tokens: int = 4000, system: str = None) -> str:
+    """Call Claude via proxy with automatic failover."""
+    return await _llm_call_raw(messages=messages, max_tokens=max_tokens, system=system)
+
+from api.media_generation_routes import router as media_gen_router
+app.include_router(media_gen_router)
+
 from api.media_routes import router as media_router
 app.include_router(media_router)
 
@@ -59,6 +70,10 @@ import os
 _media_dir = os.path.join(os.path.dirname(__file__), "..", "data", "output", "media")
 os.makedirs(_media_dir, exist_ok=True)
 app.mount("/media-files", StaticFiles(directory=_media_dir), name="media-files")
+
+_html_archive_dir = "/root/.openclaw/workspace-anstrex-scraper/html_archive"
+if os.path.exists(_html_archive_dir):
+    app.mount("/html-archive", StaticFiles(directory=_html_archive_dir), name="html-archive")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 # ── MODELS ──
@@ -67,13 +82,20 @@ class ProductAnalyzeReq(BaseModel):
 
 class PipelineStartReq(BaseModel):
     product_id: str
-    angle: str = "testimonial"
-    structure: str = "pas"
-    persona: str = ""
-    tone: str = "conversational"
-    language: str = "en"
-    brief: str = ""
     template: str = "editorial"
+    format: str = "personal_story"
+    context: str = ""
+    audience: str = ""
+    source_id: str = ""
+    source_url: str = ""
+    aggressiveness: str = "medium"
+    language: str = "en"
+    # Legacy fields — kept for backward compat
+    angle: str = ""
+    structure: str = ""
+    persona: str = ""
+    tone: str = ""
+    brief: str = ""
 
 class AdvUpdateReq(BaseModel):
     headline: Optional[str] = None
@@ -121,6 +143,7 @@ async def _load_existing_products():
                 "suggested_structure": top.get("suggested_structure", "pas"),
                 "suggested_tone": top.get("suggested_tone", "conversational"),
                 "suggested_persona": top.get("suggested_persona", ""),
+                "image_url": top.get("image_url", pi.get("image_url", "")),
             }
             logger.info(f"Loaded product: {pid} ({products[pid]['name']})")
         except Exception as e:
@@ -143,6 +166,43 @@ def _save_product(pid: str):
 def _delete_product_file(pid: str):
     fpath = Path("data/output/products") / f"product_data_{pid}.json"
     if fpath.exists(): fpath.unlink()
+
+# ── Branding Config ──
+_DEFAULT_BRANDING = {
+    "site_name": "",
+    "site_domain": "",
+    "logo_url": "",
+    "logo_url_dark": "",
+    "brand_color": "#f26722",
+    "disclaimer_text": "Advertorial",
+}
+
+def _load_branding(product_id: str) -> dict:
+    p = Path(f"data/output/products/branding_{product_id}.json")
+    if p.exists():
+        try:
+            return {**_DEFAULT_BRANDING, **json.loads(p.read_text())}
+        except Exception:
+            pass
+    return dict(_DEFAULT_BRANDING)
+
+def _save_branding(product_id: str, data: dict):
+    Path("data/output/products").mkdir(parents=True, exist_ok=True)
+    p = Path(f"data/output/products/branding_{product_id}.json")
+    p.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+
+_SEQ_FILE = Path("data/output/page_sequence.json")
+
+def _next_page_seq() -> int:
+    """Return next unique page sequence number (never reused)."""
+    try:
+        data = json.loads(_SEQ_FILE.read_text()) if _SEQ_FILE.exists() else {}
+    except Exception:
+        data = {}
+    seq = data.get("next", 1)
+    _SEQ_FILE.parent.mkdir(parents=True, exist_ok=True)
+    _SEQ_FILE.write_text(json.dumps({"next": seq + 1}))
+    return seq
 
 def _save_pipeline_state(plid: str):
     """Persist pipeline state to disk so it survives restarts."""
@@ -246,8 +306,16 @@ async def _load_existing_pipelines():
             mtime = datetime.fromtimestamp(_os.path.getmtime(str(d)))
             started_at = mtime.isoformat()
 
+            # Restore or assign seq number
+            _seq = 0
+            _state_file = d / "_pipeline_state.json"
+            if _state_file.exists():
+                try: _seq = json.loads(_state_file.read_text()).get("seq", 0)
+                except: pass
+            if not _seq:
+                _seq = _next_page_seq()
             pipelines[plid] = {
-                "id": plid, "status": status, "started_at": started_at,
+                "id": plid, "seq": _seq, "status": status, "started_at": started_at,
                 "completed_at": started_at if status == "completed" else "",
                 "product_id": product_id, "product_url": "",
                 "product_name": product_name,
@@ -329,13 +397,98 @@ async def delete_product(pid: str):
     _delete_product_file(pid)
     return {"deleted": pid}
 
+# ── BRANDING ENDPOINTS ──
+class BrandingReq(BaseModel):
+    site_name: Optional[str] = None
+    site_domain: Optional[str] = None
+    logo_url: Optional[str] = None
+    logo_url_dark: Optional[str] = None
+    brand_color: Optional[str] = None
+    disclaimer_text: Optional[str] = None
+
+@app.get("/branding/{product_id}")
+async def get_branding(product_id: str):
+    return _load_branding(product_id)
+
+@app.put("/branding/{product_id}")
+async def update_branding(product_id: str, req: BrandingReq):
+    current = _load_branding(product_id)
+    for k, v in req.dict(exclude_none=True).items():
+        current[k] = v
+    _save_branding(product_id, current)
+    return current
+
+# ── CONTEXT SUGGESTIONS ──
+class SuggestContextReq(BaseModel):
+    product_id: str = ""
+    product_name: str = ""
+    product_benefits: list = []
+    product_problem: str = ""
+    format: str = "personal_story"
+    audience: str = ""
+    aggressiveness: str = "medium"
+    current_context: str = ""
+
+@app.post("/suggest-context")
+async def suggest_context(req: SuggestContextReq):
+    """Generate 3-5 context suggestions for the copywriter using Sonnet."""
+    format_hints = {
+        "personal_story": "a personal founder/user story narrative",
+        "listicle": "a list-based article (5 reasons, top picks, etc.)",
+        "problem_solution": "a problem-solution structure",
+        "news_style": "a journalistic/news-style article",
+        "review": "a product review",
+        "case_study": "a before/after case study",
+    }
+    aggr_hints = {
+        "soft": "gentle, empathetic, low pressure",
+        "medium": "balanced, informative with clear CTAs",
+        "aggressive": "urgent, scarcity-driven, high pressure",
+    }
+    system = (
+        "You are an expert direct-response copywriter specializing in advertorials. "
+        "Generate specific, vivid narrative contexts for an advertorial copywriter. "
+        "Each suggestion must be a COMPLETE narrative context — not a template, not a skeleton. "
+        "Use specific details: ages, names, situations, emotions, before/after moments. "
+        "Output a JSON array of 4 strings, each 2-4 sentences. "
+        "Output ONLY the JSON array, no markdown, no explanation."
+    )
+    benefits_str = ", ".join(req.product_benefits[:4]) if req.product_benefits else ""
+    user_msg = (
+        f"Product: {req.product_name}\n"
+        + (f"Core problem solved: {req.product_problem}\n" if req.product_problem else "")
+        + (f"Key benefits: {benefits_str}\n" if benefits_str else "")
+        + (f"Target audience: {req.audience}\n" if req.audience else "")
+        + f"Format: {format_hints.get(req.format, req.format)}\n"
+        + f"Tone: {aggr_hints.get(req.aggressiveness, req.aggressiveness)}\n"
+        + (f"User's rough idea (expand on this): {req.current_context}\n" if req.current_context.strip() else "Generate 4 diverse contexts.\n")
+        + "\nGenerate 4 distinct, vivid advertorial context narratives. Be specific, emotional, concrete."
+    )
+    try:
+        result = await _llm_call(
+            messages=[{"role": "user", "content": user_msg}],
+            system=system,
+            max_tokens=1500,
+        )
+        # Parse JSON array
+        import re as _re2
+        m = _re2.search(r'\[.*\]', result, _re2.DOTALL)
+        if m:
+            suggestions = json.loads(m.group(0))
+        else:
+            suggestions = [result.strip()]
+        return {"suggestions": suggestions[:5]}
+    except Exception as e:
+        logger.error(f"suggest-context error: {e}")
+        raise HTTPException(500, f"Failed to generate suggestions: {str(e)}")
+
 # ── PIPELINE ──
 @app.post("/pipeline/start")
 async def start_pipeline(req: PipelineStartReq, bg: BackgroundTasks):
     if req.product_id not in products: raise HTTPException(404, "Product not found")
     product = products[req.product_id]
     plid = str(uuid.uuid4())[:8]
-    pipelines[plid] = {"id": plid, "status": "pending", "started_at": datetime.utcnow().isoformat(), "completed_at": "", "product_id": req.product_id, "product_url": product["url"], "product_name": product.get("name",""), "config": {"angle": req.angle, "structure": req.structure, "persona": req.persona, "tone": req.tone, "language": req.language, "brief": req.brief, "template": req.template}, "current_phase": "", "current_agent": "", "progress": 0.0, "error": "", "results": {}}
+    pipelines[plid] = {"id": plid, "seq": _next_page_seq(), "status": "pending", "started_at": datetime.utcnow().isoformat(), "completed_at": "", "product_id": req.product_id, "product_url": product["url"], "product_name": product.get("name",""), "config": {"template": req.template, "format": req.format, "context": req.context, "audience": req.audience, "source_id": req.source_id, "source_url": req.source_url, "aggressiveness": req.aggressiveness, "language": req.language, "angle": req.angle, "structure": req.structure, "persona": req.persona, "tone": req.tone, "brief": req.brief}, "current_phase": "", "current_agent": "", "progress": 0.0, "error": "", "results": {}}
     pipeline_events[plid] = asyncio.Queue()
     _save_pipeline_state(plid)
     bg.add_task(_run_pipeline_bg, plid, req)
@@ -415,8 +568,39 @@ async def retry_pipeline(plid: str, bg: BackgroundTasks):
         language = cfg.get("language", "en")
         brief = cfg.get("brief", "")
         template = cfg.get("template", "editorial")
+        format = cfg.get("format", "personal_story")
+        context = cfg.get("context", "")
+        audience = cfg.get("audience", "")
+        source_id = cfg.get("source_id", "")
+        source_url = cfg.get("source_url", "")
+        aggressiveness = cfg.get("aggressiveness", "medium")
+        audience = cfg.get("audience", "")
+        source_id = cfg.get("source_id", "")
+        source_url = cfg.get("source_url", "")
+        aggressiveness = cfg.get("aggressiveness", "medium")
     bg.add_task(_run_pipeline_bg, plid, _FakeReq())
     return {"pipeline_id": plid, "status": "retrying", "message": "Resuming from last checkpoint"}
+
+@app.post("/pipeline/{plid}/cancel")
+async def cancel_pipeline(plid: str):
+    """Cancel a running pipeline."""
+    if plid not in pipelines:
+        raise HTTPException(404, "Pipeline not found")
+    p = pipelines[plid]
+    if p.get("status") not in ("running", "pending"):
+        return {"cancelled": False, "message": f"Pipeline is {p.get('status')}, not running"}
+    p["status"] = "cancelled"
+    p["error"] = "Cancelled by user"
+    p["current_phase"] = "Cancelled"
+    # Also update the state file on disk
+    state_file = Path(f"data/output/{plid}/_pipeline_state.json")
+    if state_file.exists():
+        state = json.loads(state_file.read_text())
+        state["status"] = "cancelled"
+        state["error"] = "Cancelled by user"
+        state["current_phase"] = "Cancelled"
+        state_file.write_text(json.dumps(state, indent=2))
+    return {"cancelled": True}
 
 @app.put("/pipeline/{plid}/update")
 async def update_adv(plid: str, req: AdvUpdateReq):
@@ -455,8 +639,18 @@ async def history():
     for plid, s in pipelines.items():
         results = s.get("results", {})
         hf = results.get("html_file","")
-        pub_url = f"https://dailybloginfo.com/a/{hf}" if hf else ""
-        h.append({"id": plid, "product_id": s.get("product_id",""), "product_name": s.get("product_name",""), "product_url": s.get("product_url",""), "status": s.get("status",""), "started_at": s.get("started_at",""), "completed_at": s.get("completed_at",""), "headline": results.get("headline",""), "qa_score": results.get("qa_score",0), "thumbnail": results.get("thumbnail",""), "config": s.get("config",{}), "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent",""), "published_url": pub_url, "results": {"headline": results.get("headline",""), "qa_score": results.get("qa_score",0), "thumbnail": results.get("thumbnail",""), "html_file": hf}})
+        # If html_file is empty, try to find it in output dir
+        if not hf:
+            out_dir = Path(f"data/output/{plid}")
+            if out_dir.exists():
+                htmls = list(out_dir.glob("*.html"))
+                if htmls:
+                    hf = htmls[0].name
+                    results["html_file"] = hf
+        # Normalize: strip path prefix, keep just filename
+        hf_name = Path(hf).name if hf else ""
+        pub_url = f"https://dailybloginfo.com/a/{hf_name}" if hf_name else ""
+        h.append({"id": plid, "seq": s.get("seq", 0), "product_id": s.get("product_id",""), "product_name": s.get("product_name",""), "product_url": s.get("product_url",""), "status": s.get("status",""), "started_at": s.get("started_at",""), "completed_at": s.get("completed_at",""), "headline": results.get("headline",""), "qa_score": results.get("qa_score",0), "thumbnail": results.get("thumbnail",""), "config": s.get("config",{}), "progress": s.get("progress",0), "current_phase": s.get("current_phase",""), "current_agent": s.get("current_agent",""), "published_url": pub_url, "results": {"headline": results.get("headline",""), "qa_score": results.get("qa_score",0), "thumbnail": results.get("thumbnail",""), "html_file": hf_name}})
     h.sort(key=lambda x: x["started_at"], reverse=True)
     return {"pipelines": h}
 
@@ -615,10 +809,24 @@ async def save_html(plid: str, req: SaveHtmlReq):
     clean = re.sub(r'\s+class="dragging"', '', clean)
     # Unwrap img-block-wrap divs
     clean = re.sub(r'<div class="img-block-wrap"[^>]*>(.*?)</div>', r'\1', clean, flags=re.DOTALL)
+    # Unwrap orphan-text-wrap elements (editor-only wrappers — can be span or p)
+    clean = re.sub(r'<span class="orphan-text-wrap"[^>]*>(.*?)</span>', r'\1', clean, flags=re.DOTALL)
+    clean = re.sub(r'<p class="orphan-text-wrap"[^>]*>(.*?)</p>', r'\1', clean, flags=re.DOTALL)
+    # Remove vis-menu leftovers
+    clean = re.sub(r'<div class="vis-menu">.*?</div>', '', clean, flags=re.DOTALL)
+    # Inject device visibility CSS if any hide-* classes are used
+    if 'hide-desktop' in clean or 'hide-tablet' in clean or 'hide-mobile' in clean:
+        vis_css = '<style>@media(min-width:1025px){.hide-desktop{display:none!important}}@media(min-width:376px)and(max-width:1024px){.hide-tablet{display:none!important}}@media(max-width:375px){.hide-mobile{display:none!important}}</style>'
+        if '</head>' in clean:
+            clean = clean.replace('</head>', vis_css + '</head>')
+        else:
+            clean = vis_css + clean
     # Ensure header logo is present — skip for imported HTML
     is_import = pipelines.get(plid, {}).get("config", {}).get("source") == "html-import"
     if not is_import:
         clean = _inject_header_logo(clean)
+    # Enforce video attributes (autoplay/muted/loop/playsinline, strip controls)
+    clean = _enforce_video_attrs(clean)
     htmls[0].write_text(clean, encoding="utf-8")
     # Also copy to published dir
     pub = Path("/var/www/advertorials") / htmls[0].name
@@ -645,13 +853,20 @@ EDIT_SCRIPT = """
     .block-controls {
       position: absolute; left: -36px; top: 50%; transform: translateY(-50%);
       display: flex; flex-direction: column; gap: 3px;
-      opacity: 0; transition: opacity .15s; z-index: 9990;
+      opacity: 0; transition: opacity .15s; z-index: 99980;
+      pointer-events: none;
     }
+    /* Ensure block controls are never clipped by parent overflow */
+    [data-editable], .img-set, .placeholder[data-media-idx], .img-block-wrap,
+    .sidebar-card, .offer-box, .offer-card, .cta-section, .stat-row,
+    .card-body, .comparison-table, .step-card, .testimonial { overflow: visible !important; }
     [data-editable]:hover > .block-controls,
     .img-set:hover > .block-controls,
     .placeholder:hover > .block-controls,
     img[data-img-idx]:hover > .block-controls,
-    .img-block-wrap:hover > .block-controls { opacity: 1; }
+    .img-block-wrap:hover > .block-controls,
+    .sidebar-card > div:hover > .block-controls,
+    .sidebar-card > a:hover > .block-controls { opacity: 1; pointer-events: auto; }
     .block-controls button {
       width: 26px; height: 26px; border-radius: 6px; border: 1px solid #ddd;
       background: #fff; color: #666; font-size: 12px; cursor: pointer;
@@ -663,6 +878,35 @@ EDIT_SCRIPT = """
     .block-ctrl-drag { cursor: grab !important; }
     .block-ctrl-drag:active { cursor: grabbing !important; }
     .block-ctrl-del:hover { background: #ef4444 !important; border-color: #ef4444 !important; }
+    .block-ctrl-vis { font-size: 10px !important; }
+
+    /* Device visibility classes */
+    .hide-desktop, .hide-tablet, .hide-mobile { position: relative; }
+    .hide-desktop::after, .hide-tablet::after, .hide-mobile::after {
+      position: absolute; top: 2px; right: 2px; font-size: 9px; padding: 1px 4px;
+      border-radius: 3px; background: rgba(0,0,0,.6); color: #fff; z-index: 10; pointer-events: none;
+    }
+    .hide-desktop::after { content: '🖥 hidden'; }
+    .hide-tablet::after { content: '📱 hidden'; }
+    .hide-mobile::after { content: '📲 hidden'; }
+    @media (min-width: 1025px) { .hide-desktop { display: none !important; } }
+    @media (min-width: 376px) and (max-width: 1024px) { .hide-tablet { display: none !important; } }
+    @media (max-width: 375px) { .hide-mobile { display: none !important; } }
+
+    /* Visibility menu */
+    .vis-menu {
+      position: absolute; left: 0; top: 100%; margin-top: 4px;
+      background: #1a1a1a; border: 1px solid #333; border-radius: 8px;
+      padding: 4px 0; min-width: 140px; z-index: 99999;
+      box-shadow: 0 4px 16px rgba(0,0,0,.5);
+    }
+    .vis-menu button {
+      display: flex; align-items: center; gap: 6px; width: 100%;
+      padding: 6px 12px; background: none; border: none; color: #e0e0e0;
+      font-size: 12px; cursor: pointer; font-family: inherit; text-align: left;
+    }
+    .vis-menu button:hover { background: rgba(242,103,34,0.15); }
+    .vis-menu button .vis-check { width: 14px; text-align: center; }
 
     /* Drag state */
     .dragging { opacity: 0.4 !important; }
@@ -680,6 +924,11 @@ EDIT_SCRIPT = """
     img[data-img-idx]:hover, .img-block-wrap:hover img[data-img-idx] { outline: 2px dashed rgba(242,103,34,0.4); outline-offset: 3px; }
     img[data-img-idx].img-selected { outline: 2px solid #f26722 !important; outline-offset: 3px; }
     .img-block-wrap { overflow: visible; }
+
+    /* Video defaults */
+    video { width: 100%; display: block; border-radius: 8px; max-width: 100%; }
+    .media-block { margin: 12px 0; }
+    .media-placeholder { background: #f0f0f0; border-radius: 8px; padding: 40px 20px; text-align: center; color: #aaa; font-style: italic; cursor: pointer; }
 
     /* Side panel for image device settings */
     #img-panel {
@@ -737,13 +986,14 @@ EDIT_SCRIPT = """
     .img-set { position: relative; width: 100%; }
     .img-set .for-desktop, .img-set .for-tablet, .img-set .for-mobile { width: 100%; border-radius: 8px; }
     .img-set .for-tablet, .img-set .for-mobile { display: none; }
-    @media (min-width: 769px) and (max-width: 1024px) {
+    @media (min-width: 376px) and (max-width: 1024px) {
       .img-set.has-tablet .for-desktop { display: none !important; }
       .img-set.has-tablet .for-tablet { display: block !important; }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 375px) {
       .img-set.has-mobile .for-desktop { display: none !important; }
       .img-set.has-mobile .for-mobile { display: block !important; }
+      .img-set.has-mobile.has-tablet .for-tablet { display: none !important; }
     }
 
     /* ── TOOLBAR ── */
@@ -790,7 +1040,9 @@ EDIT_SCRIPT = """
   `;
   document.head.appendChild(style);
 
-  // ── CREATE TOOLBAR ──
+  // ── CREATE TOOLBAR ── (Bug 3 fix: remove any existing toolbar before creating)
+  var existingTb = document.getElementById('edit-toolbar');
+  if (existingTb) existingTb.remove();
   var tb = document.createElement('div');
   tb.id = 'edit-toolbar';
   tb.innerHTML = `
@@ -822,7 +1074,16 @@ EDIT_SCRIPT = """
     </select>
     <div class="tb-sep"></div>
     <input type="color" data-action="foreColor" value="#111111" title="Text Color">
-    <input type="color" data-action="hiliteColor" value="#ffffff" title="Highlight">
+    <input type="color" data-action="hiliteColor" value="#ffffff" title="Custom Highlight Color">
+    <div class="hl-presets" style="display:inline-flex;gap:2px;margin-left:2px;" title="Quick Highlight">
+      <button class="hl-dot" data-hl="#ffff00" style="background:#ffff00;width:20px;height:20px;border-radius:4px;border:1px solid #555;cursor:pointer;padding:0;" title="Yellow"></button>
+      <button class="hl-dot" data-hl="#90ee90" style="background:#90ee90;width:20px;height:20px;border-radius:4px;border:1px solid #555;cursor:pointer;padding:0;" title="Green"></button>
+      <button class="hl-dot" data-hl="#ffb3ba" style="background:#ffb3ba;width:20px;height:20px;border-radius:4px;border:1px solid #555;cursor:pointer;padding:0;" title="Pink"></button>
+      <button class="hl-dot" data-hl="#87ceeb" style="background:#87ceeb;width:20px;height:20px;border-radius:4px;border:1px solid #555;cursor:pointer;padding:0;" title="Blue"></button>
+      <button class="hl-dot" data-hl="#ffcc80" style="background:#ffcc80;width:20px;height:20px;border-radius:4px;border:1px solid #555;cursor:pointer;padding:0;" title="Orange"></button>
+      <button class="hl-dot" data-hl="#e0e0e0" style="background:#e0e0e0;width:20px;height:20px;border-radius:4px;border:1px solid #555;cursor:pointer;padding:0;" title="Gray"></button>
+      <button class="hl-dot" data-hl="transparent" style="background:repeating-conic-gradient(#999 0% 25%, #fff 0% 50%) 50%/12px 12px;width:20px;height:20px;border-radius:4px;border:1px solid #555;cursor:pointer;padding:0;" title="Remove Highlight"></button>
+    </div>
     <div class="tb-sep"></div>
     <button data-cmd="justifyLeft" title="Align Left"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="1" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="1" y="14" width="8" height="2"/></svg></button>
     <button data-cmd="justifyCenter" title="Center"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2"/><rect x="3" y="6" width="10" height="2"/><rect x="1" y="10" width="14" height="2"/><rect x="4" y="14" width="8" height="2"/></svg></button>
@@ -847,7 +1108,7 @@ EDIT_SCRIPT = """
     isDragging = true;
     tb.querySelector('.tb-drag').style.cursor = 'grabbing';
   }
-  function onDragMove(clientX, clientY) {
+  function onTbDragMove(clientX, clientY) {
     if (!isDragging) return;
     var x = clientX - dragOffX;
     var y = clientY - dragOffY;
@@ -868,10 +1129,12 @@ EDIT_SCRIPT = """
   tb.addEventListener('mousedown', function(e) {
     if (e.target.closest('[data-drag]')) {
       e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
       onDragStart(e.clientX, e.clientY);
     }
   });
-  document.addEventListener('mousemove', function(e) { onDragMove(e.clientX, e.clientY); });
+  document.addEventListener('mousemove', function(e) { onTbDragMove(e.clientX, e.clientY); });
   document.addEventListener('mouseup', onDragEnd);
 
   // Touch drag
@@ -884,7 +1147,7 @@ EDIT_SCRIPT = """
   document.addEventListener('touchmove', function(e) {
     if (isDragging) {
       var t = e.touches[0];
-      onDragMove(t.clientX, t.clientY);
+      onTbDragMove(t.clientX, t.clientY);
       e.preventDefault();
     }
   }, { passive: false });
@@ -914,6 +1177,22 @@ EDIT_SCRIPT = """
   });
 
   // ── BUTTON COMMANDS ──
+  // Highlight preset dots
+  tb.querySelectorAll('.hl-dot').forEach(function(dot) {
+    dot.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      restoreSel();
+      var color = dot.dataset.hl;
+      if (color === 'transparent') {
+        document.execCommand('removeFormat', false, null);
+      } else {
+        document.execCommand('hiliteColor', false, color);
+      }
+      saveSel();
+      snapshotForUndo();
+    });
+  });
+
   tb.addEventListener('click', function(e) {
     var btn = e.target.closest('button[data-cmd]');
     if (btn) {
@@ -949,16 +1228,30 @@ EDIT_SCRIPT = """
     var caseAction = e.target.closest('[data-action="titleCase"],[data-action="uppercase"],[data-action="lowercase"]');
     if (caseAction) {
       restoreSel();
+      var act = caseAction.getAttribute('data-action');
       var sel = window.getSelection();
       if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+        // Use insertText for selected text
         var text = sel.toString();
-        var act = caseAction.getAttribute('data-action');
         var result = text;
         if (act === 'uppercase') result = text.toUpperCase();
         else if (act === 'lowercase') result = text.toLowerCase();
-        else if (act === 'titleCase') result = text.replace(/\\S+/g, function(w) { return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); });
+        else if (act === 'titleCase') result = text.replace(/\S+/g, function(w) { return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); });
         document.execCommand('insertText', false, result);
+      } else if (activeEdit) {
+        // No selection — transform all text in the active element using TreeWalker (preserves HTML structure)
+        var tw = document.createTreeWalker(activeEdit, NodeFilter.SHOW_TEXT);
+        var textNodes = [];
+        while (tw.nextNode()) textNodes.push(tw.currentNode);
+        textNodes.forEach(function(tn) {
+          var t = tn.textContent;
+          if (act === 'uppercase') tn.textContent = t.toUpperCase();
+          else if (act === 'lowercase') tn.textContent = t.toLowerCase();
+          else if (act === 'titleCase') tn.textContent = t.replace(/\S+/g, function(w) { return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(); });
+        });
       }
+      saveSel();
+      snapshotForUndo();
       return;
     }
 
@@ -1160,27 +1453,75 @@ EDIT_SCRIPT = """
 
   function reMarkElements() {
     document.querySelectorAll(BLOCK_SELECTOR).forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
-    document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
+    // Bug 2 fix: mark all images AND videos with data-img-idx (excluding header logo and no-edit)
     var mi = 0;
-    document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mi++); });
+    document.querySelectorAll('img:not(#adv-header-logo img):not([data-no-edit])').forEach(function(img) {
+      img.setAttribute('data-img-idx', mi++);
+    });
+    document.querySelectorAll('video[src]:not([data-no-edit])').forEach(function(vid) {
+      vid.setAttribute('data-img-idx', mi++);
+    });
+    var mIdx = 0;
+    document.querySelectorAll('.placeholder, .sb-img, .media-block').forEach(function(el) { el.setAttribute('data-media-idx', mIdx++); });
     addBlockControls();
   }
 
   // ── MARK ELEMENTS ──
   // Universal block selector — works across all templates (editorial, health-journal, listicle)
-  var BLOCK_SELECTOR = 'h1, h2, h3, p, li, blockquote, .step p, .step-title, .step-card div, .step-pill, .tip, .tip-box, .sb-title, .offer-box h2, .offer-box p, .offer-card h3, .offer-card p, .cta-section h3, .cta-section p, a.cta-bottom, a.cta-btn, a.sb-cta, .cta-badges div, .sb-badges div, .badges span, .byline, .sticky-footer a, .testimonial .quote, .testimonial .attribution, .warning-box, .stat-box .stat-num, .stat-box .stat-label, .comparison-table td, .comparison-table th, .card-body h2, .card-body p, .hero h1, .hero .byline, .top-bar, .pullquote, .highlight';
+  var BLOCK_SELECTOR = 'h1, h2, h3, h4, h5, h6, p, li, blockquote, td, th, dt, dd, figcaption, caption, summary, .orphan-text-wrap, .step p, .step-title, .step-card div, .step-pill, .tip, .tip-box, .sb-title, .offer-box h2, .offer-box p, .offer-card h3, .offer-card p, .cta-section h3, .cta-section p, a.cta-bottom, a.cta-btn, a.sb-cta, .cta-badges div, .sb-badges div, .badges span, .byline, .sticky-footer a, .testimonial .quote, .testimonial .attribution, .warning-box, .stat-box .stat-num, .stat-box .stat-label, .comparison-table td, .comparison-table th, .card-body h2, .card-body p, .hero h1, .hero .byline, .top-bar, .pullquote, .highlight, .adv-bar, .site-header, .faq-block div, .feature-item, .benefit-item, .reason-item, .section-title, .section-text, .intro-text, .conclusion-text, .disclaimer, .footnote';
+
+  // Make ALL text clickable-to-edit, even orphan text nodes not in standard block elements
+  // Instead of restructuring the DOM (which breaks formatting), we intercept clicks on any text
+  document.addEventListener('click', function(e) {
+    // Skip if clicking on already editable, toolbar, panel, controls, or media placeholders
+    if (e.target.closest('[data-editable], #edit-toolbar, #img-panel, .block-controls, script, style')) return;
+    // Skip images and placeholders (they have their own click handlers)
+    if (e.target.closest('img[data-img-idx], video[data-img-idx], .placeholder, .media-block, [data-media-idx], .img-set, .img-block-wrap')) return;
+    // Check if we clicked on or near a text node
+    var el = e.target;
+    // If the element has direct text content and isn't a block we already handle, make it editable
+    if (el.textContent.trim().length > 2 && !el.hasAttribute('data-editable')) {
+      // Don't mark huge container divs — only elements with mostly direct text
+      var directText = '';
+      for (var i = 0; i < el.childNodes.length; i++) {
+        if (el.childNodes[i].nodeType === 3) directText += el.childNodes[i].textContent;
+      }
+      if (directText.trim().length > 2 || /^(EM|STRONG|A|SPAN|B|I|U|SMALL|CITE|MARK|S)$/.test(el.tagName)) {
+        // Temporarily mark as editable
+        el.setAttribute('data-editable', 'dynamic-' + Date.now());
+        e.preventDefault();
+        e.stopPropagation();
+        finishEdit();
+        activeEdit = el;
+        el.contentEditable = 'true';
+        el.style.outline = '2px solid #f26722';
+        el.style.outlineOffset = '3px';
+        el.style.background = 'rgba(242,103,34,0.05)';
+        el.style.minHeight = '1em';
+        el.focus();
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        positionToolbar(el);
+        updateToolbarState();
+      }
+    }
+  }, false);
+
   var editable = document.querySelectorAll(BLOCK_SELECTOR);
   editable.forEach(function(el, i) { el.setAttribute('data-editable', 'text-' + i); });
-  document.querySelectorAll('img').forEach(function(img, i) { img.setAttribute('data-img-idx', i); });
+  document.querySelectorAll('img, video').forEach(function(el, i) { el.setAttribute('data-img-idx', i); });
   var mediaIdx = 0;
-  document.querySelectorAll('.placeholder, .sb-img').forEach(function(el) { el.setAttribute('data-media-idx', mediaIdx++); });
+  document.querySelectorAll('.placeholder, .sb-img, .media-block').forEach(function(el) { el.setAttribute('data-media-idx', mediaIdx++); });
 
   // ── BLOCK CONTROLS (drag + duplicate) ──
   function addBlockControls() {
     // Remove old controls
     document.querySelectorAll('.block-controls').forEach(function(c) { c.remove(); });
     // Get all draggable blocks: editable text, images, img-sets, placeholders
-    var blocks = document.querySelectorAll('[data-editable], img[data-img-idx]:not(#adv-header-logo img), .img-set, .placeholder[data-media-idx]');
+    var blocks = document.querySelectorAll('[data-editable], img[data-img-idx]:not(#adv-header-logo img), .img-set, .placeholder[data-media-idx], .media-block, .sidebar-card > div, .sidebar-card > a, .offer-box, .offer-box > *, .sticky-footer, .sticky-footer > a');
     blocks.forEach(function(block) {
       if (block.closest('#adv-header-logo') || block.closest('#img-panel') || block.closest('#edit-toolbar')) return;
       // For <img> elements: wrap in a div first (img can't have children)
@@ -1203,6 +1544,7 @@ EDIT_SCRIPT = """
       ctrl.innerHTML =
         '<button class="block-ctrl-drag" title="Drag to reorder" draggable="false">⠿</button>' +
         '<button class="block-ctrl-dup" title="Duplicate">⧉</button>' +
+        '<button class="block-ctrl-vis" title="Device visibility">👁</button>' +
         '<button class="block-ctrl-del" title="Delete">🗑</button>';
       target.style.position = 'relative';
       target.insertBefore(ctrl, target.firstChild);
@@ -1244,6 +1586,13 @@ EDIT_SCRIPT = """
 
   function startDrag(el, e) {
     dragEl = el;
+    // Capture computed styles before moving to preserve formatting
+    if (!dragEl.getAttribute('data-original-style')) {
+      var cs = window.getComputedStyle(dragEl);
+      var preserve = ['font-size','font-weight','font-family','line-height','color','text-align','margin','padding'];
+      var captured = preserve.map(function(p) { return p + ':' + cs.getPropertyValue(p); }).join(';');
+      dragEl.setAttribute('data-original-style', captured);
+    }
     dragEl.classList.add('dragging');
     document.addEventListener('mousemove', onDragMove);
   }
@@ -1283,6 +1632,17 @@ EDIT_SCRIPT = """
     if (dragEl && dropIndicator.parentNode) {
       dropIndicator.parentNode.insertBefore(dragEl, dropIndicator);
       dragEl.classList.remove('dragging');
+      // Apply preserved styles to prevent format changes from new CSS context
+      var origStyle = dragEl.getAttribute('data-original-style');
+      if (origStyle) {
+        origStyle.split(';').forEach(function(s) {
+          var parts = s.split(':');
+          if (parts.length === 2 && parts[1].trim()) {
+            dragEl.style.setProperty(parts[0].trim(), parts[1].trim());
+          }
+        });
+        dragEl.removeAttribute('data-original-style');
+      }
       snapshotForUndo();
     }
     dropIndicator.remove();
@@ -1313,12 +1673,51 @@ EDIT_SCRIPT = """
     if (!delBtn) return;
     e.preventDefault();
     e.stopPropagation();
-    var block = delBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx], .img-block-wrap');
+    var block = delBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx], video[data-img-idx], .img-block-wrap, .media-block');
     if (!block) return;
     block.remove();
     closePanel();
     snapshotForUndo();
     reMarkElements();
+  }, true);
+
+  // ── DEVICE VISIBILITY TOGGLE ──
+  document.addEventListener('click', function(e) {
+    var visBtn = e.target.closest('.block-ctrl-vis');
+    if (!visBtn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    // Close any existing vis-menu
+    document.querySelectorAll('.vis-menu').forEach(function(m) { m.remove(); });
+    var block = visBtn.closest('[data-editable], .img-set, .placeholder, img[data-img-idx], video[data-img-idx], .img-block-wrap, .media-block');
+    if (!block) return;
+    var menu = document.createElement('div');
+    menu.className = 'vis-menu';
+    var devices = [
+      { key: 'desktop', icon: '🖥', label: 'Desktop' },
+      { key: 'tablet', icon: '📱', label: 'Tablet' },
+      { key: 'mobile', icon: '📲', label: 'Mobile' },
+    ];
+    devices.forEach(function(d) {
+      var isHidden = block.classList.contains('hide-' + d.key);
+      var btn = document.createElement('button');
+      btn.innerHTML = '<span class="vis-check">' + (isHidden ? '✕' : '✓') + '</span> ' + d.icon + ' ' + d.label;
+      btn.style.color = isHidden ? '#ef4444' : '#22c55e';
+      btn.addEventListener('click', function(ev) {
+        ev.stopPropagation();
+        block.classList.toggle('hide-' + d.key);
+        snapshotForUndo();
+        menu.remove();
+      });
+      menu.appendChild(btn);
+    });
+    visBtn.parentNode.appendChild(menu);
+    // Close menu on outside click
+    setTimeout(function() {
+      document.addEventListener('click', function closeMenu(ev) {
+        if (!ev.target.closest('.vis-menu')) { menu.remove(); document.removeEventListener('click', closeMenu); }
+      });
+    }, 10);
   }, true);
 
   // ── IMAGE SIDE PANEL ──
@@ -1338,19 +1737,23 @@ EDIT_SCRIPT = """
 
   function openPanel(imgIdx) {
     currentImgIdx = imgIdx;
-    var imgs = document.querySelectorAll('img[data-img-idx]');
+    var imgs = document.querySelectorAll('img[data-img-idx], video[data-img-idx]');
     var mainImg = imgs[imgIdx];
     if (!mainImg) return;
 
-    // Highlight selected image
+    // Highlight selected image/video
     document.querySelectorAll('.img-selected').forEach(function(el) { el.classList.remove('img-selected'); });
     mainImg.classList.add('img-selected');
+
+    var isVid = mainImg.tagName.toLowerCase() === 'video';
 
     // Find img-set if it exists
     var setEl = mainImg.closest('.img-set');
     var desktopSrc = mainImg.src;
-    var tabletSrc = setEl ? (setEl.querySelector('.for-tablet') || {}).src || '' : '';
-    var mobileSrc = setEl ? (setEl.querySelector('.for-mobile') || {}).src || '' : '';
+    var tabletEl = setEl ? setEl.querySelector('.for-tablet') : null;
+    var mobileEl = setEl ? setEl.querySelector('.for-mobile') : null;
+    var tabletSrc = tabletEl ? tabletEl.src || '' : '';
+    var mobileSrc = mobileEl ? mobileEl.src || '' : '';
 
     var slots = document.getElementById('panel-slots');
     slots.innerHTML = '';
@@ -1371,12 +1774,18 @@ EDIT_SCRIPT = """
       var badgeClass = d.key === 'desktop' ? 'badge-custom' : (hasCustom ? 'badge-custom' : 'badge-default');
       var badgeText = d.key === 'desktop' ? 'main' : (hasCustom ? 'custom' : 'using desktop');
 
+      var removeBtn = '';
+      if (!d.required && hasCustom) {
+        removeBtn = '<button class="remove-btn visible" data-remove="' + d.key + '" title="Remove custom image">✕</button>';
+      } else if (d.required && d.src) {
+        removeBtn = '<button class="remove-btn visible" data-remove-main="true" title="Remove image entirely" style="background:rgba(0,0,0,.7);color:#ef4444;border:1px solid rgba(239,68,68,.3);border-radius:50%;width:22px;height:22px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:absolute;top:4px;right:4px;line-height:1;">✕</button>';
+      }
       slot.innerHTML =
         '<div class="device-label">' + d.icon + ' ' + d.label +
         ' <span class="badge ' + badgeClass + '">' + badgeText + '</span></div>' +
         '<div class="device-thumb">' +
         '<img src="' + displaySrc + '">' +
-        ((!d.required && hasCustom) ? '<button class="remove-btn visible" data-remove="' + d.key + '" title="Remove custom image">✕</button>' : '') +
+        removeBtn +
         '</div>';
 
       slot.addEventListener('click', function(ev) {
@@ -1395,6 +1804,42 @@ EDIT_SCRIPT = """
         removeDeviceImage(imgIdx, device);
       });
     });
+    // Remove main image handler — converts back to placeholder
+    slots.querySelectorAll('[data-remove-main]').forEach(function(btn) {
+      btn.addEventListener('click', function(ev) {
+        ev.stopPropagation();
+        var allMedia = document.querySelectorAll('img[data-img-idx], video[data-img-idx]');
+        var mainImg = allMedia[imgIdx];
+        if (!mainImg) return;
+        var setEl = mainImg.closest('.img-set');
+        var target = setEl || mainImg.closest('.img-block-wrap') || mainImg;
+        var ph = document.createElement('div');
+        ph.className = 'placeholder';
+        ph.style.cssText = 'background:#f0f0f0;border-radius:8px;padding:40px 20px;text-align:center;color:#aaa;font-style:italic;margin:12px 0;cursor:pointer;';
+        ph.textContent = '📷 Click to add image';
+        target.parentNode.insertBefore(ph, target);
+        target.remove();
+        closePanel();
+        snapshotForUndo();
+        reMarkElements();
+      });
+    });
+
+    // Loop toggle for video elements
+    if (isVid) {
+      var loopWrap = document.createElement('div');
+      loopWrap.style.cssText = 'padding:14px 18px;border-top:1px solid #1f1f23;';
+      var loopChecked = mainImg.getAttribute('data-loop') !== 'false';
+      loopWrap.innerHTML = '<label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#e0e0e0;cursor:pointer;"><input type="checkbox" id="video-loop-toggle"' + (loopChecked ? ' checked' : '') + '> Loop video</label>';
+      slots.appendChild(loopWrap);
+      document.getElementById('video-loop-toggle').addEventListener('change', function() {
+        var vid = document.querySelectorAll('img[data-img-idx], video[data-img-idx]')[imgIdx];
+        if (vid && vid.tagName.toLowerCase() === 'video') {
+          vid.loop = this.checked;
+          vid.setAttribute('data-loop', this.checked ? 'true' : 'false');
+        }
+      });
+    }
 
     panel.classList.add('open');
   }
@@ -1429,6 +1874,8 @@ EDIT_SCRIPT = """
 
   document.addEventListener('click', function(e) {
     if (e.target.closest('#edit-toolbar')) return; // don't interfere with toolbar clicks
+    // Bug 1 fix: Block controls must never trigger text editor
+    if (e.target.closest('.block-controls') || e.target.closest('.block-controls button')) return;
     var el = e.target.closest('[data-editable]');
     if (el) {
       e.preventDefault();
@@ -1451,10 +1898,8 @@ EDIT_SCRIPT = """
       updateToolbarState();
       return;
     }
-    // ── Block controls take priority ──
-    if (e.target.closest('.block-controls')) return;
-    // ── Image click → open side panel ──
-    var img = e.target.closest('img[data-img-idx]');
+    // ── Image/Video click → open side panel ──
+    var img = e.target.closest('img[data-img-idx], video[data-img-idx]');
     if (img && !img.closest('#adv-header-logo') && !img.closest('#img-panel')) {
       e.preventDefault();
       openPanel(parseInt(img.getAttribute('data-img-idx')));
@@ -1467,6 +1912,16 @@ EDIT_SCRIPT = """
       e.preventDefault();
       window.parent.postMessage({ type: 'edit-image', src: '', alt: '', index: parseInt(media.getAttribute('data-media-idx')), kind: 'placeholder' }, '*');
       return;
+    }
+    // Also handle clicks directly on .media-placeholder inside .media-block
+    var mediaPh = e.target.closest('.media-placeholder');
+    if (mediaPh) {
+      var mb = mediaPh.closest('.media-block');
+      if (mb && mb.hasAttribute('data-media-idx')) {
+        e.preventDefault();
+        window.parent.postMessage({ type: 'edit-image', src: '', alt: '', index: parseInt(mb.getAttribute('data-media-idx')), kind: 'placeholder' }, '*');
+        return;
+      }
     }
     // Click outside → finish
     finishEdit();
@@ -1524,6 +1979,12 @@ EDIT_SCRIPT = """
         newEl.className = 'placeholder';
         newEl.style.cssText = 'background:#f0f0f0;border-radius:8px;padding:40px 20px;text-align:center;color:#aaa;font-style:italic;margin:12px 0;cursor:pointer;';
         newEl.textContent = '📷 Click to add image';
+      } else if (t === 'media') {
+        newEl = document.createElement('div');
+        newEl.className = 'media-block';
+        newEl.setAttribute('data-media-type', 'image');
+        newEl.style.cssText = 'margin:12px 0;cursor:pointer;';
+        newEl.innerHTML = '<div class="media-placeholder" style="background:#f0f0f0;border-radius:8px;padding:40px 20px;text-align:center;color:#aaa;font-style:italic;">🖼 Click to add image or video</div>';
       } else if (t === 'heading') {
         newEl = document.createElement('h2');
         newEl.style.cssText = 'font-size:24px;font-weight:800;margin:20px 0 10px;color:#111;';
@@ -1598,39 +2059,101 @@ EDIT_SCRIPT = """
       document.querySelectorAll('.drop-indicator').forEach(function(c) { c.remove(); });
       document.querySelectorAll('.dragging').forEach(function(c) { c.classList.remove('dragging'); });
       window.parent.postMessage({ type: 'current-html', html: document.documentElement.outerHTML }, '*');
-      // Re-add toolbar + re-wrap images
-      document.body.appendChild(tb);
+      // Re-add toolbar + re-wrap images (Bug 3 fix: guard against duplicate)
+      if (!document.getElementById('edit-toolbar')) document.body.appendChild(tb);
       reMarkElements();
     }
     if (e.data && e.data.type === 'update-image') {
+      // Helper: detect video URL by extension or path
+      function isVideoUrl(url) {
+        return /\.(mp4|mov|webm|ogg)(\?|$)/i.test(url) || url.includes('/video/');
+      }
+      // Helper: create img or video element with given class/style
+      function createMediaEl(url, extraClass, extraStyle) {
+        if (isVideoUrl(url)) {
+          var vid = document.createElement('video');
+          vid.src = url;
+          vid.autoplay = true;
+          vid.muted = true;
+          vid.loop = true;
+          vid.playsInline = true;
+          vid.setAttribute('data-loop', 'true');
+          vid.removeAttribute('controls');
+          var vs = 'width:100%;border-radius:8px;display:block;';
+          if (extraStyle) vs += extraStyle;
+          vid.style.cssText = vs;
+          if (extraClass) vid.className = extraClass;
+          vid.play().catch(function(){});
+          return vid;
+        } else {
+          var imgEl = document.createElement('img');
+          imgEl.src = url;
+          var is2 = 'width:100%;border-radius:8px;margin:8px 0';
+          if (extraStyle) is2 += extraStyle;
+          imgEl.style.cssText = is2;
+          if (extraClass) imgEl.className = extraClass;
+          return imgEl;
+        }
+      }
       if (e.data.kind === 'placeholder') {
         var placeholders = document.querySelectorAll('[data-media-idx]');
         var ph = placeholders[e.data.index];
         if (ph) {
-          var img = document.createElement('img');
-          img.src = e.data.value;
-          img.alt = e.data.alt || '';
-          img.style.cssText = 'width:100%;border-radius:8px;margin:8px 0';
-          img.setAttribute('data-img-idx', document.querySelectorAll('img').length);
-          ph.replaceWith(img);
+          // Handle .media-block wrapper
+          var mediaBlock = ph.classList.contains('media-block') ? ph : ph.closest('.media-block');
+          var newMediaEl = createMediaEl(e.data.value, '', '');
+          if (newMediaEl.tagName.toLowerCase() !== 'video') {
+            newMediaEl.alt = e.data.alt || '';
+            newMediaEl.setAttribute('data-img-idx', document.querySelectorAll('img').length);
+          }
+          if (mediaBlock) {
+            mediaBlock.parentNode.insertBefore(newMediaEl, mediaBlock);
+            mediaBlock.remove();
+          } else {
+            ph.replaceWith(newMediaEl);
+          }
           reMarkElements();
         }
       } else {
         var device = e.data.device || 'all';
-        var imgs = document.querySelectorAll('img[data-img-idx]');
+        // Support both img and video with data-img-idx
+        var imgs = document.querySelectorAll('img[data-img-idx], video[data-img-idx]');
         var targetImg = imgs[e.data.index];
         if (!targetImg) return;
 
         if (device === 'all' || device === 'desktop') {
-          // Replace/set the main (desktop) image
-          targetImg.src = e.data.value;
+          if (isVideoUrl(e.data.value)) {
+            if (targetImg.tagName.toLowerCase() === 'video') {
+              targetImg.src = e.data.value;
+              targetImg.play().catch(function(){});
+            } else {
+              // Replace img with video
+              var newVid = createMediaEl(e.data.value, targetImg.className, '');
+              newVid.setAttribute('data-img-idx', targetImg.getAttribute('data-img-idx'));
+              targetImg.parentNode.insertBefore(newVid, targetImg);
+              targetImg.remove();
+              targetImg = newVid;
+            }
+          } else {
+            if (targetImg.tagName.toLowerCase() === 'img') {
+              targetImg.src = e.data.value;
+            } else {
+              // Replace video with img
+              var newImg2 = createMediaEl(e.data.value, targetImg.className, '');
+              newImg2.alt = e.data.alt || '';
+              newImg2.setAttribute('data-img-idx', targetImg.getAttribute('data-img-idx'));
+              targetImg.parentNode.insertBefore(newImg2, targetImg);
+              targetImg.remove();
+              targetImg = newImg2;
+            }
+          }
         }
         if (device === 'tablet' || device === 'mobile') {
           // Find or create responsive set
           var wrap = targetImg.closest('.img-wrap');
           var setEl = targetImg.closest('.img-set');
           if (!setEl) {
-            // Convert single img to img-set
+            // Convert single element to img-set
             setEl = document.createElement('div');
             setEl.className = 'img-set';
             targetImg.classList.add('for-desktop');
@@ -1640,13 +2163,27 @@ EDIT_SCRIPT = """
           var cls = 'for-' + device;
           var existing = setEl.querySelector('.' + cls);
           if (existing) {
-            existing.src = e.data.value;
+            if (isVideoUrl(e.data.value)) {
+              if (existing.tagName.toLowerCase() === 'video') {
+                existing.src = e.data.value;
+                existing.play().catch(function(){});
+              } else {
+                var devVid = createMediaEl(e.data.value, cls, '');
+                existing.parentNode.insertBefore(devVid, existing);
+                existing.remove();
+              }
+            } else {
+              if (existing.tagName.toLowerCase() === 'img') {
+                existing.src = e.data.value;
+              } else {
+                var devImg2 = createMediaEl(e.data.value, cls, '');
+                existing.parentNode.insertBefore(devImg2, existing);
+                existing.remove();
+              }
+            }
           } else {
-            var devImg = document.createElement('img');
-            devImg.src = e.data.value;
-            devImg.className = cls;
-            devImg.style.cssText = 'width:100%;border-radius:8px;';
-            setEl.appendChild(devImg);
+            var devEl = createMediaEl(e.data.value, cls, 'width:100%;border-radius:8px;');
+            setEl.appendChild(devEl);
           }
           setEl.classList.add('has-' + device);
           // Rebuild overlay to show ✓
@@ -1663,6 +2200,17 @@ EDIT_SCRIPT = """
       }
     }
   });
+
+  // ── ENFORCE VIDEO DEFAULTS ON EXISTING VIDEOS ──
+  document.querySelectorAll('video').forEach(function(v) {
+    v.autoplay = true;
+    v.muted = true;
+    v.loop = true;
+    v.playsInline = true;
+    v.removeAttribute('controls');
+    if (!v.paused) return;
+    v.play().catch(function(){});
+  });
 })();
 </script>
 """
@@ -1671,8 +2219,8 @@ from fastapi.responses import HTMLResponse
 
 HEADER_LOGO_URL = "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Design_sans_titre_15.png?v=1774625309"
 FOOTER_HTML = f'''<footer id="adv-footer" style="background:#f5f5f5;border-top:1px solid #e5e5e5;padding:30px 20px;text-align:center;margin-top:40px;">
-  <img src="{HEADER_LOGO_URL}" alt="Logo" style="height:36px;max-width:180px;object-fit:contain;margin-bottom:12px;opacity:0.7;">
-  <p style="font-size:10px;color:#999;line-height:1.6;max-width:700px;margin:0 auto;">&copy; 2026 All rights reserved. All content, images, and materials on this website are protected by international copyright and intellectual property laws. Unauthorized reproduction, distribution, or modification of any materials is strictly prohibited. By accessing and using this website, you agree to abide by all applicable terms, conditions, and policies. The company reserves the right to update or modify its content, policies, and terms at any time without prior notice.</p>
+  <img src="{HEADER_LOGO_URL}" alt="Logo" style="height:36px;max-width:180px;object-fit:contain;margin-bottom:12px;">
+  <p style="font-size:10px;color:#999;line-height:1.6;max-width:700px;margin:0 auto;">&copy; 2026 All rights reserved. All content, images, and materials on this website are protected by international copyright and intellectual property laws. Unauthorized reproduction, distribution, or modification of any materials is strictly prohibited.</p>
 </footer>'''
 HEADER_LOGO_HTML = f'''<div id="adv-disclosure" style="text-align:center;padding:3px 0;background:#fafafa;border-bottom:1px solid #f0f0f0;font-size:9px;color:#c0c0c0;letter-spacing:0.03em;font-family:system-ui,sans-serif;">This is an advertorial</div>
 <div id="adv-header-logo" style="text-align:center;padding:14px 0 10px;background:#fff;border-bottom:1px solid #eee;">
@@ -1718,6 +2266,89 @@ def _inject_header_logo(html: str) -> str:
         return html[:pos] + "\n" + HEADER_LOGO_HTML + "\n" + html[pos:]
     return HEADER_LOGO_HTML + "\n" + html
 
+def _enforce_video_attrs(html: str) -> str:
+    """Ensure all <video> tags have autoplay/muted/loop/playsinline and no controls."""
+    import re as _re2
+    def fix_video(m):
+        tag = m.group(0)
+        # Strip controls
+        tag = _re2.sub(r'\s*controls\b', '', tag)
+        # Ensure required attrs
+        for attr in ['autoplay', 'muted', 'loop', 'playsinline']:
+            if attr not in tag:
+                tag = tag.replace('<video', '<video ' + attr, 1)
+        return tag
+    return _re2.sub(r'<video[^>]*>', fix_video, html)
+
+
+def _fix_broken_paragraphs(html: str) -> str:
+    """Fix broken HTML: text between empty <p> tags → text inside <p> tags.
+    Uses BeautifulSoup for reliable DOM manipulation.
+    """
+    from bs4 import BeautifulSoup, NavigableString, Tag
+    
+    soup = BeautifulSoup(html, 'html.parser')
+    INLINE_TAGS = {'em', 'strong', 'a', 'span', 'b', 'i', 'u', 'br', 'sub', 'sup', 'mark', 's', 'small', 'cite', 'code', 'abbr'}
+    
+    def is_empty_p(el):
+        return isinstance(el, Tag) and el.name == 'p' and not el.get_text(strip=True) and not el.find(['img', 'video', 'iframe', 'svg'])
+    
+    # Process each container that may have orphan text
+    containers = soup.find_all(['div', 'section', 'article', 'main', 'body'])
+    
+    for container in containers:
+        children = list(container.children)
+        i = 0
+        while i < len(children):
+            child = children[i]
+            
+            # Find empty <p> tags
+            if is_empty_p(child):
+                # Collect following content (text nodes + inline elements)
+                content_nodes = []
+                j = i + 1
+                while j < len(children):
+                    nxt = children[j]
+                    if isinstance(nxt, NavigableString):
+                        text = str(nxt).strip()
+                        if text:
+                            content_nodes.append(nxt)
+                            j += 1
+                            continue
+                        else:
+                            j += 1
+                            continue
+                    if isinstance(nxt, Tag):
+                        if nxt.name in INLINE_TAGS:
+                            content_nodes.append(nxt)
+                            j += 1
+                            continue
+                        # Another empty <p> = potential paragraph boundary
+                        if is_empty_p(nxt):
+                            break
+                        # Block element = stop
+                        break
+                    j += 1
+                
+                if content_nodes:
+                    # Move content into this <p>
+                    for node in content_nodes:
+                        node.extract()
+                        child.append(node)
+                    # Remove the following empty <p> spacer if it exists
+                    next_sib = child.next_sibling
+                    while next_sib and isinstance(next_sib, NavigableString) and not next_sib.strip():
+                        next_sib = next_sib.next_sibling
+                    if next_sib and is_empty_p(next_sib):
+                        next_sib.extract()
+                    # Refresh children list
+                    children = list(container.children)
+                    continue  # Don't increment i — reprocess
+            i += 1
+    
+    return str(soup)
+
+
 @app.get("/pipeline/{plid}/editable", response_class=HTMLResponse)
 async def editable_preview(plid: str):
     """Serve the published HTML with edit script injected — avoids cross-origin iframe issues."""
@@ -1730,7 +2361,7 @@ async def editable_preview(plid: str):
     html = htmls[0].read_text(encoding="utf-8")
     # Prevent horizontal scroll on mobile
     if 'overflow-x' not in html[:3000]:
-        html = html.replace('</style>', '\nhtml,body{overflow-x:hidden;max-width:100vw}\nimg{max-width:100%;height:auto}\ntable{max-width:100%;display:block;overflow-x:auto}\n.stat-row{overflow-x:auto}\n</style>', 1)
+        html = html.replace('</style>', '\nbody{overflow-x:hidden;max-width:100vw}\nimg{max-width:100%;height:auto}\ntable{max-width:100%;display:block;overflow-x:auto}\n.stat-row{overflow-x:auto}\n</style>', 1)
     # Inject avatars on testimonials if not already present
     if 'randomuser.me/api/portraits' not in html:
         html = _inject_avatars(html)
@@ -1738,6 +2369,8 @@ async def editable_preview(plid: str):
     is_import = pipelines.get(plid, {}).get("config", {}).get("source") == "html-import"
     if not is_import:
         html = _inject_header_logo(html)
+    # Fix broken paragraphs server-side (text between empty <p> tags → text inside <p> tags)
+    html = _fix_broken_paragraphs(html)
     # Inject edit script before </body>
     if "</body>" in html:
         html = html.replace("</body>", EDIT_SCRIPT + "\n</body>")
@@ -1746,18 +2379,68 @@ async def editable_preview(plid: str):
     return HTMLResponse(content=html)
 
 # ── SYSTEM ──
+BUILTIN_TEMPLATES = {
+    "editorial": {"name": "Editorial", "icon": "📰", "description": "Blog-style article with sticky sidebar. Classic advertorial look.", "builtin": True},
+    "health-journal": {"name": "Health Journal", "icon": "🏥", "description": "Medical/wellness style. Clean, no sidebar, cream tones.", "builtin": True},
+    "listicle": {"name": "Listicle", "icon": "📋", "description": "Numbered cards, modern & airy. '5 reasons why' angles.", "builtin": True},
+    "news-report": {"name": "News Report", "icon": "🗞️", "description": "Investigation-style with view counter, urgency, authority feel.", "builtin": True},
+    "founder-letter": {"name": "Founder Letter", "icon": "✉️", "description": "Personal letter from founder. Intimate, handwritten feel.", "builtin": True},
+    "personal-story": {"name": "Personal Story", "icon": "📖", "description": "First-person narrative. Magazine editorial layout.", "builtin": True},
+    "medical-authority": {"name": "Medical Authority", "icon": "⚕️", "description": "Clinical authority. Trust badges, study citations, doctor profile.", "builtin": True},
+    "urgency-sale": {"name": "Urgency Sale", "icon": "🔥", "description": "Flash sale with countdown, stock bar, aggressive CTAs.", "builtin": True},
+}
+
+@app.on_event("startup")
+async def _seed_builtin_template_metadata():
+    """Create metadata JSON for built-in templates if they don't exist yet."""
+    tpl_dir = Path("data/custom_templates")
+    tpl_dir.mkdir(parents=True, exist_ok=True)
+    for tid, meta in BUILTIN_TEMPLATES.items():
+        meta_file = tpl_dir / f"{tid}.json"
+        if not meta_file.exists():
+            data = {"id": tid, **meta}
+            meta_file.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+            logger.info(f"Seeded builtin template metadata: {tid}")
+
 @app.get("/templates")
 async def list_templates():
-    from agents.templates import get_template_list
-    templates = get_template_list()
-    # Add custom imported templates
+    """Return all templates from JSON metadata files (builtins + custom), excluding hidden ones."""
     tpl_dir = Path("data/custom_templates")
-    if tpl_dir.exists():
-        for meta_file in sorted(tpl_dir.glob("*.json")):
+    tpl_dir.mkdir(parents=True, exist_ok=True)
+
+    # Collect all templates from JSON files
+    templates = []
+    seen_ids = set()
+
+    # First, load builtins in defined order
+    for tid in BUILTIN_TEMPLATES:
+        meta_file = tpl_dir / f"{tid}.json"
+        if meta_file.exists():
             try:
                 meta = json.loads(meta_file.read_text())
+                if meta.get("hidden"):
+                    continue
+                meta.setdefault("id", tid)
                 templates.append(meta)
-            except: pass
+                seen_ids.add(tid)
+            except Exception as e:
+                logger.warning(f"Failed to load builtin template metadata {tid}: {e}")
+
+    # Then load custom templates
+    for meta_file in sorted(tpl_dir.glob("*.json")):
+        tid = meta_file.stem
+        if tid in seen_ids:
+            continue
+        try:
+            meta = json.loads(meta_file.read_text())
+            if meta.get("hidden"):
+                continue
+            meta.setdefault("id", tid)
+            templates.append(meta)
+            seen_ids.add(tid)
+        except Exception as e:
+            logger.warning(f"Failed to load template metadata {meta_file}: {e}")
+
     return {"templates": templates}
 
 # ── CUSTOM TEMPLATES ──
@@ -1765,6 +2448,453 @@ class ImportTemplateReq(BaseModel):
     html: str
     name: str = ""
     description: str = ""
+
+class GenerateTemplateReq(BaseModel):
+    url: str
+    product_id: str = "seese-pro-v9"
+
+_template_gen_tasks: dict = {}  # task_id -> {"status": "running"|"completed"|"failed", "result": {...}, "error": ""}
+_TEMPLATE_TASKS_FILE = Path("data/template_gen_tasks.json")
+
+def _save_template_tasks():
+    try:
+        _TEMPLATE_TASKS_FILE.write_text(json.dumps(_template_gen_tasks, indent=2))
+    except: pass
+
+def _load_template_tasks():
+    global _template_gen_tasks
+    if _TEMPLATE_TASKS_FILE.exists():
+        try:
+            _template_gen_tasks = json.loads(_TEMPLATE_TASKS_FILE.read_text())
+            # Mark any "running" tasks from before restart as failed
+            for tid, t in _template_gen_tasks.items():
+                if t.get("status") == "running":
+                    t["status"] = "failed"
+                    t["error"] = "Server restarted during generation"
+        except: pass
+
+_load_template_tasks()
+
+@app.post("/templates/generate-from-url")
+async def generate_template_from_url(req: GenerateTemplateReq, background_tasks: BackgroundTasks):
+    """Start async template generation — returns task_id immediately, poll /templates/generate-status/{task_id}."""
+    import uuid as _uuid
+    task_id = _uuid.uuid4().hex[:8]
+    _template_gen_tasks[task_id] = {"status": "running", "result": None, "error": "", "url": req.url, "started_at": datetime.utcnow().isoformat()}
+    _save_template_tasks()
+    background_tasks.add_task(_generate_template_bg, task_id, req.url, req.product_id)
+    return {"task_id": task_id, "status": "running"}
+
+@app.get("/templates/generate-tasks")
+async def template_gen_list():
+    """List all template generation tasks."""
+    return list(_template_gen_tasks.values())
+
+@app.get("/templates/generate-status/{task_id}")
+async def template_gen_status(task_id: str):
+    """Poll template generation status."""
+    task = _template_gen_tasks.get(task_id)
+    if not task:
+        raise HTTPException(404, "Task not found")
+    return task
+
+async def _generate_template_bg(task_id: str, url: str, product_id: str):
+    """
+    Clone structurel : garde le HTML/CSS source intact, remplace uniquement le contenu par {{PLACEHOLDERS}}.
+    Ne demande JAMAIS au LLM de réécrire le HTML — le LLM mappe seulement les éléments.
+    """
+    from bs4 import BeautifulSoup, NavigableString, Tag
+    from urllib.parse import urlparse
+    import uuid, re as _re, json as _json
+
+    def _smart_truncate(text: str, limit: int = 40000) -> str:
+        if len(text) <= limit:
+            return text
+        cut = text.rfind('</section>', 0, limit)
+        if cut == -1:
+            cut = text.rfind('</div>', 0, limit)
+        if cut == -1:
+            cut = limit
+        return text[:cut + 10]
+
+    def _extract_google_fonts(html: str) -> list:
+        fonts = _re.findall(r'family=([A-Za-z+]+)', html)
+        return list(dict.fromkeys([f.replace('+', ' ') for f in fonts]))[:4]
+
+    def _extract_colors(html: str) -> list:
+        colors = _re.findall(r'(?:background|color|background-color)\s*:\s*(#[0-9a-fA-F]{3,6})', html)
+        return list(dict.fromkeys(colors))[:8]
+
+    try:
+        # 1. FETCH avec retry
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+        }
+        html_content = None
+        for attempt in range(3):
+            try:
+                async with httpx.AsyncClient(timeout=30, follow_redirects=True) as client:
+                    resp = await client.get(url, headers=headers)
+                    if resp.status_code == 200:
+                        html_content = resp.text
+                        break
+                    logger.warning(f"[template-clone] Fetch attempt {attempt+1} status {resp.status_code}")
+            except Exception as e:
+                logger.warning(f"[template-clone] Fetch attempt {attempt+1} failed: {e}")
+            if attempt < 2:
+                await asyncio.sleep(2 ** attempt)
+
+        if not html_content:
+            raise Exception(f"Failed to fetch URL after 3 attempts: {url}")
+
+        # Check if JS-rendered (low visible word count) → fallback Playwright
+        soup_check = BeautifulSoup(html_content, 'html.parser')
+        for tag in soup_check.find_all(['script', 'noscript', 'iframe', 'svg', 'link']):
+            tag.decompose()
+        quick_word_count = len(soup_check.get_text(separator=' ').split())
+
+        if quick_word_count < 200:
+            logger.info(f"[template-clone] Low word count ({quick_word_count}) — trying Playwright for JS-rendered page")
+            try:
+                from playwright.async_api import async_playwright
+                async with async_playwright() as pw:
+                    browser = await pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+                    page = await browser.new_page()
+                    await page.goto(url, wait_until='networkidle', timeout=30000)
+                    await page.wait_for_timeout(2000)
+                    html_content = await page.content()
+                    await browser.close()
+                logger.info(f"[template-clone] Playwright fetch succeeded — {len(html_content)} chars")
+            except Exception as e:
+                logger.warning(f"[template-clone] Playwright fallback failed: {e}. Using original content.")
+
+        fonts = _extract_google_fonts(html_content)
+        colors = _extract_colors(html_content)
+
+        # 2. NETTOYAGE léger pour envoi au LLM (analyse)
+        soup_analyze = BeautifulSoup(html_content, 'html.parser')
+        for tag in soup_analyze.find_all(['script', 'noscript', 'iframe', 'svg', 'link']):
+            tag.decompose()
+        visible_text = soup_analyze.get_text(separator=' ')
+        word_count = len(visible_text.split())
+        if word_count < 200:
+            logger.warning(f"[template-clone] Low word count ({word_count}) even after Playwright — page may be heavily dynamic.")
+
+        # Extract body-only content for LLM — strip head + nav/aside boilerplate
+        body_for_llm = soup_analyze.find('body')
+        if body_for_llm:
+            # Remove nav, aside, header (Shopify boilerplate)
+            for tag in body_for_llm.find_all(['aside', 'nav', 'header']):
+                tag.decompose()
+            for tag in body_for_llm.find_all(class_=_re.compile(r'(megamenu|cart-popup|wlsn|breadcrumb|cookie)', _re.I)):
+                tag.decompose()
+            body_str = str(body_for_llm)
+        else:
+            body_str = str(soup_analyze)
+        cleaned_html = _smart_truncate(body_str, 35000)
+
+        # Detect if page uses Replo/data-rid pattern
+        uses_replo = bool(_re.search(r'data-rid="[0-9a-f-]{10,}"', html_content))
+        uses_alchemy = 'alchemy-rte' in html_content
+
+        # 3. LLM — CARTOGRAPHIE UNIQUEMENT
+        replo_note = ""
+        if uses_replo or uses_alchemy:
+            replo_note = """
+IMPORTANT: This page uses Replo/Alchemy builder. Elements have data-rid attributes with UUIDs.
+Use [data-rid="exact-uuid"] selectors for precise targeting.
+Text content is typically inside: [data-rid="..."] .alchemy-rte span p
+or directly: [data-rid="..."] p
+Images are in: [data-rid="..."] img
+Links: [data-rid="..."] a
+
+Example selectors for Replo pages:
+- [data-rid="ae4728f5-5d29-4831-82ad-90c7fd0388bb"] for h1 heading
+- [data-rid="35b8d7e7-e483-449e-a91a-274eddd209db"] p for subtitle
+- [data-rid="9c65d3d0-ac98-4887-a125-7e22590da78f"] for CTA link (use href attribute)
+"""
+
+        mapping_prompt = f"""You are an expert at analyzing advertorial HTML structure.
+
+Your task: analyze the HTML and return a JSON mapping of CSS selectors to placeholder names.
+DO NOT rewrite the HTML. ONLY provide the mapping.
+{replo_note}
+Rules:
+- Use CSS selectors that uniquely identify each content element
+- For Replo pages: use [data-rid="uuid"] selectors — they are unique and reliable
+- For standard pages: use semantic selectors (h1, article p:nth-of-type(1), .class-name)
+- Map ALL text content, images, links that are variable/product-specific
+- Map EVERY paragraph in the body text — be exhaustive for BODY_PARAGRAPH_1..10
+- Keep structural/decorative elements unmapped
+
+Available placeholder names:
+- HEADLINE (main h1)
+- SUBHEADLINE (subtitle/deck)
+- BADGE_TEXT (labels like "ADVERTORIAL", "SPECIAL REPORT")
+- AUTHOR_NAME, AUTHOR_TITLE
+- SITE_NAME, LOGO_URL
+- BODY_PARAGRAPH_1 through BODY_PARAGRAPH_10 (ALL body paragraphs in order — be exhaustive)
+- H2_SECTION_1 through H2_SECTION_6 (all h2/h3 headings in order)
+- HERO_IMAGE (first/main article image src)
+- IMAGE_2 through IMAGE_8 (additional images src)
+- VIDEO_1 through VIDEO_6 (video src or poster)
+- PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_COMPARE_PRICE, PRODUCT_URL, PRODUCT_IMAGE
+- TESTIMONIAL_1_TEXT, TESTIMONIAL_1_NAME, TESTIMONIAL_1_LOCATION
+- TESTIMONIAL_2_TEXT, TESTIMONIAL_2_NAME, TESTIMONIAL_2_LOCATION
+- TESTIMONIAL_3_TEXT, TESTIMONIAL_3_NAME, TESTIMONIAL_3_LOCATION
+- STAT_1_NUMBER, STAT_1_LABEL, STAT_2_NUMBER, STAT_2_LABEL, STAT_3_NUMBER, STAT_3_LABEL
+- CTA_TEXT (button text), DISCOUNT_PERCENT
+- BENEFIT_1 through BENEFIT_5
+
+Return ONLY valid JSON:
+{{
+  "selectors": [
+    {{"selector": "h1", "attribute": "text", "placeholder": "HEADLINE"}},
+    {{"selector": ".hero-img", "attribute": "src", "placeholder": "HERO_IMAGE"}},
+    {{"selector": "article p:nth-of-type(1)", "attribute": "text", "placeholder": "BODY_PARAGRAPH_1"}},
+    {{"selector": ".cta-btn", "attribute": "text", "placeholder": "CTA_TEXT"}},
+    {{"selector": ".cta-btn", "attribute": "href", "placeholder": "PRODUCT_URL"}}
+  ],
+  "layout": "sidebar|full-width",
+  "has_sticky_footer": true,
+  "has_sticky_sidebar": false,
+  "style_type": "personal-story|breaking-news|listicle|review|comparison"
+}}"""
+
+        mapping_response = await _llm_call(
+            messages=[{"role": "user", "content": f"Map this advertorial HTML:\n\n{cleaned_html}"}],
+            system=mapping_prompt,
+            max_tokens=4000
+        )
+
+        # Parser le JSON
+        selectors = []
+        layout = "full-width"
+        has_sticky_footer = False
+        has_sticky_sidebar = False
+        style_type = "personal-story"
+
+        try:
+            json_match = _re.search(r'\{[\s\S]*\}', mapping_response)
+            if json_match:
+                mapping_data = _json.loads(json_match.group())
+                selectors = mapping_data.get('selectors', [])
+                layout = mapping_data.get('layout', 'full-width')
+                has_sticky_footer = mapping_data.get('has_sticky_footer', False)
+                has_sticky_sidebar = mapping_data.get('has_sticky_sidebar', False)
+                style_type = mapping_data.get('style_type', 'personal-story')
+        except Exception as e:
+            logger.warning(f"[template-clone] Failed to parse mapping JSON: {e}")
+
+        # 4. REMPLACEMENT PROGRAMMATIQUE
+        soup_final = BeautifulSoup(html_content, 'html.parser')
+        for tag in soup_final.find_all(['script', 'noscript', 'iframe', 'link']):
+            tag.decompose()
+        for tag in soup_final.find_all('nav'):
+            tag.decompose()
+        # Remove Shopify/Replo boilerplate sections
+        for tag in soup_final.find_all('aside'):
+            tag.decompose()
+        for tag in soup_final.find_all(True):
+            for attr in ['onclick', 'onload', 'data-analytics', 'data-track']:
+                if tag.has_attr(attr):
+                    del tag[attr]
+
+        used_placeholders = set()
+
+        def _replace_element(el, attr, placeholder):
+            """Replace content of an element with a placeholder."""
+            if attr == 'text':
+                el.clear()
+                el.append(NavigableString(f'{{{{{placeholder}}}}}'))
+                used_placeholders.add(placeholder)
+            elif attr in ('src', 'href', 'alt', 'content'):
+                if el.has_attr(attr):
+                    el[attr] = f'{{{{{placeholder}}}}}'
+                    used_placeholders.add(placeholder)
+                elif attr == 'src' and el.has_attr('data-src'):
+                    el['data-src'] = f'{{{{{placeholder}}}}}'
+                    used_placeholders.add(placeholder)
+
+        # Apply LLM-provided selectors
+        for item in selectors:
+            sel = item.get('selector', '')
+            attr = item.get('attribute', 'text')
+            placeholder = item.get('placeholder', '')
+            if not sel or not placeholder:
+                continue
+            try:
+                elements = soup_final.select(sel)
+                if not elements:
+                    continue
+                el = elements[0]
+                _replace_element(el, attr, placeholder)
+            except Exception as e:
+                logger.debug(f"[template-clone] Selector '{sel}' failed: {e}")
+
+        # FALLBACK: If LLM mapped < 5 elements, use heuristic auto-mapping
+        if len(used_placeholders) < 5:
+            logger.warning(f"[template-clone] LLM mapped only {len(used_placeholders)} elements, applying heuristic fallback")
+
+            # h1 → HEADLINE
+            if 'HEADLINE' not in used_placeholders:
+                h1 = soup_final.find('h1')
+                if h1:
+                    _replace_element(h1, 'text', 'HEADLINE')
+
+            # h2 tags → H2_SECTION_N
+            if not any(p.startswith('H2_SECTION') for p in used_placeholders):
+                for i, h2 in enumerate(soup_final.find_all('h2')[:6], 1):
+                    _replace_element(h2, 'text', f'H2_SECTION_{i}')
+
+            # First img → HERO_IMAGE
+            if 'HERO_IMAGE' not in used_placeholders:
+                imgs = soup_final.find_all('img')
+                for i, img in enumerate(imgs[:8], 0):
+                    ph = 'HERO_IMAGE' if i == 0 else f'IMAGE_{i+1}'
+                    if img.has_attr('src'):
+                        img['src'] = f'{{{{{ph}}}}}'
+                        used_placeholders.add(ph)
+                    if img.has_attr('srcset'):
+                        del img['srcset']
+
+            # Body paragraphs — for Replo pages, find alchemy-rte paragraphs
+            if not any(p.startswith('BODY_PARAGRAPH') for p in used_placeholders):
+                if uses_replo or uses_alchemy:
+                    # Find paragraphs inside alchemy-rte that have substantial text
+                    para_containers = soup_final.find_all(class_='alchemy-rte')
+                    body_paras = []
+                    for container in para_containers:
+                        paras = container.find_all('p')
+                        for p in paras:
+                            text = p.get_text(strip=True)
+                            if len(text) > 50 and '{{' not in str(p):
+                                body_paras.append(p)
+                    for i, p in enumerate(body_paras[:10], 1):
+                        _replace_element(p, 'text', f'BODY_PARAGRAPH_{i}')
+                else:
+                    # Standard page: find article or main paragraphs
+                    article = soup_final.find('article') or soup_final.find('main') or soup_final.find('body')
+                    if article:
+                        paras = [p for p in article.find_all('p') if len(p.get_text(strip=True)) > 50]
+                        for i, p in enumerate(paras[:10], 1):
+                            _replace_element(p, 'text', f'BODY_PARAGRAPH_{i}')
+
+            # CTA links — links with button-like text or classes
+            if 'CTA_TEXT' not in used_placeholders and 'PRODUCT_URL' not in used_placeholders:
+                cta_links = soup_final.find_all('a', href=_re.compile(r'https?://'))
+                product_links = [a for a in cta_links if a.find_parent(class_=_re.compile(r'(cta|btn|button|shop)', _re.I)) or
+                                 any(w in a.get_text(strip=True).lower() for w in ['shop', 'buy', 'get', 'try', 'order'])]
+                for link in product_links[:2]:
+                    if 'PRODUCT_URL' not in used_placeholders:
+                        link['href'] = '{{PRODUCT_URL}}'
+                        used_placeholders.add('PRODUCT_URL')
+
+            logger.info(f"[template-clone] After fallback: {len(used_placeholders)} placeholders mapped")
+
+        # 5. POST-PROCESSING
+
+        # 5a. Supprimer les éléments Shopify non-article (cart drawer, skip link, announcements)
+        for tag in soup_final.find_all(['cart-drawer', 'cart-drawer-items', 'cart-notification',
+                                         'cart-items', 'predictive-search', 'mobile-facets']):
+            tag.decompose()
+        for a in soup_final.find_all('a', class_=lambda c: c and 'skip-to-content' in ' '.join(c)):
+            a.decompose()
+        # Supprimer sections Shopify header/announcement qui causent une marge blanche
+        for el in soup_final.find_all(id=lambda i: i and ('announcement' in i.lower() or
+                                                            'header-group' in i.lower())):
+            el.decompose()
+        # Injecter CSS override pour supprimer padding-top résiduel
+        style_override = soup_final.new_tag('style')
+        style_override.string = ("body{padding-top:0!important;margin-top:0!important}"
+                                  ".shopify-section-group-header-group{display:none!important}")
+        head = soup_final.find('head')
+        if head:
+            head.append(style_override)
+
+        # 5b. Retirer nav du header
+        header = soup_final.find('header')
+        if header:
+            for nav_el in header.find_all(['nav', 'ul', 'menu']):
+                nav_el.decompose()
+            for a_el in header.find_all('a'):
+                if not (a_el.find('img') or 'logo' in ' '.join(a_el.get('class', []))):
+                    a_el.decompose()
+        else:
+            new_header = soup_final.new_tag('header', style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border-bottom:1px solid #e0e0e0;background:#fff")
+            logo_link = soup_final.new_tag('a', href="{{PRODUCT_URL}}", style="display:block")
+            logo_img = soup_final.new_tag('img', src="{{LOGO_URL}}", alt="{{SITE_NAME}}", style="max-height:40px;width:auto")
+            logo_link.append(logo_img)
+            new_header.append(logo_link)
+            body = soup_final.find('body')
+            if body:
+                body.insert(0, new_header)
+
+        # Mettre à jour title et meta
+        title_tag = soup_final.find('title')
+        if title_tag:
+            title_tag.string = '{{HEADLINE}} - {{SITE_NAME}}'
+        for meta in soup_final.find_all('meta'):
+            prop = meta.get('property', '') or meta.get('name', '')
+            if prop in ['og:title', 'twitter:title']:
+                meta['content'] = '{{HEADLINE}}'
+            elif prop in ['og:description', 'twitter:description', 'description']:
+                meta['content'] = '{{SUBHEADLINE}}'
+            elif prop in ['og:image', 'twitter:image']:
+                meta['content'] = '{{HERO_IMAGE}}'
+            elif prop in ['og:url', 'twitter:url']:
+                meta['content'] = '{{PRODUCT_URL}}'
+
+        # 6. SAUVEGARDE
+        final_html = str(soup_final)
+        placeholder_count = len(_re.findall(r'\{\{[A-Z_0-9]+\}\}', final_html))
+        if placeholder_count < 5:
+            logger.warning(f"[template-clone] Only {placeholder_count} placeholders — mapping may have failed")
+
+        domain = urlparse(url).netloc.replace("www.", "")
+        name = f"From {domain}"[:50]
+        description = f"Structural clone of {domain} — {len(used_placeholders)} placeholders"
+        tid = "custom-" + uuid.uuid4().hex[:6]
+        tpl_dir = Path("data/custom_templates")
+        tpl_dir.mkdir(parents=True, exist_ok=True)
+        (tpl_dir / f"{tid}.html").write_text(final_html, encoding="utf-8")
+
+        meta_json = {
+            "id": tid, "name": name, "description": description,
+            "icon": "🔗", "best_for": f"Structural clone of {domain} ({style_type})",
+            "source": "url-clone", "source_url": url,
+            "placeholders": sorted(list(used_placeholders)),
+            "dominant_colors": colors, "fonts": fonts,
+            "word_count": word_count, "layout": layout,
+            "style_type": style_type,
+            "has_sticky_footer": has_sticky_footer,
+            "has_sticky_sidebar": has_sticky_sidebar,
+            "generated_at": datetime.utcnow().isoformat()
+        }
+        (tpl_dir / f"{tid}.json").write_text(_json.dumps(meta_json, indent=2, ensure_ascii=False))
+
+        logger.info(f"[template-clone] Created {tid} — {len(used_placeholders)} placeholders, {placeholder_count} occurrences")
+        _template_gen_tasks[task_id] = {
+            "status": "completed",
+            "result": {"template_id": tid, "name": name, "description": description,
+                       "source_url": url, "placeholder_count": len(used_placeholders),
+                       "layout": layout, "style_type": style_type},
+            "error": "", "url": url, "completed_at": datetime.utcnow().isoformat()
+        }
+        _save_template_tasks()
+
+    except Exception as e:
+        logger.error(f"[template-clone] Failed for task {task_id}: {e}", exc_info=True)
+        _template_gen_tasks[task_id] = {
+            "status": "failed", "result": None,
+            "error": str(e)[:300], "url": url,
+            "failed_at": datetime.utcnow().isoformat()
+        }
+        _save_template_tasks()
+
+
 
 @app.post("/templates/import")
 async def import_template(req: ImportTemplateReq):
@@ -1789,25 +2919,41 @@ async def import_template(req: ImportTemplateReq):
 
 @app.delete("/templates/{tid}")
 async def delete_template(tid: str):
-    """Delete a custom template."""
-    if not tid.startswith("custom-"):
-        raise HTTPException(400, "Cannot delete built-in templates")
+    """Delete any template. For builtins, mark as hidden. For custom, delete JSON + HTML."""
     tpl_dir = Path("data/custom_templates")
-    html_path = tpl_dir / f"{tid}.html"
     meta_path = tpl_dir / f"{tid}.json"
-    if html_path.exists(): html_path.unlink()
-    if meta_path.exists(): meta_path.unlink()
-    return {"deleted": tid}
+
+    if tid in BUILTIN_TEMPLATES:
+        # For builtins: mark as hidden in metadata (soft delete)
+        if meta_path.exists():
+            try:
+                meta = json.loads(meta_path.read_text())
+                meta["hidden"] = True
+                meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False))
+            except Exception:
+                meta_path.write_text(json.dumps({"id": tid, **BUILTIN_TEMPLATES[tid], "hidden": True}, indent=2, ensure_ascii=False))
+        else:
+            meta_path.write_text(json.dumps({"id": tid, **BUILTIN_TEMPLATES[tid], "hidden": True}, indent=2, ensure_ascii=False))
+        return {"deleted": tid}
+    else:
+        # For custom: delete both JSON + HTML
+        html_path = tpl_dir / f"{tid}.html"
+        if html_path.exists(): html_path.unlink()
+        if meta_path.exists(): meta_path.unlink()
+        return {"deleted": tid}
 
 @app.get("/templates/{tid}/preview")
 async def preview_template(tid: str):
     """Return a full HTML preview of a template with sample content."""
     # Custom template: serve raw HTML
     if tid.startswith("custom-"):
+        from fastapi.responses import HTMLResponse as _HTMLResponse
         tpl_path = Path(f"data/custom_templates/{tid}.html")
         if not tpl_path.exists():
             raise HTTPException(404, "Template not found")
-        return HTMLResponse(content=tpl_path.read_text(encoding="utf-8"))
+        html = tpl_path.read_text(encoding="utf-8")
+        html = _inject_header_logo(html)
+        return _HTMLResponse(content=html)
 
     from agents.html_publisher import HTMLPublisherAgent
     pub = HTMLPublisherAgent(output_dir="data/output")
@@ -1815,9 +2961,9 @@ async def preview_template(tid: str):
         "headline": "Last October, He Yanked His Starter Cord. The Crack He Heard Wasn't the Engine.",
         "subheadline": "",
         "sections": [
-            {"type": "body", "heading": "The Injury Nobody Warns You About", "body_html": "<p>Orthopedic surgeons across America see the same pattern every autumn. Men and women in their late 50s, 60s, and 70s walk into emergency rooms with the same complaint: sudden, severe lower back pain triggered by pulling a gas blower's starter cord.</p><p>The problem isn't obvious until you understand the mechanics. A gas blower weighs between 18 and 26 pounds. To start it, you yank a cord with 20 to 25 pounds of force.</p>", "visual_placeholder": {"type": "HERO IMAGE", "description": "A 62-year-old man in pain, holding his lower back after yard work"}},
-            {"type": "body", "heading": "Why the Problem Has Never Been Solved Until Now", "body_html": "<p>The leaf blower industry has known about this problem for decades. But they've ignored it because solving it cuts into profit margins.</p><p>Gas blower manufacturers make money from replacement parts: spark plugs, air filters, fuel line repairs, seasonal maintenance.</p>", "visual_placeholder": {"type": "INFOGRAPHIC", "description": "Age-based injury breakdown showing 55+ demographic"}},
-            {"type": "body", "heading": "2.1 Pounds. Button Start. 20 Minutes.", "body_html": "<p><strong>It weighs 2.1 pounds.</strong> That's lighter than a bag of flour. You can operate it with one hand.</p><p><strong>Button start.</strong> No yanking. No pulling. No risk of back injury from a starter cord.</p><p><strong>120 mph air velocity.</strong> Faster than commercial-grade gas blowers costing $600.</p>", "visual_placeholder": {"type": "PRODUCT HERO", "description": "The Seese Pro cordless leaf blower displayed against white background"}},
+            {"type": "body", "heading": "The Injury Nobody Warns You About", "body_html": "<p>Orthopedic surgeons across America see the same pattern every autumn.</p><p>The problem isn't obvious until you understand the mechanics.</p>", "visual_placeholder": {"type": "HERO IMAGE", "description": "A 62-year-old man in pain after yard work"}},
+            {"type": "body", "heading": "Why the Problem Has Never Been Solved Until Now", "body_html": "<p>The leaf blower industry has known about this problem for decades.</p><p>Gas blower manufacturers make money from replacement parts.</p>", "visual_placeholder": {"type": "INFOGRAPHIC", "description": "Age-based injury breakdown"}},
+            {"type": "body", "heading": "2.1 Pounds. Button Start. 20 Minutes.", "body_html": "<p><strong>It weighs 2.1 pounds.</strong> That's lighter than a bag of flour.</p><p><strong>Button start.</strong> No yanking. No pulling.</p><p><strong>120 mph air velocity.</strong> Faster than commercial-grade gas blowers costing $600.</p>", "visual_placeholder": {"type": "PRODUCT HERO", "description": "The Seese Pro cordless leaf blower"}},
             {"type": "offer"},
             {"type": "cta", "body_html": "<p>Join 2,400+ Americans who've already discovered that yard work can be safe again.</p>"},
         ],
@@ -1827,9 +2973,1019 @@ async def preview_template(tid: str):
     from fastapi.responses import HTMLResponse
     return HTMLResponse(content=html)
 
+@app.get("/templates/{tid}/editable")
+async def editable_template(tid: str):
+    """Return custom template HTML with WYSIWYG edit script injected."""
+    from fastapi.responses import HTMLResponse as _HTMLResponse
+    if not tid.startswith("custom-"):
+        raise HTTPException(400, "Only custom templates can be edited")
+    tpl_path = Path(f"data/custom_templates/{tid}.html")
+    if not tpl_path.exists():
+        raise HTTPException(404, "Template not found")
+    html = tpl_path.read_text(encoding="utf-8")
+    # In editor preview: replace {{PLACEHOLDER}} in src/poster with placehold.co images
+    import re as _re_edit
+    _img_sizes = {
+        "HERO_IMAGE": "1200x630", "IMAGE_2": "800x500", "IMAGE_3": "800x500",
+        "IMAGE_4": "800x500", "IMAGE_5": "800x500", "LOGO_URL": "300x60",
+        "VIDEO_1": "800x450", "VIDEO_2": "800x450", "VIDEO_3": "800x450",
+        "VIDEO_4": "800x450", "VIDEO_5": "800x450",
+    }
+    def _sub_media_placeholder(m):
+        attr = m.group(1)
+        key = m.group(2)
+        size = _img_sizes.get(key, "800x450")
+        label = key.replace("_", "+")
+        return f'{attr}="https://placehold.co/{size}/e5e7eb/9ca3af?text={label}"'
+    html = _re_edit.sub(r'(src|poster)="\{\{([A-Z][A-Z0-9_]*)\}\}"', _sub_media_placeholder, html)
+    if "</body>" in html:
+        html = html.replace("</body>", EDIT_SCRIPT + "\n</body>")
+    else:
+        html += EDIT_SCRIPT
+    return _HTMLResponse(content=html)
+
+class SaveTemplateReq(BaseModel):
+    html: Optional[str] = None
+    name: Optional[str] = None
+
+@app.put("/templates/{tid}")
+async def save_template(tid: str, req: SaveTemplateReq):
+    """Save/rename a template. For builtins, only update metadata (name/icon/description). For custom, also save HTML."""
+    tpl_dir = Path("data/custom_templates")
+    meta_path = tpl_dir / f"{tid}.json"
+
+    if tid in BUILTIN_TEMPLATES:
+        # For builtins: only update metadata, not HTML (they use Python template classes)
+        if req.name:
+            if meta_path.exists():
+                try:
+                    meta = json.loads(meta_path.read_text())
+                except Exception:
+                    meta = {"id": tid, **BUILTIN_TEMPLATES[tid]}
+            else:
+                meta = {"id": tid, **BUILTIN_TEMPLATES[tid]}
+            meta["name"] = req.name
+            meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False))
+        return {"saved": True, "template_id": tid}
+    else:
+        # For custom: save HTML if provided, update name in metadata
+        tpl_path = tpl_dir / f"{tid}.html"
+        if req.html:
+            if not tpl_path.exists():
+                raise HTTPException(404, "Template not found")
+            import re as _re2
+            clean_html = _re2.sub(r'<script[^>]*>.*?// EDIT SCRIPT.*?</script>', '', req.html, flags=_re2.DOTALL)
+            if not clean_html.strip():
+                clean_html = req.html
+            tpl_path.write_text(clean_html, encoding="utf-8")
+        # Update name if provided
+        if req.name:
+            if meta_path.exists():
+                try:
+                    meta = json.loads(meta_path.read_text())
+                except Exception:
+                    meta = {"id": tid}
+                meta["name"] = req.name
+                meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False))
+        return {"saved": True, "template_id": tid}
+
+# ── PAGES ──
+
+@app.get("/pages")
+async def list_pages():
+    """List all published HTML pages from /var/www/advertorials/."""
+    pub_dir = Path("/var/www/advertorials")
+    if not pub_dir.exists():
+        return {"pages": []}
+
+    # Build a slug→pipeline lookup from pipeline history
+    slug_to_pipeline = {}
+    for plid, s in pipelines.items():
+        hf = s.get("results", {}).get("html_file", "")
+        if hf:
+            # Strip path prefix (e.g. "data/output/xxx/slug.html" → "slug")
+            slug = Path(hf).stem
+            slug_to_pipeline[slug] = {"pipeline_id": plid, "product_id": s.get("product_id", ""), "product_name": s.get("product_name", "")}
+
+    pages = []
+    for html_path in sorted(pub_dir.glob("*.html"), key=lambda p: p.stat().st_mtime, reverse=True):
+        slug = html_path.stem
+        stat = html_path.stat()
+        # Extract headline from <title> or first <h1>
+        headline = slug
+        try:
+            snippet = html_path.read_text(encoding="utf-8", errors="ignore")[:30000]
+            title_m = _re.search(r'<title[^>]*>([^<]+)</title>', snippet, _re.I)
+            if title_m:
+                headline = title_m.group(1).strip()
+            elif h1_m := _re.search(r'<h1[^>]*>(.*?)</h1>', snippet, _re.I | _re.S):
+                headline = _re.sub(r'<[^>]+>', '', h1_m.group(1)).strip()
+        except Exception:
+            pass
+        thumbnail = _extract_thumbnail(html_path)
+        pip_info = slug_to_pipeline.get(slug, {})
+        # Detect language from <html lang="..."> attribute
+        language = "en"
+        try:
+            html_head = html_path.read_text(encoding="utf-8", errors="ignore")[:5000]
+            lang_m = _re.search(r'<html[^>]+lang=["\']([^"\']+)["\']', html_head, _re.IGNORECASE)
+            if lang_m:
+                language = lang_m.group(1).strip().lower().split("-")[0]
+        except Exception:
+            pass
+        # Also check pipeline config language if available
+        if language == "en" and pip_info.get("pipeline_id"):
+            plid = pip_info["pipeline_id"]
+            pl = pipelines.get(plid, {})
+            cfg_lang = pl.get("config", {}).get("language", "")
+            if cfg_lang and cfg_lang != "en":
+                language = cfg_lang
+        pages.append({
+            "slug": slug,
+            "headline": headline,
+            "thumbnail": thumbnail,
+            "live_url": f"https://dailybloginfo.com/a/{slug}.html",
+            "file_size": stat.st_size,
+            "modified_at": datetime.utcfromtimestamp(stat.st_mtime).isoformat(),
+            "pipeline_id": pip_info.get("pipeline_id", ""),
+            "product_id": pip_info.get("product_id", ""),
+            "product_name": pip_info.get("product_name", ""),
+            "language": language,
+        })
+    return {"pages": pages}
+
+
+class BulkCtaReq(BaseModel):
+    slugs: list
+    cta_url: str
+
+@app.post("/pages/bulk-cta")
+async def bulk_cta(req: BulkCtaReq):
+    """Replace CTA hrefs on selected published pages."""
+    pub_dir = Path("/var/www/advertorials")
+    updated_slugs = []
+
+    # Regex to find CTA <a> tags — by class or by text content
+    CTA_CLASS_RE = _re.compile(
+        r'(<a\b[^>]*class=["\'][^"\']*\b(?:cta|btn|button|order|buy|shop)\b[^"\']*["\'][^>]*)href=["\'][^"\']*["\']',
+        _re.IGNORECASE
+    )
+    CTA_TEXT_RE = _re.compile(
+        r'(<a\b(?:[^>](?!href))*>(?:[^<]|\s)*?(?:Order|Buy|Shop|Get|Claim|Add to Cart|Commander|Acheter)(?:[^<]|\s)*?</a>)',
+        _re.IGNORECASE | _re.DOTALL
+    )
+
+    def replace_hrefs(html: str, new_url: str) -> str:
+        # Strategy: collect all <a> tags, check class+text, replace href
+        def replace_tag(m):
+            tag = m.group(0)
+            # Replace href in this tag
+            return _re.sub(r'href=["\'][^"\']*["\']', f'href="{new_url}"', tag)
+
+        result = html
+        # Pass 1 — class-based CTA
+        result = CTA_CLASS_RE.sub(lambda m: m.group(1) + f'href="{new_url}"', result)
+
+        # Pass 2 — text-based: find all <a ...>...</a> and check inner text
+        def maybe_replace(m):
+            full = m.group(0)
+            inner = _re.sub(r'<[^>]+>', '', full)
+            if _re.search(r'\b(Order|Buy|Shop|Get|Claim|Add to Cart|Commander|Acheter)\b', inner, _re.I):
+                return _re.sub(r'href=["\'][^"\']*["\']', f'href="{new_url}"', full, count=1)
+            return full
+        result = _re.sub(r'<a\b[^>]*>.*?</a>', maybe_replace, result, flags=_re.IGNORECASE | _re.DOTALL)
+        return result
+
+    for slug in req.slugs:
+        pub_path = pub_dir / f"{slug}.html"
+        if not pub_path.exists():
+            continue
+        try:
+            html = pub_path.read_text(encoding="utf-8", errors="ignore")
+            html = replace_hrefs(html, req.cta_url)
+            pub_path.write_text(html, encoding="utf-8")
+            # Also update pipeline output copy if it exists
+            for plid, s in pipelines.items():
+                hf = s.get("results", {}).get("html_file", "")
+                if hf and hf.replace(".html", "") == slug:
+                    out_path = Path(f"data/output/{plid}/{hf}")
+                    if out_path.exists():
+                        out_path.write_text(html, encoding="utf-8")
+                    break
+            updated_slugs.append(slug)
+        except Exception as e:
+            logger.warning(f"bulk-cta failed for {slug}: {e}")
+
+    return {"updated": len(updated_slugs), "slugs": updated_slugs}
+
+
+@app.delete("/pipeline/{plid}")
+async def delete_pipeline(plid: str):
+    """Delete a pipeline entry (state + output files)."""
+    import shutil
+    out_dir = Path(f"data/output/{plid}")
+    deleted_files = False
+    # Remove published HTML if any
+    if plid in pipelines:
+        hf = pipelines[plid].get("results", {}).get("html_file", "")
+        if hf:
+            slug = Path(hf).stem
+            pub_path = Path("/var/www/advertorials") / f"{slug}.html"
+            if pub_path.exists():
+                pub_path.unlink()
+        del pipelines[plid]
+    # Remove output directory
+    if out_dir.exists():
+        shutil.rmtree(out_dir, ignore_errors=True)
+        deleted_files = True
+    return {"deleted": True, "files_removed": deleted_files}
+
+
+class BulkDeleteReq(BaseModel):
+    slugs: list
+
+@app.post("/pages/bulk-delete")
+async def bulk_delete(req: BulkDeleteReq):
+    """Delete selected published pages + their pipeline entries."""
+    import shutil
+    pub_dir = Path("/var/www/advertorials")
+    deleted = 0
+    # Delete published HTML files
+    for slug in req.slugs:
+        pub_path = pub_dir / f"{slug}.html"
+        if pub_path.exists():
+            pub_path.unlink()
+            deleted += 1
+    # Also find and delete matching pipelines (by slug match on html_file)
+    pids_to_remove = []
+    for plid, s in pipelines.items():
+        hf = s.get("results", {}).get("html_file", "")
+        if hf:
+            pip_slug = Path(hf).stem
+            if pip_slug in req.slugs:
+                pids_to_remove.append(plid)
+    for plid in pids_to_remove:
+        out_dir = Path(f"data/output/{plid}")
+        if out_dir.exists():
+            shutil.rmtree(out_dir, ignore_errors=True)
+        del pipelines[plid]
+        deleted += 1
+    return {"deleted": deleted}
+
+
+# ── TRANSLATE ──
+
+LANG_NAMES = {
+    "fr": "French", "es": "Spanish", "de": "German", "it": "Italian",
+    "pt": "Portuguese", "nl": "Dutch", "en-uk": "English (UK)", "en-us": "English (US)"
+}
+
+class TranslateReq(BaseModel):
+    slug: str
+    languages: list
+
+@app.post("/translate")
+async def translate_page(req: TranslateReq):
+    """Translate an advertorial page to one or more languages."""
+    pub_dir = Path("/var/www/advertorials")
+    src_path = pub_dir / f"{req.slug}.html"
+    if not src_path.exists():
+        raise HTTPException(404, f"Page not found: {req.slug}.html")
+
+    html_content = src_path.read_text(encoding="utf-8", errors="ignore")
+
+    # Find corresponding pipeline for this slug (to save in output dir too)
+    source_plid = None
+    for plid, s in pipelines.items():
+        hf = s.get("results", {}).get("html_file", "")
+        if hf and hf.replace(".html", "") == req.slug:
+            source_plid = plid
+            break
+
+    translations = []
+    # Unit/currency conversion rules per locale
+    UNIT_RULES: dict = {
+        "fr": "Convert: $ → € (approximate, e.g. $119.99 → 109,99€), lbs → kg (1 lb = 0.45 kg), oz → g, ft → m, mph → km/h, °F → °C. Use French number format (comma as decimal separator).",
+        "es": "Convert: $ → € (approximate), lbs → kg, oz → g, ft → m, mph → km/h, °F → °C. Use Spanish number format.",
+        "de": "Convert: $ → € (approximate), lbs → kg, oz → g, ft → m, mph → km/h, °F → °C. Use German number format (comma as decimal separator).",
+        "it": "Convert: $ → € (approximate), lbs → kg, oz → g, ft → m, mph → km/h, °F → °C.",
+        "pt": "Convert: $ → € (approximate), lbs → kg, oz → g, ft → m, mph → km/h, °F → °C.",
+        "nl": "Convert: $ → € (approximate), lbs → kg, oz → g, ft → m, mph → km/h, °F → °C.",
+        "en-uk": "Convert: $ (USD) → £ (GBP, approximate, e.g. $119.99 → £94.99), lbs stay as lbs (UK uses imperial), mph stays as mph, °F → °C. Use UK English spelling (colour, favourite, realise, etc.).",
+        "en-us": "Keep all measurements in imperial (lbs, oz, ft, mph, °F). Keep $ (USD). Use American English spelling. This is a US market adaptation — adjust any non-US cultural references.",
+    }
+
+    for lang in req.languages:
+        language_name = LANG_NAMES.get(lang, lang)
+        translated_slug = f"{req.slug}-{lang}"
+        live_url = f"https://dailybloginfo.com/a/{translated_slug}.html"
+        unit_rule = UNIT_RULES.get(lang, "")
+        is_adaptation = lang in ("en-uk", "en-us")
+
+        system_prompt = (
+            f"You are a professional {'copywriter and localisation expert' if is_adaptation else 'translator'}. "
+            f"{'Adapt' if is_adaptation else 'Translate'} ALL text content in this HTML to {language_name}.\n"
+            f"Rules:\n"
+            f"- {'Adapt' if is_adaptation else 'Translate'} ALL visible text: headings, paragraphs, button text, badges, alt text, meta title, meta description\n"
+            f"- DO NOT translate or modify: HTML tags, CSS, class names, URLs, image src, video src, script content\n"
+            f"- DO NOT translate brand names (Seese Pro, DailyBlogInfo)\n"
+            f"- Keep the exact same HTML structure\n"
+            f"- {'Adapt' if is_adaptation else 'Translate'} naturally, not word-for-word. Use the tone appropriate for the target audience.\n"
+            f"- Update the <html lang=\"\"> attribute to the target language code\n"
+            + (f"- UNIT & CURRENCY CONVERSION (mandatory): {unit_rule}\n" if unit_rule else "")
+            + f"- Return ONLY the {'adapted' if is_adaptation else 'translated'} HTML, nothing else"
+        )
+
+        try:
+            translated_html = await _llm_call(
+                messages=[{"role": "user", "content": f"Translate this HTML to {language_name}:\n\n{html_content}"}],
+                system=system_prompt, max_tokens=16000
+            )
+
+            # Strip markdown code fences if present
+            translated_html = _re.sub(r'^```html\s*\n?', '', translated_html.strip())
+            translated_html = _re.sub(r'\n?```\s*$', '', translated_html.strip())
+
+            # Save to published dir
+            out_path = pub_dir / f"{translated_slug}.html"
+            out_path.write_text(translated_html, encoding="utf-8")
+
+            # Save to pipeline output dir if source has one
+            if source_plid:
+                pipeline_out_dir = Path(f"data/output/{source_plid}")
+                if pipeline_out_dir.exists():
+                    (pipeline_out_dir / f"{translated_slug}.html").write_text(translated_html, encoding="utf-8")
+
+            # Create a pipeline entry for this translation
+            now = datetime.utcnow().isoformat()
+            new_plid = uuid.uuid4().hex[:8]
+            source_pl = pipelines.get(source_plid, {}) if source_plid else {}
+            pipeline_out_new = Path(f"data/output/{new_plid}")
+            pipeline_out_new.mkdir(parents=True, exist_ok=True)
+            (pipeline_out_new / f"{translated_slug}.html").write_text(translated_html, encoding="utf-8")
+            # Extract headline
+            tl_headline = translated_slug
+            title_m = _re.search(r'<title[^>]*>([^<]+)</title>', translated_html[:5000], _re.I)
+            if title_m:
+                tl_headline = title_m.group(1).strip()
+            thumbnail = _extract_thumbnail(pub_dir / f"{translated_slug}.html")
+            new_state = {
+                "id": new_plid,
+                "status": "completed",
+                "started_at": now,
+                "completed_at": now,
+                "product_id": source_pl.get("product_id", ""),
+                "product_url": source_pl.get("product_url", ""),
+                "product_name": source_pl.get("product_name", ""),
+                "config": {"source": "translation", "source_slug": req.slug, "language": lang, "template": "translated"},
+                "current_phase": "translated",
+                "current_agent": "",
+                "progress": 1.0,
+                "error": "",
+                "results": {"headline": tl_headline, "html_file": f"{translated_slug}.html", "qa_score": 0, "thumbnail": thumbnail},
+            }
+            (pipeline_out_new / "_pipeline_state.json").write_text(json.dumps(new_state, indent=2))
+            pipelines[new_plid] = new_state
+
+            translations.append({
+                "language": lang,
+                "slug": translated_slug,
+                "live_url": live_url,
+                "status": "ok",
+            })
+            logger.info(f"Translated {req.slug} → {translated_slug} ({language_name})")
+
+        except Exception as e:
+            logger.error(f"Translation failed for {req.slug} → {lang}: {e}", exc_info=True)
+            translations.append({
+                "language": lang,
+                "slug": translated_slug,
+                "live_url": live_url,
+                "status": "error",
+                "error": str(e)[:200],
+            })
+
+    return {"translations": translations}
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok", "version": "2.0.0", "products": len(products), "pipelines": len(pipelines), "ts": datetime.utcnow().isoformat()}
+
+# ── SOURCES ──
+
+def _load_sources_db() -> list:
+    """Load and merge advertorial sources from both DBs."""
+    from urllib.parse import urlparse
+    sources = []
+    seen_urls = set()
+
+    # 1. From ALL_PAGES_DB.json — filter is_advertorial=True
+    all_pages_path = Path("/root/.openclaw/workspace-anstrex-scraper/ALL_PAGES_DB.json")
+    if all_pages_path.exists():
+        try:
+            all_pages = json.loads(all_pages_path.read_text())
+            for url, item in all_pages.items():
+                if not item.get("is_advertorial"):
+                    continue
+                if url in seen_urls:
+                    continue
+                seen_urls.add(url)
+                import hashlib
+                src_id = hashlib.md5(url.encode()).hexdigest()[:12]
+                title = item.get("headline", url)
+                domain = item.get("domain", urlparse(url).netloc)
+                sources.append({
+                    "id": src_id, "title": title, "url": url,
+                    "domain": domain, "word_count": item.get("word_count", 0),
+                    "source_db": "all_pages", "html_file": item.get("html_file", ""),
+                })
+        except Exception as e:
+            logger.warning(f"Could not load ALL_PAGES_DB.json: {e}")
+
+    # 2. From advertorials_db.json — all items
+    adv_db_path = Path("/root/mission-control/advertorial-scraper/advertorials_db.json")
+    if adv_db_path.exists():
+        try:
+            adv_db = json.loads(adv_db_path.read_text())
+            for item in adv_db:
+                url = item.get("url", "")
+                if not url or url in seen_urls:
+                    continue
+                seen_urls.add(url)
+                import hashlib
+                src_id = hashlib.md5(url.encode()).hexdigest()[:12]
+                title = item.get("title", url)
+                domain = item.get("domain", urlparse(url).netloc)
+                sources.append({
+                    "id": src_id, "title": title, "url": url,
+                    "domain": domain, "word_count": item.get("word_count", 0),
+                    "source_db": "advertorials_db", "html_file": "",
+                })
+        except Exception as e:
+            logger.warning(f"Could not load advertorials_db.json: {e}")
+
+    # 3. From ADVERTORIAL_DB_CLASSIFIED.json — 307 classified advertorials
+    classified_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_DB_CLASSIFIED.json")
+    try:
+        if classified_path.exists():
+            classified = json.loads(classified_path.read_text())
+            advs_classified = classified.get("advertorials", {})
+            existing_urls = {s.get("url", "") for s in sources}
+            for aid, a in advs_classified.items():
+                url = a.get("url", "")
+                if not url or url in existing_urls:
+                    continue
+                existing_urls.add(url)
+                from urllib.parse import urlparse as _up
+                domain = _up(url).netloc.replace("www.", "") if url.startswith("http") else ""
+                title = a.get("headline") or a.get("title") or a.get("product_name") or ""
+                sources.append({
+                    "id": f"classified_{aid}" if not aid.startswith("http") else aid,
+                    "title": title[:120] if title else f"Advertorial ({domain})",
+                    "url": url, "domain": domain,
+                    "word_count": a.get("word_count", 0),
+                    "source_db": "classified",
+                    "html_file": "",
+                    "angle": a.get("angle", ""),
+                    "audience": a.get("target_audience", ""),
+                })
+    except Exception as e:
+        logger.warning(f"Could not load ADVERTORIAL_DB_CLASSIFIED.json: {e}")
+
+    # Sort by word_count desc
+    sources.sort(key=lambda x: x.get("word_count", 0), reverse=True)
+    return sources
+
+
+def _get_source_text(source_id: str) -> dict:
+    """Fetch text for a source by id or URL."""
+    from bs4 import BeautifulSoup
+    from urllib.parse import urlparse
+    import hashlib
+
+    sources = _load_sources_db()
+
+    # Try to find by id or URL
+    item = None
+    for s in sources:
+        if s["id"] == source_id or s["url"] == source_id:
+            item = s
+            break
+
+    if not item:
+        raise HTTPException(404, f"Source not found: {source_id}")
+
+    # Try HTML file
+    html_file = item.get("html_file", "")
+    text = ""
+    word_count = item.get("word_count", 0)
+
+    if html_file:
+        html_path = Path(html_file)
+        if html_path.exists():
+            try:
+                raw = html_path.read_text(encoding="utf-8", errors="ignore")
+                soup = BeautifulSoup(raw, "html.parser")
+                # Remove script/style
+                for tag in soup(["script", "style", "nav", "footer", "header"]):
+                    tag.decompose()
+                text = soup.get_text(separator="\n", strip=True)
+                text = re.sub(r'\n{3,}', '\n\n', text)[:12000]  # Limit to ~12k chars
+                word_count = len(text.split())
+            except Exception as e:
+                logger.warning(f"Could not parse HTML {html_file}: {e}")
+
+    if not text:
+        # Fallback: content_preview or title
+        text = item.get("title", "")
+
+    return {"id": item["id"], "title": item["title"], "text": text, "word_count": word_count}
+
+
+@app.get("/sources")
+async def get_sources():
+    """Return merged list of advertorial sources (synced with /library)."""
+    library = await get_library()
+    return [{"id": item.get("id", ""), "title": item.get("headline", ""), "url": item.get("url", ""), "domain": item.get("domain", ""), "word_count": item.get("word_count", 0), "source_db": item.get("source_db", ""), "angle": item.get("angle_tag", "") or item.get("angle", ""), "audience": item.get("target_audience", "")} for item in library]
+
+
+@app.get("/library")
+async def get_library():
+    """Return all 473 advertorials with rich metadata merged from all DBs."""
+    items = {}  # keyed by URL for dedup
+
+    # 1. Load CLASSIFIED DB
+    classified_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_DB_CLASSIFIED.json")
+    if classified_path.exists():
+        data = json.loads(classified_path.read_text())
+        for url, entry in data.get("advertorials", {}).items():
+            items[url] = {
+                "url": url,
+                "domain": entry.get("domain", "").replace("www.", ""),
+                "headline": entry.get("headline", ""),
+                "product_name": entry.get("product_name", ""),
+                "target_audience": entry.get("target_audience", ""),
+                "angle": entry.get("angle", ""),
+                "angle_classified": entry.get("_angle_classified", ""),
+                "hook_type": entry.get("_hook_type", ""),
+                "hook_rewrite": entry.get("_hook_rewrite", ""),
+                "confidence": entry.get("confidence", 0),
+                # Will be enriched from STRUCTURES below
+                "hook": "", "lead": "", "problem": "", "solution": "",
+                "offer": "", "cta": "", "structure": "", "angle_tag": "",
+                "emotional_triggers": [], "quality_score": 0, "word_count": 0,
+                "source_db": "classified",
+            }
+
+    # 2. Enrich/add from STRUCTURES
+    struct_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_STRUCTURES.json")
+    if struct_path.exists():
+        structs = json.loads(struct_path.read_text())
+        for url, s in structs.items():
+            if url in items:
+                # Enrich existing
+                items[url].update({
+                    "hook": s.get("hook", ""),
+                    "hook_type": s.get("hook_type", "") or items[url].get("hook_type", ""),
+                    "lead": s.get("lead", ""),
+                    "problem": s.get("problem", ""),
+                    "solution": s.get("solution", ""),
+                    "offer": s.get("offer", ""),
+                    "cta": s.get("cta", ""),
+                    "structure": s.get("structure", ""),
+                    "angle_tag": s.get("angle_tag", ""),
+                    "emotional_triggers": s.get("emotional_triggers", []),
+                    "quality_score": s.get("quality_score", 0),
+                    "word_count": s.get("estimated_word_count", 0) or items[url].get("word_count", 0),
+                    "demographic_signal": s.get("demographic_signal", ""),
+                    "persuasion_devices": s.get("persuasion_devices", []),
+                    "product_name": s.get("product_name", "") or items[url].get("product_name", ""),
+                    "domain": s.get("domain", "").replace("www.", "") or items[url].get("domain", ""),
+                })
+            else:
+                # New entry from structures only
+                items[url] = {
+                    "url": url,
+                    "domain": s.get("domain", "").replace("www.", ""),
+                    "headline": s.get("headline", ""),
+                    "product_name": s.get("product_name", ""),
+                    "target_audience": s.get("demographic_signal", ""),
+                    "angle": "",
+                    "angle_classified": "",
+                    "hook_type": s.get("hook_type", ""),
+                    "hook_rewrite": "",
+                    "hook": s.get("hook", ""),
+                    "lead": s.get("lead", ""),
+                    "problem": s.get("problem", ""),
+                    "solution": s.get("solution", ""),
+                    "offer": s.get("offer", ""),
+                    "cta": s.get("cta", ""),
+                    "structure": s.get("structure", ""),
+                    "angle_tag": s.get("angle_tag", ""),
+                    "emotional_triggers": s.get("emotional_triggers", []),
+                    "quality_score": s.get("quality_score", 0),
+                    "word_count": s.get("estimated_word_count", 0),
+                    "demographic_signal": s.get("demographic_signal", ""),
+                    "persuasion_devices": s.get("persuasion_devices", []),
+                    "confidence": 0,
+                    "source_db": "structures",
+                }
+
+    # 3. Add from advertorials_db (basic entries)
+    adv_db_path = Path("/root/mission-control/advertorial-scraper/advertorials_db.json")
+    if adv_db_path.exists():
+        adv_list = json.loads(adv_db_path.read_text())
+        for entry in adv_list:
+            url = entry.get("url", "")
+            if url and url not in items:
+                items[url] = {
+                    "url": url,
+                    "domain": entry.get("domain", ""),
+                    "headline": entry.get("title", ""),
+                    "product_name": "",
+                    "target_audience": "",
+                    "angle": "",
+                    "angle_classified": entry.get("category", ""),
+                    "hook_type": "",
+                    "hook_rewrite": "",
+                    "hook": entry.get("content_preview", "")[:200],
+                    "lead": "", "problem": "", "solution": "",
+                    "offer": "", "cta": "",
+                    "structure": "",
+                    "angle_tag": "",
+                    "emotional_triggers": [],
+                    "quality_score": entry.get("signal_score", 0),
+                    "word_count": entry.get("word_count", 0),
+                    "source_db": "scraped",
+                }
+
+    # Load traffic cache
+    traffic_cache_path = Path("data/domain_traffic_cache.json")
+    traffic_cache = {}
+    if traffic_cache_path.exists():
+        try:
+            traffic_cache = json.loads(traffic_cache_path.read_text())
+        except:
+            pass
+
+    # Enrich items with traffic data
+    for url, item in items.items():
+        domain = item.get("domain", "").replace("www.", "")
+        traffic = traffic_cache.get(domain, {})
+        item["monthly_visits"] = traffic.get("etv", 0)
+        item["organic_keywords"] = traffic.get("keywords", 0)
+        item["estimated_traffic_cost"] = traffic.get("estimated_paid_cost", 0)
+        item["paid_traffic"] = traffic.get("paid_etv", 0)
+
+    # Sort by quality_score + traffic factor desc, then word_count desc
+    result = sorted(items.values(), key=lambda x: ((x.get("quality_score") or 0) * 1000 + min((x.get("monthly_visits") or 0) / 1000, 100), (x.get("word_count") or 0)), reverse=True)
+
+    # Add id field
+    for i, item in enumerate(result):
+        item["id"] = f"lib_{i}"
+
+    # ── Enrich with html_file / preview_url from cached mapping ──
+    html_file_cache_path = Path("data/html_file_cache.json")
+    html_file_map: dict = {}
+    if html_file_cache_path.exists():
+        try:
+            html_file_map = json.loads(html_file_cache_path.read_text())
+        except Exception as e:
+            logger.warning(f"Could not load html_file_cache.json: {e}")
+
+    for item in result:
+        url = item.get("url", "")
+        html_file = html_file_map.get(url, "")
+        item["html_file"] = html_file
+        item["preview_url"] = f"/html-archive/{html_file}" if html_file else ""
+
+    return result
+
+
+class LibraryDeleteReq(BaseModel):
+    urls: list[str]
+
+@app.post("/library/bulk-delete")
+async def library_bulk_delete(req: LibraryDeleteReq):
+    """Delete advertorials from all DBs by URL."""
+    deleted = 0
+    urls_set = set(req.urls)
+
+    # 1. Remove from CLASSIFIED DB
+    classified_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_DB_CLASSIFIED.json")
+    if classified_path.exists():
+        data = json.loads(classified_path.read_text())
+        advs = data.get("advertorials", {})
+        before = len(advs)
+        for url in urls_set:
+            advs.pop(url, None)
+        removed_classified = before - len(advs)
+        if removed_classified > 0:
+            data["advertorials"] = advs
+            classified_path.write_text(json.dumps(data, indent=2, ensure_ascii=False))
+            deleted += removed_classified
+
+    # 2. Remove from STRUCTURES
+    struct_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_STRUCTURES.json")
+    if struct_path.exists():
+        structs = json.loads(struct_path.read_text())
+        before = len(structs)
+        for url in urls_set:
+            structs.pop(url, None)
+        removed_struct = before - len(structs)
+        if removed_struct > 0:
+            struct_path.write_text(json.dumps(structs, indent=2, ensure_ascii=False))
+
+    # 3. Remove from advertorials_db
+    adv_db_path = Path("/root/mission-control/advertorial-scraper/advertorials_db.json")
+    if adv_db_path.exists():
+        adv_list = json.loads(adv_db_path.read_text())
+        before = len(adv_list)
+        adv_list = [a for a in adv_list if a.get("url", "") not in urls_set]
+        removed_adv = before - len(adv_list)
+        if removed_adv > 0:
+            adv_db_path.write_text(json.dumps(adv_list, indent=2, ensure_ascii=False))
+            deleted += removed_adv
+
+    # 4. Remove from ALL_PAGES_DB
+    all_pages_path = Path("/root/.openclaw/workspace-anstrex-scraper/ALL_PAGES_DB.json")
+    if all_pages_path.exists():
+        all_pages = json.loads(all_pages_path.read_text())
+        before = len(all_pages)
+        for url in urls_set:
+            all_pages.pop(url, None)
+        removed_pages = before - len(all_pages)
+        if removed_pages > 0:
+            all_pages_path.write_text(json.dumps(all_pages, indent=2, ensure_ascii=False))
+
+    # 5. Remove from CONTENT_READY
+    content_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_CONTENT_READY.json")
+    if content_path.exists():
+        try:
+            content = json.loads(content_path.read_text())
+            for url in urls_set:
+                content.pop(url, None)
+            content_path.write_text(json.dumps(content, indent=2, ensure_ascii=False))
+        except Exception:
+            pass
+
+    return {"deleted": deleted, "urls": list(urls_set)}
+
+
+# ── LIBRARY ADD URL ──
+
+class LibraryAddUrlReq(BaseModel):
+    url: str
+
+_library_add_tasks: dict = {}  # task_id -> {...}
+_LIBRARY_ADD_TASKS_FILE = Path("data/library_add_tasks.json")
+
+def _save_library_add_tasks():
+    try:
+        _LIBRARY_ADD_TASKS_FILE.write_text(json.dumps(_library_add_tasks, indent=2))
+    except: pass
+
+def _load_library_add_tasks():
+    global _library_add_tasks
+    if _LIBRARY_ADD_TASKS_FILE.exists():
+        try:
+            _library_add_tasks = json.loads(_LIBRARY_ADD_TASKS_FILE.read_text())
+            for tid, t in _library_add_tasks.items():
+                if t.get("status") == "running":
+                    t["status"] = "failed"
+                    t["error"] = "Server restarted during processing"
+        except: pass
+
+_load_library_add_tasks()
+
+@app.post("/library/add-url")
+async def library_add_url(req: LibraryAddUrlReq, background_tasks: BackgroundTasks):
+    """Start async URL analysis and add to library — returns task_id immediately."""
+    import uuid as _uuid
+    task_id = _uuid.uuid4().hex[:8]
+    _library_add_tasks[task_id] = {
+        "status": "running",
+        "step": "Fetching...",
+        "url": req.url,
+        "result": None,
+        "error": "",
+        "started_at": datetime.utcnow().isoformat(),
+    }
+    _save_library_add_tasks()
+    background_tasks.add_task(_library_add_url_bg, task_id, req.url)
+    return {"task_id": task_id, "status": "running"}
+
+@app.get("/library/add-status/{task_id}")
+async def library_add_status(task_id: str):
+    """Poll library add-url task status."""
+    task = _library_add_tasks.get(task_id)
+    if not task:
+        raise HTTPException(404, "Task not found")
+    return task
+
+async def _library_add_url_bg(task_id: str, url: str):
+    """Full pipeline: Fetch HTML → LLM Analysis → DataForSEO → Save to all DBs."""
+    from bs4 import BeautifulSoup
+    from urllib.parse import urlparse
+    import os
+
+    def _update_task(step: str = "", status: str = "running", result=None, error: str = ""):
+        _library_add_tasks[task_id].update({"step": step, "status": status, "result": result, "error": error})
+        _save_library_add_tasks()
+
+    try:
+        # ── Step 1: Fetch HTML ──
+        _update_task("Fetching...")
+        headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+        async with httpx.AsyncClient(timeout=30, follow_redirects=True) as client:
+            resp = await client.get(url, headers=headers)
+            html = resp.text
+
+        # Save to html_archive
+        domain_parts = urlparse(url).netloc.replace("www.", "")
+        domain = domain_parts.replace(".", "_")
+        path_slug = urlparse(url).path.strip("/").replace("/", "_").replace("-", "_")[:60]
+        fname = re.sub(r'[^a-zA-Z0-9_\-.]', '', f"{domain}_{path_slug}.html")
+        if not fname or fname == ".html":
+            fname = domain + ".html"
+        archive_path = Path("/root/.openclaw/workspace-anstrex-scraper/html_archive") / fname
+        archive_path.write_text(html, encoding="utf-8")
+
+        # ── Step 2: LLM Analysis ──
+        _update_task("Analyzing...")
+        soup = BeautifulSoup(html, 'html.parser')
+        for tag in soup(['script', 'noscript', 'iframe', 'svg']):
+            tag.decompose()
+        cleaned = str(soup)[:25000]
+        text_content = soup.get_text(separator="\n", strip=True)[:5000]
+
+        analysis_prompt = """Analyse cet advertorial HTML et retourne un JSON avec exactement ces champs:
+{
+  "headline": "titre principal (h1 ou premier heading)",
+  "product_name": "nom du produit promu",
+  "target_audience": "audience cible (démographie, intérêts)",
+  "hook": "les 2-3 premières phrases d'accroche",
+  "hook_type": "news|testimonial|bold_claim|question|statistic|story",
+  "lead": "le paragraphe d'introduction après le hook",
+  "problem": "le problème décrit dans l'article",
+  "solution": "la solution proposée (le produit)",
+  "offer": "l'offre (prix, discount, bonus)",
+  "cta": "le texte du CTA principal",
+  "structure": "news_article|personal_story|listicle|review|comparison|how_to|founder_letter|urgency_sale",
+  "angle_tag": "fear|authority|social_proof|scarcity|curiosity|empathy|greed",
+  "emotional_triggers": ["liste", "des", "triggers", "émotionnels"],
+  "persuasion_devices": ["liste", "des", "techniques", "de", "persuasion"],
+  "estimated_word_count": 1500,
+  "quality_score": 7
+}
+Retourne UNIQUEMENT le JSON, rien d'autre."""
+
+        analysis_text = await _llm_call(
+            messages=[{"role": "user", "content": f"Analyse:\n\n{cleaned}"}],
+            system=analysis_prompt, max_tokens=2000
+        )
+        # Extract JSON from potential markdown fences or mixed text
+        json_match = re.search(r'```(?:json)?\s*\n?([\s\S]*?)\n?```', analysis_text)
+        if json_match:
+            analysis_text = json_match.group(1).strip()
+        else:
+            json_obj_match = re.search(r'\{[\s\S]*\}', analysis_text)
+            if json_obj_match:
+                analysis_text = json_obj_match.group(0).strip()
+            else:
+                analysis_text = analysis_text.strip()
+        analysis = json.loads(analysis_text)
+
+        # ── Step 3: DataForSEO traffic ──
+        _update_task("Enriching traffic...")
+        domain_clean = urlparse(url).netloc.replace("www.", "")
+        traffic_cache_path = Path("data/domain_traffic_cache.json")
+        traffic_cache = json.loads(traffic_cache_path.read_text()) if traffic_cache_path.exists() else {}
+
+        if domain_clean not in traffic_cache:
+            login = os.environ.get("DATAFORSEO_LOGIN", "admin@klaast.com")
+            password = os.environ.get("DATAFORSEO_PASSWORD", "cddccd1338ab73a9")
+            try:
+                async with httpx.AsyncClient(timeout=30) as client:
+                    resp = await client.post(
+                        "https://api.dataforseo.com/v3/dataforseo_labs/google/domain_rank_overview/live",
+                        auth=(login, password),
+                        json=[{"target": domain_clean, "location_code": 2840, "language_code": "en"}],
+                    )
+                    data = resp.json()
+                    if data.get("status_code") == 20000 and data.get("tasks"):
+                        items_data = data["tasks"][0].get("result", [{}])[0].get("items", [])
+                        if items_data:
+                            org = items_data[0].get("metrics", {}).get("organic", {})
+                            traffic_cache[domain_clean] = {
+                                "etv": round(org.get("etv", 0)),
+                                "keywords": org.get("count", 0),
+                                "estimated_paid_cost": round(org.get("estimated_paid_traffic_cost", 0)),
+                                "fetched_at": datetime.utcnow().strftime("%Y-%m-%d"),
+                            }
+                        else:
+                            traffic_cache[domain_clean] = {"etv": 0, "keywords": 0, "fetched_at": datetime.utcnow().strftime("%Y-%m-%d")}
+                    else:
+                        traffic_cache[domain_clean] = {"etv": 0, "keywords": 0, "fetched_at": datetime.utcnow().strftime("%Y-%m-%d")}
+            except Exception as e:
+                logger.warning(f"DataForSEO failed for {domain_clean}: {e}")
+                traffic_cache[domain_clean] = {"etv": 0, "keywords": 0, "fetched_at": datetime.utcnow().strftime("%Y-%m-%d")}
+            traffic_cache_path.write_text(json.dumps(traffic_cache, indent=2))
+
+        # ── Step 4: Save to all DBs ──
+        _update_task("Saving...")
+
+        # Save to CLASSIFIED DB
+        classified_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_DB_CLASSIFIED.json")
+        if classified_path.exists():
+            classified = json.loads(classified_path.read_text())
+        else:
+            classified = {"advertorials": {}}
+        classified["advertorials"][url] = {
+            "url": url, "domain": domain_clean,
+            "headline": analysis.get("headline", ""),
+            "page_type": "advertorial",
+            "product_name": analysis.get("product_name", ""),
+            "target_audience": analysis.get("target_audience", ""),
+            "angle": f"{analysis.get('angle_tag', '')} - {analysis.get('hook_type', '')}",
+            "confidence": 90, "discovered": datetime.utcnow().strftime("%Y-%m-%d"),
+            "source": "manual_add",
+            "_angle_classified": analysis.get("angle_tag", ""),
+            "_hook_type": analysis.get("hook_type", ""),
+        }
+        classified_path.write_text(json.dumps(classified, indent=2, ensure_ascii=False))
+
+        # Save to STRUCTURES
+        struct_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_STRUCTURES.json")
+        structs = json.loads(struct_path.read_text()) if struct_path.exists() else {}
+        structs[url] = {
+            "url": url, "domain": domain_clean,
+            "hook": analysis.get("hook", ""),
+            "hook_type": analysis.get("hook_type", ""),
+            "lead": analysis.get("lead", ""),
+            "problem": analysis.get("problem", ""),
+            "solution": analysis.get("solution", ""),
+            "offer": analysis.get("offer", ""),
+            "cta": analysis.get("cta", ""),
+            "structure": analysis.get("structure", ""),
+            "angle_tag": analysis.get("angle_tag", ""),
+            "emotional_triggers": analysis.get("emotional_triggers", []),
+            "persuasion_devices": analysis.get("persuasion_devices", []),
+            "estimated_word_count": analysis.get("estimated_word_count", 0),
+            "quality_score": analysis.get("quality_score", 0),
+            "demographic_signal": analysis.get("target_audience", ""),
+            "product_name": analysis.get("product_name", ""),
+            "source": "manual_add",
+        }
+        struct_path.write_text(json.dumps(structs, indent=2, ensure_ascii=False))
+
+        # Save to CONTENT_READY
+        content_path = Path("/root/.openclaw/workspace-anstrex-scraper/ADVERTORIAL_CONTENT_READY.json")
+        content = json.loads(content_path.read_text()) if content_path.exists() else {}
+        content[url] = {
+            "text": text_content, "source": "manual_add",
+            "domain": domain_clean,
+            "headline": analysis.get("headline", ""),
+            "product_name": analysis.get("product_name", ""),
+        }
+        content_path.write_text(json.dumps(content, indent=2, ensure_ascii=False))
+
+        # Update html_file_cache
+        cache_path = Path("data/html_file_cache.json")
+        cache = json.loads(cache_path.read_text()) if cache_path.exists() else {}
+        cache[url] = fname
+        cache_path.write_text(json.dumps(cache, indent=2))
+
+        _update_task(
+            step="Done!",
+            status="completed",
+            result={
+                "url": url,
+                "domain": domain_clean,
+                "headline": analysis.get("headline", ""),
+                "product_name": analysis.get("product_name", ""),
+                "quality_score": analysis.get("quality_score", 0),
+                "html_file": fname,
+            }
+        )
+        logger.info(f"Library add-url completed for {url}")
+
+    except Exception as e:
+        logger.error(f"Library add-url failed for task {task_id}: {e}", exc_info=True)
+        _library_add_tasks[task_id].update({
+            "status": "failed",
+            "step": "Failed",
+            "error": str(e)[:300],
+            "failed_at": datetime.utcnow().isoformat(),
+        })
+        _save_library_add_tasks()
+
+
+@app.get("/sources/{source_id}/text")
+async def get_source_text(source_id: str):
+    """Return extracted text for a source."""
+    return _get_source_text(source_id)
 
 @app.get("/references/stats")
 async def ref_stats():
@@ -1886,12 +4042,16 @@ async def _run_pipeline_bg(plid, req):
     out_dir.mkdir(parents=True, exist_ok=True)
     out = str(out_dir)
 
-    _log_pipeline(plid, "info", f"Pipeline started — product={req.product_id} template={req.template} angle={req.angle} lang={req.language}")
+    def _check_cancelled():
+        if pipelines.get(plid, {}).get("status") == "cancelled":
+            raise RuntimeError("Pipeline cancelled by user")
+
+    _log_pipeline(plid, "info", f"Pipeline started — product={req.product_id} template={req.template} format={req.format} aggressiveness={req.aggressiveness} lang={req.language}")
     try:
         s["status"] = "running"
         product = products.get(req.product_id)
         if not product: raise ValueError(f"Product {req.product_id} not found")
-        run_config = {"angle":req.angle,"structure":req.structure,"persona":req.persona,"tone":req.tone,"language":req.language,"brief":req.brief,"template":req.template}
+        run_config = {"template":req.template,"format":req.format,"context":req.context,"audience":req.audience,"source_id":req.source_id,"source_url":req.source_url,"aggressiveness":req.aggressiveness,"language":req.language,"angle":req.angle,"structure":req.structure,"persona":req.persona,"tone":req.tone,"brief":req.brief}
 
         # ── Helper: find existing checkpoint files ──
         def _find(pattern): 
@@ -1910,6 +4070,7 @@ async def _run_pipeline_bg(plid, req):
             _patch(pipeline, q, plid)
             # Run phases 1-2 only via the pipeline's internal flow
             # We need to run the full pipeline but we'll add checkpoints for future
+            run_config["_branding"] = _load_branding(req.product_id)
             result = await pipeline.run(
                 product_url=product.get("url", ""),
                 product_data=product.get("data") if product.get("data") else None,
@@ -1926,14 +4087,37 @@ async def _run_pipeline_bg(plid, req):
         # ── Inject config into brief ──
         lang = run_config.get("language", "en")
         lang_names = {"en": "English", "fr": "Français", "es": "Español", "de": "Deutsch"}
+        # Fetch source text if source_id provided
+        _source_text = ""
+        _source_id = run_config.get("source_id", "")
+        _source_url = run_config.get("source_url", "")
+        if _source_id or _source_url:
+            try:
+                lookup_id = _source_id or _source_url
+                src_data = _get_source_text(lookup_id)
+                _source_text = src_data.get("text", "")
+                _log_pipeline(plid, "info", f"Loaded source text: {src_data.get('title','?')[:60]} ({src_data.get('word_count',0)} words)")
+            except Exception as _e:
+                _log_pipeline(plid, "warning", f"Could not load source text: {_e}")
+
         structured_brief["_config"] = {
             "language": lang, "language_name": lang_names.get(lang, lang),
-            "angle": run_config.get("angle","testimonial"), "structure": run_config.get("structure","pas"),
-            "tone": run_config.get("tone","conversational"), "persona": run_config.get("persona",""),
-            "brief": run_config.get("brief",""), "template": run_config.get("template","editorial"),
+            "template": run_config.get("template","editorial"),
+            "format": run_config.get("format","personal_story"),
+            "context": run_config.get("context",""),
+            "audience": run_config.get("audience",""),
+            "source_id": run_config.get("source_id",""),
+            "source_url": run_config.get("source_url",""),
+            "source_text": _source_text,
+            "aggressiveness": run_config.get("aggressiveness","medium"),
+            # Legacy
+            "angle": run_config.get("angle",""), "structure": run_config.get("structure",""),
+            "tone": run_config.get("tone",""), "persona": run_config.get("persona",""),
+            "brief": run_config.get("brief",""),
         }
 
-        # ── PHASE 3: Copywriting ──
+        _check_cancelled()
+        # ── PHASE 3: Copywriting --
         draft_file = _find("advertorial_draft*.json")
         if draft_file:
             advertorial_draft = json.loads(draft_file.read_text())
@@ -1945,7 +4129,8 @@ async def _run_pipeline_bg(plid, req):
             advertorial_draft = await cw.run(structured_brief=structured_brief)
             _log_pipeline(plid, "info", f"Phase 3 completed — draft generated")
 
-        # ── PHASE 4: Visuals ──
+        _check_cancelled()
+        # ── PHASE 4: Visuals --
         img_file = _find("image_prompts.json")
         vid_file = _find("video_prompts.json")
         if img_file and vid_file:
@@ -1956,17 +4141,19 @@ async def _run_pipeline_bg(plid, req):
         else:
             await _emit(q, plid, "running", "Phase 4 — Visuals", "visual_strategist", 0.6)
             vs = VisualStrategistAgent(output_dir=out)
-            visual_plan = await vs.run(advertorial_draft=advertorial_draft, image_description=None, structured_brief=structured_brief)
+            visual_plan = await vs.run(advertorial_draft=advertorial_draft, product_data={"product_info": structured_brief.get("product_summary", {})})
             await _emit(q, plid, "running", "Phase 4 — Visuals", "image_prompter", 0.65)
             ip = ImagePrompterAgent(output_dir=out)
             vp = VideoPrompterAgent(output_dir=out)
+            product_ref_url = structured_brief.get("product_summary", {}).get("image_url", "") or "https://cdn.shopify.com/s/files/1/0600/8527/2619/files/Capture_d_ecran_2026-03-19_a_23.21.05.png?v=1773948079"
             image_prompts, video_prompts = await asyncio.gather(
-                ip.run(visual_plan=visual_plan, image_description=None, platform="kie"),
-                vp.run(visual_plan=visual_plan, image_description=None, platform="kie"),
+                ip.run(visual_plan=visual_plan, product_ref_url=product_ref_url, generate=False),
+                vp.run(visual_plan=visual_plan, generate=False),
             )
             _log_pipeline(plid, "info", f"Phase 4 completed — image + video prompts generated")
 
-        # ── PHASE 5: QA ──
+        _check_cancelled()
+        # ── PHASE 5: QA --
         qa_file = _find("qa_report*.json")
         if qa_file:
             _log_pipeline(plid, "info", f"CHECKPOINT: Skipping Phase 5 (QA report exists)")
@@ -1981,7 +4168,8 @@ async def _run_pipeline_bg(plid, req):
             )
             _log_pipeline(plid, "info", f"Phase 5 completed — QA done")
 
-        # ── PHASE 6: HTML Publishing ──
+        _check_cancelled()
+        # ── PHASE 6: HTML Publishing --
         await _emit(q, plid, "running", "Phase 6 — Publishing", "html_publisher", 0.95)
         pub = HTMLPublisherAgent(output_dir=out)
         product_name = product.get("name", "")
@@ -1996,6 +4184,7 @@ async def _run_pipeline_bg(plid, req):
         if not _product_image:
             # Try Shopify CDN fallback
             _product_image = product.get("image_url", "")
+        _branding = _load_branding(req.product_id)
         result = await pub.run(
             advertorial_draft=advertorial_final,
             image_prompts=image_prompts if isinstance(image_prompts, dict) else None,
@@ -2005,6 +4194,7 @@ async def _run_pipeline_bg(plid, req):
             product_image_url=_product_image,
             lang=lang,
             template=run_config.get("template", "editorial"),
+            branding=_branding,
         )
         _log_pipeline(plid, "info", f"Phase 6 completed — HTML published")
 
